@@ -122,7 +122,7 @@
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition/>
                             </Grid.RowDefinitions>
-                            <ListView x:Name="Lyric_ListView" ItemsSource="{x:Bind lyrics}" HorizontalContentAlignment="Center" IsItemClickEnabled="True" ItemClick="Lyric_ListView_ItemClick">
+                            <ListView x:Name="Lyric_ListView" ItemsSource="{x:Bind lyrics}" HorizontalContentAlignment="Center" IsItemClickEnabled="True" SelectionChanged="Lyric_ListView_SelectionChanged">
                                 <ListView.ItemContainerStyle>
                                     <Style TargetType="ListViewItem">
                                         <Setter Property="HorizontalContentAlignment" Value="Stretch"/>

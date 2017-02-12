@@ -278,8 +278,9 @@ namespace LyricsEditor
                 }
         }
         #endregion
-#region 歌词列表
-        private void Lyric_ListView_ItemClick(object sender, ItemClickEventArgs e)
+        #region 歌词列表
+
+        private void Lyric_ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var selects = (sender as ListView).SelectedItems;
             if (selects.Count >= 1)
@@ -363,6 +364,6 @@ namespace LyricsEditor
         {
             Sidebar_Frame.Navigate(typeof(Page));
         }
-        
+
     }
 }
