@@ -92,15 +92,7 @@ namespace LyricsEditor.Model
             backgroundOpacity = GetSetting<double>("BackgroundOpacity");
             volume = GetSetting<double>("Volume");
             isDisplayAlbumImageBackground = GetSetting<bool>("IsDisplayAlbumImageBackground");
-            theme = GetSetting<ApplicationTheme>("Theme",
-                (s) =>
-                {
-                    if (s == ApplicationTheme.Light.ToString())
-                        return ApplicationTheme.Light;
-                    else
-                        return ApplicationTheme.Dark;
-                }
-            );
+            theme = GetSetting<ApplicationTheme>("Theme", (s) => s == ApplicationTheme.Light.ToString() ? ApplicationTheme.Light : ApplicationTheme.Dark);
             chanageButtonBehavior = GetSetting<LyricChanageButtonBehavior>("ChanageButtonBehavior",
                 (s) =>
                 {
