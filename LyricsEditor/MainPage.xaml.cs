@@ -125,7 +125,7 @@ namespace LyricsEditor
         
         private void AddLyric()
         {
-            if (!LyricContent_TextBox.Text.Trim().Contains('\n') || !LyricContent_TextBox.Text.Trim().Contains('\r'))
+            if (!LyricContent_TextBox.Text.Trim().Contains('\n') && !LyricContent_TextBox.Text.Trim().Contains('\r'))
                 lyrics.Add(new Lyric { Time = AudioPlayer_MediaElement.Position, Content = LyricContent_TextBox.Text.Trim() });
             else
             {
@@ -278,7 +278,7 @@ namespace LyricsEditor
                 }
         }
         #endregion
-        #region 歌词列表
+#region 歌词列表
 
         private void Lyric_ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {

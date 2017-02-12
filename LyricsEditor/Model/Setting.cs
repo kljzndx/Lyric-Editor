@@ -133,7 +133,6 @@ namespace LyricsEditor.Model
         public T GetSetting<T>(string key)
         {
             return (T)settingsObject.Values[key];
-
         }
         public T GetSetting<T>(string key, Func<string, T> converter)
         {
