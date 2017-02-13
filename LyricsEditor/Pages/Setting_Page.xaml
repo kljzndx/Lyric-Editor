@@ -16,7 +16,20 @@
         </StackPanel>
         
         <ToggleSwitch Header="显示专辑图背景" IsOn="{x:Bind settings.IsDisplayAlbumImageBackground,Mode=TwoWay}"/>
-        <Slider Header="背景模糊度" Maximum="10" Value="{x:Bind settings.BackgroundBlurDegree,Mode=TwoWay}" Visibility="{x:Bind settings.IsDisplayAlbumImageBackground,Mode=OneWay,Converter={StaticResource boolToVisibility}}" SmallChange="0.1" StepFrequency="0.1"/>
+
+        <StackPanel x:Name="BacckgroundBlurDegree_StackPanel" Margin="0,10" Visibility="{x:Bind settings.IsDisplayAlbumImageBackground,Mode=OneWay,Converter={StaticResource boolToVisibility}}">
+            <Slider
+                x:Name="BacckgroundBlurDegree_Slider"
+                Header="背景模糊度"
+                SmallChange="0.1"
+                StepFrequency="0.1"
+                Value="{x:Bind settings.BackgroundBlurDegree,Mode=TwoWay}"
+                Maximum="10"
+                IsEnabled="{x:Bind settings.BlurAvailability}"
+                IsEnabledChanged="BacckgroundBlurDegree_Slider_IsEnabledChanged"/>
+            <TextBlock x:Name="BacckgroundBlurDegree_Massage_TextBlock" Text="模糊功能仅支持1607以及之后的版本" Foreground="Red" Visibility="Collapsed"/>
+        </StackPanel>
+        
         <Slider Header="背景不透明度" Value="{x:Bind settings.BackgroundOpacity,Mode=TwoWay,Converter={StaticResource percentage_Double}}" Visibility="{x:Bind settings.IsDisplayAlbumImageBackground,Mode=OneWay,Converter={StaticResource boolToVisibility}}"/>
 
         <StackPanel x:Name="AppTheme_StackPanel">

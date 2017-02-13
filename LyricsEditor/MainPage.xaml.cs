@@ -44,9 +44,9 @@ namespace LyricsEditor
             this.InitializeComponent();
             CoreWindow.GetForCurrentThread().KeyDown += MainPage_KeyDown;
         }
-        private async void Page_Loaded(object sender, RoutedEventArgs e)
+        private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            await Background_Image.Blur(settings.BackgroundBlurDegree, 0, 0).StartAsync();
+            
 
 
             if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile")

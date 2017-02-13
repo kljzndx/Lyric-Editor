@@ -79,7 +79,11 @@
                     </Grid.RowDefinitions>
                     <Image x:Name="Background_Image" Source="{x:Bind music.AlbumImage,Mode=OneWay}" Stretch="UniformToFill" Visibility="{x:Bind settings.IsDisplayAlbumImageBackground,Mode=OneWay,Converter={StaticResource boolToVisibility}}" Opacity="{x:Bind settings.BackgroundOpacity,Mode=OneWay}" Grid.RowSpan="3">
                         <interactivity:Interaction.Behaviors>
-                            <behaviors:Blur x:Name="BackgroundImage_Blur" Value="{x:Bind settings.BackgroundBlurDegree,Mode=OneWay}" Duration="0" Delay="0"/>
+                            <behaviors:Blur 
+                                x:Name="BackgroundImage_Blur"
+                                Value="{x:Bind settings.BackgroundBlurDegree,Mode=OneWay}" 
+                                Duration="500" Delay="0" 
+                                AutomaticallyStart="{x:Bind settings.BlurAvailability}"/>
                         </interactivity:Interaction.Behaviors>
                     </Image>
                     <Grid>

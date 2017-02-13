@@ -5,6 +5,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.Storage;
+using Windows.System.Profile;
 using Windows.UI.Xaml;
 
 namespace LyricsEditor.Model
@@ -15,7 +16,7 @@ namespace LyricsEditor.Model
         private static Setting thisObject;
         private static readonly object locker = new object();
         private double backgroundBlurDegree, backgroundOpacity, volume;
-        private bool isDisplayAlbumImageBackground;
+        private bool isDisplayAlbumImageBackground, blurAvailability;
         private ApplicationTheme theme;
         private LyricChanageButtonBehavior chanageButtonBehavior;
         private LyricIDTag idTag = new LyricIDTag();
@@ -52,6 +53,7 @@ namespace LyricsEditor.Model
                 SetSetting(ref isDisplayAlbumImageBackground, value);
             }
         }
+        public bool BlurAvailability { get => blurAvailability; set => blurAvailability = value; }
         public ApplicationTheme Theme
         {
             get => theme;
@@ -78,6 +80,7 @@ namespace LyricsEditor.Model
         }
 
         public ApplicationDataContainer SettingsObject { get => settingsObject; }
+        
 
         private Setting()
         {
@@ -88,7 +91,9 @@ namespace LyricsEditor.Model
             CreateSetting("Theme", ApplicationTheme.Light.ToString());
             CreateSetting("ChanageButtonBehavior", LyricChanageButtonBehavior.LetMeChoose.ToString());
 
-            backgroundBlurDegree = GetSetting<double>("BackgroundBlurDegree");
+            blurAvailability = GetOsVersion() >= 14393;
+            backgroundBlurDegree = blurAvailability ? GetSetting<double>("BackgroundBlurDegree") : 0D;
+
             backgroundOpacity = GetSetting<double>("BackgroundOpacity");
             volume = GetSetting<double>("Volume");
             isDisplayAlbumImageBackground = GetSetting<bool>("IsDisplayAlbumImageBackground");
@@ -144,6 +149,12 @@ namespace LyricsEditor.Model
                 settingValue = value;
             SetProperty<T>(ref Field, value, propertyName);
             settingsObject.Values[propertyName] = settingValue;
+        }
+        private ulong GetOsVersion()
+        {
+            ulong version = Convert.ToUInt64(AnalyticsInfo.VersionInfo.DeviceFamilyVersion);
+            //return $"{version >> 48 & 0xFFFF}.{version >> 32 & 0xFFFF}.{version >> 16 & 0xFFFF}.{version & 0xFFFF}";
+            return version >> 16 & 0xFFFF;
         }
     }
 }
