@@ -10,6 +10,7 @@
         <cvt:Percentage_Double x:Key="percentage_Double"/>
         <cvt:Percentage_String x:Key="percentage_String"/>
         <cvt:BoolToVisibility x:Key="boolToVisibility"/>
+        <cvt:BoolToVisibility_Reverse x:Key="boolToVisibility_Reverse"/>
         <Style x:Key='MediaSliderStyle' TargetType='Slider'>
             <Setter Property="Background" Value="{ThemeResource SystemControlForegroundBaseMediumLowBrush}" />
             <Setter Property="BorderThickness" Value="{ThemeResource SliderBorderThemeThickness}" />

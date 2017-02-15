@@ -88,12 +88,11 @@ namespace LyricsEditor.Model
             CreateSetting("BackgroundOpacity", 0.3);
             CreateSetting("Volume", 1D);
             CreateSetting("IsDisplayAlbumImageBackground", true);
-            CreateSetting("Theme", ApplicationTheme.Light.ToString());
+            CreateSetting("Theme", ApplicationTheme.Dark.ToString());
             CreateSetting("ChanageButtonBehavior", LyricChanageButtonBehavior.LetMeChoose.ToString());
 
             blurAvailability = GetOsVersion() >= 14393;
             backgroundBlurDegree = blurAvailability ? GetSetting<double>("BackgroundBlurDegree") : 0D;
-
             backgroundOpacity = GetSetting<double>("BackgroundOpacity");
             volume = GetSetting<double>("Volume");
             isDisplayAlbumImageBackground = GetSetting<bool>("IsDisplayAlbumImageBackground");

@@ -6,7 +6,6 @@
     xmlns:tpl="using:LyricsEditor.Templates"
     xmlns:model="using:LyricsEditor.Model"
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
-    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:behaviors="using:Microsoft.Toolkit.Uwp.UI.Animations.Behaviors"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -62,6 +61,10 @@
                         </StackPanel>
                         <Button x:Name="GoBack_Button" Content="&#xE892;" Style="{StaticResource ControllerButton}" RelativePanel.AlignVerticalCenterWithPanel="True" RelativePanel.LeftOf="PlayOrPause_StackPanel" Click="GoBack_Button_Click" IsEnabled="False"/>
                         <Button x:Name="GoForward_Button" Content="&#xE893;" Style="{StaticResource ControllerButton}" RelativePanel.AlignVerticalCenterWithPanel="True" RelativePanel.RightOf="PlayOrPause_StackPanel" Click="GoForward_Button_Click" IsEnabled="False"/>
+                        
+                        <Button x:Name="FastRewind_Button" Content="&#xE0A6;" Style="{StaticResource ControllerButton}" IsEnabled="False" Click="FastRewind_Button_Click" RelativePanel.LeftOf="GoBack_Button"/>
+                        <Button x:Name="FastForward_Button" Content="&#xE0AB;" Style="{StaticResource ControllerButton}" IsEnabled="False" Click="FastForward_Button_Click" RelativePanel.RightOf="GoForward_Button"/>
+                        
                         <Button x:Name="Volume_Button" Content="&#xE995;" Style="{StaticResource ControllerButton}" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True">
                             <Button.Flyout>
                                 <Flyout Placement="Bottom">
@@ -77,15 +80,14 @@
                         <RowDefinition Height="Auto"/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
-                    <Image x:Name="Background_Image" Source="{x:Bind music.AlbumImage,Mode=OneWay}" Stretch="UniformToFill" Visibility="{x:Bind settings.IsDisplayAlbumImageBackground,Mode=OneWay,Converter={StaticResource boolToVisibility}}" Opacity="{x:Bind settings.BackgroundOpacity,Mode=OneWay}" Grid.RowSpan="3">
-                        <interactivity:Interaction.Behaviors>
-                            <behaviors:Blur 
-                                x:Name="BackgroundImage_Blur"
-                                Value="{x:Bind settings.BackgroundBlurDegree,Mode=OneWay}" 
-                                Duration="500" Delay="0" 
-                                AutomaticallyStart="{x:Bind settings.BlurAvailability}"/>
-                        </interactivity:Interaction.Behaviors>
-                    </Image>
+                    <Grid Grid.RowSpan="3" Visibility="{x:Bind settings.IsDisplayAlbumImageBackground,Converter={StaticResource boolToVisibility}}" Opacity="{x:Bind settings.BackgroundOpacity,Mode=OneWay,Converter={StaticResource percentage_Double}}">
+                        <Image x:Name="Background_Image" Source="{x:Bind music.AlbumImage,Mode=OneWay}" Stretch="UniformToFill"/>
+                        <Image x:Name="BlurBackground_Image" x:DeferLoadStrategy="Lazy" Source="{x:Bind music.AlbumImage,Mode=OneWay}" Stretch="UniformToFill">
+                            <interactivity:Interaction.Behaviors>
+                                <behaviors:Blur Value="{x:Bind settings.BackgroundBlurDegree,Mode=OneWay}" Duration="0"/>
+                            </interactivity:Interaction.Behaviors>
+                        </Image>
+                    </Grid>
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition/>
@@ -111,8 +113,8 @@
                             <Button x:Name="ChanageLyric_Button" Content="&#xE70F;" Style="{StaticResource ControllerButton}">
                                 <Button.Flyout>
                                     <MenuFlyout Placement="Bottom">
-                                        <MenuFlyoutItem x:Name="ChanageTime_MenuFlyoutItem" Text="修改为当前时间" Click="ChanageTime_MenuFlyoutItem_Click"/>
-                                        <MenuFlyoutItem x:Name="ChanageLyric_MenuFlyoutItem" Text="修改为当前歌词" Click="ChanageLyric_MenuFlyoutItem_Click"/>
+                                        <MenuFlyoutItem x:Name="ChanageTime_MenuFlyoutItem" x:Uid="/Main/ChanageTime_MenuFlyoutItem" Click="ChanageTime_MenuFlyoutItem_Click"/>
+                                        <MenuFlyoutItem x:Name="ChanageLyric_MenuFlyoutItem" x:Uid="/Main/ChanageLyric_MenuFlyoutItem" Click="ChanageLyric_MenuFlyoutItem_Click"/>
                                     </MenuFlyout>
                                 </Button.Flyout>
                             </Button>
@@ -175,32 +177,29 @@
                                     <Ellipse x:Name="Light_Ellipse" Fill="White" Opacity="0"/>
                                     <Ellipse x:Name="Dark_Ellipse" Fill="Black" Opacity="0"/>
                                     <TextBlock Text="&#xE8CB;" FontFamily="{TemplateBinding FontFamily}" FontSize="{TemplateBinding FontSize}" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White"/>
-
                                 </Grid>
                             </ControlTemplate>
                         </Button.Template>
                     </Button>
                 </Grid>
-
-
             </Grid>
         </SplitView.Content>
     </SplitView>
     <Page.BottomAppBar>
         <CommandBar>
             <CommandBar.PrimaryCommands>
-                <AppBarButton x:Name="OpenFile" Icon="OpenFile" Label="打开">
+                <AppBarButton x:Name="OpenFile_AppBarButton" x:Uid="/Main/OpenFile_AppBarButton" Icon="OpenFile">
                     <AppBarButton.Flyout>
                         <MenuFlyout>
-                            <MenuFlyoutItem x:Name="OpenMusic_MenuFlyoutItem" Text="打开歌曲" Click="OpenMusic_MenuFlyoutItem_Click"/>
-                            <MenuFlyoutItem x:Name="OpenLRC_MenuFlyoutItem" Text="打开歌词" Click="OpenLRC_MenuFlyoutItem_Click"/>
+                            <MenuFlyoutItem x:Name="OpenMusic_MenuFlyoutItem" x:Uid="/Main/OpenMusic_MenuFlyoutItem" Click="OpenMusic_MenuFlyoutItem_Click"/>
+                            <MenuFlyoutItem x:Name="OpenLRC_MenuFlyoutItem" x:Uid="/Main/OpenLRC_MenuFlyoutItem" Click="OpenLRC_MenuFlyoutItem_Click"/>
                         </MenuFlyout>
                     </AppBarButton.Flyout>
                 </AppBarButton>
-                <AppBarButton x:Name="Save_AppBarButton" Icon="Save" Label="保存歌词" Click="Save_AppBarButton_Click"/>
-                <AppBarButton x:Name="MultilineEdit_AppBarButton" Icon="AllApps" Label="多行编辑" Click="MultilineEdit_AppBarButton_Click" />
-                <AppBarButton x:Name="Submit_AppBarButton" Icon="Accept" Label="确认" Visibility="Collapsed" Click="Submit_AppBarButton_Click"/>
-                <AppBarButton x:Name="Settings_AppBarButton" Icon="Setting" Label="设置" Click="Settings_AppBarButton_Click"/>
+                <AppBarButton x:Name="Save_AppBarButton" x:Uid="/Main/Save_AppBarButton" Icon="Save" Click="Save_AppBarButton_Click"/>
+                <AppBarButton x:Name="MultilineEdit_AppBarButton" x:Uid="/Main/MultilineEdit_AppBarButton" Icon="AllApps" Click="MultilineEdit_AppBarButton_Click" />
+                <AppBarButton x:Name="Submit_AppBarButton" x:Uid="/Main/Submit_AppBarButton" Icon="Accept" Visibility="Collapsed" Click="Submit_AppBarButton_Click"/>
+                <AppBarButton x:Name="Settings_AppBarButton" x:Uid="/Main/Settings_AppBarButton" Icon="Setting" Click="Settings_AppBarButton_Click"/>
             </CommandBar.PrimaryCommands>
         </CommandBar>
     </Page.BottomAppBar>

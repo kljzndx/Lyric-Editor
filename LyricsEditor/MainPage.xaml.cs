@@ -35,7 +35,7 @@ namespace LyricsEditor
         private ObservableCollection<Lyric> lyrics = new ObservableCollection<Lyric>();
         private ThreadPoolTimer displayTime_ThreadPoolTimer;
         private Setting settings = Setting.GetSettingObject();
-
+        
         private bool isPressSlider = false;
         private bool InputBoxAvailableFocus = false;
 
@@ -46,8 +46,13 @@ namespace LyricsEditor
         }
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            
-
+            if (settings.BlurAvailability)
+            {
+                FindName(nameof(BlurBackground_Image));
+                Lyric_Grid.Children.Remove(Background_Image);
+            }
+            else
+                Lyric_Grid.Children.Remove(BlurBackground_Image);
 
             if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile")
                 Grid.SetRow(LyricEditButton_StackPanel, 1);
@@ -147,6 +152,8 @@ namespace LyricsEditor
             SwitchDisplayPlayAndPauseButton(false);
             GoBack_Button.IsEnabled = true;
             GoForward_Button.IsEnabled = true;
+            FastRewind_Button.IsEnabled = true;
+            FastForward_Button.IsEnabled = true;
             settings.IdTag.Title = music.Name;
             settings.IdTag.Artist = music.Artist;
             settings.IdTag.Album = music.Album;
@@ -196,23 +203,30 @@ namespace LyricsEditor
 
         private void GoBack_Button_Click(object sender, RoutedEventArgs e)
         {
-            double thisPlayTime = AudioPlayer_MediaElement.Position.TotalMinutes;
-            double milliseconds = TimeSpan.FromMilliseconds(100).TotalMinutes;
-            double time = thisPlayTime - milliseconds;
-            AudioPlayer_MediaElement.Position = TimeSpan.FromMinutes(time);
+            AudioPlayer_MediaElement.Position = TimeSpan.FromMinutes(AudioPlayer_MediaElement.Position.TotalMinutes - TimeSpan.FromMilliseconds(100).TotalMinutes);
             DisplayTime();
         }
 
         private void GoForward_Button_Click(object sender, RoutedEventArgs e)
         {
-            double thisPlayTime = AudioPlayer_MediaElement.Position.TotalMinutes;
-            double milliseconds = TimeSpan.FromMilliseconds(100).TotalMinutes;
-            double time = thisPlayTime + milliseconds;
-            AudioPlayer_MediaElement.Position = TimeSpan.FromMinutes(time);
+            AudioPlayer_MediaElement.Position = TimeSpan.FromMinutes(AudioPlayer_MediaElement.Position.TotalMinutes + TimeSpan.FromMilliseconds(100).TotalMinutes);
             DisplayTime();
         }
+
+        private void FastRewind_Button_Click(object sender, RoutedEventArgs e)
+        {
+            AudioPlayer_MediaElement.Position = TimeSpan.FromMinutes(AudioPlayer_MediaElement.Position.TotalMinutes - TimeSpan.FromSeconds(5).TotalMinutes);
+            DisplayTime();
+        }
+
+        private void FastForward_Button_Click(object sender, RoutedEventArgs e)
+        {
+            AudioPlayer_MediaElement.Position = TimeSpan.FromMinutes(AudioPlayer_MediaElement.Position.TotalMinutes + TimeSpan.FromSeconds(5).TotalMinutes);
+            DisplayTime();
+        }
+
         #endregion
-#region 歌词输入框
+        #region 歌词输入框
         private void LyricContent_TextBox_GotFocus(object sender, RoutedEventArgs e)
         {
             InputBoxAvailableFocus = true;

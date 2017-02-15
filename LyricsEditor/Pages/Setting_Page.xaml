@@ -8,36 +8,35 @@
     mc:Ignorable="d">
 
     <StackPanel Width="270" HorizontalAlignment="Left">
-        <StackPanel Margin="0,10">
-            <TextBox Header="歌名" Text="{x:Bind settings.IdTag.Title,Mode=TwoWay}"/>
-            <TextBox Header="歌手" Text="{x:Bind settings.IdTag.Artist,Mode=TwoWay}"/>
-            <TextBox Header="专辑" Text="{x:Bind settings.IdTag.Album,Mode=TwoWay}"/>
-            <TextBox Header="LRC创建者" Text="{x:Bind settings.IdTag.LyricAuthor,Mode=TwoWay}"/>
+        <StackPanel Margin="0,20">
+            <TextBox x:Uid="/Setting/SongTitle_TextBox" Text="{x:Bind settings.IdTag.Title,Mode=TwoWay}"/>
+            <TextBox x:Uid="/Setting/SongArtist_TextBox" Text="{x:Bind settings.IdTag.Artist,Mode=TwoWay}"/>
+            <TextBox x:Uid="/Setting/SongAlbum_TextBox" Text="{x:Bind settings.IdTag.Album,Mode=TwoWay}"/>
+            <TextBox x:Uid="/Setting/LrcCreator_TextBox" Text="{x:Bind settings.IdTag.LyricAuthor,Mode=TwoWay}"/>
         </StackPanel>
-        
-        <ToggleSwitch Header="显示专辑图背景" IsOn="{x:Bind settings.IsDisplayAlbumImageBackground,Mode=TwoWay}"/>
+
+        <ToggleSwitch x:Uid="/Setting/AlbumImageBackground_ToggleSwitch" IsOn="{x:Bind settings.IsDisplayAlbumImageBackground,Mode=TwoWay}"/>
 
         <StackPanel x:Name="BacckgroundBlurDegree_StackPanel" Margin="0,10" Visibility="{x:Bind settings.IsDisplayAlbumImageBackground,Mode=OneWay,Converter={StaticResource boolToVisibility}}">
             <Slider
                 x:Name="BacckgroundBlurDegree_Slider"
-                Header="背景模糊度"
+                x:Uid="/Setting/BacckgroundBlurDegree_Slider"
                 SmallChange="0.1"
                 StepFrequency="0.1"
                 Value="{x:Bind settings.BackgroundBlurDegree,Mode=TwoWay}"
                 Maximum="10"
-                IsEnabled="{x:Bind settings.BlurAvailability}"
-                IsEnabledChanged="BacckgroundBlurDegree_Slider_IsEnabledChanged"/>
-            <TextBlock x:Name="BacckgroundBlurDegree_Massage_TextBlock" Text="模糊功能仅支持1607以及之后的版本" Foreground="Red" Visibility="Collapsed"/>
+                IsEnabled="{x:Bind settings.BlurAvailability}"/>
+            <TextBlock x:Name="BacckgroundBlurDegree_Massage_TextBlock" x:Uid="/Setting/BacckgroundBlurDegree_Massage_TextBlock" Foreground="Red" Visibility="{x:Bind settings.BlurAvailability,Converter={StaticResource boolToVisibility_Reverse}}" TextWrapping="Wrap"/>
         </StackPanel>
         
-        <Slider Header="背景不透明度" Value="{x:Bind settings.BackgroundOpacity,Mode=TwoWay,Converter={StaticResource percentage_Double}}" Visibility="{x:Bind settings.IsDisplayAlbumImageBackground,Mode=OneWay,Converter={StaticResource boolToVisibility}}"/>
+        <Slider x:Uid="/Setting/BackgroundOpacity_Slider" Value="{x:Bind settings.BackgroundOpacity,Mode=TwoWay,Converter={StaticResource percentage_Double}}" Visibility="{x:Bind settings.IsDisplayAlbumImageBackground,Mode=OneWay,Converter={StaticResource boolToVisibility}}"/>
 
         <StackPanel x:Name="AppTheme_StackPanel">
-            <ComboBox x:Name="AppTheme_ComboBox" Header="界面主题" SelectionChanged="AppTheme_ComboBox_SelectionChanged">
-                <ComboBoxItem x:Name="AppTheme_Light_ComboBoxItem" Content="亮"/>
-                <ComboBoxItem x:Name="AppTheme_Dark_ComboBoxItem" Content="暗"/>
+            <ComboBox x:Name="AppTheme_ComboBox" x:Uid="/Setting/AppTheme_ComboBox" SelectionChanged="AppTheme_ComboBox_SelectionChanged">
+                <ComboBoxItem x:Name="AppTheme_Light_ComboBoxItem" x:Uid="/Setting/AppTheme_Light_ComboBoxItem"/>
+                <ComboBoxItem x:Name="AppTheme_Dark_ComboBoxItem" x:Uid="/Setting/AppTheme_Dark_ComboBoxItem"/>
             </ComboBox>
-            <TextBlock x:Name="AppTheme_Massage_TextBlock" Text="重启应用后生效" Foreground="Red" Visibility="Collapsed"/>
+            <TextBlock x:Name="AppTheme_Massage_TextBlock" x:Uid="/Setting/AppTheme_Massage_TextBlock" Foreground="Red" Visibility="Collapsed" TextWrapping="Wrap"/>
         </StackPanel>
         
         

@@ -36,10 +36,6 @@ namespace LyricsEditor.Pages
             settings.Theme = theme;
             AppTheme_Massage_TextBlock.Visibility = Application.Current.RequestedTheme != settings.Theme ? Visibility.Visible : Visibility.Collapsed;
         }
-
-        private void BacckgroundBlurDegree_Slider_IsEnabledChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-            BacckgroundBlurDegree_Massage_TextBlock.Visibility = !(bool)e.NewValue ? Visibility.Visible : Visibility.Collapsed;
-        }
+        
     }
 }
