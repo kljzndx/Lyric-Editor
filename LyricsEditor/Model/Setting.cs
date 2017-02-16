@@ -144,8 +144,7 @@ namespace LyricsEditor.Model
         }
         private void SetSetting<T>(ref T Field, T value, object settingValue = null, [CallerMemberName] string propertyName = null)
         {
-            if (settingValue is null)
-                settingValue = value;
+            settingValue = settingValue ?? value;
             SetProperty<T>(ref Field, value, propertyName);
             settingsObject.Values[propertyName] = settingValue;
         }
