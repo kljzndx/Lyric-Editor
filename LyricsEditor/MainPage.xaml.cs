@@ -9,18 +9,12 @@ using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 using Windows.System;
-using Windows.System.Threading;
 using LyricsEditor.Model;
-using Microsoft.Toolkit.Uwp.UI.Animations;
 using Windows.UI.Core;
-using System.Threading.Tasks;
 using LyricsEditor.Pages;
-using Windows.System.Profile;
+using LyricsEditor.UserControls;
 
 // https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x804 上介绍了“空白页”项模板
 
@@ -33,11 +27,9 @@ namespace LyricsEditor
     {
         private Music music = new Music();
         private ObservableCollection<Lyric> lyrics = new ObservableCollection<Lyric>();
-        private ThreadPoolTimer displayTime_ThreadPoolTimer;
         private Setting settings = Setting.GetSettingObject();
-        
-        private bool isPressSlider = false;
         private bool InputBoxAvailableFocus = false;
+        private UserControl backgroundImage;
 
         public MainPage()
         {
@@ -46,15 +38,7 @@ namespace LyricsEditor
         }
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            if (settings.BlurAvailability)
-            {
-                FindName(nameof(BlurBackground_Image));
-                Lyric_Grid.Children.Remove(Background_Image);
-            }
-            else
-                Lyric_Grid.Children.Remove(BlurBackground_Image);
-
-            if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile")
+            if (SystemInfo.DeviceType == "Windows.Mobile")
                 Grid.SetRow(LyricEditButton_StackPanel, 1);
             else
                 Grid.SetColumn(LyricEditButton_StackPanel, 1);
@@ -68,8 +52,6 @@ namespace LyricsEditor
                 !InputBoxAvailableFocus &&
                 selectItem is null)
             {
-                AudioPlayer_MediaElement.Pause();
-                SwitchDisplayPlayAndPauseButton(true);
                 AddLyric();
             }
             //修改歌词
@@ -77,9 +59,9 @@ namespace LyricsEditor
                 !InputBoxAvailableFocus &&
                 selectItem is Lyric)
             {
-                selectItem.Time = AudioPlayer_MediaElement.Position;
+                selectItem.Time = AudioPlayer.PlayPosition;
                 selectItem.Content = LyricContent_TextBox.Text;
-                if(Lyric_ListView.SelectedIndex < lyrics.Count-1)
+                if (Lyric_ListView.SelectedIndex < lyrics.Count - 1)
                     Lyric_ListView.SelectedIndex++;
             }
             //删除歌词
@@ -94,138 +76,24 @@ namespace LyricsEditor
 
             }
         }
-#region 自己定义的方法
-        private void DisplayTime()
-        {
-            var playTime = AudioPlayer_MediaElement.Position;
-            if (!isPressSlider)
-                PlayPosithon_Slider.Value = playTime.TotalMinutes;
-        }
-        private async void DisplayTime(ThreadPoolTimer timer)
-        {
-            await base.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, DisplayTime);
-        }
+        #region 自己定义的方法
 
-        private void StartDisPlayTime()
-        {
-            displayTime_ThreadPoolTimer = ThreadPoolTimer.CreatePeriodicTimer(DisplayTime, TimeSpan.FromMilliseconds(100), DisplayTime);
-        }
-        /// <summary>
-        /// 切换显示播放和暂停按钮
-        /// </summary>
-        /// <param name="isDisplayPlayButton">是否显示播放按钮</param>
-        private void SwitchDisplayPlayAndPauseButton(bool isDisplayPlayButton)
-        {
-            if (isDisplayPlayButton)
-            {
-                Play_Button.Visibility = Visibility.Visible;
-                Pause_Button.Visibility = Visibility.Collapsed;
-            }
-            else
-            {
-                Play_Button.Visibility = Visibility.Collapsed;
-                Pause_Button.Visibility = Visibility.Visible;
-            }
-        }
-        
         private void AddLyric()
         {
             if (!LyricContent_TextBox.Text.Trim().Contains('\n') && !LyricContent_TextBox.Text.Trim().Contains('\r'))
-                lyrics.Add(new Lyric { Time = AudioPlayer_MediaElement.Position, Content = LyricContent_TextBox.Text.Trim() });
+                lyrics.Add(new Lyric { Time = AudioPlayer.PlayPosition, Content = LyricContent_TextBox.Text.Trim() });
             else
             {
                 char lineBreak = LyricContent_TextBox.Text.Contains('\n') ? '\n' : '\r';
                 string[] lines = LyricContent_TextBox.Text.Trim().Split(lineBreak);
                 foreach (var line in lines)
                 {
-                    lyrics.Add(new Lyric { Time = AudioPlayer_MediaElement.Position, Content = line.Trim() });
+                    lyrics.Add(new Lyric { Time = AudioPlayer.PlayPosition, Content = line.Trim() });
                 }
             }
         }
-#endregion
-#region 播放器
-        private void AudioPlayer_MediaElement_MediaOpened(object sender, RoutedEventArgs e)
-        {
-            (sender as MediaElement).Play();
-            PlayPosithon_Slider.Maximum = music.Alltime.TotalMinutes;
-            StartDisPlayTime();
-            SwitchDisplayPlayAndPauseButton(false);
-            GoBack_Button.IsEnabled = true;
-            GoForward_Button.IsEnabled = true;
-            FastRewind_Button.IsEnabled = true;
-            FastForward_Button.IsEnabled = true;
-            settings.IdTag.Title = music.Name;
-            settings.IdTag.Artist = music.Artist;
-            settings.IdTag.Album = music.Album;
-        }
-
-        private void AudioPlayer_MediaElement_MediaEnded(object sender, RoutedEventArgs e)
-        {
-            displayTime_ThreadPoolTimer.Cancel();
-            SwitchDisplayPlayAndPauseButton(true);
-        }
-#endregion
-#region 进度条
-        private void PlayPosithon_Slider_PointerPressed(object sender, PointerRoutedEventArgs e)
-        {
-            isPressSlider = true;
-        }
-
-        private void PlayPosithon_Slider_PointerReleased(object sender, PointerRoutedEventArgs e)
-        {
-            isPressSlider = false;
-        }
-
-        private void PlayPosithon_Slider_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
-        {
-            AudioPlayer_MediaElement.Position = TimeSpan.FromMinutes(e.NewValue);
-        }
-#endregion
-#region 播放器控制按钮
-        private async void Play_Button_Click(object sender, RoutedEventArgs e)
-        {
-            if (music.File is null && await music.OpenFile())
-                AudioPlayer_MediaElement.SetSource(await music.File.OpenAsync(Windows.Storage.FileAccessMode.Read), music.File.ContentType);
-            else
-            {
-                AudioPlayer_MediaElement.Play();
-                StartDisPlayTime();
-            }
-            SwitchDisplayPlayAndPauseButton(false);
-        }
-
-        private void Pause_Button_Click(object sender, RoutedEventArgs e)
-        {
-            AudioPlayer_MediaElement.Pause();
-            displayTime_ThreadPoolTimer.Cancel();
-            SwitchDisplayPlayAndPauseButton(true);
-        }
-
-        private void GoBack_Button_Click(object sender, RoutedEventArgs e)
-        {
-            AudioPlayer_MediaElement.Position = TimeSpan.FromMinutes(AudioPlayer_MediaElement.Position.TotalMinutes - TimeSpan.FromMilliseconds(100).TotalMinutes);
-            DisplayTime();
-        }
-
-        private void GoForward_Button_Click(object sender, RoutedEventArgs e)
-        {
-            AudioPlayer_MediaElement.Position = TimeSpan.FromMinutes(AudioPlayer_MediaElement.Position.TotalMinutes + TimeSpan.FromMilliseconds(100).TotalMinutes);
-            DisplayTime();
-        }
-
-        private void FastRewind_Button_Click(object sender, RoutedEventArgs e)
-        {
-            AudioPlayer_MediaElement.Position = TimeSpan.FromMinutes(AudioPlayer_MediaElement.Position.TotalMinutes - TimeSpan.FromSeconds(5).TotalMinutes);
-            DisplayTime();
-        }
-
-        private void FastForward_Button_Click(object sender, RoutedEventArgs e)
-        {
-            AudioPlayer_MediaElement.Position = TimeSpan.FromMinutes(AudioPlayer_MediaElement.Position.TotalMinutes + TimeSpan.FromSeconds(5).TotalMinutes);
-            DisplayTime();
-        }
-
         #endregion
+
         #region 歌词输入框
         private void LyricContent_TextBox_GotFocus(object sender, RoutedEventArgs e)
         {
@@ -237,7 +105,7 @@ namespace LyricsEditor
             InputBoxAvailableFocus = false;
         }
         #endregion
-#region 歌词编辑按钮
+        #region 歌词编辑按钮
         private void Unselect_MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
         {
 
@@ -261,23 +129,23 @@ namespace LyricsEditor
         {
             AddLyric();
         }
-        
+
         private void DelLyric_Button_Click(object sender, RoutedEventArgs e)
         {
-            foreach (Lyric item in Lyric_ListView.SelectedItems)
+            for (int i = Lyric_ListView.SelectedItems.Count - 1; i >= 0; i--)
             {
-                lyrics.Remove(item);
+                lyrics.Remove(Lyric_ListView.SelectedItems[i] as Lyric);
             }
         }
 
         private void ChanageTime_MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
         {
             if (Lyric_ListView.SelectedItems.Count == 1)
-                (Lyric_ListView.SelectedItem as Lyric).Time = AudioPlayer_MediaElement.Position;
+                (Lyric_ListView.SelectedItem as Lyric).Time = AudioPlayer.PlayPosition;
             else
                 foreach (Lyric item in Lyric_ListView.SelectedItems)
                 {
-                    item.Time = AudioPlayer_MediaElement.Position;
+                    item.Time = AudioPlayer.PlayPosition;
                 }
         }
 
@@ -292,7 +160,7 @@ namespace LyricsEditor
                 }
         }
         #endregion
-#region 歌词列表
+        #region 歌词列表
 
         private void Lyric_ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -313,15 +181,10 @@ namespace LyricsEditor
         private void Reload_Button_Click(object sender, RoutedEventArgs e)
         {
             if (lyrics.Count > 1)
-            {
-                for (int i = lyrics.Count - 1; i > 0; i--)
-                {
-                    if (lyrics[i].CompareTo(lyrics[i - 1]) < 0)
-                    {
-                        lyrics.Move(i, i - 1);
-                    }
-                }
-            }
+                for (int i = lyrics.Count; i > 0; i--)
+                    for (int j = 0; j < i - 1; j++)
+                        if (lyrics[j].CompareTo(lyrics[j + 1]) > 0)
+                            lyrics.Move(j, j + 1);
         }
 
         private void ListEnd_Rectangle_Tapped(object sender, TappedRoutedEventArgs e)
@@ -336,12 +199,14 @@ namespace LyricsEditor
                 LyricList_ScrollViewer.VerticalScrollBarVisibility = ScrollBarVisibility.Auto;
             }
         }
-#endregion
-#region 低栏
+        #endregion
+        #region 低栏
         private async void OpenMusic_MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
         {
             if (await music.OpenFile())
-                AudioPlayer_MediaElement.SetSource(await music.File.OpenAsync(Windows.Storage.FileAccessMode.Read), music.File.ContentType);
+            {
+                await AudioPlayer.PlayMusic();
+            }
         }
         private async void OpenLRC_MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
         {
@@ -362,6 +227,7 @@ namespace LyricsEditor
             //SelectToolkit_Button.Visibility = Visibility.Visible;
             MultilineEdit_AppBarButton.Visibility = Visibility.Collapsed;
             Submit_AppBarButton.Visibility = Visibility.Visible;
+            ChanageTime_MenuFlyoutItem.IsEnabled = false;
         }
 
         private void Submit_AppBarButton_Click(object sender, RoutedEventArgs e)
@@ -370,6 +236,7 @@ namespace LyricsEditor
             //SelectToolkit_Button.Visibility = Visibility.Collapsed;
             Submit_AppBarButton.Visibility = Visibility.Collapsed;
             MultilineEdit_AppBarButton.Visibility = Visibility.Visible;
+            ChanageTime_MenuFlyoutItem.IsEnabled = true;
         }
 
         #endregion

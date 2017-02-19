@@ -12,7 +12,7 @@
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion>10.0.14393.0</TargetPlatformVersion>
-    <TargetPlatformMinVersion>10.0.10586.0</TargetPlatformMinVersion>
+    <TargetPlatformMinVersion>10.0.14393.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -95,6 +95,8 @@
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
     <None Include="LyricsEditor_StoreKey.pfx" />
     <None Include="project.json" />
+    <PRIResource Include="Strings\en-US\MessageBox.resw" />
+    <PRIResource Include="Strings\zh-CN\MessageBox.resw" />
     <PRIResource Include="Strings\en-US\Setting.resw" />
     <PRIResource Include="Strings\en-US\Main.resw" />
     <PRIResource Include="Strings\zh-CN\Setting.resw" />
@@ -112,20 +114,34 @@
     <Compile Include="Converter\Percentage_String.cs" />
     <Compile Include="Converter\TimeSpenToString.cs" />
     <Compile Include="Enum\LyricChanageButtonBehavior.cs" />
+    <Compile Include="ExceptionHandlingSynchronizationContext.cs" />
+    <Compile Include="Model\CharacterLibrary.cs" />
+    <Compile Include="Model\Error.cs" />
     <Compile Include="Model\Lyric.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Model\LyricIDTag.cs" />
     <Compile Include="Model\LyricManager.cs" />
+    <Compile Include="Model\MessageBox.cs" />
     <Compile Include="Model\Music.cs" />
     <Compile Include="Model\Setting.cs" />
+    <Compile Include="Model\SystemInfo.cs" />
     <Compile Include="Pages\Setting_Page.xaml.cs">
       <DependentUpon>Setting_Page.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Templates\LyricItemTemplate.xaml.cs">
       <DependentUpon>LyricItemTemplate.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\AudioPlayer.xaml.cs">
+      <DependentUpon>AudioPlayer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\BackgroundImage.xaml.cs">
+      <DependentUpon>BackgroundImage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\BlurBackgroundImage.xaml.cs">
+      <DependentUpon>BlurBackgroundImage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -219,12 +235,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Styles\MediaSliderStyle.xaml">
+    <Page Include="Templates\LyricItemTemplate.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Page>
-    <Page Include="Templates\LyricItemTemplate.xaml">
+    <Page Include="UserControls\AudioPlayer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\BackgroundImage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\BlurBackgroundImage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

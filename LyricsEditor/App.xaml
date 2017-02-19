@@ -5,6 +5,17 @@
     xmlns:local="using:LyricsEditor"
     xmlns:cvt="using:LyricsEditor.Converter">
     <Application.Resources>
+        <Style x:Key="ControllerButton" TargetType="Button">
+            <Setter Property="FontFamily" Value="Segoe MDL2 Assets"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="Padding" Value="10"/>
+            <Setter Property="Margin" Value="5,0"/>
+            <Setter Property="Background">
+                <Setter.Value>
+                    <SolidColorBrush Color="#00000000"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
         <cvt:TimeSpenToString x:Key="timeSpenToString"/>
         <cvt:DoubleToTimeString x:Key="doubleToTimeString"/>
         <cvt:Percentage_Double x:Key="percentage_Double"/>

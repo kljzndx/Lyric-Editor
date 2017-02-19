@@ -9,8 +9,11 @@ namespace LyricsEditor.Model
 {
     public class Lyric : Auxiliary, IComparable
     {
+        private int id;
         private TimeSpan time;
         private string content;
+
+        public int ID { get => id; set => SetProperty(ref id, value); }
         public TimeSpan Time { get => time; set { SetProperty(ref time, value); } }
         public string Content { get => content; set { SetProperty(ref content, value); } }
 

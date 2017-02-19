@@ -5,24 +5,12 @@
     xmlns:local="using:LyricsEditor"
     xmlns:tpl="using:LyricsEditor.Templates"
     xmlns:model="using:LyricsEditor.Model"
-    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
-    xmlns:behaviors="using:Microsoft.Toolkit.Uwp.UI.Animations.Behaviors"
+    xmlns:usctrl="using:LyricsEditor.UserControls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d" Loaded="Page_Loaded">
-    <Page.Resources>
-        <Style x:Key="ControllerButton" TargetType="Button">
-            <Setter Property="FontFamily" Value="Segoe MDL2 Assets"/>
-            <Setter Property="FontSize" Value="18"/>
-            <Setter Property="Padding" Value="10"/>
-            <Setter Property="Margin" Value="5,0"/>
-            <Setter Property="Background">
-                <Setter.Value>
-                    <SolidColorBrush Color="#00000000"/>
-                </Setter.Value>
-            </Setter>
-        </Style>
-    </Page.Resources>
+    mc:Ignorable="d"
+    Loaded="Page_Loaded">
+
     <SplitView x:Name="Sidebar_SplitView" PanePlacement="Right" PaneClosed="Sidebar_SplitView_PaneClosed">
         <SplitView.Pane>
             <ScrollViewer>
@@ -35,59 +23,15 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
-
-                <MediaElement x:Name="AudioPlayer_MediaElement" AutoPlay="False" Volume="{x:Bind settings.Volume,Mode=OneWay}" MediaOpened="AudioPlayer_MediaElement_MediaOpened" MediaEnded="AudioPlayer_MediaElement_MediaEnded" />
-
-                <Grid x:Name="PlayController" Padding="10" Background="{ThemeResource AppBarBackground}">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition/>
-                    </Grid.RowDefinitions>
-                    <StackPanel>
-                        <TextBlock x:Name="MusicPath_TextBlock" Text="{x:Bind music.File.Path,Mode=OneWay}" TextAlignment="Center" TextWrapping="Wrap"/>
-                        <Grid x:Name="Progress">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition/>
-                                <ColumnDefinition Width="Auto"/>
-                            </Grid.ColumnDefinitions>
-                            <Slider x:Name="PlayPosithon_Slider" Height="45" Maximum="0" Style="{StaticResource MediaSliderStyle}" SmallChange="0.0001" LargeChange="1" ThumbToolTipValueConverter="{StaticResource doubleToTimeString}" PointerPressed="PlayPosithon_Slider_PointerPressed" PointerReleased="PlayPosithon_Slider_PointerReleased" ValueChanged="PlayPosithon_Slider_ValueChanged" TickFrequency="1" StepFrequency="0.01" />
-                            <TextBlock x:Name="ThisTime_TextBlock" Grid.Column="1" Text="{x:Bind PlayPosithon_Slider.Value,Mode=OneWay,Converter={StaticResource doubleToTimeString}}" Margin="10,0" VerticalAlignment="Center"/>
-                        </Grid>
-                    </StackPanel>
-                    <RelativePanel x:Name="ControllerButton_RelativePanel" Grid.Row="1" Grid.ColumnSpan="2">
-                        <StackPanel x:Name="PlayOrPause_StackPanel" RelativePanel.AlignVerticalCenterWithPanel="True" RelativePanel.AlignHorizontalCenterWithPanel="True">
-                            <Button x:Name="Play_Button" Content="&#xE102;" Style="{StaticResource ControllerButton}" Click="Play_Button_Click"/>
-                            <Button x:Name="Pause_Button" Content="&#xE103;" Style="{StaticResource ControllerButton}" Visibility="Collapsed" Click="Pause_Button_Click"/>
-                        </StackPanel>
-                        <Button x:Name="GoBack_Button" Content="&#xE892;" Style="{StaticResource ControllerButton}" RelativePanel.AlignVerticalCenterWithPanel="True" RelativePanel.LeftOf="PlayOrPause_StackPanel" Click="GoBack_Button_Click" IsEnabled="False"/>
-                        <Button x:Name="GoForward_Button" Content="&#xE893;" Style="{StaticResource ControllerButton}" RelativePanel.AlignVerticalCenterWithPanel="True" RelativePanel.RightOf="PlayOrPause_StackPanel" Click="GoForward_Button_Click" IsEnabled="False"/>
-                        
-                        <Button x:Name="FastRewind_Button" Content="&#xE0A6;" Style="{StaticResource ControllerButton}" IsEnabled="False" Click="FastRewind_Button_Click" RelativePanel.LeftOf="GoBack_Button"/>
-                        <Button x:Name="FastForward_Button" Content="&#xE0AB;" Style="{StaticResource ControllerButton}" IsEnabled="False" Click="FastForward_Button_Click" RelativePanel.RightOf="GoForward_Button"/>
-                        
-                        <Button x:Name="Volume_Button" Content="&#xE995;" Style="{StaticResource ControllerButton}" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True">
-                            <Button.Flyout>
-                                <Flyout Placement="Bottom">
-                                    <Slider Value="{x:Bind settings.Volume,Mode=TwoWay,Converter={StaticResource percentage_Double}}" Maximum="200" RelativePanel.AlignRightWithPanel="True" Width="200"/>
-                                </Flyout>
-                            </Button.Flyout>
-                        </Button>
-                    </RelativePanel>
-                </Grid>
-
+                
+                <usctrl:AudioPlayer x:Name="AudioPlayer" MusicSource="{x:Bind music,Mode=OneWay}"/>
+                
                 <Grid x:Name="Lyric_Grid" Grid.Row="1">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
-                    <Grid Grid.RowSpan="3" Visibility="{x:Bind settings.IsDisplayAlbumImageBackground,Converter={StaticResource boolToVisibility}}" Opacity="{x:Bind settings.BackgroundOpacity,Mode=OneWay,Converter={StaticResource percentage_Double}}">
-                        <Image x:Name="Background_Image" Source="{x:Bind music.AlbumImage,Mode=OneWay}" Stretch="UniformToFill"/>
-                        <Image x:Name="BlurBackground_Image" x:DeferLoadStrategy="Lazy" Source="{x:Bind music.AlbumImage,Mode=OneWay}" Stretch="UniformToFill">
-                            <interactivity:Interaction.Behaviors>
-                                <behaviors:Blur Value="{x:Bind settings.BackgroundBlurDegree,Mode=OneWay}" Duration="0"/>
-                            </interactivity:Interaction.Behaviors>
-                        </Image>
-                    </Grid>
+                    <usctrl:BlurBackgroundImage ImageSource="{x:Bind music.AlbumImage,Mode=OneWay}" Grid.RowSpan="3" Visibility="{x:Bind settings.IsDisplayAlbumImageBackground,Mode=OneWay,Converter={StaticResource boolToVisibility}}" Opacity="{x:Bind settings.BackgroundOpacity,Mode=OneWay}"/>
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition/>
@@ -182,6 +126,7 @@
                         </Button.Template>
                     </Button>
                 </Grid>
+                
             </Grid>
         </SplitView.Content>
     </SplitView>

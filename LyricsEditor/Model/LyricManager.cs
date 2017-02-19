@@ -40,11 +40,12 @@ namespace LyricsEditor.Model
             {
                 foreach (Match item in lyrics)
                 {
+                    int i = 0;
                     int min = Int32.Parse(item.Groups[1].Value);
                     int souconds = Int32.Parse(item.Groups[2].Value);
                     int ms = Int32.Parse(item.Groups[3].Value) * 10;
                     var time = new TimeSpan(0, 0, min, souconds, ms);
-                    lyricContent.Add(new Lyric { Time = time, Content = item.Groups[4].Value.Trim() });
+                    lyricContent.Add(new Lyric { ID = i++, Time = time, Content = item.Groups[4].Value.Trim() });
                 }
             }
             else if (content != String.Empty && content != null)

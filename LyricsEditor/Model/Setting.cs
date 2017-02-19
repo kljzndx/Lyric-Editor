@@ -53,7 +53,7 @@ namespace LyricsEditor.Model
                 SetSetting(ref isDisplayAlbumImageBackground, value);
             }
         }
-        public bool BlurAvailability { get => blurAvailability; set => blurAvailability = value; }
+        public bool BlurAvailability { get => blurAvailability; }
         public ApplicationTheme Theme
         {
             get => theme;
@@ -91,7 +91,7 @@ namespace LyricsEditor.Model
             CreateSetting("Theme", ApplicationTheme.Dark.ToString());
             CreateSetting("ChanageButtonBehavior", LyricChanageButtonBehavior.LetMeChoose.ToString());
 
-            blurAvailability = GetOsVersion() >= 14393;
+            blurAvailability = true;
             backgroundBlurDegree = blurAvailability ? GetSetting<double>("BackgroundBlurDegree") : 0D;
             backgroundOpacity = GetSetting<double>("BackgroundOpacity");
             volume = GetSetting<double>("Volume");
@@ -147,12 +147,6 @@ namespace LyricsEditor.Model
             settingValue = settingValue ?? value;
             SetProperty<T>(ref Field, value, propertyName);
             settingsObject.Values[propertyName] = settingValue;
-        }
-        private ulong GetOsVersion()
-        {
-            ulong version = Convert.ToUInt64(AnalyticsInfo.VersionInfo.DeviceFamilyVersion);
-            //return $"{version >> 48 & 0xFFFF}.{version >> 32 & 0xFFFF}.{version >> 16 & 0xFFFF}.{version & 0xFFFF}";
-            return version >> 16 & 0xFFFF;
         }
     }
 }

@@ -10,13 +10,13 @@ using Windows.UI.Xaml.Media.Imaging;
 
 namespace LyricsEditor.Model
 {
-    class Music : Auxiliary
+    public class Music : Auxiliary
     {
         private string name, artist, album;
         private BitmapImage albumImage;
         private TimeSpan allTime;
         private StorageFile file;
-
+        
         /// <summary>
         /// 歌名
         /// </summary>
@@ -51,7 +51,7 @@ namespace LyricsEditor.Model
         /// <returns>成功与否</returns>
         public async Task<bool> OpenFile()
         {
-            FileOpenPicker picker = new FileOpenPicker { CommitButtonText = "打开此音乐" };
+            FileOpenPicker picker = new FileOpenPicker();
             picker.FileTypeFilter.Add(".mp3");
             picker.FileTypeFilter.Add(".flac");
             picker.FileTypeFilter.Add(".wav");

@@ -8,6 +8,8 @@ using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.System;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -15,6 +17,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using WinRTExceptions;
 
 namespace LyricsEditor
 {
@@ -31,7 +34,44 @@ namespace LyricsEditor
         {
             this.InitializeComponent();
             this.Suspending += OnSuspending;
+            this.UnhandledException += OnUnhandledException;
             this.RequestedTheme = Setting.GetSettingObject().Theme;
+        }
+
+        private async void OnUnhandledException(object sender, Windows.UI.Xaml.UnhandledExceptionEventArgs e)
+        {
+            e.Handled = true;
+            await ShowErrorReport(e.Exception);
+        }
+
+
+        private async System.Threading.Tasks.Task ShowErrorReport(Exception e)
+        {
+            var error = new Error();
+            error.Code = e.HResult.ToString("X");
+            error.Source = e.Source;
+            error.Content = e.Message;
+            error.StackTrace = e.StackTraceEx();
+            var buttons = new Dictionary<string, UICommandInvokedHandler>();
+            buttons.Add(CharacterLibrary.MessageBox.GetString("EmailErrorReport"),
+                async (u) => await Launcher.LaunchUriAsync(new Uri($"mailto:kljzndx@outlook.com?subject=ErrorReport&body=" +
+                                                                   $"{SystemInfo.PrintInfo()}, {error.ToString()}%0A%0A" +
+                                                                    "请说明你做了什么%0A" +
+                                                                    "Please indicate what you do%0A%0A%0A"))
+                    
+            );
+            await MessageBox.ShowMessageBoxAsync("Error", error.Content, buttons, "关闭");
+        }
+
+        private void EnsureSyncContext()
+        {
+            ExceptionHandlingSynchronizationContext.Register().UnhandledException += OnSynchronizationContextUnhandledException;
+        }
+
+        private async void OnSynchronizationContextUnhandledException(object sender, WinRTExceptions.UnhandledExceptionEventArgs e)
+        {
+            e.Handled = true;
+            await ShowErrorReport(e.Exception);
         }
 
         /// <summary>
@@ -74,6 +114,12 @@ namespace LyricsEditor
                 // 确保当前窗口处于活动状态
                 Window.Current.Activate();
             }
+            EnsureSyncContext();
+        }
+
+        protected override void OnActivated(IActivatedEventArgs args)
+        {
+            EnsureSyncContext();
         }
 
         /// <summary>
