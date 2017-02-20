@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AppName" xml:space="preserve">
-    <value>Simple Lyrics Editor</value>
+    <value>Simple Lyric Editor</value>
     <comment>应用名称</comment>
   </data>
   <data name="ChanageLyric_MenuFlyoutItem.Text" xml:space="preserve">
@@ -128,6 +128,10 @@
   <data name="ChanageTime_MenuFlyoutItem.Text" xml:space="preserve">
     <value>Modifications to the current time</value>
     <comment>“歌词修改“按钮里的“修改为当前时间”菜单</comment>
+  </data>
+  <data name="Feedback_AppBarButton.Label" xml:space="preserve">
+    <value>Feedback</value>
+    <comment>“低栏”溢出菜单里的“反馈”按钮</comment>
   </data>
   <data name="LyricContent_TextBox.PlaceholderText" xml:space="preserve">
     <value>Please Enter Lyric</value>

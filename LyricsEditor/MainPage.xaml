@@ -126,7 +126,9 @@
                         </Button.Template>
                     </Button>
                 </Grid>
-                
+                <RelativePanel>
+                    
+                </RelativePanel>
             </Grid>
         </SplitView.Content>
     </SplitView>
@@ -146,6 +148,9 @@
                 <AppBarButton x:Name="Submit_AppBarButton" x:Uid="/Main/Submit_AppBarButton" Icon="Accept" Visibility="Collapsed" Click="Submit_AppBarButton_Click"/>
                 <AppBarButton x:Name="Settings_AppBarButton" x:Uid="/Main/Settings_AppBarButton" Icon="Setting" Click="Settings_AppBarButton_Click"/>
             </CommandBar.PrimaryCommands>
+            <CommandBar.SecondaryCommands>
+                <AppBarButton x:Name="Feedback_AppBarButton" x:Uid="/Main/Feedback_AppBarButton" Click="Feedback_AppBarButton_Click"/>
+            </CommandBar.SecondaryCommands>
         </CommandBar>
     </Page.BottomAppBar>
 </Page>

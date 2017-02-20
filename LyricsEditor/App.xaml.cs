@@ -48,17 +48,15 @@ namespace LyricsEditor
         private async System.Threading.Tasks.Task ShowErrorReport(Exception e)
         {
             var error = new Error();
-            error.Code = e.HResult.ToString("X");
+            error.Code = "0x" + e.HResult.ToString("X");
             error.Source = e.Source;
             error.Content = e.Message;
             error.StackTrace = e.StackTraceEx();
             var buttons = new Dictionary<string, UICommandInvokedHandler>();
+            string report = $"请说明你做了什么\nPlease introduce what you do\n\n\n\n{SystemInfo.PrintInfo()}\n{error.ToString()}";
+            report = report.Replace("\n", "%0A");
             buttons.Add(CharacterLibrary.MessageBox.GetString("EmailErrorReport"),
-                async (u) => await Launcher.LaunchUriAsync(new Uri($"mailto:kljzndx@outlook.com?subject=ErrorReport&body=" +
-                                                                   $"{SystemInfo.PrintInfo()}, {error.ToString()}%0A%0A" +
-                                                                    "请说明你做了什么%0A" +
-                                                                    "Please indicate what you do%0A%0A%0A"))
-                    
+                async (u) => await Launcher.LaunchUriAsync(new Uri($"mailto:kljzndx@outlook.com?subject=Simple Lyric Editor Error Report&body={report}"))
             );
             await MessageBox.ShowMessageBoxAsync("Error", error.Content, buttons, "关闭");
         }

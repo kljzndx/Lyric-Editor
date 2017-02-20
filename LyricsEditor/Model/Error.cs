@@ -15,7 +15,7 @@ namespace LyricsEditor.Model
 
         public override string ToString()
         {
-            return $"错误码： {Code} ； 崩溃源： {Source} ； 错误信息： {Content} ； 堆栈信息： {StackTrace}";
+            return $"错误码： {Code}\n崩溃源： {Source}\n错误信息： {Content}\n堆栈信息\n{StackTrace}";
         }
     }
 }

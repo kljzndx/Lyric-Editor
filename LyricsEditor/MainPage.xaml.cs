@@ -239,12 +239,16 @@ namespace LyricsEditor
             ChanageTime_MenuFlyoutItem.IsEnabled = true;
         }
 
+        private async void Feedback_AppBarButton_Click(object sender, RoutedEventArgs e)
+        {
+            await Launcher.LaunchUriAsync(new Uri("mailto:kljzndx@outlook.com?subject=Simple Lyric Editor Feedback"));
+        }
         #endregion
 
         private void Sidebar_SplitView_PaneClosed(SplitView sender, object args)
         {
             Sidebar_Frame.Navigate(typeof(Page));
         }
-
+        
     }
 }

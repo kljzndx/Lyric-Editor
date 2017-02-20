@@ -91,7 +91,7 @@ namespace LyricsEditor.Model
             CreateSetting("Theme", ApplicationTheme.Dark.ToString());
             CreateSetting("ChanageButtonBehavior", LyricChanageButtonBehavior.LetMeChoose.ToString());
 
-            blurAvailability = true;
+            blurAvailability = SystemInfo.Version >= 14393;
             backgroundBlurDegree = blurAvailability ? GetSetting<double>("BackgroundBlurDegree") : 0D;
             backgroundOpacity = GetSetting<double>("BackgroundOpacity");
             volume = GetSetting<double>("Volume");
@@ -110,7 +110,6 @@ namespace LyricsEditor.Model
                         return LyricChanageButtonBehavior.LetMeChoose;
                 }
             );
-
         }
         public static Setting GetSettingObject()
         {
