@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.System.Profile;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Media.Imaging;
 
 namespace LyricsEditor.Model
 {
@@ -20,64 +21,17 @@ namespace LyricsEditor.Model
         private ApplicationTheme theme;
         private LyricChanageButtonBehavior chanageButtonBehavior;
         private LyricIDTag idTag = new LyricIDTag();
+        private BitmapImage backgroundImage;
 
-        public double BackgroundBlurDegree
-        {
-            get => backgroundBlurDegree;
-            set
-            {
-                SetSetting(ref backgroundBlurDegree, value);
-            }
-        }
-        public double BackgroundOpacity
-        {
-            get => backgroundOpacity;
-            set
-            {
-                SetSetting(ref backgroundOpacity, value);
-            }
-        }
-        public double Volume
-        {
-            get => volume;
-            set
-            {
-                SetSetting(ref volume, value);
-            }
-        }
-        public bool IsDisplayAlbumImageBackground
-        {
-            get => isDisplayAlbumImageBackground;
-            set
-            {
-                SetSetting(ref isDisplayAlbumImageBackground, value);
-            }
-        }
+        public double BackgroundBlurDegree { get => backgroundBlurDegree; set => SetSetting(ref backgroundBlurDegree, value); }
+        public double BackgroundOpacity { get => backgroundOpacity; set => SetSetting(ref backgroundOpacity, value); }
+        public double Volume { get => volume; set => SetSetting(ref volume, value); }
+        public bool IsDisplayAlbumImageBackground { get => isDisplayAlbumImageBackground; set => SetSetting(ref isDisplayAlbumImageBackground, value); }
         public bool BlurAvailability { get => blurAvailability; }
-        public ApplicationTheme Theme
-        {
-            get => theme;
-            set
-            {
-                SetSetting(ref theme, value,value.ToString());
-            }
-        }
-        public LyricChanageButtonBehavior ChanageButtonBehavior
-        {
-            get => chanageButtonBehavior;
-            set
-            {
-                SetSetting(ref chanageButtonBehavior, value, value.ToString());
-            }
-        }
-        public LyricIDTag IdTag
-        {
-            get => idTag;
-            set
-            {
-                SetProperty(ref idTag, value);
-            }
-        }
+        public ApplicationTheme Theme { get => theme; set => SetSetting(ref theme, value,value.ToString()); }
+        public LyricChanageButtonBehavior ChanageButtonBehavior { get => chanageButtonBehavior; set => SetSetting(ref chanageButtonBehavior, value, value.ToString()); }
+        public LyricIDTag IdTag { get => idTag; set => SetProperty(ref idTag, value); }
+        public BitmapImage BackgroundImage { get => backgroundImage; set => SetProperty(ref backgroundImage, value); }
 
         public ApplicationDataContainer SettingsObject { get => settingsObject; }
         
@@ -91,7 +45,7 @@ namespace LyricsEditor.Model
             CreateSetting("Theme", ApplicationTheme.Dark.ToString());
             CreateSetting("ChanageButtonBehavior", LyricChanageButtonBehavior.LetMeChoose.ToString());
 
-            blurAvailability = SystemInfo.Version >= 14393;
+            blurAvailability = SystemInfo.SystemVersion >= 14393;
             backgroundBlurDegree = blurAvailability ? GetSetting<double>("BackgroundBlurDegree") : 0D;
             backgroundOpacity = GetSetting<double>("BackgroundOpacity");
             volume = GetSetting<double>("Volume");

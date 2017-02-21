@@ -21,21 +21,11 @@ namespace LyricsEditor.UserControls
 {
     public sealed partial class BlurBackgroundImage : UserControl
     {
-        public BitmapImage ImageSource
-        {
-            get { return (BitmapImage)GetValue(ImageSourceProperty); }
-            set { SetValue(ImageSourceProperty, value); }
-        }
-
-        // Using a DependencyProperty as the backing store for ImageSource.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty ImageSourceProperty =
-            DependencyProperty.Register(nameof(ImageSource), typeof(BitmapImage), typeof(BlurBackgroundImage), new PropertyMetadata(new BitmapImage()));
-
-        private Setting settings = Setting.GetSettingObject();
+        private Setting settings;
         public BlurBackgroundImage()
         {
             this.InitializeComponent();
-            
+            settings = Setting.GetSettingObject();
         }
     }
 }

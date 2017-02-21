@@ -25,13 +25,15 @@
                 </Grid.RowDefinitions>
                 
                 <usctrl:AudioPlayer x:Name="AudioPlayer" MusicSource="{x:Bind music,Mode=OneWay}"/>
-                
+
                 <Grid x:Name="Lyric_Grid" Grid.Row="1">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
-                    <usctrl:BlurBackgroundImage ImageSource="{x:Bind music.AlbumImage,Mode=OneWay}" Grid.RowSpan="3" Visibility="{x:Bind settings.IsDisplayAlbumImageBackground,Mode=OneWay,Converter={StaticResource boolToVisibility}}" Opacity="{x:Bind settings.BackgroundOpacity,Mode=OneWay}"/>
+
+                    <Border x:Name="Background_Border" Grid.RowSpan="2" Visibility="{x:Bind settings.IsDisplayAlbumImageBackground,Mode=OneWay,Converter={StaticResource boolToVisibility}}" Opacity="{x:Bind settings.BackgroundOpacity,Mode=OneWay}"/>
+
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition/>
@@ -126,9 +128,6 @@
                         </Button.Template>
                     </Button>
                 </Grid>
-                <RelativePanel>
-                    
-                </RelativePanel>
             </Grid>
         </SplitView.Content>
     </SplitView>

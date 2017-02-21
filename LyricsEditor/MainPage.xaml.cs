@@ -15,6 +15,8 @@ using LyricsEditor.Model;
 using Windows.UI.Core;
 using LyricsEditor.Pages;
 using LyricsEditor.UserControls;
+using System.Reflection;
+using Windows.UI.ViewManagement;
 
 // https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x804 上介绍了“空白页”项模板
 
@@ -38,6 +40,25 @@ namespace LyricsEditor
         }
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
+            if (settings.BlurAvailability)
+            {
+                var ass = Application.Current.GetType().GetTypeInfo().Assembly;
+                foreach (var item in ass.DefinedTypes)
+                {
+                    var ai = item.DeclaringType;
+                    if (ai != null && ai.FullName == "LyricsEditor.UserControls.BlurBackgroundImage")
+                    {
+                        backgroundImage = ai.GetConstructor(Type.EmptyTypes).Invoke(null) as UserControl;
+                        break;
+                    }
+                }
+            }
+            else
+                backgroundImage = new BackgroundImage();
+
+            Background_Border.Child = backgroundImage;
+            
+
             if (SystemInfo.DeviceType == "Windows.Mobile")
                 Grid.SetRow(LyricEditButton_StackPanel, 1);
             else
@@ -243,6 +264,7 @@ namespace LyricsEditor
         {
             await Launcher.LaunchUriAsync(new Uri("mailto:kljzndx@outlook.com?subject=Simple Lyric Editor Feedback"));
         }
+        
         #endregion
 
         private void Sidebar_SplitView_PaneClosed(SplitView sender, object args)

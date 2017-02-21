@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.ApplicationModel;
 using Windows.Security.ExchangeActiveSyncProvisioning;
 using Windows.System.Profile;
 
@@ -10,15 +11,6 @@ namespace LyricsEditor.Model
 {
     public static class SystemInfo
     {
-        public static double Version
-        {
-            get
-            {
-                ulong u = Convert.ToUInt64(AnalyticsInfo.VersionInfo.DeviceFamilyVersion);
-                string version = $"{u >> 16 & 0xFFFF}.{u & 0xFFFF}";
-                return Double.Parse(version);
-            }
-        }
         public static string DeviceType { get => AnalyticsInfo.VersionInfo.DeviceFamily; }
         public static string DeviceName
         {
@@ -28,10 +20,27 @@ namespace LyricsEditor.Model
                 return $"{deviceInfo.SystemManufacturer} {deviceInfo.SystemProductName}";
             }
         }
+        public static double SystemVersion
+        {
+            get
+            {
+                ulong u = Convert.ToUInt64(AnalyticsInfo.VersionInfo.DeviceFamilyVersion);
+                string version = $"{u >> 16 & 0xFFFF}.{u & 0xFFFF}";
+                return Double.Parse(version);
+            }
+        }
+        public static string AppVersion
+        {
+            get
+            {
+                var version = Package.Current.Id.Version;
+                return $"{version.Major}.{version.Minor}.{version.Build}";
+            }
+        }
 
         public static string PrintInfo()
         {
-            return $"设备类型： {DeviceType}\n设备名： {DeviceName}\n系统版本： {Version}";
+            return $"设备类型： {DeviceType}\n设备名： {DeviceName}\n系统版本： {SystemVersion}\n应用版本： {AppVersion}";
         }
     }
 }

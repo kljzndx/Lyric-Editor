@@ -102,6 +102,7 @@ namespace LyricsEditor.UserControls
             settings.IdTag.Title = MusicSource.Name;
             settings.IdTag.Artist = MusicSource.Artist;
             settings.IdTag.Album = MusicSource.Album;
+            settings.BackgroundImage = MusicSource.AlbumImage;
         }
 
         private void AudioPlayer_MediaElement_MediaEnded(object sender, RoutedEventArgs e)

@@ -9,5 +9,5 @@
     d:DesignHeight="300"
     d:DesignWidth="400">
 
-    <Image Source="{x:Bind ImageSource,Mode=OneWay}" Stretch="UniformToFill"/>
+    <Image Source="{x:Bind settings.BackgroundImage,Mode=OneWay}" Stretch="UniformToFill"/>
 </UserControl>
