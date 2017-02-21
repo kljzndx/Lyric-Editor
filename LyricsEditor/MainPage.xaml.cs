@@ -37,6 +37,7 @@ namespace LyricsEditor
         {
             this.InitializeComponent();
             CoreWindow.GetForCurrentThread().KeyDown += MainPage_KeyDown;
+            AppVersionValue_TextBlock.Text = SystemInfo.AppVersion;
         }
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
@@ -262,7 +263,7 @@ namespace LyricsEditor
 
         private async void Feedback_AppBarButton_Click(object sender, RoutedEventArgs e)
         {
-            await Launcher.LaunchUriAsync(new Uri("mailto:kljzndx@outlook.com?subject=Simple Lyric Editor Feedback"));
+            await Launcher.LaunchUriAsync(new Uri($"mailto:kljzndx@outlook.com?subject=Simple Lyric Editor {SystemInfo.AppVersion} Feedback"));
         }
         
         #endregion

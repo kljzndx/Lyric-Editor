@@ -123,4 +123,7 @@
   <data name="EmailErrorReport" xml:space="preserve">
     <value>发送错误报告</value>
   </data>
+  <data name="EncodingError" xml:space="preserve">
+    <value>本应用暂时只支持UTF-8编码</value>
+  </data>
 </root>

@@ -13,9 +13,24 @@
 
     <SplitView x:Name="Sidebar_SplitView" PanePlacement="Right" PaneClosed="Sidebar_SplitView_PaneClosed">
         <SplitView.Pane>
-            <ScrollViewer>
-                <Frame x:Name="Sidebar_Frame" Padding="10"/>
-            </ScrollViewer>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <ScrollViewer>
+                    <Frame x:Name="Sidebar_Frame" Padding="10"/>
+                </ScrollViewer>
+                <StackPanel Grid.Row="1" Padding="10">
+                    <TextBlock Text="简易歌词编辑器" FontSize="20" Foreground="{ThemeResource SystemControlBackgroundAccentBrush}" TextAlignment="Center" FontWeight="Bold"/>
+                    <TextBlock Text="Simple Lyric Editor" FontSize="18" Foreground="{ThemeResource SystemControlBackgroundAccentBrush}" TextAlignment="Center"/>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,5">
+                        <TextBlock Text="版本/Version: "/>
+                        <TextBlock x:Name="AppVersionValue_TextBlock"/>
+                    </StackPanel>
+                    <HyperlinkButton NavigateUri="https://github.com/kljzndx/Lyric-Editor/" Content="Github" HorizontalAlignment="Center"/>
+                </StackPanel>
+            </Grid>
         </SplitView.Pane>
         <SplitView.Content>
             <Grid x:Name="Main_Grid" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">

@@ -9,6 +9,12 @@ namespace LyricsEditor.Model
 {
     public static class MessageBox
     {
+        public static async Task ShowMessageBoxAsync(string content, string buttonContent)
+        {
+            MessageDialog box = new MessageDialog(content);
+            box.Commands.Add(new UICommand(buttonContent));
+            await box.ShowAsync();
+        }
         public static async Task ShowMessageBoxAsync(string title, string content, string buttonContent)
         {
             MessageDialog box = new MessageDialog(content, title);

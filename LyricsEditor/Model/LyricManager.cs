@@ -25,7 +25,20 @@ namespace LyricsEditor.Model
 
             if (ThisLRCFile is null)
                 return false;
-            string content = await FileIO.ReadTextAsync(ThisLRCFile);
+            string content = String.Empty;
+            try
+            {
+                content = await FileIO.ReadTextAsync(ThisLRCFile);
+            }
+            catch (Exception ex)
+            {
+                ThisLRCFile = null;
+                if (ex.HResult.ToString("X") == "80070459")
+                    await MessageBox.ShowMessageBoxAsync(CharacterLibrary.MessageBox.GetString("EncodingError"), CharacterLibrary.MessageBox.GetString("Close"));
+                else
+                    throw;
+            }
+            
             if (idTag.Title == String.Empty)
                 idTag.Title = GetIDTag(content, "ti");
             if (idTag.Artist == String.Empty)

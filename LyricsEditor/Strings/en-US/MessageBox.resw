@@ -123,4 +123,7 @@
   <data name="EmailErrorReport" xml:space="preserve">
     <value>Email Error Report</value>
   </data>
+  <data name="EncodingError" xml:space="preserve">
+    <value>this application only support UTF-8 encoding</value>
+  </data>
 </root>

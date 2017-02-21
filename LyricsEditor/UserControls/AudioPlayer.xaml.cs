@@ -108,6 +108,7 @@ namespace LyricsEditor.UserControls
         private void AudioPlayer_MediaElement_MediaEnded(object sender, RoutedEventArgs e)
         {
             displayTime_ThreadPoolTimer.Cancel();
+            (sender as MediaElement).Position = new TimeSpan();
             SwitchDisplayPlayAndPauseButton(true);
         }
         #endregion
