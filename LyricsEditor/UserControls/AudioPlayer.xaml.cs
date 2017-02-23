@@ -40,7 +40,7 @@ namespace LyricsEditor.UserControls
 
         // Using a DependencyProperty as the backing store for music.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty MusicSourceProperty = 
-            DependencyProperty.Register("music", typeof(Music), typeof(AudioPlayer), new PropertyMetadata(new Music()));
+            DependencyProperty.Register(nameof(MusicSource), typeof(Music), typeof(AudioPlayer), new PropertyMetadata(new Music()));
         
         // Using a DependencyProperty as the backing store for PlayPosition.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty PlayPositionProperty =
@@ -68,6 +68,10 @@ namespace LyricsEditor.UserControls
         {
             displayTime_ThreadPoolTimer = ThreadPoolTimer.CreatePeriodicTimer(DisplayTime, TimeSpan.FromMilliseconds(100), DisplayTime);
         }
+        public async Task PlayMusic()
+        {
+            AudioPlayer_MediaElement.SetSource(await MusicSource.File.OpenAsync(Windows.Storage.FileAccessMode.Read), MusicSource.File.ContentType);
+        }
         /// <summary>
         /// 切换显示播放和暂停按钮
         /// </summary>
@@ -84,10 +88,6 @@ namespace LyricsEditor.UserControls
                 Play_Button.Visibility = Visibility.Collapsed;
                 Pause_Button.Visibility = Visibility.Visible;
             }
-        }
-        public async Task PlayMusic()
-        {
-            AudioPlayer_MediaElement.SetSource(await MusicSource.File.OpenAsync(Windows.Storage.FileAccessMode.Read), MusicSource.File.ContentType);
         }
         #region 播放器
         private void AudioPlayer_MediaElement_MediaOpened(object sender, RoutedEventArgs e)

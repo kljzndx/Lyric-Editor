@@ -8,6 +8,7 @@ using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Storage;
 using Windows.System;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
@@ -56,7 +57,7 @@ namespace LyricsEditor
             string report = $"请说明你做了什么\nPlease introduce what you do\n\n\n\n{SystemInfo.PrintInfo()}\n{error.ToString()}";
             report = report.Replace("\n", "%0A");
             buttons.Add(CharacterLibrary.MessageBox.GetString("EmailErrorReport"),
-                async (u) => await Launcher.LaunchUriAsync(new Uri($"mailto:kljzndx@outlook.com?subject=Simple Lyric Editor Error Report&body={report}"))
+                async u => await Launcher.LaunchUriAsync(new Uri($"mailto:kljzndx@outlook.com?subject=Simple Lyric Editor Error Report&body={report}"))
             );
             await MessageBox.ShowMessageBoxAsync("Error", error.Content, buttons, "关闭");
         }
@@ -118,6 +119,17 @@ namespace LyricsEditor
         protected override void OnActivated(IActivatedEventArgs args)
         {
             EnsureSyncContext();
+        }
+        protected override void OnFileActivated(FileActivatedEventArgs args)
+        {
+            var freme = Window.Current.Content as Frame;
+            if (freme == null)
+            {
+                freme = new Frame();
+                freme.NavigationFailed += OnNavigationFailed;
+            }
+            freme.Navigate(typeof(MainPage));
+            Window.Current.Activate();
         }
 
         /// <summary>

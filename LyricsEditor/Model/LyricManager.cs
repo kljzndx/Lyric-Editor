@@ -12,7 +12,8 @@ namespace LyricsEditor.Model
 {
     public static class LyricManager
     {
-        public static StorageFile ThisLRCFile { get; set; }
+        public static IStorageFile ThisLRCFile { get; set; }
+
         public static async Task<bool> OpenLRCAndAnalysis(ObservableCollection<Lyric> lyricContent, LyricIDTag idTag)
         {
             lyricContent.Clear();

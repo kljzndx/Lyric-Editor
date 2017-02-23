@@ -31,7 +31,6 @@ namespace LyricsEditor
         private ObservableCollection<Lyric> lyrics = new ObservableCollection<Lyric>();
         private Setting settings = Setting.GetSettingObject();
         private bool InputBoxAvailableFocus = false;
-        private UserControl backgroundImage;
 
         public MainPage()
         {
@@ -41,23 +40,23 @@ namespace LyricsEditor
         }
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            if (settings.BlurAvailability)
-            {
-                var ass = Application.Current.GetType().GetTypeInfo().Assembly;
-                foreach (var item in ass.DefinedTypes)
-                {
-                    var ai = item.DeclaringType;
-                    if (ai != null && ai.FullName == "LyricsEditor.UserControls.BlurBackgroundImage")
-                    {
-                        backgroundImage = ai.GetConstructor(Type.EmptyTypes).Invoke(null) as UserControl;
-                        break;
-                    }
-                }
-            }
-            else
-                backgroundImage = new BackgroundImage();
+            //if (settings.BlurAvailability)
+            //{
+            //    var ass = Application.Current.GetType().GetTypeInfo().Assembly;
+            //    foreach (var item in ass.DefinedTypes)
+            //    {
+            //        var ai = item.DeclaringType;
+            //        if (ai != null && ai.FullName == "LyricsEditor.UserControls.BlurBackgroundImage")
+            //        {
+            //            backgroundImage = ai.GetConstructor(Type.EmptyTypes).Invoke(null) as UserControl;
+            //            break;
+            //        }
+            //    }
+            //}
+            //else
+            //    backgroundImage = new BackgroundImage();
 
-            Background_Border.Child = backgroundImage;
+            //Background_Border.Child = backgroundImage;
             
 
             if (SystemInfo.DeviceType == "Windows.Mobile")

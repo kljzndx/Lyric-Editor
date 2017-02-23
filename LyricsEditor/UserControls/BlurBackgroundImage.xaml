@@ -15,7 +15,7 @@
         xmlns:behaviors="using:Microsoft.Toolkit.Uwp.UI.Animations.Behaviors"
     -->
     <Image
-        Name="image"
+        x:Name="image"
         Source="{x:Bind settings.BackgroundImage, Mode=OneWay}"
         Stretch="UniformToFill">
         <!--<interactivity:Interaction.Behaviors>

@@ -36,19 +36,30 @@
             <Grid x:Name="Main_Grid" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
-                
-                <usctrl:AudioPlayer x:Name="AudioPlayer" MusicSource="{x:Bind music,Mode=OneWay}"/>
 
-                <Grid x:Name="Lyric_Grid" Grid.Row="1">
+                <!--<Grid x:Name="TitleBar_Grid">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Orientation="Horizontal">
+                        <Button x:Name="OpenFile" Content="&#xE1A5;" FontFamily="Segoe MDL2 Assets" />
+                    </StackPanel>
+                </Grid>-->
+                
+                <usctrl:AudioPlayer x:Name="AudioPlayer" Grid.Row="1" MusicSource="{x:Bind music,Mode=OneWay}"/>
+
+                <Grid x:Name="Lyric_Grid" Grid.Row="2">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
 
-                    <Border x:Name="Background_Border" Grid.RowSpan="2" Visibility="{x:Bind settings.IsDisplayAlbumImageBackground,Mode=OneWay,Converter={StaticResource boolToVisibility}}" Opacity="{x:Bind settings.BackgroundOpacity,Mode=OneWay}"/>
-
+                    <usctrl:BlurBackgroundImage x:Name="blurBackgroundImage" Grid.RowSpan="2" Visibility="{x:Bind settings.IsDisplayAlbumImageBackground,Mode=OneWay,Converter={StaticResource boolToVisibility}}" Opacity="{x:Bind settings.BackgroundOpacity,Mode=OneWay}"/>
+                    
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition/>
