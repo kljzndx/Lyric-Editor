@@ -12,34 +12,35 @@ namespace LyricsEditor.Model
 {
     public static class LyricManager
     {
-        public static IStorageFile ThisLRCFile { get; set; }
+        //public static async Task<bool> OpenLRCAndAnalysis(ObservableCollection<Lyric> lyricContent, LyricIDTag idTag)
+        //{
+        //    StorageFile thisLRCFile = await LyricFileManager.OpenFileAsync();
 
-        public static async Task<bool> OpenLRCAndAnalysis(ObservableCollection<Lyric> lyricContent, LyricIDTag idTag)
+        //    if (thisLRCFile is null)
+        //        return false;
+            
+        //    await LrcAnalysis(thisLRCFile, lyricContent, idTag);
+
+        //    return true;
+        //}
+
+        public static async Task LrcAnalysis(IStorageFile file, ObservableCollection<Lyric> lyricContent, LyricIDTag idTag)
         {
-            lyricContent.Clear();
-            ThisLRCFile = null;
-            FileOpenPicker picker = new FileOpenPicker();
-            picker.FileTypeFilter.Add(".lrc");
-            picker.FileTypeFilter.Add(".txt");
-
-            ThisLRCFile = await picker.PickSingleFileAsync();
-
-            if (ThisLRCFile is null)
-                return false;
             string content = String.Empty;
             try
             {
-                content = await FileIO.ReadTextAsync(ThisLRCFile);
+                content = await FileIO.ReadTextAsync(file);
             }
             catch (Exception ex)
             {
-                ThisLRCFile = null;
+                LyricFileManager.ThisLRCFile = null;
                 if (ex.HResult.ToString("X") == "80070459")
                     await MessageBox.ShowMessageBoxAsync(CharacterLibrary.MessageBox.GetString("EncodingError"), CharacterLibrary.MessageBox.GetString("Close"));
                 else
                     throw;
+                return;
             }
-            
+            lyricContent.Clear();
             if (idTag.Title == String.Empty)
                 idTag.Title = GetIDTag(content, "ti");
             if (idTag.Artist == String.Empty)
@@ -70,31 +71,35 @@ namespace LyricsEditor.Model
                     lyricContent.Add(new Lyric { Time = new TimeSpan(), Content = line.Trim() });
                 }
             }
-            
-            return true;
         }
+
         public static async Task<bool> SaveLyric(ObservableCollection<Lyric> lyricList,LyricIDTag tag)
         {
-            if (ThisLRCFile is null)
+            StorageFile lrcFile = null;
+            if (LyricFileManager.ThisLRCFile is null)
             {
                 FileSavePicker picker = new FileSavePicker();
                 picker.SuggestedFileName = "New_LRC_File";
                 picker.DefaultFileExtension = ".lrc";
                 picker.FileTypeChoices.Add("LRC File", new List<string> { ".lrc" });
 
-                ThisLRCFile = await picker.PickSaveFileAsync();
-                if (ThisLRCFile is null)
+                lrcFile = await picker.PickSaveFileAsync();
+                if (lrcFile is null)
                     return false;
             }
+            else
+                lrcFile = LyricFileManager.ThisLRCFile as StorageFile;
+
             string lyric_str = String.Empty;
             lyric_str = tag.ToString() + "\r\n\r\n";
             foreach (var item in lyricList)
             {
                 lyric_str += item.ToString() + "\r\n";
             }
-            await FileIO.WriteTextAsync(ThisLRCFile, lyric_str);
+            await FileIO.WriteTextAsync(lrcFile, lyric_str);
             return true;
         }
+
         private static string GetIDTag(string content,string tagName)
         {
             string result = String.Empty;

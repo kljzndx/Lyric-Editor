@@ -37,6 +37,7 @@ namespace LyricsEditor
             this.InitializeComponent();
             CoreWindow.GetForCurrentThread().KeyDown += MainPage_KeyDown;
             AppVersionValue_TextBlock.Text = SystemInfo.AppVersion;
+            LyricFileManager.LyricFileChanageEvent += async (e) => { await LyricManager.LrcAnalysis(e.File, lyrics, settings.IdTag); };
         }
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
@@ -63,6 +64,7 @@ namespace LyricsEditor
                 Grid.SetRow(LyricEditButton_StackPanel, 1);
             else
                 Grid.SetColumn(LyricEditButton_StackPanel, 1);
+            
         }
 
         private void MainPage_KeyDown(CoreWindow sender, KeyEventArgs args)
@@ -231,7 +233,7 @@ namespace LyricsEditor
         }
         private async void OpenLRC_MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
         {
-            await LyricManager.OpenLRCAndAnalysis(lyrics, settings.IdTag);
+            await LyricFileManager.OpenFileAsync();
         }
         private async void Save_AppBarButton_Click(object sender, RoutedEventArgs e)
         {

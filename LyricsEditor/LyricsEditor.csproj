@@ -121,6 +121,8 @@
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Model\LyricFileChanageEventArgs.cs" />
+    <Compile Include="Model\LyricFileManager.cs" />
     <Compile Include="Model\LyricIDTag.cs" />
     <Compile Include="Model\LyricManager.cs" />
     <Compile Include="Model\MessageBox.cs" />

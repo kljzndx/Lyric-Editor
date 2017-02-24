@@ -122,14 +122,17 @@ namespace LyricsEditor
         }
         protected override void OnFileActivated(FileActivatedEventArgs args)
         {
-            var freme = Window.Current.Content as Frame;
-            if (freme == null)
+            var frame = Window.Current.Content as Frame;
+            if (frame == null)
             {
-                freme = new Frame();
-                freme.NavigationFailed += OnNavigationFailed;
+                frame = new Frame();
+                frame.NavigationFailed += OnNavigationFailed;
+                Window.Current.Content = frame;
             }
-            freme.Navigate(typeof(MainPage));
+            if (frame.Content == null)
+                frame.Navigate(typeof(MainPage));
             Window.Current.Activate();
+            LyricFileManager.ChanageFile(args.Files[0] as StorageFile);
         }
 
         /// <summary>
