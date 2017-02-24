@@ -58,7 +58,7 @@
                         <RowDefinition/>
                     </Grid.RowDefinitions>
 
-                    <usctrl:BlurBackgroundImage x:Name="blurBackgroundImage" Grid.RowSpan="2" Visibility="{x:Bind settings.IsDisplayAlbumImageBackground,Mode=OneWay,Converter={StaticResource boolToVisibility}}" Opacity="{x:Bind settings.BackgroundOpacity,Mode=OneWay}"/>
+                    <usctrl:BlurBackgroundImage Grid.RowSpan="2" Visibility="{x:Bind settings.IsDisplayAlbumImageBackground,Mode=OneWay,Converter={StaticResource boolToVisibility}}" Opacity="{x:Bind settings.BackgroundOpacity,Mode=OneWay}"/>
                     
                     <Grid>
                         <Grid.RowDefinitions>
