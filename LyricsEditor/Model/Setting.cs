@@ -42,7 +42,7 @@ namespace LyricsEditor.Model
             CreateSetting("BackgroundOpacity", 0.3);
             CreateSetting("Volume", 1D);
             CreateSetting("IsDisplayAlbumImageBackground", true);
-            CreateSetting("Theme", ApplicationTheme.Dark.ToString());
+            CreateSetting("Theme", ApplicationTheme.Light.ToString());
             CreateSetting("ChanageButtonBehavior", LyricChanageButtonBehavior.LetMeChoose.ToString());
 
             blurAvailability = SystemInfo.SystemVersion >= 14393;

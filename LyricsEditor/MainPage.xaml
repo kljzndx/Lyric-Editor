@@ -51,8 +51,8 @@
                 </Grid>-->
                 
                 <usctrl:AudioPlayer x:Name="AudioPlayer" Grid.Row="1" MusicSource="{x:Bind music,Mode=OneWay}"/>
-
-                <Grid x:Name="Lyric_Grid" Grid.Row="2">
+                <usctrl:ShortcutKeysDescribedPanel x:Name="ShortcutKeysPanel" Grid.RowSpan="3" Canvas.ZIndex="2"/>
+                <Grid x:Name="Lyric_Grid" Grid.Row="2" Margin="0,5,0,0">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition/>
@@ -69,7 +69,7 @@
                             <ColumnDefinition/>
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
-                        <TextBox x:Name="LyricContent_TextBox" VerticalAlignment="Center" AcceptsReturn="True" GotFocus="LyricContent_TextBox_GotFocus" LostFocus="LyricContent_TextBox_LostFocus" MaxHeight="100"/>
+                        <TextBox x:Name="LyricContent_TextBox" x:Uid="/Main/LyricContent_TextBox" VerticalAlignment="Center" AcceptsReturn="True" GotFocus="LyricContent_TextBox_GotFocus" LostFocus="LyricContent_TextBox_LostFocus" MaxHeight="100"/>
                         <StackPanel x:Name="LyricEditButton_StackPanel" Orientation="Horizontal" HorizontalAlignment="Center">
                             <Button x:Name="SelectToolkit_Button" Content="&#xE0A2;" Style="{StaticResource ControllerButton}" Visibility="Collapsed">
                                 <Button.Flyout>
@@ -153,6 +153,11 @@
                             </ControlTemplate>
                         </Button.Template>
                     </Button>
+                    <StackPanel x:Name="FastMenu_StackPanel" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Button x:Uid="/Main/OpenMusic_Button" Width="130" Margin="0,5" Click="OpenMusic_MenuFlyoutItem_Click"/>
+                        <Button x:Uid="/Main/OpenLRC_Button" Width="130" Margin="0,5" Click="OpenLRC_MenuFlyoutItem_Click"/>
+                        <Button x:Name="HideMenu_Button" x:Uid="/Main/HideMenu_Button" Width="130" Margin="0,5" Click="HideMenu_Button_Click"/>
+                    </StackPanel>
                 </Grid>
             </Grid>
         </SplitView.Content>
@@ -174,6 +179,7 @@
                 <AppBarButton x:Name="Settings_AppBarButton" x:Uid="/Main/Settings_AppBarButton" Icon="Setting" Click="Settings_AppBarButton_Click"/>
             </CommandBar.PrimaryCommands>
             <CommandBar.SecondaryCommands>
+                <AppBarButton x:Name="ShowShortcutKeysPanel_AppBarButton" x:Uid="/Main/ShowShortcutKeysPanel_AppBarButton" Click="ShowShortcutKeysPanel_AppBarButton_Click"/>
                 <AppBarButton x:Name="Feedback_AppBarButton" x:Uid="/Main/Feedback_AppBarButton" Click="Feedback_AppBarButton_Click"/>
             </CommandBar.SecondaryCommands>
         </CommandBar>

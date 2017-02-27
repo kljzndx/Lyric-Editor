@@ -95,6 +95,8 @@
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
     <None Include="LyricsEditor_StoreKey.pfx" />
     <None Include="project.json" />
+    <PRIResource Include="Strings\en-US\ShortcutKeys.resw" />
+    <PRIResource Include="Strings\zh-CN\ShortcutKeys.resw" />
     <PRIResource Include="Strings\en-US\MessageBox.resw" />
     <PRIResource Include="Strings\zh-CN\MessageBox.resw" />
     <PRIResource Include="Strings\en-US\Setting.resw" />
@@ -115,6 +117,7 @@
     <Compile Include="Converter\TimeSpenToString.cs" />
     <Compile Include="Enum\LyricChanageButtonBehavior.cs" />
     <Compile Include="ExceptionHandlingSynchronizationContext.cs" />
+    <Compile Include="Model\AppInfo.cs" />
     <Compile Include="Model\CharacterLibrary.cs" />
     <Compile Include="Model\Error.cs" />
     <Compile Include="Model\Lyric.cs" />
@@ -141,6 +144,9 @@
     </Compile>
     <Compile Include="UserControls\BlurBackgroundImage.xaml.cs">
       <DependentUpon>BlurBackgroundImage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\ShortcutKeysDescribedPanel.xaml.cs">
+      <DependentUpon>ShortcutKeysDescribedPanel.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -243,6 +249,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\BlurBackgroundImage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\ShortcutKeysDescribedPanel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

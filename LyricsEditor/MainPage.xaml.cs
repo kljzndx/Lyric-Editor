@@ -31,46 +31,39 @@ namespace LyricsEditor
         private ObservableCollection<Lyric> lyrics = new ObservableCollection<Lyric>();
         private Setting settings = Setting.GetSettingObject();
         private bool InputBoxAvailableFocus = false;
+        private bool isPressCtrl = false;
 
         public MainPage()
         {
             this.InitializeComponent();
             CoreWindow.GetForCurrentThread().KeyDown += MainPage_KeyDown;
-            AppVersionValue_TextBlock.Text = SystemInfo.AppVersion;
+            CoreWindow.GetForCurrentThread().KeyUp += MainPage_KeyUp;
+            AppVersionValue_TextBlock.Text = AppInfo.AppVersion;
             LyricFileManager.LyricFileChanageEvent += async (e) => { await LyricManager.LrcAnalysis(e.File, lyrics, settings.IdTag); };
         }
+
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            //if (settings.BlurAvailability)
-            //{
-            //    var ass = Application.Current.GetType().GetTypeInfo().Assembly;
-            //    foreach (var item in ass.DefinedTypes)
-            //    {
-            //        var ai = item.DeclaringType;
-            //        if (ai != null && ai.FullName == "LyricsEditor.UserControls.BlurBackgroundImage")
-            //        {
-            //            backgroundImage = ai.GetConstructor(Type.EmptyTypes).Invoke(null) as UserControl;
-            //            break;
-            //        }
-            //    }
-            //}
-            //else
-            //    backgroundImage = new BackgroundImage();
-
-            //Background_Border.Child = backgroundImage;
-            
-
             if (SystemInfo.DeviceType == "Windows.Mobile")
                 Grid.SetRow(LyricEditButton_StackPanel, 1);
             else
                 Grid.SetColumn(LyricEditButton_StackPanel, 1);
             
+            if (AppInfo.BootCount++ == 1)
+                ShortcutKeysPanel.PopUp();
         }
 
         private void MainPage_KeyDown(CoreWindow sender, KeyEventArgs args)
         {
+            if (args.VirtualKey == VirtualKey.Control)
+                isPressCtrl = true;
+
             var selectItem = Lyric_ListView.SelectedItem as Lyric;
             //添加歌词
+
+            if (isPressCtrl && args.VirtualKey == VirtualKey.Enter)
+                AddLyric();
+
             if (args.VirtualKey == VirtualKey.Space &&
                 !InputBoxAvailableFocus &&
                 selectItem is null)
@@ -83,7 +76,6 @@ namespace LyricsEditor
                 selectItem is Lyric)
             {
                 selectItem.Time = AudioPlayer.PlayPosition;
-                selectItem.Content = LyricContent_TextBox.Text;
                 if (Lyric_ListView.SelectedIndex < lyrics.Count - 1)
                     Lyric_ListView.SelectedIndex++;
             }
@@ -96,9 +88,15 @@ namespace LyricsEditor
                 {
                     lyrics.Remove(item);
                 }
-
             }
         }
+
+        private void MainPage_KeyUp(CoreWindow sender, KeyEventArgs args)
+        {
+            if (args.VirtualKey == VirtualKey.Control)
+                isPressCtrl = false;
+        }
+
         #region 自己定义的方法
 
         private void AddLyric()
@@ -264,15 +262,24 @@ namespace LyricsEditor
 
         private async void Feedback_AppBarButton_Click(object sender, RoutedEventArgs e)
         {
-            await Launcher.LaunchUriAsync(new Uri($"mailto:kljzndx@outlook.com?subject=Simple Lyric Editor {SystemInfo.AppVersion} Feedback"));
+            await Launcher.LaunchUriAsync(new Uri($"mailto:kljzndx@outlook.com?subject=Simple Lyric Editor {AppInfo.AppVersion} Feedback"));
         }
-        
+
+        private void ShowShortcutKeysPanel_AppBarButton_Click(object sender, RoutedEventArgs e)
+        {
+            ShortcutKeysPanel.PopUp();
+        }
+
         #endregion
 
         private void Sidebar_SplitView_PaneClosed(SplitView sender, object args)
         {
             Sidebar_Frame.Navigate(typeof(Page));
         }
-        
+
+        private void HideMenu_Button_Click(object sender, RoutedEventArgs e)
+        {
+            FastMenu_StackPanel.Visibility = Visibility.Collapsed;
+        }
     }
 }

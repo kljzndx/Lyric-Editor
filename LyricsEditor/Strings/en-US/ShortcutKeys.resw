@@ -117,65 +117,37 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AppName" xml:space="preserve">
-    <value>Simple Lyric Editor</value>
-    <comment>应用名称</comment>
+  <data name="AddLyric_Condition1_TextBlock.Text" xml:space="preserve">
+    <value>enter song lyric after press Ctrl+Enter</value>
   </data>
-  <data name="ChanageLyric_MenuFlyoutItem.Text" xml:space="preserve">
-    <value>Modifications to the current lyric</value>
-    <comment>”歌词修改“按钮里的“修改为当前歌词”菜单</comment>
+  <data name="AddLyric_Condition2_TextBlock.Text" xml:space="preserve">
+    <value>Press spacebar when there are no selected items</value>
   </data>
-  <data name="ChanageTime_MenuFlyoutItem.Text" xml:space="preserve">
+  <data name="AddLyric_Function_TextBlock.Text" xml:space="preserve">
+    <value>Add Lyric</value>
+  </data>
+  <data name="ChanageTime_Condition_TextBlock.Text" xml:space="preserve">
+    <value>Press spacebar when there are selected items</value>
+  </data>
+  <data name="ChanageTime_Function_TextBlock.Text" xml:space="preserve">
     <value>Modifications to the current time</value>
-    <comment>“歌词修改“按钮里的“修改为当前时间”菜单</comment>
   </data>
-  <data name="Feedback_AppBarButton.Label" xml:space="preserve">
-    <value>Feedback</value>
-    <comment>“低栏”溢出菜单里的“反馈”按钮</comment>
+  <data name="Close_Button.Content" xml:space="preserve">
+    <value>Close</value>
   </data>
-  <data name="HideMenu_Button.Content" xml:space="preserve">
-    <value>Hide This Menu</value>
+  <data name="Conditions_TextBlock.Text" xml:space="preserve">
+    <value>Condition</value>
   </data>
-  <data name="LyricContent_TextBox.PlaceholderText" xml:space="preserve">
-    <value>Please Enter Lyric
-Support Multiline Text</value>
-    <comment>歌词输入框</comment>
+  <data name="Delete_Condition_TextBlock.Text" xml:space="preserve">
+    <value>Press delete when there are selected items</value>
   </data>
-  <data name="MultilineEdit_AppBarButton.Label" xml:space="preserve">
-    <value>Multiline Edit</value>
-    <comment>"多行编辑"按钮</comment>
+  <data name="Delete_Function_TextBlock.Text" xml:space="preserve">
+    <value>Delete Selected Lyrics</value>
   </data>
-  <data name="OpenFile_AppBarButton.Label" xml:space="preserve">
-    <value>Open</value>
-    <comment>”打开“按钮</comment>
+  <data name="Function_TextBlock.Text" xml:space="preserve">
+    <value>Function</value>
   </data>
-  <data name="OpenLRC_Button.Content" xml:space="preserve">
-    <value>Open Lyric</value>
-  </data>
-  <data name="OpenLRC_MenuFlyoutItem.Text" xml:space="preserve">
-    <value>Open Lyric</value>
-    <comment>“打开”按钮里的“打开歌词”菜单</comment>
-  </data>
-  <data name="OpenMusic_Button.Content" xml:space="preserve">
-    <value>Open Music</value>
-  </data>
-  <data name="OpenMusic_MenuFlyoutItem.Text" xml:space="preserve">
-    <value>Open Music</value>
-    <comment>“打开”按钮里的“打开音乐”菜单</comment>
-  </data>
-  <data name="Save_AppBarButton.Label" xml:space="preserve">
-    <value>Save</value>
-    <comment>”保存“按钮</comment>
-  </data>
-  <data name="Settings_AppBarButton.Label" xml:space="preserve">
-    <value>Settings</value>
-    <comment>”设置“按钮</comment>
-  </data>
-  <data name="ShowShortcutKeysPanel_AppBarButton.Label" xml:space="preserve">
+  <data name="Introduction_TextBlock.Text" xml:space="preserve">
     <value>Shortcut keys described</value>
-  </data>
-  <data name="Submit_AppBarButton.Label" xml:space="preserve">
-    <value>Submit</value>
-    <comment>"确认"按钮</comment>
   </data>
 </root>

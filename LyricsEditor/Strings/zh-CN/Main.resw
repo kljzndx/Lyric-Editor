@@ -133,8 +133,12 @@
     <value>反馈</value>
     <comment>“低栏”溢出菜单里的“反馈”按钮</comment>
   </data>
+  <data name="HideMenu_Button.Content" xml:space="preserve">
+    <value>隐藏此菜单</value>
+  </data>
   <data name="LyricContent_TextBox.PlaceholderText" xml:space="preserve">
-    <value>请输入歌词</value>
+    <value>请输入歌词
+支持多行文本</value>
     <comment>歌词输入框</comment>
   </data>
   <data name="MultilineEdit_AppBarButton.Label" xml:space="preserve">
@@ -145,9 +149,15 @@
     <value>打开</value>
     <comment>”打开“按钮</comment>
   </data>
+  <data name="OpenLRC_Button.Content" xml:space="preserve">
+    <value>打开歌词</value>
+  </data>
   <data name="OpenLRC_MenuFlyoutItem.Text" xml:space="preserve">
     <value>打开歌词</value>
     <comment>“打开”按钮里的“打开歌词”菜单</comment>
+  </data>
+  <data name="OpenMusic_Button.Content" xml:space="preserve">
+    <value>打开歌曲</value>
   </data>
   <data name="OpenMusic_MenuFlyoutItem.Text" xml:space="preserve">
     <value>打开歌曲</value>
@@ -160,6 +170,9 @@
   <data name="Settings_AppBarButton.Label" xml:space="preserve">
     <value>设置</value>
     <comment>”设置“按钮</comment>
+  </data>
+  <data name="ShowShortcutKeysPanel_AppBarButton.Label" xml:space="preserve">
+    <value>快捷键介绍</value>
   </data>
   <data name="Submit_AppBarButton.Label" xml:space="preserve">
     <value>确认</value>

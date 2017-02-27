@@ -29,18 +29,10 @@ namespace LyricsEditor.Model
                 return Double.Parse(version);
             }
         }
-        public static string AppVersion
-        {
-            get
-            {
-                var version = Package.Current.Id.Version;
-                return $"{version.Major}.{version.Minor}.{version.Build}";
-            }
-        }
-
+        
         public static string PrintInfo()
         {
-            return $"设备类型： {DeviceType}\n设备名： {DeviceName}\n系统版本： {SystemVersion}\n应用版本： {AppVersion}";
+            return $"设备类型： {DeviceType}\n设备名： {DeviceName}\n系统版本： {SystemVersion}";
         }
     }
 }
