@@ -19,9 +19,9 @@ namespace LyricsEditor.Model
 
         public int CompareTo(object obj)
         {
-            if (this.Time.TotalMinutes == (obj as Lyric).Time.TotalMinutes)
+            if (this.Time == (obj as Lyric).Time)
                 return 0;
-            return Time.TotalMinutes > (obj as Lyric).Time.TotalMinutes ? 1 : -1;
+            return Time > (obj as Lyric).Time ? 1 : -1;
         }
         public override string ToString()
         {

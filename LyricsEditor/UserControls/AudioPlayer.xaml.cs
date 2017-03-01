@@ -102,7 +102,15 @@ namespace LyricsEditor.UserControls
             settings.IdTag.Title = MusicSource.Name;
             settings.IdTag.Artist = MusicSource.Artist;
             settings.IdTag.Album = MusicSource.Album;
-            settings.BackgroundImage = MusicSource.AlbumImage;
+        }
+
+        private async void AudioPlayer_MediaElement_MediaFailed(object sender, ExceptionRoutedEventArgs e)
+        {
+            SwitchDisplayPlayAndPauseButton(true);
+            Play_Button.IsEnabled = false;
+            GoBack_Button.IsEnabled = false;
+            GoForward_Button.IsEnabled = false;
+            await MessageBox.ShowMessageBoxAsync(CharacterLibrary.MessageBox.GetString("MusicPlayError"), CharacterLibrary.MessageBox.GetString("Close"));
         }
 
         private void AudioPlayer_MediaElement_MediaEnded(object sender, RoutedEventArgs e)
@@ -111,6 +119,7 @@ namespace LyricsEditor.UserControls
             (sender as MediaElement).Position = new TimeSpan();
             SwitchDisplayPlayAndPauseButton(true);
         }
+
         #endregion
         #region 进度条
         private void PlayPosithon_Slider_PointerPressed(object sender, PointerRoutedEventArgs e)

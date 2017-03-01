@@ -117,9 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AlbumImageBackground_ToggleSwitch.Header" xml:space="preserve">
-    <value>Album Image Background</value>
-  </data>
   <data name="AppTheme_ComboBox.Header" xml:space="preserve">
     <value>App Theme</value>
   </data>
@@ -138,8 +135,20 @@
   <data name="BacckgroundBlurDegree_Slider.Header" xml:space="preserve">
     <value>Bacckground Blur Degree</value>
   </data>
+  <data name="BackgroundImageSource_AlbumCover_RadioButton.Content" xml:space="preserve">
+    <value>Song Album Cover</value>
+  </data>
+  <data name="BackgroundImageSource_Custom_RadioButton.Content" xml:space="preserve">
+    <value>Custom</value>
+  </data>
+  <data name="BackgroundImageSource_TextBlock.Text" xml:space="preserve">
+    <value>Background Image Source</value>
+  </data>
   <data name="BackgroundOpacity_Slider.Header" xml:space="preserve">
     <value>Background Opacity</value>
+  </data>
+  <data name="DisplayBackgroundImage_ToggleSwitch.Header" xml:space="preserve">
+    <value>Display Image Background </value>
   </data>
   <data name="LrcCreator_TextBox.Header" xml:space="preserve">
     <value>LRC Creator</value>

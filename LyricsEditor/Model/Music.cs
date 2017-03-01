@@ -10,13 +10,21 @@ using Windows.UI.Xaml.Media.Imaging;
 
 namespace LyricsEditor.Model
 {
+    public class MusicChanageEventArgs : EventArgs
+    {
+        public Music _Music { get; set; }
+    }
+    public delegate void MusicChanageEventHandler(object serder, MusicChanageEventArgs e);
     public class Music : Auxiliary
     {
+
         private string name, artist, album;
         private BitmapImage albumImage;
         private TimeSpan allTime;
         private StorageFile file;
-        
+
+
+        public event MusicChanageEventHandler MusicChanageEvent;
         /// <summary>
         /// 歌名
         /// </summary>
@@ -66,6 +74,7 @@ namespace LyricsEditor.Model
             Album = properties.Album;
             Alltime = properties.Duration;
             AlbumImage.SetSource(await File.GetThumbnailAsync(ThumbnailMode.MusicView));
+            MusicChanageEvent?.Invoke(this, new MusicChanageEventArgs { _Music = this });
             return true;
         }
     }

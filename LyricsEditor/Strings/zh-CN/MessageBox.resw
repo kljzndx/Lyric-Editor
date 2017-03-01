@@ -126,4 +126,7 @@
   <data name="EncodingError" xml:space="preserve">
     <value>本应用暂时只支持UTF-8编码</value>
   </data>
+  <data name="MusicPlayError" xml:space="preserve">
+    <value>此音乐无法解码</value>
+  </data>
 </root>

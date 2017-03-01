@@ -126,4 +126,7 @@
   <data name="EncodingError" xml:space="preserve">
     <value>this application only support UTF-8 encoding</value>
   </data>
+  <data name="MusicPlayError" xml:space="preserve">
+    <value>The music cannot be decoded</value>
+  </data>
 </root>

@@ -134,7 +134,7 @@
     <comment>“低栏”溢出菜单里的“反馈”按钮</comment>
   </data>
   <data name="HideMenu_Button.Content" xml:space="preserve">
-    <value>Hide This Menu</value>
+    <value>Hide The Menu</value>
   </data>
   <data name="LyricContent_TextBox.PlaceholderText" xml:space="preserve">
     <value>Please Enter Lyric

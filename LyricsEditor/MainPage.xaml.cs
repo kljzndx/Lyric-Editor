@@ -40,6 +40,8 @@ namespace LyricsEditor
             CoreWindow.GetForCurrentThread().KeyUp += MainPage_KeyUp;
             AppVersionValue_TextBlock.Text = AppInfo.AppVersion;
             LyricFileManager.LyricFileChanageEvent += async (e) => { await LyricManager.LrcAnalysis(e.File, lyrics, settings.IdTag); };
+            
+            music.MusicChanageEvent += BackgroundImage.RefreshImage;
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)

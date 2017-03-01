@@ -115,6 +115,7 @@
     <Compile Include="Converter\Percentage_Double.cs" />
     <Compile Include="Converter\Percentage_String.cs" />
     <Compile Include="Converter\TimeSpenToString.cs" />
+    <Compile Include="Enum\BackgroundImageType.cs" />
     <Compile Include="Enum\LyricChanageButtonBehavior.cs" />
     <Compile Include="ExceptionHandlingSynchronizationContext.cs" />
     <Compile Include="Model\AppInfo.cs" />
@@ -124,7 +125,6 @@
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Model\LyricFileChanageEventArgs.cs" />
     <Compile Include="Model\LyricFileManager.cs" />
     <Compile Include="Model\LyricIDTag.cs" />
     <Compile Include="Model\LyricManager.cs" />

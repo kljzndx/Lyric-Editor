@@ -117,9 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AlbumImageBackground_ToggleSwitch.Header" xml:space="preserve">
-    <value>专辑图背景</value>
-  </data>
   <data name="AppTheme_ComboBox.Header" xml:space="preserve">
     <value>应用主题</value>
   </data>
@@ -138,8 +135,20 @@
   <data name="BacckgroundBlurDegree_Slider.Header" xml:space="preserve">
     <value>背景模糊度</value>
   </data>
+  <data name="BackgroundImageSource_AlbumCover_RadioButton.Content" xml:space="preserve">
+    <value>歌曲专辑封面</value>
+  </data>
+  <data name="BackgroundImageSource_Custom_RadioButton.Content" xml:space="preserve">
+    <value>自定义</value>
+  </data>
+  <data name="BackgroundImageSource_TextBlock.Text" xml:space="preserve">
+    <value>背景图片来源</value>
+  </data>
   <data name="BackgroundOpacity_Slider.Header" xml:space="preserve">
     <value>背景不透明度</value>
+  </data>
+  <data name="DisplayBackgroundImage_ToggleSwitch.Header" xml:space="preserve">
+    <value>显示背景图</value>
   </data>
   <data name="LrcCreator_TextBox.Header" xml:space="preserve">
     <value>LRC创建者</value>

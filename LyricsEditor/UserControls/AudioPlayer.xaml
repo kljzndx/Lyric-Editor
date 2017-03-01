@@ -14,7 +14,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <MediaElement x:Name="AudioPlayer_MediaElement" AutoPlay="False" Volume="{x:Bind settings.Volume,Mode=OneWay}" MediaOpened="AudioPlayer_MediaElement_MediaOpened" MediaEnded="AudioPlayer_MediaElement_MediaEnded" />
+        <MediaElement x:Name="AudioPlayer_MediaElement" AutoPlay="False" Volume="{x:Bind settings.Volume,Mode=OneWay}" MediaOpened="AudioPlayer_MediaElement_MediaOpened" MediaEnded="AudioPlayer_MediaElement_MediaEnded" MediaFailed="AudioPlayer_MediaElement_MediaFailed" />
         <StackPanel>
             <TextBlock x:Name="MusicPath_TextBlock" Text="{x:Bind MusicSource.File.Path,Mode=OneWay}" TextAlignment="Center" TextWrapping="Wrap"/>
             <Grid x:Name="Progress">

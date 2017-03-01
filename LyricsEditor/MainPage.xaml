@@ -52,15 +52,16 @@
                 
                 <usctrl:AudioPlayer x:Name="AudioPlayer" Grid.Row="1" MusicSource="{x:Bind music,Mode=OneWay}"/>
                 <usctrl:ShortcutKeysDescribedPanel x:Name="ShortcutKeysPanel" Grid.RowSpan="3" Canvas.ZIndex="2"/>
-                <Grid x:Name="Lyric_Grid" Grid.Row="2" Margin="0,5,0,0">
+                
+                <Grid x:Name="Lyric_Grid" Grid.Row="2">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
 
-                    <usctrl:BlurBackgroundImage Grid.RowSpan="2" Visibility="{x:Bind settings.IsDisplayAlbumImageBackground,Mode=OneWay,Converter={StaticResource boolToVisibility}}" Opacity="{x:Bind settings.BackgroundOpacity,Mode=OneWay}"/>
+                    <usctrl:BlurBackgroundImage x:Name="BackgroundImage" Grid.RowSpan="2" Visibility="{x:Bind settings.IsDisplayBackgroundImage,Mode=OneWay,Converter={StaticResource boolToVisibility}}" Opacity="{x:Bind settings.BackgroundOpacity,Mode=OneWay}"/>
                     
-                    <Grid>
+                    <Grid Margin="0,5">
                         <Grid.RowDefinitions>
                             <RowDefinition/>
                             <RowDefinition Height="Auto"/>
