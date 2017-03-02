@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 
@@ -31,14 +32,20 @@ namespace LyricsEditor.Model
             {
                 content = await FileIO.ReadTextAsync(file);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                LyricFileManager.ThisLRCFile = null;
-                if (ex.HResult.ToString("X") == "80070459")
-                    await MessageBox.ShowMessageBoxAsync(CharacterLibrary.MessageBox.GetString("EncodingError"), CharacterLibrary.MessageBox.GetString("Close"));
-                else
+
+                var filebuffer = await FileIO.ReadBufferAsync(file);
+                Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+                try
+                {
+                    var gbkEncoding = Encoding.GetEncoding("GBK");
+                    content = gbkEncoding.GetString(filebuffer.ToArray());
+                }
+                catch (Exception)
+                {
                     throw;
-                return;
+                }
             }
             lyricContent.Clear();
             if (idTag.Title == String.Empty)

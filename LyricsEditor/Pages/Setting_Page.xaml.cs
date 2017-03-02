@@ -66,7 +66,12 @@ namespace LyricsEditor.Pages
         private async void BackgroundType_UserDefined_RadioButton_Checked(object sender, RoutedEventArgs e)
         {
             if (settings.UserDefinedBackgroundImagePath == String.Empty)
-                await ChanageBackgroundImageFileAsync();
+                if (!await ChanageBackgroundImageFileAsync())
+                {
+                    BackgroundType_Album_RadioButton.IsChecked = true;
+                    return;
+                }
+                    
 
             //避免打开设置面板时重新加载背景图
             if (settings.BackgroundImageType != BackgroundImageTypeEnum.UserDefined)
@@ -83,17 +88,18 @@ namespace LyricsEditor.Pages
             await ChanageBackgroundImageAsync();
         }
 
-        public async Task ChanageBackgroundImageFileAsync()
+        public async Task<bool> ChanageBackgroundImageFileAsync()
         {
             var picker = new FileOpenPicker();
             picker.FileTypeFilter.Add(".jpg");
             picker.FileTypeFilter.Add(".png");
             var _imageFile = await picker.PickSingleFileAsync();
             if (_imageFile is null)
-                return;
+                return false;
             StorageApplicationPermissions.FutureAccessList.AddOrReplace("BackgroundImage", _imageFile);
             settings.UserDefinedBackgroundImagePath = _imageFile.Path;
             backgroundImageFile = _imageFile;
+            return true;
         }
 
         private async Task ChanageBackgroundImageAsync()
