@@ -61,23 +61,17 @@ namespace LyricsEditor.UserControls
             //    //blur.Attach(image);
             //}
         */
-
+        public static readonly DependencyProperty ImageSourceProperty = DependencyProperty.Register(nameof(ImageSource), typeof(BitmapImage), typeof(BlurBackgroundImage), new PropertyMetadata(new BitmapImage()));
         private Setting settings;
         private BitmapImage albumImage = new BitmapImage();
         private StorageFile imageFile;
-
-
+        
         public BitmapImage ImageSource
         {
             get { return (BitmapImage)GetValue(ImageSourceProperty); }
             set { SetValue(ImageSourceProperty, value); }
         }
-
-        // Using a DependencyProperty as the backing store for ImageSource.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty ImageSourceProperty =
-            DependencyProperty.Register(nameof(ImageSource), typeof(BitmapImage), typeof(BlurBackgroundImage), new PropertyMetadata(new BitmapImage()));
-
-
+        
         public BlurBackgroundImage()
         {
             this.InitializeComponent();
@@ -108,11 +102,8 @@ namespace LyricsEditor.UserControls
                 if (settings.BackgroundImageType == BackgroundImageTypeEnum.AlbumImage)
                     ImageSource = albumImage;
                 else if (settings.BackgroundImageType == BackgroundImageTypeEnum.UserDefined)
-                {
                     await UpdateImageSourceAsync();
-                }
             }
-
         }
 
         public void RefreshImage(object sender, MusicChanageEventArgs e)
