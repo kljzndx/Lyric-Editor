@@ -11,7 +11,7 @@
     d:DesignWidth="400"
     mc:Ignorable="d" Loaded="UserControl_Loaded">
 
-    <Image x:Name="image" Source="{x:Bind settings.BackgroundImage, Mode=OneWay}" Stretch="UniformToFill">
+    <Image x:Name="image" Source="{x:Bind ImageSource,Mode=OneWay}" Stretch="UniformToFill">
         <interactivity:Interaction.Behaviors>
             <behaviors:Blur Value="{x:Bind settings.BackgroundBlurDegree,Mode=OneWay}" Duration="0" AutomaticallyStart="True"/>
         </interactivity:Interaction.Behaviors>

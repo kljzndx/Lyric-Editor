@@ -14,7 +14,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <MediaElement x:Name="AudioPlayer_MediaElement" AutoPlay="False" Volume="{x:Bind settings.Volume,Mode=OneWay}" MediaOpened="AudioPlayer_MediaElement_MediaOpened" MediaEnded="AudioPlayer_MediaElement_MediaEnded" MediaFailed="AudioPlayer_MediaElement_MediaFailed" />
+        <MediaElement x:Name="AudioPlayer_MediaElement" AutoPlay="False" Position="{x:Bind PlayPosition,Mode=OneWay}" Volume="{x:Bind settings.Volume,Mode=OneWay}" MediaOpened="AudioPlayer_MediaElement_MediaOpened" MediaEnded="AudioPlayer_MediaElement_MediaEnded" MediaFailed="AudioPlayer_MediaElement_MediaFailed" />
         <StackPanel>
             <TextBlock x:Name="MusicPath_TextBlock" Text="{x:Bind MusicSource.File.Path,Mode=OneWay}" TextAlignment="Center" TextWrapping="Wrap"/>
             <Grid x:Name="Progress">
@@ -38,7 +38,7 @@
             <Button x:Name="Volume_Button" Content="&#xE995;" Style="{StaticResource ControllerButton}" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True">
                 <Button.Flyout>
                     <Flyout Placement="Bottom">
-                        <Slider Value="{x:Bind settings.Volume,Mode=TwoWay,Converter={StaticResource percentage_Double}}" Maximum="200" RelativePanel.AlignRightWithPanel="True" Width="200"/>
+                        <Slider Value="{x:Bind settings.Volume,Mode=TwoWay,Converter={StaticResource percentage_Double}}" Maximum="100" RelativePanel.AlignRightWithPanel="True" Width="200"/>
                     </Flyout>
                 </Button.Flyout>
             </Button>

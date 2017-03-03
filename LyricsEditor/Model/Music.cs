@@ -12,9 +12,10 @@ namespace LyricsEditor.Model
 {
     public class MusicChanageEventArgs : EventArgs
     {
-        public Music _Music { get; set; }
+        public Music NewMusic { get; set; }
     }
     public delegate void MusicChanageEventHandler(object serder, MusicChanageEventArgs e);
+
     public class Music : Auxiliary
     {
 
@@ -74,7 +75,7 @@ namespace LyricsEditor.Model
             Album = properties.Album;
             Alltime = properties.Duration;
             AlbumImage.SetSource(await File.GetThumbnailAsync(ThumbnailMode.MusicView));
-            MusicChanageEvent?.Invoke(this, new MusicChanageEventArgs { _Music = this });
+            MusicChanageEvent?.Invoke(this, new MusicChanageEventArgs { NewMusic = this });
             return true;
         }
     }

@@ -29,7 +29,6 @@ namespace LyricsEditor.Pages
     public sealed partial class Setting_Page : Page
     {
         private Setting settings = Setting.GetSettingObject();
-        private StorageFile backgroundImageFile;
         public Setting_Page()
         {
             this.InitializeComponent();
@@ -39,11 +38,6 @@ namespace LyricsEditor.Pages
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            if (settings.UserDefinedBackgroundImagePath != String.Empty)
-            {
-                backgroundImageFile = await StorageApplicationPermissions.FutureAccessList.GetFileAsync("BackgroundImage");
-            }
-
             if (settings.BackgroundImageType == BackgroundImageTypeEnum.AlbumImage)
                 BackgroundType_Album_RadioButton.IsChecked = true;
             else
@@ -65,27 +59,19 @@ namespace LyricsEditor.Pages
 
         private async void BackgroundType_UserDefined_RadioButton_Checked(object sender, RoutedEventArgs e)
         {
-            if (settings.UserDefinedBackgroundImagePath == String.Empty)
-                if (!await ChanageBackgroundImageFileAsync())
-                {
-                    BackgroundType_Album_RadioButton.IsChecked = true;
-                    return;
-                }
-                    
-
-            //避免打开设置面板时重新加载背景图
-            if (settings.BackgroundImageType != BackgroundImageTypeEnum.UserDefined)
-                await ChanageBackgroundImageAsync();
-
+            if (settings.UserDefinedBackgroundImagePath == String.Empty && !await ChanageBackgroundImageFileAsync())
+            {
+                BackgroundType_Album_RadioButton.IsChecked = true;
+                return;
+            }
             BackgroundImagePath_Grid.Visibility = Visibility.Visible;
             settings.BackgroundImageType = BackgroundImageTypeEnum.UserDefined;
         }
 
-        
+
         private async void ChanageBackgroundImageFile_Rectangle_Tapped(object sender, TappedRoutedEventArgs e)
         {
             await ChanageBackgroundImageFileAsync();
-            await ChanageBackgroundImageAsync();
         }
 
         public async Task<bool> ChanageBackgroundImageFileAsync()
@@ -98,15 +84,7 @@ namespace LyricsEditor.Pages
                 return false;
             StorageApplicationPermissions.FutureAccessList.AddOrReplace("BackgroundImage", _imageFile);
             settings.UserDefinedBackgroundImagePath = _imageFile.Path;
-            backgroundImageFile = _imageFile;
             return true;
-        }
-
-        private async Task ChanageBackgroundImageAsync()
-        {
-            var image = new BitmapImage();
-            image.SetSource(await backgroundImageFile.OpenAsync(FileAccessMode.Read));
-            settings.BackgroundImage = image;
         }
 
     }

@@ -7,7 +7,9 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.System;
 using Windows.System.Threading;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -50,8 +52,47 @@ namespace LyricsEditor.UserControls
         public AudioPlayer()
         {
             this.InitializeComponent();
+            CoreWindow.GetForCurrentThread().KeyDown += AudioPlayer_KeyDown;
         }
 
+        private void AudioPlayer_KeyDown(CoreWindow sender, KeyEventArgs args)
+        {
+            if (args.VirtualKey == VirtualKey.Up)
+            {
+
+                settings.Volume += 0.1;
+            }
+
+            if (args.VirtualKey == VirtualKey.Down)
+            {
+                settings.Volume -= 0.1;
+            }
+
+            if (args.VirtualKey == VirtualKey.Left &&
+                AudioPlayer_MediaElement.Position > TimeSpan.FromMilliseconds(100))
+            {
+                AudioPlayer_MediaElement.Position -= TimeSpan.FromMilliseconds(100);
+            }
+
+            if (args.VirtualKey == VirtualKey.Right &&
+                AudioPlayer_MediaElement.Position < (MusicSource.Alltime -= TimeSpan.FromMilliseconds(100)))
+            {
+                AudioPlayer_MediaElement.Position += TimeSpan.FromMilliseconds(100);
+            }
+
+            if (App.isPressShift && args.VirtualKey == VirtualKey.Left &&
+                AudioPlayer_MediaElement.Position > TimeSpan.FromSeconds(5))
+            {
+                AudioPlayer_MediaElement.Position -= TimeSpan.FromSeconds(5);
+            }
+
+            if (App.isPressShift && args.VirtualKey == VirtualKey.Right &&
+                AudioPlayer_MediaElement.Position < (MusicSource.Alltime -= TimeSpan.FromSeconds(5)))
+            {
+                AudioPlayer_MediaElement.Position += TimeSpan.FromSeconds(5);
+            }
+        }
+        
         private void DisplayTime()
         {
             var playTime = AudioPlayer_MediaElement.Position;

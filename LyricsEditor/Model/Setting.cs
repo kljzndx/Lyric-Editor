@@ -24,18 +24,16 @@ namespace LyricsEditor.Model
         private ApplicationTheme theme;
         private LyricChanageButtonBehavior chanageButtonBehavior;
         private LyricIDTag idTag = new LyricIDTag();
-        private BitmapImage backgroundImage = new BitmapImage();
 
         public double BackgroundBlurDegree { get => backgroundBlurDegree; set => SetSetting(ref backgroundBlurDegree, value); }
         public double BackgroundOpacity { get => backgroundOpacity; set => SetSetting(ref backgroundOpacity, value); }
-        public double Volume { get => volume; set => SetSetting(ref volume, value); }
+        public double Volume { get => volume; set { if (volume >= 0D && volume <= 1D) SetSetting(ref volume, value); } }
         public string UserDefinedBackgroundImagePath { get => userDefinedBackgroundImagePath; set => SetSetting(ref userDefinedBackgroundImagePath, value); }
         public bool IsDisplayBackgroundImage { get => isDisplayBackgroundImage; set => SetSetting(ref isDisplayBackgroundImage, value); }
         public bool BlurAvailability { get => blurAvailability; }
         public ApplicationTheme Theme { get => theme; set => SetSetting(ref theme, value, value.ToString()); }
         public LyricChanageButtonBehavior ChanageButtonBehavior { get => chanageButtonBehavior; set => SetSetting(ref chanageButtonBehavior, value, value.ToString()); }
         public LyricIDTag IdTag { get => idTag; set => SetProperty(ref idTag, value); }
-        public BitmapImage BackgroundImage { get => backgroundImage; set => SetProperty(ref backgroundImage, value); }
         public BackgroundImageTypeEnum BackgroundImageType { get => backgroundImageType; set => SetSetting(ref backgroundImageType, value, value.ToString()); }
 
         public ApplicationDataContainer SettingsObject { get => settingsObject; }

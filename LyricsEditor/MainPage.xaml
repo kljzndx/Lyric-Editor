@@ -33,7 +33,7 @@
             </Grid>
         </SplitView.Pane>
         <SplitView.Content>
-            <Grid x:Name="Main_Grid" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+            <Grid x:Name="Main_Grid" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" AllowDrop="True" Drop="Main_Grid_Drop">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
@@ -163,6 +163,8 @@
             </Grid>
         </SplitView.Content>
     </SplitView>
+    
+    
     <Page.BottomAppBar>
         <CommandBar>
             <CommandBar.PrimaryCommands>

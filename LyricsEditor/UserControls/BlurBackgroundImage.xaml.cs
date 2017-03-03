@@ -6,6 +6,8 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.Storage.AccessCache;
+using Windows.Storage;
+using System.Threading.Tasks;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
@@ -62,33 +64,70 @@ namespace LyricsEditor.UserControls
 
         private Setting settings;
         private BitmapImage albumImage = new BitmapImage();
+        private StorageFile imageFile;
+
+
+        public BitmapImage ImageSource
+        {
+            get { return (BitmapImage)GetValue(ImageSourceProperty); }
+            set { SetValue(ImageSourceProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for ImageSource.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty ImageSourceProperty =
+            DependencyProperty.Register(nameof(ImageSource), typeof(BitmapImage), typeof(BlurBackgroundImage), new PropertyMetadata(new BitmapImage()));
+
+
         public BlurBackgroundImage()
         {
             this.InitializeComponent();
             this.settings = Setting.GetSettingObject();
-            this.settings.PropertyChanged += 
-                (s, e) => 
-                {
-                    if (e.PropertyName == "BackgroundImageType" && settings.BackgroundImageType == BackgroundImageTypeEnum.AlbumImage)
-                        settings.BackgroundImage = albumImage;
-                };
+            this.settings.PropertyChanged += SettingItemChanged;
         }
 
         private async void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
+            if (settings.UserDefinedBackgroundImagePath != String.Empty)
+                imageFile = await StorageApplicationPermissions.FutureAccessList.GetFileAsync("BackgroundImage");
             if (settings.BackgroundImageType == BackgroundImageTypeEnum.UserDefined)
             {
-                var imageFile = await StorageApplicationPermissions.FutureAccessList.GetFileAsync("BackgroundImage");
-                await settings.BackgroundImage.SetSourceAsync(await imageFile.OpenAsync(Windows.Storage.FileAccessMode.Read));
+                await ImageSource.SetSourceAsync(await imageFile.OpenAsync(FileAccessMode.Read));
             }
+        }
+
+        private async void SettingItemChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "UserDefinedBackgroundImagePath")
+            {
+                imageFile = await StorageApplicationPermissions.FutureAccessList.GetFileAsync("BackgroundImage");
+                if (settings.BackgroundImageType == BackgroundImageTypeEnum.UserDefined)
+                    await UpdateImageSourceAsync();
+            }
+            if (e.PropertyName == "BackgroundImageType")
+            {
+                if (settings.BackgroundImageType == BackgroundImageTypeEnum.AlbumImage)
+                    ImageSource = albumImage;
+                else if (settings.BackgroundImageType == BackgroundImageTypeEnum.UserDefined)
+                {
+                    await UpdateImageSourceAsync();
+                }
+            }
+
         }
 
         public void RefreshImage(object sender, MusicChanageEventArgs e)
         {
-            albumImage = e._Music.AlbumImage;
+            albumImage = e.NewMusic.AlbumImage;
             if (settings.BackgroundImageType == BackgroundImageTypeEnum.AlbumImage)
-                settings.BackgroundImage = albumImage;
+                ImageSource = albumImage;
         }
-        
+
+        private async Task UpdateImageSourceAsync()
+        {
+            var imageSource = new BitmapImage();
+            await imageSource.SetSourceAsync(await imageFile.OpenAsync(FileAccessMode.Read));
+            ImageSource = imageSource;
+        }
+
     }
 }

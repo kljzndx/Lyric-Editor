@@ -17,6 +17,7 @@ using LyricsEditor.Pages;
 using LyricsEditor.UserControls;
 using System.Reflection;
 using Windows.UI.ViewManagement;
+using Windows.ApplicationModel.DataTransfer;
 
 // https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x804 上介绍了“空白页”项模板
 
@@ -31,13 +32,12 @@ namespace LyricsEditor
         private ObservableCollection<Lyric> lyrics = new ObservableCollection<Lyric>();
         private Setting settings = Setting.GetSettingObject();
         private bool InputBoxAvailableFocus = false;
-        private bool isPressCtrl = false;
+        
 
         public MainPage()
         {
             this.InitializeComponent();
             CoreWindow.GetForCurrentThread().KeyDown += MainPage_KeyDown;
-            CoreWindow.GetForCurrentThread().KeyUp += MainPage_KeyUp;
             AppVersionValue_TextBlock.Text = AppInfo.AppVersion;
             LyricFileManager.LyricFileChanageEvent += async (e) => { await LyricManager.LrcAnalysis(e.File, lyrics, settings.IdTag); };
             
@@ -57,13 +57,10 @@ namespace LyricsEditor
 
         private void MainPage_KeyDown(CoreWindow sender, KeyEventArgs args)
         {
-            if (args.VirtualKey == VirtualKey.Control)
-                isPressCtrl = true;
-
             var selectItem = Lyric_ListView.SelectedItem as Lyric;
             //添加歌词
 
-            if (isPressCtrl && args.VirtualKey == VirtualKey.Enter)
+            if (App.isPressCtrl && args.VirtualKey == VirtualKey.Enter)
                 AddLyric();
 
             if (args.VirtualKey == VirtualKey.Space &&
@@ -91,13 +88,10 @@ namespace LyricsEditor
                     lyrics.Remove(item);
                 }
             }
-        }
 
-        private void MainPage_KeyUp(CoreWindow sender, KeyEventArgs args)
-        {
-            if (args.VirtualKey == VirtualKey.Control)
-                isPressCtrl = false;
+            
         }
+        
 
         #region 自己定义的方法
 
@@ -282,6 +276,11 @@ namespace LyricsEditor
         private void HideMenu_Button_Click(object sender, RoutedEventArgs e)
         {
             FastMenu_StackPanel.Visibility = Visibility.Collapsed;
+        }
+
+        private void Main_Grid_Drop(object sender, DragEventArgs e)
+        {
+            
         }
     }
 }

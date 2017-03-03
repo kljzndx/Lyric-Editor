@@ -10,6 +10,7 @@ using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Storage;
 using Windows.System;
+using Windows.UI.Core;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -27,6 +28,9 @@ namespace LyricsEditor
     /// </summary>
     sealed partial class App : Application
     {
+        public static bool isPressCtrl = false;
+        public static bool isPressShift = false;
+
         /// <summary>
         /// 初始化单一实例应用程序对象。这是执行的创作代码的第一行，
         /// 已执行，逻辑上等同于 main() 或 WinMain()。
@@ -37,6 +41,22 @@ namespace LyricsEditor
             this.Suspending += OnSuspending;
             this.UnhandledException += OnUnhandledException;
             this.RequestedTheme = Setting.GetSettingObject().Theme;
+        }
+
+        private void Window_KeyDown(CoreWindow sender, KeyEventArgs args)
+        {
+            if (args.VirtualKey == VirtualKey.Control)
+                App.isPressCtrl = true;
+            if (args.VirtualKey == VirtualKey.Shift)
+                App.isPressShift = true;
+        }
+
+        private void Window_KeyUp(CoreWindow sender, KeyEventArgs args)
+        {
+            if (args.VirtualKey == VirtualKey.Control)
+                App.isPressCtrl = false;
+            if (args.VirtualKey == VirtualKey.Shift)
+                App.isPressShift = false;
         }
 
         private async void OnUnhandledException(object sender, Windows.UI.Xaml.UnhandledExceptionEventArgs e)
@@ -81,7 +101,6 @@ namespace LyricsEditor
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
             Frame rootFrame = Window.Current.Content as Frame;
-
             // 不要在窗口已包含内容时重复应用程序初始化，
             // 只需确保窗口处于活动状态
             if (rootFrame == null)
@@ -114,6 +133,8 @@ namespace LyricsEditor
                 Window.Current.Activate();
             }
             EnsureSyncContext();
+            Window.Current.CoreWindow.KeyDown += Window_KeyDown;
+            Window.Current.CoreWindow.KeyUp += Window_KeyUp;
         }
 
         protected override void OnActivated(IActivatedEventArgs args)
@@ -128,9 +149,13 @@ namespace LyricsEditor
                 frame = new Frame();
                 frame.NavigationFailed += OnNavigationFailed;
                 Window.Current.Content = frame;
+                Window.Current.CoreWindow.KeyDown += Window_KeyDown;
+                Window.Current.CoreWindow.KeyUp += Window_KeyUp;
             }
             if (frame.Content == null)
+            {
                 frame.Navigate(typeof(MainPage));
+            }
             Window.Current.Activate();
             LyricFileManager.ChanageFile(args.Files[0] as StorageFile);
         }
