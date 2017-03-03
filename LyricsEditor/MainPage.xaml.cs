@@ -41,7 +41,7 @@ namespace LyricsEditor
             AppVersionValue_TextBlock.Text = AppInfo.AppVersion;
             LyricFileManager.LyricFileChanageEvent += async (e) => { await LyricManager.LrcAnalysis(e.File, lyrics, settings.IdTag); };
             
-            music.MusicChanageEvent += BackgroundImage.RefreshImage;
+            music.MusicChanageEvent += BackgroundImage.RefreshAlbumImage;
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)

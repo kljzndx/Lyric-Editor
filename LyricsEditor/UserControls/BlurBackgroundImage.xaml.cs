@@ -106,7 +106,7 @@ namespace LyricsEditor.UserControls
             }
         }
 
-        public void RefreshImage(object sender, MusicChanageEventArgs e)
+        public void RefreshAlbumImage(object sender, MusicChanageEventArgs e)
         {
             albumImage = e.NewMusic.AlbumImage;
             if (settings.BackgroundImageType == BackgroundImageTypeEnum.AlbumImage)
