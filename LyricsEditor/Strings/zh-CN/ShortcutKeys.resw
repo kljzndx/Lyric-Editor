@@ -132,6 +132,12 @@
   <data name="ChanageTime_Function_TextBlock.Text" xml:space="preserve">
     <value>修改为当前时间</value>
   </data>
+  <data name="ChangeVolume_Condition_TextBlock.Text" xml:space="preserve">
+    <value>上/下 方向键</value>
+  </data>
+  <data name="ChangeVolume_Function_TextBlock.Text" xml:space="preserve">
+    <value>增大/减小 音量</value>
+  </data>
   <data name="Close_Button.Content" xml:space="preserve">
     <value>关闭</value>
   </data>

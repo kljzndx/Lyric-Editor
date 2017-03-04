@@ -132,6 +132,12 @@
   <data name="ChanageTime_Function_TextBlock.Text" xml:space="preserve">
     <value>Modifications to the current time</value>
   </data>
+  <data name="ChangeVolume_Condition_TextBlock.Text" xml:space="preserve">
+    <value>Up / Down Arrow Key</value>
+  </data>
+  <data name="ChangeVolume_Function_TextBlock.Text" xml:space="preserve">
+    <value>Increase / Decrease Volume</value>
+  </data>
   <data name="Close_Button.Content" xml:space="preserve">
     <value>Close</value>
   </data>
