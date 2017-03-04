@@ -32,8 +32,8 @@
                 <Button x:Name="Pause_Button" Content="&#xE103;" Style="{StaticResource ControllerButton}" Visibility="Collapsed" Click="Pause_Button_Click"/>
             </StackPanel>
 
-            <Button x:Name="GoBack_Button" Content="&#xE892;" Style="{StaticResource ControllerButton}" RelativePanel.AlignVerticalCenterWithPanel="True" RelativePanel.LeftOf="PlayOrPause_StackPanel" IsEnabled="False" Click="GoBack_Button_Click" RightTapped="GoBack_Button_RightTapped"/>
-            <Button x:Name="GoForward_Button" Content="&#xE893;" Style="{StaticResource ControllerButton}" RelativePanel.AlignVerticalCenterWithPanel="True" RelativePanel.RightOf="PlayOrPause_StackPanel" IsEnabled="False" Click="GoForward_Button_Click" RightTapped="GoForward_Button_RightTapped"/>
+            <Button x:Name="GoBack_Button" Content="&#xE892;" Style="{StaticResource ControllerButton}" RelativePanel.AlignVerticalCenterWithPanel="True" RelativePanel.LeftOf="PlayOrPause_StackPanel" IsEnabled="False" Click="GoBack_Button_Click"/>
+            <Button x:Name="GoForward_Button" Content="&#xE893;" Style="{StaticResource ControllerButton}" RelativePanel.AlignVerticalCenterWithPanel="True" RelativePanel.RightOf="PlayOrPause_StackPanel" IsEnabled="False" Click="GoForward_Button_Click"/>
 
             <Button x:Name="Volume_Button" Content="&#xE995;" Style="{StaticResource ControllerButton}" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True">
                 <Button.Flyout>

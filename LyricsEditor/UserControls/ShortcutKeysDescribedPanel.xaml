@@ -6,7 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    d:DesignHeight="350"
+    d:DesignHeight="400"
     d:DesignWidth="400">
     <UserControl.Resources>
         <!--<Storyboard x:Name="Shrinkage_Storyboard" Completed="Shrinkage_Storyboard_Completed">
@@ -43,7 +43,7 @@
         </Storyboard>
     </UserControl.Resources>
 
-    <Grid x:Name="Root_Grid" Width="400" Height="350" Background="{ThemeResource SystemControlBackgroundAccentBrush}" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Collapsed">
+    <Grid x:Name="Root_Grid" Width="400" Height="400" Background="{ThemeResource SystemControlBackgroundAccentBrush}" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Collapsed">
         <Grid.RenderTransform>
             <CompositeTransform x:Name="RootGrid_Transform" ScaleX="0" ScaleY="0"/>
         </Grid.RenderTransform>
@@ -73,6 +73,8 @@
                     <TextBlock x:Uid="/ShortcutKeys/AddLyric_Condition2_TextBlock" Margin="0,10" Foreground="White"/>
                     <TextBlock x:Uid="/ShortcutKeys/ChanageTime_Condition_TextBlock" Margin="0,10" Foreground="White"/>
                     <TextBlock x:Uid="/ShortcutKeys/Delete_Condition_TextBlock"  Margin="0,10" Foreground="White"/>
+                    <TextBlock x:Uid="/ShortcutKeys/FastBackOrForward500ms_Condition_TextBlock"  Margin="0,10" Foreground="White"/>
+                    <TextBlock x:Uid="/ShortcutKeys/FastBackOrForward5s_Condition_TextBlock"  Margin="0,10" Foreground="White"/>
                 </StackPanel>
                 <Border Background="White" Grid.Column="1" Padding="0,5">
                     <TextBlock x:Uid="/ShortcutKeys/Function_TextBlock" HorizontalAlignment="Center" Foreground="Black"/>
@@ -81,7 +83,10 @@
                     <TextBlock x:Uid="/ShortcutKeys/AddLyric_Function_TextBlock" Margin="0,30" Foreground="White"/>
                     <TextBlock x:Uid="/ShortcutKeys/ChanageTime_Function_TextBlock" Margin="0,10" Foreground="White"/>
                     <TextBlock x:Uid="/ShortcutKeys/Delete_Function_TextBlock" Margin="0,10" Foreground="White"/>
+                    <TextBlock x:Uid="/ShortcutKeys/FastBackOrForward500ms_Function_TextBlock" Margin="0,10" Foreground="White"/>
+                    <TextBlock x:Uid="/ShortcutKeys/FastBackOrForward5s_Function_TextBlock" Margin="0,10" Foreground="White"/>
                 </StackPanel>
+                
             </Grid>
         </ScrollViewer>
 

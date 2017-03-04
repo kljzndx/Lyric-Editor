@@ -53,6 +53,7 @@ namespace LyricsEditor.UserControls
         {
             this.InitializeComponent();
             CoreWindow.GetForCurrentThread().KeyDown += AudioPlayer_KeyDown;
+            CoreWindow.GetForCurrentThread().KeyUp += AudioPlayer_KeyUp;
         }
 
         private void AudioPlayer_KeyDown(CoreWindow sender, KeyEventArgs args)
@@ -91,8 +92,22 @@ namespace LyricsEditor.UserControls
             {
                 AudioPlayer_MediaElement.Position += TimeSpan.FromSeconds(5);
             }
+            if (args.VirtualKey == VirtualKey.Shift)
+            {
+                GoBack_Button.Content = "\uE0A6";
+                GoForward_Button.Content = "\uE0AB";
+            }
         }
-        
+
+        private void AudioPlayer_KeyUp(CoreWindow sender, KeyEventArgs args)
+        {
+            if (args.VirtualKey == VirtualKey.Shift)
+            {
+                GoBack_Button.Content = "\uE892";
+                GoForward_Button.Content = "\uE893";
+            }
+        }
+
         private void DisplayTime()
         {
             var playTime = AudioPlayer_MediaElement.Position;
@@ -195,28 +210,16 @@ namespace LyricsEditor.UserControls
 
         private void GoBack_Button_Click(object sender, RoutedEventArgs e)
         {
-            AudioPlayer_MediaElement.Position = TimeSpan.FromMinutes(AudioPlayer_MediaElement.Position.TotalMinutes - TimeSpan.FromMilliseconds(100).TotalMinutes);
+            AudioPlayer_MediaElement.Position -= App.isPressShift ? TimeSpan.FromSeconds(5) : TimeSpan.FromMilliseconds(500);
             DisplayTime();
         }
 
         private void GoForward_Button_Click(object sender, RoutedEventArgs e)
         {
-            AudioPlayer_MediaElement.Position = TimeSpan.FromMinutes(AudioPlayer_MediaElement.Position.TotalMinutes + TimeSpan.FromMilliseconds(100).TotalMinutes);
+            AudioPlayer_MediaElement.Position += App.isPressShift ? TimeSpan.FromSeconds(5) : TimeSpan.FromMilliseconds(500);
             DisplayTime();
         }
-
-        private void GoBack_Button_RightTapped(object sender, RightTappedRoutedEventArgs e)
-        {
-            AudioPlayer_MediaElement.Position = TimeSpan.FromMinutes(AudioPlayer_MediaElement.Position.TotalMinutes - TimeSpan.FromSeconds(5).TotalMinutes);
-            DisplayTime();
-        }
-
-        private void GoForward_Button_RightTapped(object sender, RightTappedRoutedEventArgs e)
-        {
-            AudioPlayer_MediaElement.Position = TimeSpan.FromMinutes(AudioPlayer_MediaElement.Position.TotalMinutes + TimeSpan.FromSeconds(5).TotalMinutes);
-            DisplayTime();
-        }
-
+        
         #endregion
 
     }

@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AddLyric_Condition1_TextBlock.Text" xml:space="preserve">
-    <value>输入完歌词后按ctrl + Enter</value>
+    <value>输入完歌词后按 Ctrl + Enter</value>
   </data>
   <data name="AddLyric_Condition2_TextBlock.Text" xml:space="preserve">
     <value>无选中项时按空格</value>
@@ -143,6 +143,18 @@
   </data>
   <data name="Delete_Function_TextBlock.Text" xml:space="preserve">
     <value>删除选中的歌词</value>
+  </data>
+  <data name="FastBackOrForward500ms_Condition_TextBlock.Text" xml:space="preserve">
+    <value>左/右 方向键</value>
+  </data>
+  <data name="FastBackOrForward500ms_Function_TextBlock.Text" xml:space="preserve">
+    <value>快退/快进 500毫秒</value>
+  </data>
+  <data name="FastBackOrForward5s_Condition_TextBlock.Text" xml:space="preserve">
+    <value>Shift + 左/右 方向键</value>
+  </data>
+  <data name="FastBackOrForward5s_Function_TextBlock.Text" xml:space="preserve">
+    <value>快退/快进 5秒</value>
   </data>
   <data name="Function_TextBlock.Text" xml:space="preserve">
     <value>功能</value>

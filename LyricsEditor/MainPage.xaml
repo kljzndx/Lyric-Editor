@@ -6,6 +6,8 @@
     xmlns:tpl="using:LyricsEditor.Templates"
     xmlns:model="using:LyricsEditor.Model"
     xmlns:usctrl="using:LyricsEditor.UserControls"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:behaviors="using:Microsoft.Toolkit.Uwp.UI.Animations.Behaviors"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
@@ -154,11 +156,22 @@
                             </ControlTemplate>
                         </Button.Template>
                     </Button>
-                    <StackPanel x:Name="FastMenu_StackPanel" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
-                        <Button x:Uid="/Main/OpenMusic_Button" Width="130" Margin="0,5" Click="OpenMusic_MenuFlyoutItem_Click"/>
-                        <Button x:Uid="/Main/OpenLRC_Button" Width="130" Margin="0,5" Click="OpenLRC_MenuFlyoutItem_Click"/>
-                        <Button x:Name="HideMenu_Button" x:Uid="/Main/HideMenu_Button" Width="130" Margin="0,5" Click="HideMenu_Button_Click"/>
-                    </StackPanel>
+                    
+                    <Grid x:Name="FastMenu_Grid" Grid.Row="1" Width="140" Height="140" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Image Source="Assets/毛玻璃.png" Stretch="UniformToFill" Opacity="0.7">
+                            <interactivity:Interaction.Behaviors>
+                                <behaviors:Blur Value="3"/>
+                            </interactivity:Interaction.Behaviors>
+                        </Image>
+                        
+                        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <Button x:Uid="/Main/OpenMusic_Button" Width="130" Margin="0,5" Click="OpenMusic_MenuFlyoutItem_Click"/>
+                            <Button x:Uid="/Main/OpenLRC_Button" Width="130" Margin="0,5" Click="OpenLRC_MenuFlyoutItem_Click"/>
+                            <Button x:Name="HideMenu_Button" x:Uid="/Main/HideMenu_Button" Width="130" Margin="0,5" Click="HideMenu_Button_Click"/>
+                        </StackPanel>
+                    </Grid>
+                    
+                    
                 </Grid>
             </Grid>
         </SplitView.Content>

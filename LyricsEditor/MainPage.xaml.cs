@@ -275,7 +275,7 @@ namespace LyricsEditor
 
         private void HideMenu_Button_Click(object sender, RoutedEventArgs e)
         {
-            FastMenu_StackPanel.Visibility = Visibility.Collapsed;
+            FastMenu_Grid.Visibility = Visibility.Collapsed;
         }
 
         private void Main_Grid_Drop(object sender, DragEventArgs e)

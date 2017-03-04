@@ -144,6 +144,18 @@
   <data name="Delete_Function_TextBlock.Text" xml:space="preserve">
     <value>Delete Selected Lyrics</value>
   </data>
+  <data name="FastBackOrForward500ms_Condition_TextBlock.Text" xml:space="preserve">
+    <value>Left / Right Arrow Key</value>
+  </data>
+  <data name="FastBackOrForward500ms_Function_TextBlock.Text" xml:space="preserve">
+    <value>Fast Back / Fast Forward 500ms</value>
+  </data>
+  <data name="FastBackOrForward5s_Condition_TextBlock.Text" xml:space="preserve">
+    <value>Shift + Left / Right Arrow Key</value>
+  </data>
+  <data name="FastBackOrForward5s_Function_TextBlock.Text" xml:space="preserve">
+    <value>Fast Back / Fast Forward 5s</value>
+  </data>
   <data name="Function_TextBlock.Text" xml:space="preserve">
     <value>Function</value>
   </data>
