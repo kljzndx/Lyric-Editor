@@ -51,7 +51,7 @@ namespace LyricsEditor
                 Grid.SetRow(LyricEditButton_StackPanel, 1);
             else
                 Grid.SetColumn(LyricEditButton_StackPanel, 1);
-            
+
             if (AppInfo.BootCount++ == 1)
                 ShortcutKeysPanel.PopUp();
         }
