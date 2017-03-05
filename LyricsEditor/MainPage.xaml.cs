@@ -18,6 +18,7 @@ using LyricsEditor.UserControls;
 using System.Reflection;
 using Windows.UI.ViewManagement;
 using Windows.ApplicationModel.DataTransfer;
+using LyricsEditor.Information;
 
 // https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x804 上介绍了“空白页”项模板
 

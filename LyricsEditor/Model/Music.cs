@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LyricsEditor.Auxiliary;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,7 @@ using Windows.Storage.FileProperties;
 using Windows.Storage.Pickers;
 using Windows.UI.Xaml.Media.Imaging;
 
+
 namespace LyricsEditor.Model
 {
     public class MusicChanageEventArgs : EventArgs
@@ -16,7 +18,7 @@ namespace LyricsEditor.Model
     }
     public delegate void MusicChanageEventHandler(object serder, MusicChanageEventArgs e);
 
-    public class Music : Auxiliary
+    public class Music : BindableBase
     {
 
         private string name, artist, album;

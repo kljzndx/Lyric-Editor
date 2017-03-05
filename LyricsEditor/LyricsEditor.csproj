@@ -108,7 +108,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Auxiliary.cs" />
+    <Compile Include="Auxiliary\BindableBase.cs" />
     <Compile Include="Converter\BoolToVisibility.cs" />
     <Compile Include="Converter\BoolToVisibility_Reverse.cs" />
     <Compile Include="Converter\DoubleToTimeString.cs" />
@@ -118,9 +118,9 @@
     <Compile Include="Enum\BackgroundImageType.cs" />
     <Compile Include="Enum\LyricChanageButtonBehavior.cs" />
     <Compile Include="ExceptionHandlingSynchronizationContext.cs" />
-    <Compile Include="Model\AppInfo.cs" />
-    <Compile Include="Model\CharacterLibrary.cs" />
-    <Compile Include="Model\Error.cs" />
+    <Compile Include="Information\AppInfo.cs" />
+    <Compile Include="Auxiliary\CharacterLibrary.cs" />
+    <Compile Include="Information\Error.cs" />
     <Compile Include="Model\Lyric.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
@@ -128,10 +128,10 @@
     <Compile Include="Model\LyricFileManager.cs" />
     <Compile Include="Model\LyricIDTag.cs" />
     <Compile Include="Model\LyricManager.cs" />
-    <Compile Include="Model\MessageBox.cs" />
+    <Compile Include="Auxiliary\MessageBox.cs" />
     <Compile Include="Model\Music.cs" />
     <Compile Include="Model\Setting.cs" />
-    <Compile Include="Model\SystemInfo.cs" />
+    <Compile Include="Information\SystemInfo.cs" />
     <Compile Include="Pages\Setting_Page.xaml.cs">
       <DependentUpon>Setting_Page.xaml</DependentUpon>
     </Compile>

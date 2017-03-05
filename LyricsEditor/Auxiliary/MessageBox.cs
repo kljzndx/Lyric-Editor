@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Popups;
 
-namespace LyricsEditor.Model
+namespace LyricsEditor.Auxiliary
 {
     public static class MessageBox
     {

@@ -7,7 +7,7 @@ using Windows.ApplicationModel;
 using Windows.Security.ExchangeActiveSyncProvisioning;
 using Windows.System.Profile;
 
-namespace LyricsEditor.Model
+namespace LyricsEditor.Information
 {
     public static class SystemInfo
     {

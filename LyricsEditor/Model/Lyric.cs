@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using LyricsEditor.Auxiliary;
 
 namespace LyricsEditor.Model
 {
-    public class Lyric : Auxiliary, IComparable
+    public class Lyric : BindableBase, IComparable
     {
         private int id;
         private TimeSpan time;

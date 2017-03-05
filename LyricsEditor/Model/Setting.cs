@@ -1,4 +1,6 @@
-﻿using System;
+﻿using LyricsEditor.Auxiliary;
+using LyricsEditor.Information;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -12,7 +14,7 @@ using Windows.UI.Xaml.Media.Imaging;
 namespace LyricsEditor.Model
 {
 
-    class Setting : Auxiliary
+    class Setting : BindableBase
     {
         private ApplicationDataContainer settingsObject = ApplicationData.Current.LocalSettings;
         private static Setting thisObject;

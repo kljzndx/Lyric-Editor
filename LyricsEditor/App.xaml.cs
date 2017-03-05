@@ -1,4 +1,6 @@
-﻿using LyricsEditor.Model;
+﻿using LyricsEditor.Auxiliary;
+using LyricsEditor.Information;
+using LyricsEditor.Model;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -74,7 +76,7 @@ namespace LyricsEditor
             error.Content = e.Message;
             error.StackTrace = e.StackTraceEx();
             var buttons = new Dictionary<string, UICommandInvokedHandler>();
-            string report = $"请说明你做了什么\nPlease introduce what you do\n\n\n\n{SystemInfo.PrintInfo()}\n{Model.AppInfo.PrintInfo()}\n{error.ToString()}";
+            string report = $"请说明你做了什么\nPlease introduce what you do\n\n\n\n{SystemInfo.PrintInfo()}\n{Information.AppInfo.PrintInfo()}\n{error.ToString()}";
             report = report.Replace("\n", "%0A");
             buttons.Add(CharacterLibrary.MessageBox.GetString("EmailErrorReport"),
                 async u => await Launcher.LaunchUriAsync(new Uri($"mailto:kljzndx@outlook.com?subject=Simple Lyric Editor Error Report&body={report}"))

@@ -6,9 +6,9 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LyricsEditor
+namespace LyricsEditor.Auxiliary
 {
-    public abstract class Auxiliary: INotifyPropertyChanged
+    public abstract class BindableBase : INotifyPropertyChanged
     {
         /// <summary>
         /// Multicast event for property change notifications.

@@ -1,4 +1,5 @@
-﻿using LyricsEditor.Model;
+﻿using LyricsEditor.Information;
+using LyricsEditor.Model;
 using System;
 using System.Collections.Generic;
 using System.IO;

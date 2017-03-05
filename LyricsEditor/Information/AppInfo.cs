@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LyricsEditor.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Resources;
 
-namespace LyricsEditor.Model
+namespace LyricsEditor.Information
 {
     public static class AppInfo
     {

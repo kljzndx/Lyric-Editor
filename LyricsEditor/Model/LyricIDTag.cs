@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using LyricsEditor.Auxiliary;
 
 namespace LyricsEditor.Model
 {
-    public class LyricIDTag : Auxiliary
+    public class LyricIDTag : BindableBase
     {
         private string title, artist, album, lyricAuthor;
 

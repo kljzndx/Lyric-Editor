@@ -36,7 +36,7 @@ namespace LyricsEditor.Pages
 
         }
 
-        private async void Page_Loaded(object sender, RoutedEventArgs e)
+        private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             if (settings.BackgroundImageType == BackgroundImageTypeEnum.AlbumImage)
                 BackgroundType_Album_RadioButton.IsChecked = true;
