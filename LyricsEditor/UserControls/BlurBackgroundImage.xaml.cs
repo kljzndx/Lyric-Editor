@@ -116,7 +116,8 @@ namespace LyricsEditor.UserControls
         private async Task UpdateImageSourceAsync()
         {
             var imageSource = new BitmapImage();
-            await imageSource.SetSourceAsync(await imageFile.OpenAsync(FileAccessMode.Read));
+            if (imageFile != null)
+                await imageSource.SetSourceAsync(await imageFile.OpenAsync(FileAccessMode.Read));
             ImageSource = imageSource;
         }
 
