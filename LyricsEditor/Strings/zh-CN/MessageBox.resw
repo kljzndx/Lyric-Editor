@@ -129,4 +129,7 @@
   <data name="MusicPlayError" xml:space="preserve">
     <value>此音乐无法解码</value>
   </data>
+  <data name="UnsupportedFolder" xml:space="preserve">
+    <value>请勿释放文件夹</value>
+  </data>
 </root>

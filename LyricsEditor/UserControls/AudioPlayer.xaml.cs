@@ -34,16 +34,8 @@ namespace LyricsEditor.UserControls
             get { return (TimeSpan)GetValue(PlayPositionProperty); }
             set { SetValue(PlayPositionProperty, value); }
         }
-        
-        public Music MusicSource
-        {
-            get { return (Music)GetValue(MusicSourceProperty); }
-            set { SetValue(MusicSourceProperty, value); }
-        }
 
-        // Using a DependencyProperty as the backing store for music.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty MusicSourceProperty = 
-            DependencyProperty.Register(nameof(MusicSource), typeof(Music), typeof(AudioPlayer), new PropertyMetadata(new Music()));
+        private Music musicSource;
         
         // Using a DependencyProperty as the backing store for PlayPosition.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty PlayPositionProperty =
@@ -53,6 +45,7 @@ namespace LyricsEditor.UserControls
         public AudioPlayer()
         {
             this.InitializeComponent();
+            musicSource = new Music();
             CoreWindow.GetForCurrentThread().KeyDown += AudioPlayer_KeyDown;
             CoreWindow.GetForCurrentThread().KeyUp += AudioPlayer_KeyUp;
         }
@@ -61,7 +54,6 @@ namespace LyricsEditor.UserControls
         {
             if (args.VirtualKey == VirtualKey.Up)
             {
-
                 settings.Volume += 0.1;
             }
 
@@ -77,7 +69,7 @@ namespace LyricsEditor.UserControls
             }
 
             if (args.VirtualKey == VirtualKey.Right &&
-                AudioPlayer_MediaElement.Position < (MusicSource.Alltime -= TimeSpan.FromMilliseconds(100)))
+                AudioPlayer_MediaElement.Position < (musicSource.Alltime -= TimeSpan.FromMilliseconds(100)))
             {
                 AudioPlayer_MediaElement.Position += TimeSpan.FromMilliseconds(100);
             }
@@ -89,7 +81,7 @@ namespace LyricsEditor.UserControls
             }
 
             if (App.isPressShift && args.VirtualKey == VirtualKey.Right &&
-                AudioPlayer_MediaElement.Position < (MusicSource.Alltime -= TimeSpan.FromSeconds(5)))
+                AudioPlayer_MediaElement.Position < (musicSource.Alltime -= TimeSpan.FromSeconds(5)))
             {
                 AudioPlayer_MediaElement.Position += TimeSpan.FromSeconds(5);
             }
@@ -125,9 +117,11 @@ namespace LyricsEditor.UserControls
         {
             displayTime_ThreadPoolTimer = ThreadPoolTimer.CreatePeriodicTimer(DisplayTime, TimeSpan.FromMilliseconds(100), DisplayTime);
         }
-        public async Task PlayMusic()
+
+        public async void SwitchMusic(object sender, MusicChanageEventArgs e)
         {
-            AudioPlayer_MediaElement.SetSource(await MusicSource.File.OpenAsync(Windows.Storage.FileAccessMode.Read), MusicSource.File.ContentType);
+            musicSource = e.NewMusic;
+            AudioPlayer_MediaElement.SetSource(await musicSource.File.OpenAsync(Windows.Storage.FileAccessMode.Read), musicSource.File.ContentType);
         }
         /// <summary>
         /// 切换显示播放和暂停按钮
@@ -150,15 +144,16 @@ namespace LyricsEditor.UserControls
         private void AudioPlayer_MediaElement_MediaOpened(object sender, RoutedEventArgs e)
         {
             (sender as MediaElement).Play();
-            PlayPosithon_Slider.Maximum = MusicSource.Alltime.TotalMinutes;
+            MusicPath_TextBlock.Text = musicSource.File.Path;
+            PlayPosithon_Slider.Maximum = musicSource.Alltime.TotalMinutes;
             StartDisPlayTime();
             SwitchDisplayPlayAndPauseButton(false);
             Play_Button.IsEnabled = true;
             GoBack_Button.IsEnabled = true;
             GoForward_Button.IsEnabled = true;
-            settings.IdTag.Title = MusicSource.Name;
-            settings.IdTag.Artist = MusicSource.Artist;
-            settings.IdTag.Album = MusicSource.Album;
+            settings.IdTag.Title = musicSource.Name;
+            settings.IdTag.Artist = musicSource.Artist;
+            settings.IdTag.Album = musicSource.Album;
         }
 
         private async void AudioPlayer_MediaElement_MediaFailed(object sender, ExceptionRoutedEventArgs e)

@@ -25,7 +25,7 @@ namespace LyricsEditor.Model
         //    return true;
         //}
 
-        public static async Task LrcAnalysis(IStorageFile file, ObservableCollection<Lyric> lyricContent, LyricIDTag idTag)
+        public static async Task LrcAnalysis(IStorageFile file, IList<Lyric> lyricContent, LyricIDTag idTag)
         {
             string content = String.Empty;
             try
@@ -34,7 +34,6 @@ namespace LyricsEditor.Model
             }
             catch (Exception)
             {
-
                 var filebuffer = await FileIO.ReadBufferAsync(file);
                 Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
                 try
@@ -47,12 +46,14 @@ namespace LyricsEditor.Model
                     throw;
                 }
             }
+
             lyricContent.Clear();
-            if (idTag.Title == String.Empty)
+
+            if (String.IsNullOrEmpty(idTag.Title))
                 idTag.Title = GetIDTag(content, "ti");
-            if (idTag.Artist == String.Empty)
+            if (String.IsNullOrEmpty(idTag.Artist))
                 idTag.Artist = GetIDTag(content, "ar");
-            if (idTag.Album == String.Empty)
+            if (String.IsNullOrEmpty(idTag.Album))
                 idTag.Album = GetIDTag(content, "al");
 
             idTag.LyricAuthor = GetIDTag(content, "by");
@@ -70,7 +71,7 @@ namespace LyricsEditor.Model
                     lyricContent.Add(new Lyric { ID = i++, Time = time, Content = item.Groups[4].Value.Trim() });
                 }
             }
-            else if (content != String.Empty && content != null)
+            else if (!String.IsNullOrEmpty(content))
             {
                 string[] lines = content.Split('\n');
                 foreach (var line in lines)
@@ -80,7 +81,7 @@ namespace LyricsEditor.Model
             }
         }
 
-        public static async Task<bool> SaveLyric(ObservableCollection<Lyric> lyricList,LyricIDTag tag)
+        public static async Task<bool> SaveLyric(IList<Lyric> lyricList,LyricIDTag tag)
         {
             StorageFile lrcFile = null;
             if (LyricFileManager.ThisLRCFile is null)

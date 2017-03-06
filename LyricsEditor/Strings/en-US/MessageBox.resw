@@ -129,4 +129,7 @@
   <data name="MusicPlayError" xml:space="preserve">
     <value>The music cannot be decoded</value>
   </data>
+  <data name="UnsupportedFolder" xml:space="preserve">
+    <value>Please do not release folder</value>
+  </data>
 </root>

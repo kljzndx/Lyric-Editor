@@ -35,7 +35,7 @@
             </Grid>
         </SplitView.Pane>
         <SplitView.Content>
-            <Grid x:Name="Main_Grid" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" AllowDrop="True" Drop="Main_Grid_Drop">
+            <Grid x:Name="Main_Grid" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" AllowDrop="True" Drop="Main_Grid_Drop" DragOver="Main_Grid_DragOver">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
@@ -52,7 +52,7 @@
                     </StackPanel>
                 </Grid>-->
                 
-                <usctrl:AudioPlayer x:Name="AudioPlayer" Grid.Row="1" MusicSource="{x:Bind music,Mode=OneWay}"/>
+                <usctrl:AudioPlayer x:Name="AudioPlayer" Grid.Row="1"/>
                 <usctrl:ShortcutKeysDescribedPanel x:Name="ShortcutKeysPanel" Grid.RowSpan="3" Canvas.ZIndex="2"/>
                 
                 <Grid x:Name="Lyric_Grid" Grid.Row="2">

@@ -60,23 +60,29 @@ namespace LyricsEditor.Model
         /// 打开音乐文件
         /// </summary>
         /// <returns>成功与否</returns>
-        public async Task<bool> OpenFile()
+        public async Task<bool> OpenFile(StorageFile file = null)
         {
-            FileOpenPicker picker = new FileOpenPicker();
-            picker.FileTypeFilter.Add(".mp3");
-            picker.FileTypeFilter.Add(".flac");
-            picker.FileTypeFilter.Add(".wav");
-            picker.FileTypeFilter.Add(".aac");
-            picker.FileTypeFilter.Add(".m4a");
-            File = await picker.PickSingleFileAsync();
-            if (File == null)
-                return false;
-            var properties = await File.Properties.GetMusicPropertiesAsync();
+            if (file == null)
+            {
+                FileOpenPicker picker = new FileOpenPicker();
+                picker.FileTypeFilter.Add(".mp3");
+                picker.FileTypeFilter.Add(".flac");
+                picker.FileTypeFilter.Add(".wav");
+                picker.FileTypeFilter.Add(".aac");
+                picker.FileTypeFilter.Add(".m4a");
+                this.file = await picker.PickSingleFileAsync();
+                if (this.file == null)
+                    return false;
+            }
+            else
+                this.file = file;
+
+            var properties = await this.file.Properties.GetMusicPropertiesAsync();
             Name = properties.Title;
             Artist = properties.Artist;
             Album = properties.Album;
             Alltime = properties.Duration;
-            AlbumImage.SetSource(await File.GetThumbnailAsync(ThumbnailMode.MusicView));
+            AlbumImage.SetSource(await this.file.GetThumbnailAsync(ThumbnailMode.MusicView));
             MusicChanageEvent?.Invoke(this, new MusicChanageEventArgs { NewMusic = this });
             return true;
         }

@@ -19,6 +19,8 @@ using System.Reflection;
 using Windows.UI.ViewManagement;
 using Windows.ApplicationModel.DataTransfer;
 using LyricsEditor.Information;
+using LyricsEditor.Auxiliary;
+using Windows.Storage;
 
 // https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x804 上介绍了“空白页”项模板
 
@@ -40,9 +42,11 @@ namespace LyricsEditor
             this.InitializeComponent();
             CoreWindow.GetForCurrentThread().KeyDown += MainPage_KeyDown;
             AppVersionValue_TextBlock.Text = AppInfo.AppVersion;
+
             LyricFileManager.LyricFileChanageEvent += async (e) => { await LyricManager.LrcAnalysis(e.File, lyrics, settings.IdTag); };
             
             music.MusicChanageEvent += BackgroundImage.RefreshAlbumImage;
+            music.MusicChanageEvent += AudioPlayer.SwitchMusic;
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
@@ -221,10 +225,7 @@ namespace LyricsEditor
         #region 低栏
         private async void OpenMusic_MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
         {
-            if (await music.OpenFile())
-            {
-                await AudioPlayer.PlayMusic();
-            }
+            await music.OpenFile();
         }
         private async void OpenLRC_MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
         {
@@ -279,9 +280,59 @@ namespace LyricsEditor
             FastMenu_Grid.Visibility = Visibility.Collapsed;
         }
 
-        private void Main_Grid_Drop(object sender, DragEventArgs e)
+        private async void Main_Grid_Drop(object sender, DragEventArgs e)
         {
-            
+            if (e.DataView.Contains(StandardDataFormats.StorageItems))
+            {
+                bool isGetMusic = false;
+                bool isGetLyric = false;
+                var items = await e.DataView.GetStorageItemsAsync();
+
+                foreach (var item in items)
+                {
+                    var file = item as StorageFile;
+                    var folder = item as StorageFolder;
+
+                    if (file != null)
+                    {
+                        string fileType = file.FileType;
+                        if (!isGetMusic)
+                        {
+                            if (fileType == ".mp3" || fileType == ".flac" || fileType == ".aac" || fileType == ".wav")
+                            {
+                                await music.OpenFile(file);
+                                isGetMusic = true;
+                            }
+                        }
+                        if (!isGetLyric)
+                        {
+                            if (fileType == ".lrc" || fileType == ".txt")
+                            {
+                                await LyricManager.LrcAnalysis(file, lyrics, settings.IdTag);
+                                isGetLyric = true;
+                            }
+                        }
+                        if (isGetMusic && isGetLyric)
+                            break;
+                    }
+                    else
+                    {
+                        await MessageBox.ShowMessageBoxAsync(CharacterLibrary.MessageBox.GetString("UnsupportedFolder"), CharacterLibrary.MessageBox.GetString("Close"));
+                    }
+
+                }
+
+            }
+        }
+
+        private void Main_Grid_DragOver(object sender, DragEventArgs e)
+        {
+
+            e.AcceptedOperation = DataPackageOperation.Link;
+            e.DragUIOverride.Caption = CharacterLibrary.Main.GetString("DragAndDrop");
+            e.DragUIOverride.IsCaptionVisible = true;
+            e.DragUIOverride.IsContentVisible = true;
+
         }
     }
 }

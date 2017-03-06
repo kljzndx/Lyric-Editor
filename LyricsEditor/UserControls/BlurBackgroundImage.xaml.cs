@@ -83,10 +83,9 @@ namespace LyricsEditor.UserControls
         {
             if (settings.UserDefinedBackgroundImagePath != String.Empty)
                 imageFile = await StorageApplicationPermissions.FutureAccessList.GetFileAsync("BackgroundImage");
+
             if (settings.BackgroundImageType == BackgroundImageTypeEnum.UserDefined)
-            {
                 await ImageSource.SetSourceAsync(await imageFile.OpenAsync(FileAccessMode.Read));
-            }
         }
 
         private async void SettingItemChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -97,6 +96,7 @@ namespace LyricsEditor.UserControls
                 if (settings.BackgroundImageType == BackgroundImageTypeEnum.UserDefined)
                     await UpdateImageSourceAsync();
             }
+
             if (e.PropertyName == "BackgroundImageType")
             {
                 if (settings.BackgroundImageType == BackgroundImageTypeEnum.AlbumImage)

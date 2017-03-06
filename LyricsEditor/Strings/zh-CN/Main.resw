@@ -129,6 +129,9 @@
     <value>修改为当前时间</value>
     <comment>“歌词修改“按钮里的“修改为当前时间”菜单</comment>
   </data>
+  <data name="DragAndDrop" xml:space="preserve">
+    <value>请将歌词或者歌曲释放在此处</value>
+  </data>
   <data name="Feedback_AppBarButton.Label" xml:space="preserve">
     <value>反馈</value>
     <comment>“低栏”溢出菜单里的“反馈”按钮</comment>
