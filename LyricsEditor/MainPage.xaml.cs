@@ -43,7 +43,7 @@ namespace LyricsEditor
             CoreWindow.GetForCurrentThread().KeyDown += MainPage_KeyDown;
             AppVersionValue_TextBlock.Text = AppInfo.AppVersion;
 
-            LyricFileManager.LyricFileChanageEvent += async (e) => { await LyricManager.LrcAnalysis(e.File, lyrics, settings.IdTag); };
+            LyricFileManager.LyricFileChanageEvent += (e) => { LyricManager.LrcAnalysis(e.Content, lyrics, settings.IdTag); };
             
             music.MusicChanageEvent += BackgroundImage.RefreshAlbumImage;
             music.MusicChanageEvent += AudioPlayer.SwitchMusic;
@@ -308,7 +308,7 @@ namespace LyricsEditor
                         {
                             if (fileType == ".lrc" || fileType == ".txt")
                             {
-                                await LyricManager.LrcAnalysis(file, lyrics, settings.IdTag);
+                                LyricManager.LrcAnalysis(await LyricFileManager.ReadLyricFile(file), lyrics, settings.IdTag);
                                 isGetLyric = true;
                             }
                         }
@@ -333,6 +333,11 @@ namespace LyricsEditor
             e.DragUIOverride.IsCaptionVisible = true;
             e.DragUIOverride.IsContentVisible = true;
 
+        }
+
+        private void ShowUpdateLogPanel_AppBarButton_Click(object sender, RoutedEventArgs e)
+        {
+            UpdateLogPanel.StartPopup();
         }
     }
 }

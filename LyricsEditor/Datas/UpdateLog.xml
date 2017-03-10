@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<UpdateLogs>
+    <UpdateLog>
+        <Version>1.6.1</Version>
+        <Content>
+1，新增支持从外部拖拽歌曲/歌词文件到应用内
+2，修复第一次设置背景图片时会报错的问题
+        </Content>
+        <Date>2017/03/06</Date>
+    </UpdateLog>
+    <UpdateLog>
+        <Version>1.5.5</Version>
+        <Content>
+1，新增支持GBK编码
+2，增加三个快捷键
+3，快捷键介绍面板适配手机
+4，增加“背景图片来源设置”
+        </Content>
+        <Date>2017/03/05</Date>
+    </UpdateLog>
+    <UpdateLog>
+        <Version>1.4.0</Version>
+        <Content>正式发布</Content>
+        <Date>2017/02/27</Date>
+    </UpdateLog>
+</UpdateLogs>

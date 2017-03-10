@@ -132,10 +132,12 @@
     <Compile Include="Model\Music.cs" />
     <Compile Include="Model\Setting.cs" />
     <Compile Include="Information\SystemInfo.cs" />
+    <Compile Include="Model\UpdateLog.cs" />
     <Compile Include="Pages\Setting_Page.xaml.cs">
       <DependentUpon>Setting_Page.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\UpdateLogXmlService.cs" />
     <Compile Include="Templates\LyricItemTemplate.xaml.cs">
       <DependentUpon>LyricItemTemplate.xaml</DependentUpon>
     </Compile>
@@ -147,6 +149,9 @@
     </Compile>
     <Compile Include="UserControls\ShortcutKeysDescribedPanel.xaml.cs">
       <DependentUpon>ShortcutKeysDescribedPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\UpdateLogPanel.xaml.cs">
+      <DependentUpon>UpdateLogPanel.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -215,6 +220,7 @@
     <Content Include="Assets\StoreLogo.scale-150.png" />
     <Content Include="Assets\StoreLogo.scale-200.png" />
     <Content Include="Assets\StoreLogo.scale-400.png" />
+    <Content Include="Datas\UpdateLog.xml" />
     <Content Include="Assets\Wide310x150Logo.scale-100.png" />
     <Content Include="Assets\Wide310x150Logo.scale-125.png" />
     <Content Include="Assets\Wide310x150Logo.scale-150.png" />
@@ -257,6 +263,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="UserControls\UpdateLogPanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <SDKReference Include="Microsoft.VCLibs, Version=14.0">
+      <Name>Visual C++ 2015 Runtime for Universal Windows Platform Apps</Name>
+    </SDKReference>
   </ItemGroup>
   <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

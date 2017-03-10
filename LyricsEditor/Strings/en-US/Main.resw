@@ -177,6 +177,9 @@ Support Multiline Text</value>
   <data name="ShowShortcutKeysPanel_AppBarButton.Label" xml:space="preserve">
     <value>Shortcut keys described</value>
   </data>
+  <data name="ShowUpdateLogPanel_AppBarButton.Label" xml:space="preserve">
+    <value>Update Log</value>
+  </data>
   <data name="Submit_AppBarButton.Label" xml:space="preserve">
     <value>Submit</value>
     <comment>"确认"按钮</comment>

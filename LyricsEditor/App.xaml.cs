@@ -143,7 +143,7 @@ namespace LyricsEditor
         {
             EnsureSyncContext();
         }
-        protected override void OnFileActivated(FileActivatedEventArgs args)
+        protected override async void OnFileActivated(FileActivatedEventArgs args)
         {
             var frame = Window.Current.Content as Frame;
             if (frame == null)
@@ -159,7 +159,8 @@ namespace LyricsEditor
                 frame.Navigate(typeof(MainPage));
             }
             Window.Current.Activate();
-            LyricFileManager.ChanageFile(args.Files[0] as StorageFile);
+            var file = args.Files[0] as IStorageFile;
+            LyricFileManager.ChanageFile(file, await LyricFileManager.ReadLyricFile(file));
         }
 
         /// <summary>

@@ -54,7 +54,8 @@
                 
                 <usctrl:AudioPlayer x:Name="AudioPlayer" Grid.Row="1"/>
                 <usctrl:ShortcutKeysDescribedPanel x:Name="ShortcutKeysPanel" Grid.RowSpan="3" Canvas.ZIndex="2"/>
-                
+                <usctrl:UpdateLogPanel x:Name="UpdateLogPanel" Grid.RowSpan="3" Canvas.ZIndex="1"/>
+
                 <Grid x:Name="Lyric_Grid" Grid.Row="2">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
@@ -196,6 +197,7 @@
             </CommandBar.PrimaryCommands>
             <CommandBar.SecondaryCommands>
                 <AppBarButton x:Name="ShowShortcutKeysPanel_AppBarButton" x:Uid="/Main/ShowShortcutKeysPanel_AppBarButton" Click="ShowShortcutKeysPanel_AppBarButton_Click"/>
+                <AppBarButton x:Name="ShowUpdateLogPanel_AppBarButton" x:Uid="/Main/ShowUpdateLogPanel_AppBarButton" Click="ShowUpdateLogPanel_AppBarButton_Click"/>
                 <AppBarButton x:Name="Feedback_AppBarButton" x:Uid="/Main/Feedback_AppBarButton" Click="Feedback_AppBarButton_Click"/>
             </CommandBar.SecondaryCommands>
         </CommandBar>

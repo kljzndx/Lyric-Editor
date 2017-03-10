@@ -35,6 +35,13 @@
             <Button x:Name="GoBack_Button" Content="&#xE892;" Style="{StaticResource ControllerButton}" RelativePanel.AlignVerticalCenterWithPanel="True" RelativePanel.LeftOf="PlayOrPause_StackPanel" IsEnabled="False" Click="GoBack_Button_Click"/>
             <Button x:Name="GoForward_Button" Content="&#xE893;" Style="{StaticResource ControllerButton}" RelativePanel.AlignVerticalCenterWithPanel="True" RelativePanel.RightOf="PlayOrPause_StackPanel" IsEnabled="False" Click="GoForward_Button_Click"/>
 
+            <Button x:Name="SpeedChange_Button" Content="&#xEC4A;" Style="{StaticResource ControllerButton}">
+                <Button.Flyout>
+                    <Flyout>
+                        <Slider Value="{x:Bind AudioPlayer_MediaElement}"/>
+                    </Flyout>
+                </Button.Flyout>
+            </Button>
             <Button x:Name="Volume_Button" Content="&#xE995;" Style="{StaticResource ControllerButton}" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True">
                 <Button.Flyout>
                     <Flyout Placement="Bottom">

@@ -26,7 +26,7 @@ namespace LyricsEditor.Templates
         public LyricItemTemplate()
         {
             this.InitializeComponent();
-            DataContextChanged += (s, e) => Bindings.Update();
+            DataContextChanged += (s, e) => this.Bindings.Update();
         }
     }
 }

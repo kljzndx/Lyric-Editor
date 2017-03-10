@@ -13,40 +13,8 @@ namespace LyricsEditor.Model
 {
     public static class LyricManager
     {
-        //public static async Task<bool> OpenLRCAndAnalysis(ObservableCollection<Lyric> lyricContent, LyricIDTag idTag)
-        //{
-        //    StorageFile thisLRCFile = await LyricFileManager.OpenFileAsync();
-
-        //    if (thisLRCFile is null)
-        //        return false;
-            
-        //    await LrcAnalysis(thisLRCFile, lyricContent, idTag);
-
-        //    return true;
-        //}
-
-        public static async Task LrcAnalysis(IStorageFile file, IList<Lyric> lyricContent, LyricIDTag idTag)
+        public static void LrcAnalysis(string content, IList<Lyric> lyricContent, LyricIDTag idTag)
         {
-            string content = String.Empty;
-            try
-            {
-                content = await FileIO.ReadTextAsync(file);
-            }
-            catch (Exception)
-            {
-                var filebuffer = await FileIO.ReadBufferAsync(file);
-                Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
-                try
-                {
-                    var gbkEncoding = Encoding.GetEncoding("GBK");
-                    content = gbkEncoding.GetString(filebuffer.ToArray());
-                }
-                catch (Exception)
-                {
-                    throw;
-                }
-            }
-
             lyricContent.Clear();
 
             if (String.IsNullOrEmpty(idTag.Title))

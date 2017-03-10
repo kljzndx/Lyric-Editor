@@ -177,6 +177,9 @@
   <data name="ShowShortcutKeysPanel_AppBarButton.Label" xml:space="preserve">
     <value>快捷键介绍</value>
   </data>
+  <data name="ShowUpdateLogPanel_AppBarButton.Label" xml:space="preserve">
+    <value>更新日志</value>
+  </data>
   <data name="Submit_AppBarButton.Label" xml:space="preserve">
     <value>确认</value>
     <comment>"确认"按钮</comment>
