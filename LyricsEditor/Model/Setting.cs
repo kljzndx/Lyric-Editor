@@ -20,11 +20,11 @@ namespace LyricsEditor.Model
         private ApplicationDataContainer settingsObject = ApplicationData.Current.LocalSettings;
         private static Setting thisObject;
         private static readonly object locker = new object();
-        private double backgroundBlurDegree, backgroundOpacity, volume;
+        private double backgroundBlurDegree, backgroundOpacity, volume, playSpeed;
         private BackgroundImageTypeEnum backgroundImageType;
         private string userDefinedBackgroundImagePath;
         private bool isDisplayBackgroundImage, blurAvailability;
-        private ApplicationTheme theme;
+        private ElementTheme theme;
         private LyricChanageButtonBehavior chanageButtonBehavior;
         private LyricIDTag idTag = new LyricIDTag();
 
@@ -34,34 +34,37 @@ namespace LyricsEditor.Model
         public string UserDefinedBackgroundImagePath { get => userDefinedBackgroundImagePath; set => SetSetting(ref userDefinedBackgroundImagePath, value); }
         public bool IsDisplayBackgroundImage { get => isDisplayBackgroundImage; set => SetSetting(ref isDisplayBackgroundImage, value); }
         public bool BlurAvailability { get => blurAvailability; }
-        public ApplicationTheme Theme { get => theme; set => SetSetting(ref theme, value, value.ToString()); }
+        public ElementTheme Theme { get => theme; set => SetSetting(ref theme, value, value.ToString()); }
         public LyricChanageButtonBehavior ChanageButtonBehavior { get => chanageButtonBehavior; set => SetSetting(ref chanageButtonBehavior, value, value.ToString()); }
         public LyricIDTag IdTag { get => idTag; set => SetProperty(ref idTag, value); }
         public BackgroundImageTypeEnum BackgroundImageType { get => backgroundImageType; set => SetSetting(ref backgroundImageType, value, value.ToString()); }
 
         public ApplicationDataContainer SettingsObject { get => settingsObject; }
+        public double PlaySpeed { get => playSpeed; set => SetSetting(ref playSpeed, value); }
 
         private Setting()
         {
-            RenameSettingKry("IsDisplayAlbumImageBackground", "IsDisplayBackgroundImage");
-            CreateSetting("BackgroundBlurDegree", 5D);
-            CreateSetting("BackgroundOpacity", 0.3);
-            CreateSetting("UserDefinedBackgroundImagePath", String.Empty);
+            RenameSettingKry("IsDisplayAlbumImageBackground", nameof(IsDisplayBackgroundImage));
+            CreateSetting(nameof(BackgroundBlurDegree), 5D);
+            CreateSetting(nameof(BackgroundOpacity), 0.3);
+            CreateSetting(nameof(PlaySpeed), 1D);
+            CreateSetting(nameof(UserDefinedBackgroundImagePath), String.Empty);
             CreateSetting(nameof(BackgroundImageType), BackgroundImageTypeEnum.AlbumImage.ToString());
-            CreateSetting("Volume", 1D);
-            CreateSetting("IsDisplayBackgroundImage", true);
-            CreateSetting("Theme", ApplicationTheme.Light.ToString());
-            CreateSetting("ChanageButtonBehavior", LyricChanageButtonBehavior.LetMeChoose.ToString());
+            CreateSetting(nameof(Volume), 1D);
+            CreateSetting(nameof(IsDisplayBackgroundImage), true);
+            CreateSetting(nameof(Theme), ElementTheme.Default.ToString());
+            CreateSetting(nameof(ChanageButtonBehavior), LyricChanageButtonBehavior.LetMeChoose.ToString());
 
             blurAvailability = SystemInfo.SystemVersion >= 14393;
-            backgroundBlurDegree = blurAvailability ? GetSetting<double>("BackgroundBlurDegree") : 0D;
-            backgroundOpacity = GetSetting<double>("BackgroundOpacity");
-            userDefinedBackgroundImagePath = GetSetting<string>("UserDefinedBackgroundImagePath");
+            backgroundBlurDegree = blurAvailability ? GetSetting<double>(nameof(BackgroundBlurDegree)) : 0D;
+            backgroundOpacity = GetSetting<double>(nameof(BackgroundOpacity));
+            volume = GetSetting<double>(nameof(Volume));
+            playSpeed = GetSetting<double>(nameof(PlaySpeed));
+            userDefinedBackgroundImagePath = GetSetting<string>(nameof(UserDefinedBackgroundImagePath));
             backgroundImageType = GetSetting<BackgroundImageTypeEnum>(nameof(BackgroundImageType), s => s == BackgroundImageTypeEnum.AlbumImage.ToString() ? BackgroundImageTypeEnum.AlbumImage : BackgroundImageTypeEnum.UserDefined);
-            volume = GetSetting<double>("Volume");
-            isDisplayBackgroundImage = GetSetting<bool>("IsDisplayBackgroundImage");
-            theme = GetSetting<ApplicationTheme>("Theme", s => s == ApplicationTheme.Light.ToString() ? ApplicationTheme.Light : ApplicationTheme.Dark);
-            chanageButtonBehavior = GetSetting<LyricChanageButtonBehavior>("ChanageButtonBehavior",
+            isDisplayBackgroundImage = GetSetting<bool>(nameof(IsDisplayBackgroundImage));
+            theme = GetSetting<ElementTheme>(nameof(Theme), s => s == ElementTheme.Default.ToString() ? ElementTheme.Default : (s == ElementTheme.Light.ToString() ? ElementTheme.Light : ElementTheme.Dark));
+            chanageButtonBehavior = GetSetting<LyricChanageButtonBehavior>(nameof(ChanageButtonBehavior),
                 (s) =>
                 {
                     if (s == LyricChanageButtonBehavior.ChanageTime.ToString())
@@ -91,12 +94,12 @@ namespace LyricsEditor.Model
         }
         public T GetSetting<T>(string key)
         {
-            return (T)settingsObject.Values[key];
+            return (T)settingsObject.Values[$"{key[0].ToString().ToUpperInvariant()}{key.Remove(0,1)}"];
         }
 
-        public T GetSetting<T>(string key, Func<string, T> converter)
+        public T GetSetting<T>(string key,Func<string, T> converter)
         {
-            return converter.Invoke(settingsObject.Values[key].ToString());
+            return converter.Invoke(settingsObject.Values[$"{key[0].ToString().ToUpperInvariant()}{key.Remove(0, 1)}"].ToString());
         }
 
         public void CreateSetting(string key, object value)

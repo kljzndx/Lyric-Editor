@@ -64,10 +64,6 @@ namespace LyricsEditor
         {
             var selectItem = Lyric_ListView.SelectedItem as Lyric;
             //添加歌词
-
-            if (App.isPressCtrl && args.VirtualKey == VirtualKey.Enter)
-                AddLyric();
-
             if (args.VirtualKey == VirtualKey.Space &&
                 !InputBoxAvailableFocus &&
                 selectItem is null)
@@ -82,7 +78,13 @@ namespace LyricsEditor
                 selectItem.Time = AudioPlayer.PlayPosition;
                 if (Lyric_ListView.SelectedIndex < lyrics.Count - 1)
                     Lyric_ListView.SelectedIndex++;
+                else
+                {
+                    Lyric_ListView.SelectedIndex = -1;
+                    AddLyric();
+                }
             }
+            
             //删除歌词
             if (args.VirtualKey == VirtualKey.Delete &&
                 !InputBoxAvailableFocus &&
@@ -113,6 +115,23 @@ namespace LyricsEditor
                     lyrics.Add(new Lyric { Time = AudioPlayer.PlayPosition, Content = line.Trim() });
                 }
             }
+
+            if (Lyric_ListView.SelectedItems.Count == 1)
+            {
+                int line = 0;
+                for (int i = 0; i < lyrics.Count; i++)
+                {
+                    if (lyrics[i].Equals(Lyric_ListView.SelectedItems[0]))
+                    {
+                        line = i + 1;
+                        break;
+                    }
+                }
+                if (line < lyrics.Count - 1)
+                    lyrics.Move(lyrics.Count - 1, line);
+                (Lyric_ListView.ItemsPanelRoot.Children[line - 1] as ListViewItem).IsSelected = false;
+                (Lyric_ListView.ItemsPanelRoot.Children[line] as ListViewItem).IsSelected = true;
+            }
         }
         #endregion
 
@@ -130,23 +149,68 @@ namespace LyricsEditor
         #region 歌词编辑按钮
         private void Unselect_MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
         {
-
+            foreach (ListViewItem item in Lyric_ListView.ItemsPanelRoot.Children)
+            {
+                item.IsSelected = !item.IsSelected;
+            }
         }
 
         private void SelectBeforeItem_MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
         {
-
+            bool select = false;
+            for (int i = Lyric_ListView.ItemsPanelRoot.Children.Count - 1; i >= 0; i--)
+            {
+                var item = Lyric_ListView.ItemsPanelRoot.Children[i] as ListViewItem;
+                if (select)
+                    item.IsSelected = true;
+                else if (item.IsSelected)
+                    select = true;
+            }
         }
 
         private void SelectAfterItem_MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
         {
-
+            bool select = false;
+            foreach (ListViewItem item in Lyric_ListView.ItemsPanelRoot.Children)
+            {
+                if (select)
+                    item.IsSelected = select;
+                else if (item.IsSelected)
+                    select = true;
+            }
         }
 
         private void SelectParagraph_MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
         {
+            int selectID = 0;
+            bool select = false;
+            for (int i = 0; i < Lyric_ListView.ItemsPanelRoot.Children.Count; i++)
+            {
+                var listItem = Lyric_ListView.ItemsPanelRoot.Children[i] as ListViewItem;
+                var lyricItem = Lyric_ListView.Items[i] as Lyric;
+                if (select && String.IsNullOrEmpty(lyricItem.Content))
+                    break;
 
+                if (select)
+                    listItem.IsSelected = true;
+                else if (listItem.IsSelected)
+                {
+                    select = true;
+                    selectID = i;
+                }
+            }
+
+            for (int i = selectID; i >= 0; i--)
+            {
+                var listItem = Lyric_ListView.ItemsPanelRoot.Children[i] as ListViewItem;
+                var lyricItem = Lyric_ListView.Items[i] as Lyric;
+                if (String.IsNullOrEmpty(lyricItem.Content))
+                    break;
+                
+                listItem.IsSelected = true;
+            }
         }
+
         private void AddLyric_Button_Click(object sender, RoutedEventArgs e)
         {
             AddLyric();
@@ -186,16 +250,9 @@ namespace LyricsEditor
 
         private void Lyric_ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var selects = (sender as ListView).SelectedItems;
-            if (selects.Count >= 1)
-            {
-                string lyric = String.Empty;
-                foreach (Lyric item in selects)
-                {
-                    lyric += item.Content + "\r\n";
-                }
-                LyricContent_TextBox.Text = lyric.Trim();
-            }
+            var select = (sender as ListView).SelectedItem as Lyric;
+            if (select != null)
+                LyricContent_TextBox.Text = select.Content;
             else
                 LyricContent_TextBox.Text = String.Empty;
         }
@@ -233,7 +290,7 @@ namespace LyricsEditor
         }
         private async void Save_AppBarButton_Click(object sender, RoutedEventArgs e)
         {
-            await LyricManager.SaveLyric(lyrics, settings.IdTag);
+            await LyricFileManager.SaveLyricAsync(lyrics, settings.IdTag);
         }
         private void Settings_AppBarButton_Click(object sender, RoutedEventArgs e)
         {
@@ -243,7 +300,7 @@ namespace LyricsEditor
         private void MultilineEdit_AppBarButton_Click(object sender, RoutedEventArgs e)
         {
             Lyric_ListView.SelectionMode = ListViewSelectionMode.Multiple;
-            //SelectToolkit_Button.Visibility = Visibility.Visible;
+            SelectToolkit_Button.Visibility = Visibility.Visible;
             MultilineEdit_AppBarButton.Visibility = Visibility.Collapsed;
             Submit_AppBarButton.Visibility = Visibility.Visible;
             ChanageTime_MenuFlyoutItem.IsEnabled = false;
@@ -252,7 +309,7 @@ namespace LyricsEditor
         private void Submit_AppBarButton_Click(object sender, RoutedEventArgs e)
         {
             Lyric_ListView.SelectionMode = ListViewSelectionMode.Single;
-            //SelectToolkit_Button.Visibility = Visibility.Collapsed;
+            SelectToolkit_Button.Visibility = Visibility.Collapsed;
             Submit_AppBarButton.Visibility = Visibility.Collapsed;
             MultilineEdit_AppBarButton.Visibility = Visibility.Visible;
             ChanageTime_MenuFlyoutItem.IsEnabled = true;
@@ -266,6 +323,11 @@ namespace LyricsEditor
         private void ShowShortcutKeysPanel_AppBarButton_Click(object sender, RoutedEventArgs e)
         {
             ShortcutKeysPanel.PopUp();
+        }
+
+        private void ShowUpdateLogPanel_AppBarButton_Click(object sender, RoutedEventArgs e)
+        {
+            UpdateLogPanel.StartPopup();
         }
 
         #endregion
@@ -327,17 +389,34 @@ namespace LyricsEditor
 
         private void Main_Grid_DragOver(object sender, DragEventArgs e)
         {
-
             e.AcceptedOperation = DataPackageOperation.Link;
             e.DragUIOverride.Caption = CharacterLibrary.Main.GetString("DragAndDrop");
             e.DragUIOverride.IsCaptionVisible = true;
             e.DragUIOverride.IsContentVisible = true;
-
         }
 
-        private void ShowUpdateLogPanel_AppBarButton_Click(object sender, RoutedEventArgs e)
+        private void LyricContent_TextBox_KeyDown(object sender, KeyRoutedEventArgs e)
         {
-            UpdateLogPanel.StartPopup();
+            if (e.Key == VirtualKey.Enter)
+            {
+                e.Handled = true;
+                if (App.isPressCtrl)
+                    AddLyric();
+                else if (Lyric_ListView.SelectedItem is Lyric)
+                {
+                    foreach (Lyric item in Lyric_ListView.SelectedItems)
+                        item.Content = LyricContent_TextBox.Text;
+                    Lyric_ListView.SelectedIndex = Lyric_ListView.SelectedIndex == Lyric_ListView.Items.Count - 1 ? Lyric_ListView.Items.Count - 1 : Lyric_ListView.SelectedIndex + 1;
+                }
+                else
+                {
+                    var thisBox = (sender as TextBox);
+                    string selectPositionLaft = thisBox.Text.Substring(0, thisBox.SelectionStart) + "\r\n";
+                    string result = selectPositionLaft + thisBox.Text.Substring(thisBox.SelectionStart);
+                    thisBox.Text = result;
+                    thisBox.Select(selectPositionLaft.Length - 1, 0);
+                }
+            }
         }
     }
 }

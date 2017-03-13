@@ -32,8 +32,7 @@ namespace LyricsEditor.Pages
         public Setting_Page()
         {
             this.InitializeComponent();
-            AppTheme_ComboBox.SelectedIndex = settings.Theme == ApplicationTheme.Light ? 0 : 1;
-
+            AppTheme_ComboBox.SelectedIndex = settings.Theme == ElementTheme.Default ? 0 : (settings.Theme == ElementTheme.Light ? 1 : 2);
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
@@ -46,9 +45,9 @@ namespace LyricsEditor.Pages
 
         private void AppTheme_ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var theme = (sender as ComboBox).SelectedIndex == 0 ? ApplicationTheme.Light : ApplicationTheme.Dark;
+            int sltid = (sender as ComboBox).SelectedIndex;
+            var theme = sltid == 0 ? ElementTheme.Default : (sltid == 1 ? ElementTheme.Light : ElementTheme.Dark);
             settings.Theme = theme;
-            AppTheme_Massage_TextBlock.Visibility = Application.Current.RequestedTheme != settings.Theme ? Visibility.Visible : Visibility.Collapsed;
         }
 
         private void BackgroundType_Album_RadioButton_Checked(object sender, RoutedEventArgs e)

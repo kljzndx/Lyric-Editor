@@ -10,6 +10,7 @@ namespace LyricsEditor.Model
 {
     public class Lyric : BindableBase, IComparable
     {
+        private static int sID;
         private int id;
         private TimeSpan time;
         private string content;
@@ -18,6 +19,10 @@ namespace LyricsEditor.Model
         public TimeSpan Time { get => time; set { SetProperty(ref time, value); } }
         public string Content { get => content; set { SetProperty(ref content, value); } }
 
+        public Lyric()
+        {
+            id = sID++;
+        }
         public int CompareTo(object obj)
         {
             if (this.Time == (obj as Lyric).Time)

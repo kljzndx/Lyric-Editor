@@ -123,6 +123,9 @@
   <data name="AppTheme_Dark_ComboBoxItem.Content" xml:space="preserve">
     <value>Dark</value>
   </data>
+  <data name="AppTheme_Default_ComboBoxItem.Content" xml:space="preserve">
+    <value>System Default</value>
+  </data>
   <data name="AppTheme_Light_ComboBoxItem.Content" xml:space="preserve">
     <value>Light</value>
   </data>

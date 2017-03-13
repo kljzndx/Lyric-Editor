@@ -1,4 +1,5 @@
-﻿using LyricsEditor.Model;
+﻿using LyricsEditor.Auxiliary;
+using LyricsEditor.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,7 @@ namespace LyricsEditor.Information
     public static class AppInfo
     {
         private static Setting settings = Setting.GetSettingObject();
+        public static string AppName { get; } = CharacterLibrary.Main.GetString("AppName") + " For Win10 UWP";
         public static string AppVersion
         {
             get
@@ -20,17 +22,7 @@ namespace LyricsEditor.Information
                 return $"{version.Major}.{version.Minor}.{version.Build}";
             }
         }
-        public static string LanguageCode
-        {
-            get
-            {
-                string appName = ResourceLoader.GetForCurrentView("Main").GetString("AppName");
-                if (appName == "简易歌词编辑器")
-                    return "zh-CN";
-                else
-                    return "en-US";
-            }
-        }
+        public static string LanguageCode { get => AppName == "简易歌词编辑器 For Win10 UWP" ? "zh-CN" : "en-US"; }
         public static int BootCount
         {
             get

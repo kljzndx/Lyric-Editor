@@ -36,7 +36,7 @@ namespace LyricsEditor.Model
                     int souconds = Int32.Parse(item.Groups[2].Value);
                     int ms = Int32.Parse(item.Groups[3].Value) * 10;
                     var time = new TimeSpan(0, 0, min, souconds, ms);
-                    lyricContent.Add(new Lyric { ID = i++, Time = time, Content = item.Groups[4].Value.Trim() });
+                    lyricContent.Add(new Lyric { Time = time, Content = item.Groups[4].Value.Trim() });
                 }
             }
             else if (!String.IsNullOrEmpty(content))
@@ -49,31 +49,15 @@ namespace LyricsEditor.Model
             }
         }
 
-        public static async Task<bool> SaveLyric(IList<Lyric> lyricList,LyricIDTag tag)
+        public static string PrintLyric(IList<Lyric> lyricList,LyricIDTag tag)
         {
-            StorageFile lrcFile = null;
-            if (LyricFileManager.ThisLRCFile is null)
-            {
-                FileSavePicker picker = new FileSavePicker();
-                picker.SuggestedFileName = "New_LRC_File";
-                picker.DefaultFileExtension = ".lrc";
-                picker.FileTypeChoices.Add("LRC File", new List<string> { ".lrc" });
-
-                lrcFile = await picker.PickSaveFileAsync();
-                if (lrcFile is null)
-                    return false;
-            }
-            else
-                lrcFile = LyricFileManager.ThisLRCFile as StorageFile;
-
             string lyric_str = String.Empty;
             lyric_str = tag.ToString() + "\r\n\r\n";
             foreach (var item in lyricList)
             {
                 lyric_str += item.ToString() + "\r\n";
             }
-            await FileIO.WriteTextAsync(lrcFile, lyric_str);
-            return true;
+            return lyric_str;
         }
 
         private static string GetIDTag(string content,string tagName)

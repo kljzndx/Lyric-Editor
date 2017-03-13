@@ -11,7 +11,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Loaded="Page_Loaded">
+    Loaded="Page_Loaded" RequestedTheme="{x:Bind settings.Theme,Mode=OneWay}">
 
     <SplitView x:Name="Sidebar_SplitView" PanePlacement="Right" PaneClosed="Sidebar_SplitView_PaneClosed">
         <SplitView.Pane>
@@ -73,15 +73,15 @@
                             <ColumnDefinition/>
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
-                        <TextBox x:Name="LyricContent_TextBox" x:Uid="/Main/LyricContent_TextBox" VerticalAlignment="Center" AcceptsReturn="True" GotFocus="LyricContent_TextBox_GotFocus" LostFocus="LyricContent_TextBox_LostFocus" MaxHeight="100"/>
+                        <TextBox x:Name="LyricContent_TextBox" x:Uid="/Main/LyricContent_TextBox" VerticalAlignment="Center" AcceptsReturn="False" TextWrapping="Wrap" GotFocus="LyricContent_TextBox_GotFocus" LostFocus="LyricContent_TextBox_LostFocus" MaxHeight="100" KeyDown="LyricContent_TextBox_KeyDown"/>
                         <StackPanel x:Name="LyricEditButton_StackPanel" Orientation="Horizontal" HorizontalAlignment="Center">
                             <Button x:Name="SelectToolkit_Button" Content="&#xE0A2;" Style="{StaticResource ControllerButton}" Visibility="Collapsed">
                                 <Button.Flyout>
                                     <MenuFlyout>
-                                        <MenuFlyoutItem x:Name="Unselect_MenuFlyoutItem" Text="反选" Click="Unselect_MenuFlyoutItem_Click"/>
-                                        <MenuFlyoutItem x:Name="SelectBeforeItem_MenuFlyoutItem" Text="选择之前项" Click="SelectBeforeItem_MenuFlyoutItem_Click"/>
-                                        <MenuFlyoutItem x:Name="SelectAfterItem_MenuFlyoutItem" Text="选择之后项" Click="SelectAfterItem_MenuFlyoutItem_Click"/>
-                                        <MenuFlyoutItem x:Name="SelectParagraph_MenuFlyoutItem" Text="选择段落" Click="SelectParagraph_MenuFlyoutItem_Click"/>
+                                        <MenuFlyoutItem x:Name="Unselect_MenuFlyoutItem" x:Uid="/Main/Unselect_MenuFlyoutItem" Click="Unselect_MenuFlyoutItem_Click"/>
+                                        <MenuFlyoutItem x:Name="SelectBeforeItem_MenuFlyoutItem" x:Uid="/Main/SelectBeforeItem_MenuFlyoutItem" Click="SelectBeforeItem_MenuFlyoutItem_Click"/>
+                                        <MenuFlyoutItem x:Name="SelectAfterItem_MenuFlyoutItem" x:Uid="/Main/SelectAfterItem_MenuFlyoutItem" Click="SelectAfterItem_MenuFlyoutItem_Click"/>
+                                        <MenuFlyoutItem x:Name="SelectParagraph_MenuFlyoutItem" x:Uid="/Main/SelectParagraph_MenuFlyoutItem" Click="SelectParagraph_MenuFlyoutItem_Click"/>
                                     </MenuFlyout>
                                 </Button.Flyout>
                             </Button>

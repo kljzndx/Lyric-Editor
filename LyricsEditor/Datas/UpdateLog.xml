@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <UpdateLogs>
     <UpdateLog>
+        <Version>1.9.0</Version>
+        <Content>
+1，增加更新日志弹窗
+2，增加播放速度调整按钮
+3，增加选择工具按钮
+4，增加歌词修改快捷键
+5，支持即时切换主题
+6，支持在当前位置添加歌词
+        </Content>
+        <Date>2017/03/13</Date>
+    </UpdateLog>
+    <UpdateLog>
         <Version>1.6.1</Version>
         <Content>
 1，新增支持从外部拖拽歌曲/歌词文件到应用内

@@ -16,7 +16,6 @@ namespace LyricsEditor.Model
     {
         public Music NewMusic { get; set; }
     }
-    public delegate void MusicChanageEventHandler(object serder, MusicChanageEventArgs e);
 
     public class Music : BindableBase
     {
@@ -27,7 +26,7 @@ namespace LyricsEditor.Model
         private StorageFile file;
 
 
-        public event MusicChanageEventHandler MusicChanageEvent;
+        public event EventHandler<MusicChanageEventArgs> MusicChanageEvent;
         /// <summary>
         /// 歌名
         /// </summary>

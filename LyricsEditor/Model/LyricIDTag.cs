@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using LyricsEditor.Auxiliary;
+using LyricsEditor.Information;
 
 namespace LyricsEditor.Model
 {
@@ -15,6 +16,8 @@ namespace LyricsEditor.Model
         public string Artist { get => artist; set { SetProperty(ref artist, value); } }
         public string Album { get => album; set { SetProperty(ref album, value); } }
         public string LyricAuthor { get => lyricAuthor; set { SetProperty(ref lyricAuthor, value); } }
+        
+
 
 
         public LyricIDTag()
@@ -31,6 +34,8 @@ namespace LyricsEditor.Model
             result += WriteIDTag("ar", artist);
             result += WriteIDTag("al", album);
             result += WriteIDTag("by", lyricAuthor);
+            result += WriteIDTag("re", AppInfo.AppName);
+            result += WriteIDTag("ve", AppInfo.AppVersion);
             return result.Trim();
         }
         public string WriteIDTag(string tagName, string Content)

@@ -28,7 +28,10 @@ namespace LyricsEditor.UserControls
                 ShortcutKeysTable_ScrollViewer.HorizontalScrollBarVisibility = ScrollBarVisibility.Auto;
 
             if (SystemInfo.DeviceType == "Windows.Mobile")
+            {
                 Root_Grid.Width = 320;
+                ShortcutKeysTable_ScrollViewer.HorizontalScrollBarVisibility = ScrollBarVisibility.Auto;
+            }
         }
 
         public void PopUp()

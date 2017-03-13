@@ -27,6 +27,7 @@ namespace LyricsEditor.UserControls
     {
         private Setting settings = Setting.GetSettingObject();
         private ThreadPoolTimer displayTime_ThreadPoolTimer;
+        private Music musicSource;
         private bool isPressSlider = false;
 
         public TimeSpan PlayPosition
@@ -34,8 +35,6 @@ namespace LyricsEditor.UserControls
             get { return (TimeSpan)GetValue(PlayPositionProperty); }
             set { SetValue(PlayPositionProperty, value); }
         }
-
-        private Music musicSource;
         
         // Using a DependencyProperty as the backing store for PlayPosition.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty PlayPositionProperty =

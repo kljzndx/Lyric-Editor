@@ -132,6 +132,12 @@
   <data name="ChanageTime_Function_TextBlock.Text" xml:space="preserve">
     <value>Modifications to the current time</value>
   </data>
+  <data name="ChangeLyricContent_Condition_TextBlock.Text" xml:space="preserve">
+    <value>press Enter In Lyric input box</value>
+  </data>
+  <data name="ChangeLyricContent_Function_TextBlock.Text" xml:space="preserve">
+    <value>Modifications to the current lyric</value>
+  </data>
   <data name="ChangeVolume_Condition_TextBlock.Text" xml:space="preserve">
     <value>Up / Down Arrow Key</value>
   </data>

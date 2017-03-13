@@ -19,7 +19,7 @@ namespace LyricsEditor.Model
 
     public static class LyricFileManager
     {
-        public static IStorageFile ThisLRCFile { get; set; }
+        public static IStorageFile ThisLRCFile { get; private set; }
         public static event LyricFileChanageEventHandler LyricFileChanageEvent;
 
 
@@ -44,7 +44,30 @@ namespace LyricsEditor.Model
             }
             return thisLRCFile;
         }
+        public static async Task<bool> SaveLyricAsync(IList<Lyric> lyricList, LyricIDTag tag)
+        {
+            StorageFile lrcFile = null;
+            if (LyricFileManager.ThisLRCFile is null)
+            {
+                FileSavePicker picker = new FileSavePicker();
+                picker.SuggestedFileName = "New_LRC_File";
+                picker.DefaultFileExtension = ".lrc";
+                picker.FileTypeChoices.Add("LRC File", new List<string> { ".lrc" });
 
+                lrcFile = await picker.PickSaveFileAsync();
+                if (lrcFile is null)
+                    return false;
+            }
+            else
+                lrcFile = LyricFileManager.ThisLRCFile as StorageFile;
+
+            string fileContent = LyricManager.PrintLyric(lyricList, tag);
+
+            await FileIO.WriteTextAsync(lrcFile, fileContent);
+            ThisLRCFile = lrcFile;
+
+            return true;
+        }
         public static async Task<String> ReadLyricFile(IStorageFile file)
         {
             string content = String.Empty;

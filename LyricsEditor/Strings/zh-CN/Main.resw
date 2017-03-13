@@ -170,6 +170,15 @@
     <value>保存</value>
     <comment>”保存“按钮</comment>
   </data>
+  <data name="SelectAfterItem_MenuFlyoutItem.Text" xml:space="preserve">
+    <value>选择之后项</value>
+  </data>
+  <data name="SelectBeforeItem_MenuFlyoutItem.Text" xml:space="preserve">
+    <value>选择之前项</value>
+  </data>
+  <data name="SelectParagraph_MenuFlyoutItem.Text" xml:space="preserve">
+    <value>选择段落</value>
+  </data>
   <data name="Settings_AppBarButton.Label" xml:space="preserve">
     <value>设置</value>
     <comment>”设置“按钮</comment>
@@ -183,5 +192,8 @@
   <data name="Submit_AppBarButton.Label" xml:space="preserve">
     <value>确认</value>
     <comment>"确认"按钮</comment>
+  </data>
+  <data name="Unselect_MenuFlyoutItem.Text" xml:space="preserve">
+    <value>反向选择</value>
   </data>
 </root>

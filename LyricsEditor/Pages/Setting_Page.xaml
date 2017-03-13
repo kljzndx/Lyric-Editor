@@ -14,6 +14,12 @@
             <TextBox x:Uid="/Setting/SongAlbum_TextBox" Text="{x:Bind settings.IdTag.Album,Mode=TwoWay}"/>
             <TextBox x:Uid="/Setting/LrcCreator_TextBox" Text="{x:Bind settings.IdTag.LyricAuthor,Mode=TwoWay}"/>
         </StackPanel>
+        
+        <ComboBox x:Name="AppTheme_ComboBox" x:Uid="/Setting/AppTheme_ComboBox" SelectionChanged="AppTheme_ComboBox_SelectionChanged">
+            <ComboBoxItem x:Name="AppTheme_Default_ComboBoxItem" x:Uid="/Setting/AppTheme_Default_ComboBoxItem"/>
+            <ComboBoxItem x:Name="AppTheme_Light_ComboBoxItem" x:Uid="/Setting/AppTheme_Light_ComboBoxItem"/>
+            <ComboBoxItem x:Name="AppTheme_Dark_ComboBoxItem" x:Uid="/Setting/AppTheme_Dark_ComboBoxItem"/>
+        </ComboBox>
 
         <ToggleSwitch x:Uid="/Setting/DisplayBackgroundImage_ToggleSwitch" IsOn="{x:Bind settings.IsDisplayBackgroundImage,Mode=TwoWay}"/>
         
@@ -41,12 +47,5 @@
 
         <Slider x:Uid="/Setting/BackgroundOpacity_Slider" Value="{x:Bind settings.BackgroundOpacity,Mode=TwoWay,Converter={StaticResource percentage_Double}}" Visibility="{x:Bind settings.IsDisplayBackgroundImage,Mode=OneWay,Converter={StaticResource boolToVisibility}}"/>
 
-        <StackPanel x:Name="AppTheme_StackPanel">
-            <ComboBox x:Name="AppTheme_ComboBox" x:Uid="/Setting/AppTheme_ComboBox" SelectionChanged="AppTheme_ComboBox_SelectionChanged">
-                <ComboBoxItem x:Name="AppTheme_Light_ComboBoxItem" x:Uid="/Setting/AppTheme_Light_ComboBoxItem"/>
-                <ComboBoxItem x:Name="AppTheme_Dark_ComboBoxItem" x:Uid="/Setting/AppTheme_Dark_ComboBoxItem"/>
-            </ComboBox>
-            <TextBlock x:Name="AppTheme_Massage_TextBlock" x:Uid="/Setting/AppTheme_Massage_TextBlock" Foreground="Red" Visibility="Collapsed" TextWrapping="Wrap"/>
-        </StackPanel>
     </StackPanel>
 </Page>

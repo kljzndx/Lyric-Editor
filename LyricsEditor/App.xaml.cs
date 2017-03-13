@@ -42,7 +42,6 @@ namespace LyricsEditor
             this.InitializeComponent();
             this.Suspending += OnSuspending;
             this.UnhandledException += OnUnhandledException;
-            this.RequestedTheme = Setting.GetSettingObject().Theme;
         }
 
         private void Window_KeyDown(CoreWindow sender, KeyEventArgs args)

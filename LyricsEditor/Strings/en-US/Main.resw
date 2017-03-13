@@ -170,6 +170,15 @@ Support Multiline Text</value>
     <value>Save</value>
     <comment>”保存“按钮</comment>
   </data>
+  <data name="SelectAfterItem_MenuFlyoutItem.Text" xml:space="preserve">
+    <value>Select After Items</value>
+  </data>
+  <data name="SelectBeforeItem_MenuFlyoutItem.Text" xml:space="preserve">
+    <value>Select Before Items</value>
+  </data>
+  <data name="SelectParagraph_MenuFlyoutItem.Text" xml:space="preserve">
+    <value>Select Paragraph</value>
+  </data>
   <data name="Settings_AppBarButton.Label" xml:space="preserve">
     <value>Settings</value>
     <comment>”设置“按钮</comment>
@@ -183,5 +192,8 @@ Support Multiline Text</value>
   <data name="Submit_AppBarButton.Label" xml:space="preserve">
     <value>Submit</value>
     <comment>"确认"按钮</comment>
+  </data>
+  <data name="Unselect_MenuFlyoutItem.Text" xml:space="preserve">
+    <value>Invert Selection</value>
   </data>
 </root>

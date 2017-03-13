@@ -14,7 +14,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <MediaElement x:Name="AudioPlayer_MediaElement" AutoPlay="False" Position="{x:Bind PlayPosition,Mode=OneWay}" Volume="{x:Bind settings.Volume,Mode=OneWay}" MediaOpened="AudioPlayer_MediaElement_MediaOpened" MediaEnded="AudioPlayer_MediaElement_MediaEnded" MediaFailed="AudioPlayer_MediaElement_MediaFailed" />
+        <MediaElement x:Name="AudioPlayer_MediaElement" AutoPlay="False" Position="{x:Bind PlayPosition,Mode=OneWay}" PlaybackRate="{x:Bind settings.PlaySpeed,Mode=OneWay}" DefaultPlaybackRate="{x:Bind settings.PlaySpeed,Mode=OneWay}" Volume="{x:Bind settings.Volume,Mode=OneWay}" MediaOpened="AudioPlayer_MediaElement_MediaOpened" MediaEnded="AudioPlayer_MediaElement_MediaEnded" MediaFailed="AudioPlayer_MediaElement_MediaFailed" />
         <StackPanel>
             <TextBlock x:Name="MusicPath_TextBlock" TextAlignment="Center" TextWrapping="Wrap"/>
             <Grid x:Name="Progress">
@@ -35,17 +35,17 @@
             <Button x:Name="GoBack_Button" Content="&#xE892;" Style="{StaticResource ControllerButton}" RelativePanel.AlignVerticalCenterWithPanel="True" RelativePanel.LeftOf="PlayOrPause_StackPanel" IsEnabled="False" Click="GoBack_Button_Click"/>
             <Button x:Name="GoForward_Button" Content="&#xE893;" Style="{StaticResource ControllerButton}" RelativePanel.AlignVerticalCenterWithPanel="True" RelativePanel.RightOf="PlayOrPause_StackPanel" IsEnabled="False" Click="GoForward_Button_Click"/>
 
-            <Button x:Name="SpeedChange_Button" Content="&#xEC4A;" Style="{StaticResource ControllerButton}">
+            <Button x:Name="SpeedChange_Button" Content="&#xEC4A;" Style="{StaticResource ControllerButton}" RelativePanel.AlignVerticalCenterWithPanel="True">
                 <Button.Flyout>
                     <Flyout>
-                        <Slider Value="{x:Bind AudioPlayer_MediaElement}"/>
+                        <Slider Width="250" Value="{x:Bind settings.PlaySpeed,Mode=TwoWay,Converter={StaticResource percentage_Double}}" Maximum="200"/>
                     </Flyout>
                 </Button.Flyout>
             </Button>
             <Button x:Name="Volume_Button" Content="&#xE995;" Style="{StaticResource ControllerButton}" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True">
                 <Button.Flyout>
                     <Flyout Placement="Bottom">
-                        <Slider Value="{x:Bind settings.Volume,Mode=TwoWay,Converter={StaticResource percentage_Double}}" Maximum="100" RelativePanel.AlignRightWithPanel="True" Width="200"/>
+                        <Slider Value="{x:Bind settings.Volume,Mode=TwoWay,Converter={StaticResource percentage_Double}}" Maximum="100" RelativePanel.AlignRightWithPanel="True" Width="150"/>
                     </Flyout>
                 </Button.Flyout>
             </Button>

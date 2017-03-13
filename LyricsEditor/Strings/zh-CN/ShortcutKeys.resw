@@ -132,6 +132,12 @@
   <data name="ChanageTime_Function_TextBlock.Text" xml:space="preserve">
     <value>修改为当前时间</value>
   </data>
+  <data name="ChangeLyricContent_Condition_TextBlock.Text" xml:space="preserve">
+    <value>在歌词输入框内按回车键</value>
+  </data>
+  <data name="ChangeLyricContent_Function_TextBlock.Text" xml:space="preserve">
+    <value>修改为当前歌词</value>
+  </data>
   <data name="ChangeVolume_Condition_TextBlock.Text" xml:space="preserve">
     <value>上/下 方向键</value>
   </data>
