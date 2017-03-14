@@ -21,7 +21,7 @@
             <ComboBoxItem x:Name="AppTheme_Dark_ComboBoxItem" x:Uid="/Setting/AppTheme_Dark_ComboBoxItem"/>
         </ComboBox>
 
-        <ToggleSwitch x:Uid="/Setting/DisplayBackgroundImage_ToggleSwitch" IsOn="{x:Bind settings.IsDisplayBackgroundImage,Mode=TwoWay}"/>
+        <ToggleSwitch x:Uid="/Setting/DisplayBackgroundImage_ToggleSwitch" Margin="0,10" IsOn="{x:Bind settings.IsDisplayBackgroundImage,Mode=TwoWay}"/>
         
         <StackPanel x:Name="BackgroundImageSource_StackPanel" Margin="0,10" Visibility="{x:Bind settings.IsDisplayBackgroundImage,Converter={StaticResource boolToVisibility},Mode=OneWay}">
             <TextBlock x:Uid="/Setting/BackgroundImageSource_TextBlock"/>

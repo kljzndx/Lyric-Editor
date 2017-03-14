@@ -36,7 +36,7 @@ namespace LyricsEditor.UserControls
 
         private async void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            var allLog = await Services.UpdateLogXmlService.GetUpdateLog();
+            var allLog = await Tools.UpdateLogTools.GetUpdateLog();
             thelog = allLog.theVersionUpdateLog;
             allLogs = allLog.allUpdateLog;
             Bindings.Update();

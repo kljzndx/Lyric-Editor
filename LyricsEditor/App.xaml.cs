@@ -1,6 +1,7 @@
 ﻿using LyricsEditor.Auxiliary;
 using LyricsEditor.Information;
 using LyricsEditor.Model;
+using LyricsEditor.Tools;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -159,7 +160,7 @@ namespace LyricsEditor
             }
             Window.Current.Activate();
             var file = args.Files[0] as IStorageFile;
-            LyricFileManager.ChanageFile(file, await LyricFileManager.ReadLyricFile(file));
+            LyricFileTools.ChanageFile(file, await LyricFileTools.ReadLyricFile(file));
         }
 
         /// <summary>

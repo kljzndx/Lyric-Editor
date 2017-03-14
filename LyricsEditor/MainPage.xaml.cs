@@ -21,6 +21,7 @@ using Windows.ApplicationModel.DataTransfer;
 using LyricsEditor.Information;
 using LyricsEditor.Auxiliary;
 using Windows.Storage;
+using LyricsEditor.Tools;
 
 // https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x804 上介绍了“空白页”项模板
 
@@ -43,7 +44,7 @@ namespace LyricsEditor
             CoreWindow.GetForCurrentThread().KeyDown += MainPage_KeyDown;
             AppVersionValue_TextBlock.Text = AppInfo.AppVersion;
 
-            LyricFileManager.LyricFileChanageEvent += (e) => { LyricManager.LrcAnalysis(e.Content, lyrics, settings.IdTag); };
+            LyricFileTools.LyricFileChanageEvent += (s,e) => { LyricTools.LrcAnalysis(e.Content, lyrics, settings.IdTag); };
             
             music.MusicChanageEvent += BackgroundImage.RefreshAlbumImage;
             music.MusicChanageEvent += AudioPlayer.SwitchMusic;
@@ -101,7 +102,6 @@ namespace LyricsEditor
         
 
         #region 自己定义的方法
-
         private void AddLyric()
         {
             if (!LyricContent_TextBox.Text.Trim().Contains('\n') && !LyricContent_TextBox.Text.Trim().Contains('\r'))
@@ -144,6 +144,30 @@ namespace LyricsEditor
         private void LyricContent_TextBox_LostFocus(object sender, RoutedEventArgs e)
         {
             InputBoxAvailableFocus = false;
+        }
+        
+        private void LyricContent_TextBox_KeyDown(object sender, KeyRoutedEventArgs e)
+        {
+            if (e.Key == VirtualKey.Enter)
+            {
+                e.Handled = true;
+                if (App.isPressCtrl)
+                    AddLyric();
+                else if (Lyric_ListView.SelectedItem is Lyric)
+                {
+                    foreach (Lyric item in Lyric_ListView.SelectedItems)
+                        item.Content = LyricContent_TextBox.Text;
+                    Lyric_ListView.SelectedIndex = Lyric_ListView.SelectedIndex == Lyric_ListView.Items.Count - 1 ? Lyric_ListView.Items.Count - 1 : Lyric_ListView.SelectedIndex + 1;
+                }
+                else
+                {
+                    var thisBox = (sender as TextBox);
+                    string selectPositionLaft = thisBox.Text.Substring(0, thisBox.SelectionStart) + "\r\n";
+                    string result = selectPositionLaft + thisBox.Text.Substring(thisBox.SelectionStart);
+                    thisBox.Text = result;
+                    thisBox.Select(selectPositionLaft.Length - 1, 0);
+                }
+            }
         }
         #endregion
         #region 歌词编辑按钮
@@ -284,19 +308,23 @@ namespace LyricsEditor
         {
             await music.OpenFile();
         }
+
         private async void OpenLRC_MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
         {
-            await LyricFileManager.OpenFileAsync();
+            await LyricFileTools.OpenFileAsync();
         }
+
         private async void Save_AppBarButton_Click(object sender, RoutedEventArgs e)
         {
-            await LyricFileManager.SaveLyricAsync(lyrics, settings.IdTag);
+            await LyricFileTools.SaveLyricAsync(lyrics, settings.IdTag);
         }
+
         private void Settings_AppBarButton_Click(object sender, RoutedEventArgs e)
         {
             Sidebar_SplitView.IsPaneOpen = !Sidebar_SplitView.IsPaneOpen;
             Sidebar_Frame.Navigate(typeof(Setting_Page));
         }
+
         private void MultilineEdit_AppBarButton_Click(object sender, RoutedEventArgs e)
         {
             Lyric_ListView.SelectionMode = ListViewSelectionMode.Multiple;
@@ -370,7 +398,7 @@ namespace LyricsEditor
                         {
                             if (fileType == ".lrc" || fileType == ".txt")
                             {
-                                LyricManager.LrcAnalysis(await LyricFileManager.ReadLyricFile(file), lyrics, settings.IdTag);
+                                LyricTools.LrcAnalysis(await LyricFileTools.ReadLyricFile(file), lyrics, settings.IdTag);
                                 isGetLyric = true;
                             }
                         }
@@ -395,28 +423,5 @@ namespace LyricsEditor
             e.DragUIOverride.IsContentVisible = true;
         }
 
-        private void LyricContent_TextBox_KeyDown(object sender, KeyRoutedEventArgs e)
-        {
-            if (e.Key == VirtualKey.Enter)
-            {
-                e.Handled = true;
-                if (App.isPressCtrl)
-                    AddLyric();
-                else if (Lyric_ListView.SelectedItem is Lyric)
-                {
-                    foreach (Lyric item in Lyric_ListView.SelectedItems)
-                        item.Content = LyricContent_TextBox.Text;
-                    Lyric_ListView.SelectedIndex = Lyric_ListView.SelectedIndex == Lyric_ListView.Items.Count - 1 ? Lyric_ListView.Items.Count - 1 : Lyric_ListView.SelectedIndex + 1;
-                }
-                else
-                {
-                    var thisBox = (sender as TextBox);
-                    string selectPositionLaft = thisBox.Text.Substring(0, thisBox.SelectionStart) + "\r\n";
-                    string result = selectPositionLaft + thisBox.Text.Substring(thisBox.SelectionStart);
-                    thisBox.Text = result;
-                    thisBox.Select(selectPositionLaft.Length - 1, 0);
-                }
-            }
-        }
     }
 }

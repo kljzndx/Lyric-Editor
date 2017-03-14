@@ -1,4 +1,6 @@
-﻿using System;
+﻿using LyricsEditor.EventArg;
+using LyricsEditor.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -7,26 +9,17 @@ using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 
-namespace LyricsEditor.Model
+namespace LyricsEditor.Tools
 {
-    public class LyricFileChanageEventArgs : EventArgs
-    {
-        public IStorageFile File { get; set; }
-        public string Content { get; set; }
-    }
-
-    public delegate void LyricFileChanageEventHandler(LyricFileChanageEventArgs e);
-
-    public static class LyricFileManager
+    
+    public static class LyricFileTools
     {
         public static IStorageFile ThisLRCFile { get; private set; }
-        public static event LyricFileChanageEventHandler LyricFileChanageEvent;
-
-
-
+        public static event EventHandler<LyricFileChanageEventArgs> LyricFileChanageEvent;
+        
         public static void ChanageFile(IStorageFile file, string content)
         {
-            LyricFileChanageEvent(new LyricFileChanageEventArgs { File = file, Content = content });
+            LyricFileChanageEvent(null, new LyricFileChanageEventArgs { File = file, Content = content });
             ThisLRCFile = file;
         }
 
@@ -47,7 +40,7 @@ namespace LyricsEditor.Model
         public static async Task<bool> SaveLyricAsync(IList<Lyric> lyricList, LyricIDTag tag)
         {
             StorageFile lrcFile = null;
-            if (LyricFileManager.ThisLRCFile is null)
+            if (LyricFileTools.ThisLRCFile is null)
             {
                 FileSavePicker picker = new FileSavePicker();
                 picker.SuggestedFileName = "New_LRC_File";
@@ -59,9 +52,9 @@ namespace LyricsEditor.Model
                     return false;
             }
             else
-                lrcFile = LyricFileManager.ThisLRCFile as StorageFile;
+                lrcFile = LyricFileTools.ThisLRCFile as StorageFile;
 
-            string fileContent = LyricManager.PrintLyric(lyricList, tag);
+            string fileContent = LyricTools.PrintLyric(lyricList, tag);
 
             await FileIO.WriteTextAsync(lrcFile, fileContent);
             ThisLRCFile = lrcFile;

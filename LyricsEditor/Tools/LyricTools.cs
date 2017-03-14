@@ -8,10 +8,11 @@ using System.Threading.Tasks;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Storage;
 using Windows.Storage.Pickers;
+using LyricsEditor.Model;
 
-namespace LyricsEditor.Model
+namespace LyricsEditor.Tools
 {
-    public static class LyricManager
+    public static class LyricTools
     {
         public static void LrcAnalysis(string content, IList<Lyric> lyricContent, LyricIDTag idTag)
         {
@@ -31,7 +32,6 @@ namespace LyricsEditor.Model
             {
                 foreach (Match item in lyrics)
                 {
-                    int i = 0;
                     int min = Int32.Parse(item.Groups[1].Value);
                     int souconds = Int32.Parse(item.Groups[2].Value);
                     int ms = Int32.Parse(item.Groups[3].Value) * 10;

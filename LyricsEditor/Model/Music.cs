@@ -1,4 +1,5 @@
 ﻿using LyricsEditor.Auxiliary;
+using LyricsEditor.EventArg;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,21 +13,15 @@ using Windows.UI.Xaml.Media.Imaging;
 
 namespace LyricsEditor.Model
 {
-    public class MusicChanageEventArgs : EventArgs
-    {
-        public Music NewMusic { get; set; }
-    }
-
     public class Music : BindableBase
     {
-
         private string name, artist, album;
         private BitmapImage albumImage;
         private TimeSpan allTime;
         private StorageFile file;
-
-
+        
         public event EventHandler<MusicChanageEventArgs> MusicChanageEvent;
+
         /// <summary>
         /// 歌名
         /// </summary>

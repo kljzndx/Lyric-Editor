@@ -8,14 +8,14 @@ using System.Threading.Tasks;
 using System.Xml.Linq;
 using Windows.Storage;
 
-namespace LyricsEditor.Services
+namespace LyricsEditor.Tools
 {
-    public static class UpdateLogXmlService
+    public static class UpdateLogTools
     {
         public static async Task<(UpdateLog theVersionUpdateLog, ObservableCollection<UpdateLog> allUpdateLog)> GetUpdateLog()
         {
             ObservableCollection<UpdateLog> logs = new ObservableCollection<UpdateLog>();
-            var file = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Datas/UpdateLog.xml"));
+            var file = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Data/UpdateLog.xml"));
 
             XDocument dom = XDocument.Parse(await FileIO.ReadTextAsync(file));
             var x_Logs = dom.Descendants("UpdateLog");

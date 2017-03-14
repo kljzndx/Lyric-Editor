@@ -1,4 +1,5 @@
 ﻿using LyricsEditor.Auxiliary;
+using LyricsEditor.EventArg;
 using LyricsEditor.Model;
 using System;
 using System.Collections.Generic;
@@ -120,6 +121,7 @@ namespace LyricsEditor.UserControls
         public async void SwitchMusic(object sender, MusicChanageEventArgs e)
         {
             musicSource = e.NewMusic;
+            this.Bindings.Update();
             AudioPlayer_MediaElement.SetSource(await musicSource.File.OpenAsync(Windows.Storage.FileAccessMode.Read), musicSource.File.ContentType);
         }
         /// <summary>
@@ -143,7 +145,6 @@ namespace LyricsEditor.UserControls
         private void AudioPlayer_MediaElement_MediaOpened(object sender, RoutedEventArgs e)
         {
             (sender as MediaElement).Play();
-            MusicPath_TextBlock.Text = musicSource.File.Path;
             PlayPosithon_Slider.Maximum = musicSource.Alltime.TotalMinutes;
             StartDisPlayTime();
             SwitchDisplayPlayAndPauseButton(false);
