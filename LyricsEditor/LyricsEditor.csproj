@@ -119,6 +119,7 @@
     <Compile Include="Enum\LyricChanageButtonBehavior.cs" />
     <Compile Include="EventArg\LyricFileChanageEventArgs.cs" />
     <Compile Include="EventArg\MusicChanageEventArgs.cs" />
+    <Compile Include="EventArg\PlayPositionUserChangedEventArgs.cs" />
     <Compile Include="ExceptionHandlingSynchronizationContext.cs" />
     <Compile Include="Information\AppInfo.cs" />
     <Compile Include="Auxiliary\CharacterLibrary.cs" />
@@ -148,6 +149,9 @@
     </Compile>
     <Compile Include="UserControls\BlurBackgroundImage.xaml.cs">
       <DependentUpon>BlurBackgroundImage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\LyricPreview.xaml.cs">
+      <DependentUpon>LyricPreview.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserControls\ShortcutKeysDescribedPanel.xaml.cs">
       <DependentUpon>ShortcutKeysDescribedPanel.xaml</DependentUpon>
@@ -258,6 +262,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\BlurBackgroundImage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\LyricPreview.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

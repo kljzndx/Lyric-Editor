@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <UpdateLogs>
+      <UpdateLog>
+        <Version>1.9.0</Version>
+        <Content>
+1，调整快捷菜单的背景的不透明度为40%（之前为70%）
+        </Content>
+        <Date>2017/03/13</Date>
+    </UpdateLog>
     <UpdateLog>
         <Version>1.9.0</Version>
         <Content>

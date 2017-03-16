@@ -40,6 +40,7 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition/>
+                    <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
                 <!--<Grid x:Name="TitleBar_Grid">
@@ -52,9 +53,10 @@
                     </StackPanel>
                 </Grid>-->
                 
-                <usctrl:AudioPlayer x:Name="AudioPlayer" Grid.Row="1"/>
+                <usctrl:AudioPlayer x:Name="AudioPlayer" Grid.Row="1" Played="AudioPlayer_Played" Paused="AudioPlayer_Paused" PlayPositionUserChange="AudioPlayer_PlayPositionUserChange"/>
                 <usctrl:ShortcutKeysDescribedPanel x:Name="ShortcutKeysPanel" Grid.RowSpan="3" Canvas.ZIndex="2"/>
                 <usctrl:UpdateLogPanel x:Name="UpdateLogPanel" Grid.RowSpan="3" Canvas.ZIndex="1"/>
+                <usctrl:BlurBackgroundImage x:Name="BackgroundImage" Grid.Row="2" Grid.RowSpan="2" Visibility="{x:Bind settings.IsDisplayBackgroundImage,Mode=OneWay,Converter={StaticResource boolToVisibility}}" Opacity="{x:Bind settings.BackgroundOpacity,Mode=OneWay}"/>
 
                 <Grid x:Name="Lyric_Grid" Grid.Row="2">
                     <Grid.RowDefinitions>
@@ -62,7 +64,6 @@
                         <RowDefinition/>
                     </Grid.RowDefinitions>
 
-                    <usctrl:BlurBackgroundImage x:Name="BackgroundImage" Grid.RowSpan="2" Visibility="{x:Bind settings.IsDisplayBackgroundImage,Mode=OneWay,Converter={StaticResource boolToVisibility}}" Opacity="{x:Bind settings.BackgroundOpacity,Mode=OneWay}"/>
                     
                     <Grid Margin="0,5">
                         <Grid.RowDefinitions>
@@ -157,23 +158,23 @@
                             </ControlTemplate>
                         </Button.Template>
                     </Button>
-                    
+
                     <Grid x:Name="FastMenu_Grid" Grid.Row="1" Width="140" Height="140" HorizontalAlignment="Center" VerticalAlignment="Center">
-                        <Image Source="Assets/毛玻璃.png" Stretch="UniformToFill" Opacity="0.7">
+                        <Image Source="Assets/毛玻璃.png" Stretch="UniformToFill" Opacity="0.4">
                             <interactivity:Interaction.Behaviors>
                                 <behaviors:Blur Value="3"/>
                             </interactivity:Interaction.Behaviors>
                         </Image>
-                        
+
                         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
                             <Button x:Uid="/Main/OpenMusic_Button" Width="130" Margin="0,5" Click="OpenMusic_MenuFlyoutItem_Click"/>
                             <Button x:Uid="/Main/OpenLRC_Button" Width="130" Margin="0,5" Click="OpenLRC_MenuFlyoutItem_Click"/>
                             <Button x:Name="HideMenu_Button" x:Uid="/Main/HideMenu_Button" Width="130" Margin="0,5" Click="HideMenu_Button_Click"/>
                         </StackPanel>
                     </Grid>
-                    
-                    
                 </Grid>
+
+                <usctrl:LyricPreview x:Name="LyricPreview" Grid.Row="3"/>
             </Grid>
         </SplitView.Content>
     </SplitView>

@@ -29,7 +29,12 @@ namespace LyricsEditor.UserControls
         private Setting settings = Setting.GetSettingObject();
         private ThreadPoolTimer displayTime_ThreadPoolTimer;
         private Music musicSource;
+        
+        public event EventHandler<PlayPositionUserChangeEventArgs> PlayPositionUserChange;
+        public event EventHandler Played;
+        public event EventHandler Paused;
         private bool isPressSlider = false;
+        public bool IsPressSlider { get => isPressSlider; private set => UserChangePosition(ref isPressSlider, value); }
 
         public TimeSpan PlayPosition
         {
@@ -134,12 +139,21 @@ namespace LyricsEditor.UserControls
             {
                 Play_Button.Visibility = Visibility.Visible;
                 Pause_Button.Visibility = Visibility.Collapsed;
+                Paused?.Invoke(this, EventArgs.Empty);
             }
             else
             {
                 Play_Button.Visibility = Visibility.Collapsed;
                 Pause_Button.Visibility = Visibility.Visible;
+                Played?.Invoke(this, EventArgs.Empty);
             }
+        }
+
+        private void UserChangePosition(ref bool pressSlider,bool value)
+        {
+            pressSlider = value;
+
+            PlayPositionUserChange?.Invoke(this, new PlayPositionUserChangeEventArgs { IsChanging = value, Time = PlayPosition });
         }
         #region 播放器
         private void AudioPlayer_MediaElement_MediaOpened(object sender, RoutedEventArgs e)
@@ -174,20 +188,22 @@ namespace LyricsEditor.UserControls
 
         #endregion
         #region 进度条
+
         private void PlayPosithon_Slider_PointerPressed(object sender, PointerRoutedEventArgs e)
         {
-            isPressSlider = true;
+            IsPressSlider = true;
         }
 
         private void PlayPosithon_Slider_PointerReleased(object sender, PointerRoutedEventArgs e)
         {
-            isPressSlider = false;
+            IsPressSlider = false;
         }
 
         private void PlayPosithon_Slider_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
         {
             AudioPlayer_MediaElement.Position = TimeSpan.FromMinutes(e.NewValue);
         }
+
         #endregion
         #region 播放器控制按钮
         private  void Play_Button_Click(object sender, RoutedEventArgs e)

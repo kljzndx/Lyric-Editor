@@ -22,6 +22,8 @@ using LyricsEditor.Information;
 using LyricsEditor.Auxiliary;
 using Windows.Storage;
 using LyricsEditor.Tools;
+using LyricsEditor.EventArg;
+using Windows.System.Threading;
 
 // https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x804 上介绍了“空白页”项模板
 
@@ -33,10 +35,12 @@ namespace LyricsEditor
     public sealed partial class MainPage : Page
     {
         private Music music = new Music();
+        private int theLyricID;
+        private Lyric theLyric;
         private ObservableCollection<Lyric> lyrics = new ObservableCollection<Lyric>();
         private Setting settings = Setting.GetSettingObject();
         private bool InputBoxAvailableFocus = false;
-        
+        private ThreadPoolTimer lyricPreview_ThreadPoolTimer;
 
         public MainPage()
         {
@@ -102,6 +106,35 @@ namespace LyricsEditor
         
 
         #region 自己定义的方法
+
+        private void PreviewLyric()
+        {
+            if (lyrics.Count == 0)
+                return;
+            var theTime = AudioPlayer.PlayPosition;
+            if (theLyric is null)
+            {
+                theLyric = lyrics[theLyricID];
+            }
+
+            if (theTime.Minutes == theLyric.Time.Minutes && theTime.Seconds == theLyric.Time.Seconds)
+            {
+                LyricPreview.SwitchLyric(theLyric.Content);
+                if (theLyricID < lyrics.Count-1)
+                    theLyric = lyrics[++theLyricID];
+            }
+        }
+
+        private async void PreviewLyric(ThreadPoolTimer timer)
+        {
+            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, PreviewLyric);
+        }
+
+        private void StartDisplayLyricPreview()
+        {
+            lyricPreview_ThreadPoolTimer = ThreadPoolTimer.CreatePeriodicTimer(PreviewLyric, TimeSpan.FromMilliseconds(100));
+        }
+
         private void AddLyric()
         {
             if (!LyricContent_TextBox.Text.Trim().Contains('\n') && !LyricContent_TextBox.Text.Trim().Contains('\r'))
@@ -134,7 +167,58 @@ namespace LyricsEditor
             }
         }
         #endregion
+        #region 播放器
 
+        private void AudioPlayer_PlayPositionUserChange(object sender, PlayPositionUserChangeEventArgs e)
+        {
+            if (e.IsChanging)
+            {
+                lyricPreview_ThreadPoolTimer.Cancel();
+                return;
+            }
+
+            bool isOk = false;
+
+            if (e.Time < lyrics[0].Time)
+            {
+                theLyricID = 0;
+                isOk = true;
+            }
+
+            if (e.Time > lyrics[lyrics.Count - 1].Time)
+            {
+                theLyricID = lyrics.Count - 1;
+                isOk = true;
+            }
+
+            if (!isOk)
+            {
+                for (int i = 0; i < lyrics.Count; i++)
+                {
+                    if (e.Time.CompareTo(lyrics[i].Time) == 1)
+                    {
+                        theLyricID = i - 1;
+                        break;
+                    }
+                }
+            }
+
+            theLyric = lyrics[theLyricID];
+            LyricPreview.SwitchLyric(theLyric.Content);
+            StartDisplayLyricPreview();
+        }
+
+        private void AudioPlayer_Played(object sender, EventArgs e)
+        {
+            StartDisplayLyricPreview();
+        }
+
+        private void AudioPlayer_Paused(object sender, EventArgs e)
+        {
+            lyricPreview_ThreadPoolTimer.Cancel();
+        }
+
+        #endregion
         #region 歌词输入框
         private void LyricContent_TextBox_GotFocus(object sender, RoutedEventArgs e)
         {
