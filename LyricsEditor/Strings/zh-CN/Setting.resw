@@ -129,9 +129,6 @@
   <data name="AppTheme_Light_ComboBoxItem.Content" xml:space="preserve">
     <value>亮</value>
   </data>
-  <data name="AppTheme_Massage_TextBlock.Text" xml:space="preserve">
-    <value>重启应用后生效</value>
-  </data>
   <data name="BacckgroundBlurDegree_Massage_TextBlock.Text" xml:space="preserve">
     <value>背景模糊功能仅支持win10 1607及之后的版本</value>
   </data>

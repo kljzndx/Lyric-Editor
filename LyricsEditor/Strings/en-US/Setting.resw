@@ -129,9 +129,6 @@
   <data name="AppTheme_Light_ComboBoxItem.Content" xml:space="preserve">
     <value>Light</value>
   </data>
-  <data name="AppTheme_Massage_TextBlock.Text" xml:space="preserve">
-    <value>Restart the applications after the entry into force</value>
-  </data>
   <data name="BacckgroundBlurDegree_Massage_TextBlock.Text" xml:space="preserve">
     <value>Background blur function only supports "win10 1607" and later versions</value>
   </data>

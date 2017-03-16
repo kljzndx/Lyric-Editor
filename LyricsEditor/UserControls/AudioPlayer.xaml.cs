@@ -53,6 +53,8 @@ namespace LyricsEditor.UserControls
             musicSource = new Music();
             CoreWindow.GetForCurrentThread().KeyDown += AudioPlayer_KeyDown;
             CoreWindow.GetForCurrentThread().KeyUp += AudioPlayer_KeyUp;
+            PlayPosithon_Slider.AddHandler(PointerPressedEvent, new PointerEventHandler(PlayPosithon_Slider_PointerPressed), true);
+            PlayPosithon_Slider.AddHandler(PointerReleasedEvent, new PointerEventHandler(PlayPosithon_Slider_PointerReleased), true);
         }
 
         private void AudioPlayer_KeyDown(CoreWindow sender, KeyEventArgs args)
@@ -224,14 +226,16 @@ namespace LyricsEditor.UserControls
         {
             AudioPlayer_MediaElement.Position -= App.isPressShift ? TimeSpan.FromSeconds(5) : TimeSpan.FromMilliseconds(500);
             DisplayTime();
+            PlayPositionUserChange?.Invoke(this, new PlayPositionUserChangeEventArgs { IsChanging = false, Time = PlayPosition });
         }
 
         private void GoForward_Button_Click(object sender, RoutedEventArgs e)
         {
             AudioPlayer_MediaElement.Position += App.isPressShift ? TimeSpan.FromSeconds(5) : TimeSpan.FromMilliseconds(500);
             DisplayTime();
+            PlayPositionUserChange?.Invoke(this, new PlayPositionUserChangeEventArgs { IsChanging = false, Time = PlayPosition });
         }
-        
+
         #endregion
 
     }

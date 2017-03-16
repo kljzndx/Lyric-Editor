@@ -21,7 +21,7 @@
     </UserControl.Resources>
 
     <Grid x:Name="Root_Grid">
-        <Rectangle Fill="{ThemeResource SystemControlBackgroundAccentBrush}" Opacity="0.3"/>
+        <Rectangle Fill="{ThemeResource SystemControlBackgroundAccentBrush}" Opacity="0.5"/>
         <TextBlock x:Name="LyricContent_TextBlock" Margin="0,10" Text="{x:Bind LyricContent,Mode=OneWay}" TextAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap" FontSize="24" RenderTransformOrigin="0.5,0.5">
             <TextBlock.RenderTransform>
                 <CompositeTransform x:Name="LyricContent_Transform" ScaleY="0"/>

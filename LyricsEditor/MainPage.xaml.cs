@@ -48,7 +48,12 @@ namespace LyricsEditor
             CoreWindow.GetForCurrentThread().KeyDown += MainPage_KeyDown;
             AppVersionValue_TextBlock.Text = AppInfo.AppVersion;
 
-            LyricFileTools.LyricFileChanageEvent += (s,e) => { LyricTools.LrcAnalysis(e.Content, lyrics, settings.IdTag); };
+            LyricFileTools.LyricFileChanageEvent += 
+                (s,e) => 
+                {
+                    LyricTools.LrcAnalysis(e.Content, lyrics, settings.IdTag);
+                    RefreshTheLyric();
+                };
             
             music.MusicChanageEvent += BackgroundImage.RefreshAlbumImage;
             music.MusicChanageEvent += AudioPlayer.SwitchMusic;
@@ -88,6 +93,7 @@ namespace LyricsEditor
                     Lyric_ListView.SelectedIndex = -1;
                     AddLyric();
                 }
+                RefreshTheLyric();
             }
             
             //删除歌词
@@ -99,6 +105,7 @@ namespace LyricsEditor
                 {
                     lyrics.Remove(item);
                 }
+                RefreshTheLyric();
             }
 
             
@@ -116,12 +123,17 @@ namespace LyricsEditor
             {
                 theLyric = lyrics[theLyricID];
             }
-
-            if (theTime.Minutes == theLyric.Time.Minutes && theTime.Seconds == theLyric.Time.Seconds)
+            
+            if (theTime.Minutes == theLyric.Time.Minutes && theTime.Seconds == theLyric.Time.Seconds && theTime.Milliseconds / 100 >= theLyric.Time.Milliseconds / 100)
             {
                 LyricPreview.SwitchLyric(theLyric.Content);
                 if (theLyricID < lyrics.Count-1)
                     theLyric = lyrics[++theLyricID];
+                else
+                {
+                    theLyricID = 0;
+                    theLyric = lyrics[0];
+                }
             }
         }
 
@@ -165,6 +177,7 @@ namespace LyricsEditor
                 (Lyric_ListView.ItemsPanelRoot.Children[line - 1] as ListViewItem).IsSelected = false;
                 (Lyric_ListView.ItemsPanelRoot.Children[line] as ListViewItem).IsSelected = true;
             }
+            RefreshTheLyric();
         }
         #endregion
         #region 播放器
@@ -177,15 +190,22 @@ namespace LyricsEditor
                 return;
             }
 
-            bool isOk = false;
+            RefreshTheLyric();
+            StartDisplayLyricPreview();
+        }
 
-            if (e.Time < lyrics[0].Time)
+        private void RefreshTheLyric()
+        {
+            bool isOk = false;
+            TimeSpan Time = AudioPlayer.PlayPosition;
+
+            if (Time < lyrics[0].Time)
             {
                 theLyricID = 0;
                 isOk = true;
             }
 
-            if (e.Time > lyrics[lyrics.Count - 1].Time)
+            if (Time > lyrics[lyrics.Count - 1].Time)
             {
                 theLyricID = lyrics.Count - 1;
                 isOk = true;
@@ -195,17 +215,22 @@ namespace LyricsEditor
             {
                 for (int i = 0; i < lyrics.Count; i++)
                 {
-                    if (e.Time.CompareTo(lyrics[i].Time) == 1)
+                    if (lyrics[i].Time.CompareTo(Time) == 0)
                     {
-                        theLyricID = i - 1;
+                        theLyricID = i < lyrics.Count - 1 ? i + 1 : i;
+                        LyricPreview.SwitchLyric(lyrics[i].Content);
+                        break;
+                    }
+                    if (lyrics[i].Time.CompareTo(Time) == 1)
+                    {
+                        theLyricID = i;
+                        LyricPreview.SwitchLyric(lyrics[i - 1].Content);
                         break;
                     }
                 }
             }
 
             theLyric = lyrics[theLyricID];
-            LyricPreview.SwitchLyric(theLyric.Content);
-            StartDisplayLyricPreview();
         }
 
         private void AudioPlayer_Played(object sender, EventArgs e)
@@ -236,12 +261,16 @@ namespace LyricsEditor
             {
                 e.Handled = true;
                 if (App.isPressCtrl)
+                {
                     AddLyric();
+                    RefreshTheLyric();
+                }
                 else if (Lyric_ListView.SelectedItem is Lyric)
                 {
                     foreach (Lyric item in Lyric_ListView.SelectedItems)
                         item.Content = LyricContent_TextBox.Text;
                     Lyric_ListView.SelectedIndex = Lyric_ListView.SelectedIndex == Lyric_ListView.Items.Count - 1 ? Lyric_ListView.Items.Count - 1 : Lyric_ListView.SelectedIndex + 1;
+                    RefreshTheLyric();
                 }
                 else
                 {
@@ -326,10 +355,11 @@ namespace LyricsEditor
 
         private void DelLyric_Button_Click(object sender, RoutedEventArgs e)
         {
-            for (int i = Lyric_ListView.SelectedItems.Count - 1; i >= 0; i--)
+            foreach (Lyric item in Lyric_ListView.SelectedItems)
             {
-                lyrics.Remove(Lyric_ListView.SelectedItems[i] as Lyric);
+                lyrics.Remove(item);
             }
+            RefreshTheLyric();
         }
 
         private void ChanageTime_MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
@@ -338,9 +368,9 @@ namespace LyricsEditor
                 (Lyric_ListView.SelectedItem as Lyric).Time = AudioPlayer.PlayPosition;
             else
                 foreach (Lyric item in Lyric_ListView.SelectedItems)
-                {
                     item.Time = AudioPlayer.PlayPosition;
-                }
+                
+            RefreshTheLyric();
         }
 
         private void ChanageLyric_MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
@@ -349,9 +379,9 @@ namespace LyricsEditor
                 (Lyric_ListView.SelectedItem as Lyric).Content = LyricContent_TextBox.Text;
             else
                 foreach (Lyric item in Lyric_ListView.SelectedItems)
-                {
                     item.Content = LyricContent_TextBox.Text;
-                }
+
+            RefreshTheLyric();
         }
         #endregion
         #region 歌词列表
@@ -372,6 +402,7 @@ namespace LyricsEditor
                     for (int j = 0; j < i - 1; j++)
                         if (lyrics[j].CompareTo(lyrics[j + 1]) > 0)
                             lyrics.Move(j, j + 1);
+            RefreshTheLyric();
         }
 
         private void ListEnd_Rectangle_Tapped(object sender, TappedRoutedEventArgs e)

@@ -22,7 +22,7 @@
                     <ColumnDefinition/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
-                <Slider x:Name="PlayPosithon_Slider" Height="45" Maximum="0" Style="{StaticResource MediaSliderStyle}" SmallChange="0.0001" LargeChange="1" ThumbToolTipValueConverter="{StaticResource doubleToTimeString}" PointerPressed="PlayPosithon_Slider_PointerPressed" PointerReleased="PlayPosithon_Slider_PointerReleased" ValueChanged="PlayPosithon_Slider_ValueChanged" TickFrequency="1" StepFrequency="0.01" />
+                <Slider x:Name="PlayPosithon_Slider" Height="45" Maximum="0" Style="{StaticResource MediaSliderStyle}" SmallChange="0.0001" LargeChange="1" ThumbToolTipValueConverter="{StaticResource doubleToTimeString}" ValueChanged="PlayPosithon_Slider_ValueChanged" TickFrequency="1" StepFrequency="0.01" />
                 <TextBlock x:Name="ThisTime_TextBlock" Grid.Column="1" Text="{x:Bind PlayPosithon_Slider.Value,Mode=OneWay,Converter={StaticResource doubleToTimeString}}" Margin="10,0" VerticalAlignment="Center"/>
             </Grid>
         </StackPanel>
