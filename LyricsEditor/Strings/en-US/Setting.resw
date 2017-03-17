@@ -153,6 +153,9 @@
   <data name="LrcCreator_TextBox.Header" xml:space="preserve">
     <value>LRC Creator</value>
   </data>
+  <data name="PreviewFontSize_Slider.Header" xml:space="preserve">
+    <value>font size in preview area</value>
+  </data>
   <data name="SongAlbum_TextBox.Header" xml:space="preserve">
     <value>Album</value>
   </data>

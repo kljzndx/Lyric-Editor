@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LyricsEditor.Model;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -19,6 +20,7 @@ namespace LyricsEditor.UserControls
 {
     public sealed partial class LyricPreview : UserControl
     {
+        private Setting settings = Setting.GetSettingObject();
         private string lyricContent;
 
 

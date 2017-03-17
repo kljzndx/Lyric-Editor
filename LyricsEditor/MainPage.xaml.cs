@@ -123,7 +123,7 @@ namespace LyricsEditor
             {
                 theLyric = lyrics[theLyricID];
             }
-            
+            //判断分秒和毫秒的百位数
             if (theTime.Minutes == theLyric.Time.Minutes && theTime.Seconds == theLyric.Time.Seconds && theTime.Milliseconds / 100 >= theLyric.Time.Milliseconds / 100)
             {
                 LyricPreview.SwitchLyric(theLyric.Content);
@@ -145,53 +145,6 @@ namespace LyricsEditor
         private void StartDisplayLyricPreview()
         {
             lyricPreview_ThreadPoolTimer = ThreadPoolTimer.CreatePeriodicTimer(PreviewLyric, TimeSpan.FromMilliseconds(100));
-        }
-
-        private void AddLyric()
-        {
-            if (!LyricContent_TextBox.Text.Trim().Contains('\n') && !LyricContent_TextBox.Text.Trim().Contains('\r'))
-                lyrics.Add(new Lyric { Time = AudioPlayer.PlayPosition, Content = LyricContent_TextBox.Text.Trim() });
-            else
-            {
-                char lineBreak = LyricContent_TextBox.Text.Contains('\n') ? '\n' : '\r';
-                string[] lines = LyricContent_TextBox.Text.Trim().Split(lineBreak);
-                foreach (var line in lines)
-                {
-                    lyrics.Add(new Lyric { Time = AudioPlayer.PlayPosition, Content = line.Trim() });
-                }
-            }
-
-            if (Lyric_ListView.SelectedItems.Count == 1)
-            {
-                int line = 0;
-                for (int i = 0; i < lyrics.Count; i++)
-                {
-                    if (lyrics[i].Equals(Lyric_ListView.SelectedItems[0]))
-                    {
-                        line = i + 1;
-                        break;
-                    }
-                }
-                if (line < lyrics.Count - 1)
-                    lyrics.Move(lyrics.Count - 1, line);
-                (Lyric_ListView.ItemsPanelRoot.Children[line - 1] as ListViewItem).IsSelected = false;
-                (Lyric_ListView.ItemsPanelRoot.Children[line] as ListViewItem).IsSelected = true;
-            }
-            RefreshTheLyric();
-        }
-        #endregion
-        #region 播放器
-
-        private void AudioPlayer_PlayPositionUserChange(object sender, PlayPositionUserChangeEventArgs e)
-        {
-            if (e.IsChanging)
-            {
-                lyricPreview_ThreadPoolTimer.Cancel();
-                return;
-            }
-
-            RefreshTheLyric();
-            StartDisplayLyricPreview();
         }
 
         private void RefreshTheLyric()
@@ -232,6 +185,56 @@ namespace LyricsEditor
 
             theLyric = lyrics[theLyricID];
         }
+        
+        private void AddLyric()
+        {
+            if (!LyricContent_TextBox.Text.Trim().Contains('\n') && !LyricContent_TextBox.Text.Trim().Contains('\r'))
+                lyrics.Add(new Lyric { Time = AudioPlayer.PlayPosition, Content = LyricContent_TextBox.Text.Trim() });
+            else
+            {
+                char lineBreak = LyricContent_TextBox.Text.Contains('\n') ? '\n' : '\r';
+                string[] lines = LyricContent_TextBox.Text.Trim().Split(lineBreak);
+                foreach (var line in lines)
+                {
+                    lyrics.Add(new Lyric { Time = AudioPlayer.PlayPosition, Content = line.Trim() });
+                }
+            }
+
+            if (Lyric_ListView.SelectedItems.Count == 1)
+            {
+                int line = 0;
+                for (int i = 0; i < lyrics.Count; i++)
+                {
+                    if (lyrics[i].Equals(Lyric_ListView.SelectedItems[0]))
+                    {
+                        line = i + 1;
+                        break;
+                    }
+                }
+                if (line < lyrics.Count - 1)
+                    lyrics.Move(lyrics.Count - 1, line);
+                (Lyric_ListView.ItemsPanelRoot.Children[line - 1] as ListViewItem).IsSelected = false;
+                (Lyric_ListView.ItemsPanelRoot.Children[line] as ListViewItem).IsSelected = true;
+            }
+            RefreshTheLyric();
+        }
+        #endregion
+        #region 播放器
+
+        private void AudioPlayer_PlayPositionUserChange(object sender, PlayPositionUserChangeEventArgs e)
+        {
+            if (music.File is null)
+                return;
+            if (e.IsChanging)
+            {
+                lyricPreview_ThreadPoolTimer.Cancel();
+                return;
+            }
+
+            RefreshTheLyric();
+            StartDisplayLyricPreview();
+        }
+
 
         private void AudioPlayer_Played(object sender, EventArgs e)
         {

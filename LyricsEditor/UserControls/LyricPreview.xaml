@@ -11,18 +11,18 @@
     
     <UserControl.Resources>
         <Storyboard x:Name="FadeIn_Storyboard">
-            <DoubleAnimation Storyboard.TargetName="LyricContent_TextBlock" Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:0.2"/>
-            <DoubleAnimation Storyboard.TargetName="LyricContent_Transform" Storyboard.TargetProperty="ScaleY" From="0" To="1" Duration="0:0:0.2"/>
+            <DoubleAnimation Storyboard.TargetName="LyricContent_TextBlock" Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:0.1"/>
+            <DoubleAnimation Storyboard.TargetName="LyricContent_Transform" Storyboard.TargetProperty="ScaleY" From="0" To="1" Duration="0:0:0.1"/>
         </Storyboard>
         <Storyboard x:Name="FadeOut_Storyboard" Completed="FadeOut_Storyboard_Completed">
-            <DoubleAnimation Storyboard.TargetName="LyricContent_TextBlock" Storyboard.TargetProperty="Opacity" From="1" To="0" Duration="0:0:0.2"/>
-            <DoubleAnimation Storyboard.TargetName="LyricContent_Transform" Storyboard.TargetProperty="ScaleY" From="1" To="0" Duration="0:0:0.2"/>
+            <DoubleAnimation Storyboard.TargetName="LyricContent_TextBlock" Storyboard.TargetProperty="Opacity" From="1" To="0" Duration="0:0:0.1"/>
+            <DoubleAnimation Storyboard.TargetName="LyricContent_Transform" Storyboard.TargetProperty="ScaleY" From="1" To="0" Duration="0:0:0.1"/>
         </Storyboard>
     </UserControl.Resources>
 
     <Grid x:Name="Root_Grid">
         <Rectangle Fill="{ThemeResource SystemControlBackgroundAccentBrush}" Opacity="0.5"/>
-        <TextBlock x:Name="LyricContent_TextBlock" Margin="0,10" Text="{x:Bind LyricContent,Mode=OneWay}" TextAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap" FontSize="24" RenderTransformOrigin="0.5,0.5">
+        <TextBlock x:Name="LyricContent_TextBlock" Margin="0,10" Text="{x:Bind LyricContent,Mode=OneWay}" FontSize="{x:Bind settings.PreviewFontSize,Mode=OneWay}" TextAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap" RenderTransformOrigin="0.5,0.5">
             <TextBlock.RenderTransform>
                 <CompositeTransform x:Name="LyricContent_Transform" ScaleY="0"/>
             </TextBlock.RenderTransform>

@@ -153,6 +153,9 @@
   <data name="LrcCreator_TextBox.Header" xml:space="preserve">
     <value>LRC创建者</value>
   </data>
+  <data name="PreviewFontSize_Slider.Header" xml:space="preserve">
+    <value>预览区域内字体大小</value>
+  </data>
   <data name="SongAlbum_TextBox.Header" xml:space="preserve">
     <value>专辑</value>
   </data>
