@@ -123,8 +123,8 @@ namespace LyricsEditor
             {
                 theLyric = lyrics[theLyricID];
             }
-            //判断分秒和毫秒的百位数
-            if (theTime.Minutes == theLyric.Time.Minutes && theTime.Seconds == theLyric.Time.Seconds && theTime.Milliseconds / 100 >= theLyric.Time.Milliseconds / 100)
+
+            if (theTime.Minutes == theLyric.Time.Minutes && theTime.Seconds == theLyric.Time.Seconds && theTime.Milliseconds / 100 >= theLyric.Time.Milliseconds - 100 / 100)
             {
                 LyricPreview.SwitchLyric(theLyric.Content);
                 if (theLyricID < lyrics.Count-1)
@@ -149,6 +149,9 @@ namespace LyricsEditor
 
         private void RefreshTheLyric()
         {
+            if (!lyrics.Any())
+                return;
+
             bool isOk = false;
             TimeSpan Time = AudioPlayer.PlayPosition;
 

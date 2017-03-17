@@ -1,10 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <UpdateLogs>
       <UpdateLog>
+        <Version>1.10.1</Version>
+        <Content>
+1，歌词预览提前100毫秒切换
+2，修复没有歌词项时拖动进度条会报错的问题
+        </Content>
+        <Date>2017/03/17</Date>
+      </UpdateLog>
+      <UpdateLog>
         <Version>1.10.0</Version>
         <Content>
 1，新增歌词预览功能
-2，增加“预览区域那内字体大小“设置
+2，增加“预览区域内字体大小“设置
 3，调整快捷菜单的背景的不透明度为40%（之前为70%）
 4，修复删除歌词按钮在多选状态下功能不正常的问题
         </Content>
