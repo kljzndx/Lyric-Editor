@@ -122,7 +122,7 @@ namespace LyricsEditor.UserControls
 
         private void StartDisPlayTime()
         {
-            displayTime_ThreadPoolTimer = ThreadPoolTimer.CreatePeriodicTimer(DisplayTime, TimeSpan.FromMilliseconds(100), DisplayTime);
+            displayTime_ThreadPoolTimer = ThreadPoolTimer.CreatePeriodicTimer(DisplayTime, TimeSpan.FromMilliseconds(50), DisplayTime);
         }
 
         public async void SwitchMusic(object sender, MusicChanageEventArgs e)

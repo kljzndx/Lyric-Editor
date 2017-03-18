@@ -21,7 +21,7 @@
             <ComboBoxItem x:Name="AppTheme_Dark_ComboBoxItem" x:Uid="/Setting/AppTheme_Dark_ComboBoxItem"/>
         </ComboBox>
 
-        <Slider x:Uid="/Setting/PreviewFontSize_Slider" Value="{x:Bind settings.PreviewFontSize,Mode=TwoWay}" Maximum="24" Margin="0,10"/>
+        <Slider x:Uid="/Setting/PreviewFontSize_Slider" Minimum="15" Value="{x:Bind settings.PreviewFontSize,Mode=TwoWay}" Maximum="32" Margin="0,10"/>
 
         <ToggleSwitch x:Uid="/Setting/DisplayBackgroundImage_ToggleSwitch" Margin="0,10" IsOn="{x:Bind settings.IsDisplayBackgroundImage,Mode=TwoWay}"/>
         

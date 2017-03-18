@@ -116,18 +116,18 @@ namespace LyricsEditor
 
         private void PreviewLyric()
         {
-            if (lyrics.Count == 0)
+            if (!lyrics.Any())
                 return;
-            var theTime = AudioPlayer.PlayPosition;
+            
             if (theLyric is null)
-            {
                 theLyric = lyrics[theLyricID];
-            }
-
-            if (theTime.Minutes == theLyric.Time.Minutes && theTime.Seconds == theLyric.Time.Seconds && theTime.Milliseconds / 100 >= theLyric.Time.Milliseconds - 100 / 100)
+            
+            var theTime = AudioPlayer.PlayPosition;
+            
+            if (theTime.Minutes == theLyric.Time.Minutes && theTime.Seconds == theLyric.Time.Seconds && theTime.Milliseconds / 10 >= theLyric.Time.Milliseconds / 10 - 10)
             {
                 LyricPreview.SwitchLyric(theLyric.Content);
-                if (theLyricID < lyrics.Count-1)
+                if (theLyricID < lyrics.Count - 1)
                     theLyric = lyrics[++theLyricID];
                 else
                 {
@@ -135,6 +135,7 @@ namespace LyricsEditor
                     theLyric = lyrics[0];
                 }
             }
+
         }
 
         private async void PreviewLyric(ThreadPoolTimer timer)
@@ -144,7 +145,7 @@ namespace LyricsEditor
 
         private void StartDisplayLyricPreview()
         {
-            lyricPreview_ThreadPoolTimer = ThreadPoolTimer.CreatePeriodicTimer(PreviewLyric, TimeSpan.FromMilliseconds(100));
+            lyricPreview_ThreadPoolTimer = ThreadPoolTimer.CreatePeriodicTimer(PreviewLyric, TimeSpan.FromMilliseconds(50));
         }
 
         private void RefreshTheLyric()
@@ -161,9 +162,10 @@ namespace LyricsEditor
                 isOk = true;
             }
 
-            if (Time > lyrics[lyrics.Count - 1].Time)
+            if (Time >= lyrics[lyrics.Count - 1].Time)
             {
-                theLyricID = lyrics.Count - 1;
+                theLyricID = 0;
+                LyricPreview.SwitchLyric(lyrics[lyrics.Count - 1].Content);
                 isOk = true;
             }
 

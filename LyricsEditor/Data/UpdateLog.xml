@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <UpdateLogs>
       <UpdateLog>
+        <Version>1.10.2</Version>
+        <Content>
+1，修复有时候歌词预览不会切换的问题
+2，时间刷新频率提升到50毫秒/一次（之前为100毫秒/一次）
+        </Content>
+        <Date>2017/03/18</Date>
+      </UpdateLog>
+      <UpdateLog>
         <Version>1.10.1</Version>
         <Content>
 1，歌词预览提前100毫秒切换
