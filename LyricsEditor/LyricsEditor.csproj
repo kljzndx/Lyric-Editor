@@ -133,6 +133,7 @@
     <Compile Include="Model\Music.cs" />
     <Compile Include="Model\Setting.cs" />
     <Compile Include="Information\SystemInfo.cs" />
+    <Compile Include="Model\ShortcutKey.cs" />
     <Compile Include="Model\UpdateLog.cs" />
     <Compile Include="Pages\Setting_Page.xaml.cs">
       <DependentUpon>Setting_Page.xaml</DependentUpon>
@@ -226,7 +227,12 @@
     <Content Include="Assets\StoreLogo.scale-150.png" />
     <Content Include="Assets\StoreLogo.scale-200.png" />
     <Content Include="Assets\StoreLogo.scale-400.png" />
-    <Content Include="Data\UpdateLog.xml" />
+    <Content Include="Data\ShortcutKeys.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Data\UpdateLog.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Assets\Wide310x150Logo.scale-100.png" />
     <Content Include="Assets\Wide310x150Logo.scale-125.png" />
     <Content Include="Assets\Wide310x150Logo.scale-150.png" />

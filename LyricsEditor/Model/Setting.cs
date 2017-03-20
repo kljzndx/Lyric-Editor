@@ -55,7 +55,7 @@ namespace LyricsEditor.Model
             CreateSetting(nameof(UserDefinedBackgroundImagePath), String.Empty);
             CreateSetting(nameof(BackgroundImageType), BackgroundImageTypeEnum.AlbumImage.ToString());
             CreateSetting(nameof(IsDisplayBackgroundImage), true);
-            CreateSetting(nameof(Theme), ElementTheme.Default.ToString());
+            CreateSetting(nameof(Theme), ElementTheme.Dark.ToString());
             CreateSetting(nameof(ChanageButtonBehavior), LyricChanageButtonBehavior.LetMeChoose.ToString());
 
             blurAvailability = SystemInfo.SystemVersion >= 14393;

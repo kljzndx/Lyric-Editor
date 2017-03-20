@@ -117,56 +117,11 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AddLyric_Condition1_TextBlock.Text" xml:space="preserve">
-    <value>输入完歌词后按 Ctrl + Enter</value>
-  </data>
-  <data name="AddLyric_Condition2_TextBlock.Text" xml:space="preserve">
-    <value>无选中项时按空格</value>
-  </data>
-  <data name="AddLyric_Function_TextBlock.Text" xml:space="preserve">
-    <value>添加歌词</value>
-  </data>
-  <data name="ChanageTime_Condition_TextBlock.Text" xml:space="preserve">
-    <value>有选中项时按空格</value>
-  </data>
-  <data name="ChanageTime_Function_TextBlock.Text" xml:space="preserve">
-    <value>修改为当前时间</value>
-  </data>
-  <data name="ChangeLyricContent_Condition_TextBlock.Text" xml:space="preserve">
-    <value>在歌词输入框内按回车键</value>
-  </data>
-  <data name="ChangeLyricContent_Function_TextBlock.Text" xml:space="preserve">
-    <value>修改为当前歌词</value>
-  </data>
-  <data name="ChangeVolume_Condition_TextBlock.Text" xml:space="preserve">
-    <value>上/下 方向键</value>
-  </data>
-  <data name="ChangeVolume_Function_TextBlock.Text" xml:space="preserve">
-    <value>增大/减小 音量</value>
-  </data>
   <data name="Close_Button.Content" xml:space="preserve">
     <value>关闭</value>
   </data>
   <data name="Conditions_TextBlock.Text" xml:space="preserve">
     <value>条件</value>
-  </data>
-  <data name="Delete_Condition_TextBlock.Text" xml:space="preserve">
-    <value>有选中项时按删除键</value>
-  </data>
-  <data name="Delete_Function_TextBlock.Text" xml:space="preserve">
-    <value>删除选中的歌词</value>
-  </data>
-  <data name="FastBackOrForward500ms_Condition_TextBlock.Text" xml:space="preserve">
-    <value>左/右 方向键</value>
-  </data>
-  <data name="FastBackOrForward500ms_Function_TextBlock.Text" xml:space="preserve">
-    <value>快退/快进 500毫秒</value>
-  </data>
-  <data name="FastBackOrForward5s_Condition_TextBlock.Text" xml:space="preserve">
-    <value>Shift + 左/右 方向键</value>
-  </data>
-  <data name="FastBackOrForward5s_Function_TextBlock.Text" xml:space="preserve">
-    <value>快退/快进 5秒</value>
   </data>
   <data name="Function_TextBlock.Text" xml:space="preserve">
     <value>功能</value>

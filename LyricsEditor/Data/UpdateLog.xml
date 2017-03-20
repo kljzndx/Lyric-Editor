@@ -1,5 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <UpdateLogs>
+        <UpdateLog>
+        <Version>1.11.0</Version>
+        <Content>
+1，背景图片增加淡入淡出效果
+2，播放/暂停快捷键更改为P键
+        </Content>
+        <Date>2017/03/20</Date>
+      </UpdateLog>
+        <UpdateLog>
+        <Version>1.10.6</Version>
+        <Content>
+1，紧急修复无选中项时按空格会弹出“请勿修改多行时间”的问题
+
+--------------附 1.10.5 版本更新日志---------------
+
+1，快捷键介绍弹窗改版
+2，增加 播放/暂停 快捷键
+3，修复暂停时拖动进度条后预览区域显示的还是之前的歌词的问题
+4，修复点击低栏的打开按钮有可能出现惨白或惨黑的菜单的问题
+5，精简部分代码
+        </Content>
+        <Date>2017/03/19</Date>
+      </UpdateLog>
+      <UpdateLog>
+        <Version>1.10.5</Version>
+        <Content>
+1，快捷键介绍弹窗改版
+2，增加 播放/暂停 快捷键
+3，修复暂停时拖动进度条后预览区域显示的还是之前的歌词的问题
+4，修复点击低栏的打开按钮有可能出现惨白或惨黑的菜单的问题
+5，精简部分代码
+        </Content>
+        <Date>2017/03/19</Date>
+      </UpdateLog>
       <UpdateLog>
         <Version>1.10.2</Version>
         <Content>

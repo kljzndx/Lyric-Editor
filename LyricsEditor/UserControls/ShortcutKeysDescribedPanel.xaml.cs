@@ -2,11 +2,14 @@
 using LyricsEditor.Model;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Xml.Linq;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -21,16 +24,15 @@ namespace LyricsEditor.UserControls
 {
     public sealed partial class ShortcutKeysDescribedPanel : UserControl
     {
+        private ObservableCollection<ShortcutKey> shortcutKeys = new ObservableCollection<ShortcutKey>();
+
         public ShortcutKeysDescribedPanel()
         {
             this.InitializeComponent();
-            if (AppInfo.LanguageCode == "en-US")
-                ShortcutKeysTable_ScrollViewer.HorizontalScrollBarVisibility = ScrollBarVisibility.Auto;
 
             if (SystemInfo.DeviceType == "Windows.Mobile")
             {
                 Root_Grid.Width = 320;
-                ShortcutKeysTable_ScrollViewer.HorizontalScrollBarVisibility = ScrollBarVisibility.Auto;
             }
         }
 
@@ -49,6 +51,22 @@ namespace LyricsEditor.UserControls
         {
             Disappear_Animation.Begin();
         }
-        
+
+        private async void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            var file = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Data/ShortcutKeys.xml"));
+            string content = await FileIO.ReadTextAsync(file);
+
+            XDocument dcm = XDocument.Parse(content);
+            foreach (var item in dcm.Element("ShortcutKeys").Elements("ShortcutKey"))
+            {
+                var shortcutKey = new ShortcutKey();
+                string language = AppInfo.LanguageCode == "zh-CN" ? "zh_CN" : "en_US";
+
+                shortcutKey.Condition = item.Element("Condition").Element(language).Value;
+                shortcutKey.Function = item.Element("Function").Element(language).Value;
+                shortcutKeys.Add(shortcutKey);
+            }
+        }
     }
 }

@@ -11,7 +11,16 @@
     d:DesignWidth="400"
     mc:Ignorable="d" Loaded="UserControl_Loaded">
 
-    <Image x:Name="image" Source="{x:Bind ImageSource,Mode=OneWay}" Stretch="UniformToFill">
+    <UserControl.Resources>
+        <Storyboard x:Name="FadeIn_Storyboard">
+            <DoubleAnimation Storyboard.TargetName="image" Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:0.5"/>
+        </Storyboard>
+        <Storyboard x:Name="FadeOut_Storyboard" Completed="FadeOut_Storyboard_Completed">
+            <DoubleAnimation Storyboard.TargetName="image" Storyboard.TargetProperty="Opacity" From="1" To="0" Duration="0:0:0.5"/>
+        </Storyboard>
+    </UserControl.Resources>
+
+    <Image x:Name="image" Stretch="UniformToFill">
         <interactivity:Interaction.Behaviors>
             <behaviors:Blur Value="{x:Bind settings.BackgroundBlurDegree,Mode=OneWay}" Duration="0" AutomaticallyStart="True"/>
         </interactivity:Interaction.Behaviors>

@@ -117,56 +117,11 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AddLyric_Condition1_TextBlock.Text" xml:space="preserve">
-    <value>enter song lyric after press Ctrl+Enter</value>
-  </data>
-  <data name="AddLyric_Condition2_TextBlock.Text" xml:space="preserve">
-    <value>Press spacebar when there are no selected items</value>
-  </data>
-  <data name="AddLyric_Function_TextBlock.Text" xml:space="preserve">
-    <value>Add Lyric</value>
-  </data>
-  <data name="ChanageTime_Condition_TextBlock.Text" xml:space="preserve">
-    <value>Press spacebar when there are selected items</value>
-  </data>
-  <data name="ChanageTime_Function_TextBlock.Text" xml:space="preserve">
-    <value>Modifications to the current time</value>
-  </data>
-  <data name="ChangeLyricContent_Condition_TextBlock.Text" xml:space="preserve">
-    <value>press Enter In Lyric input box</value>
-  </data>
-  <data name="ChangeLyricContent_Function_TextBlock.Text" xml:space="preserve">
-    <value>Modifications to the current lyric</value>
-  </data>
-  <data name="ChangeVolume_Condition_TextBlock.Text" xml:space="preserve">
-    <value>Up / Down Arrow Key</value>
-  </data>
-  <data name="ChangeVolume_Function_TextBlock.Text" xml:space="preserve">
-    <value>Increase / Decrease Volume</value>
-  </data>
   <data name="Close_Button.Content" xml:space="preserve">
     <value>Close</value>
   </data>
   <data name="Conditions_TextBlock.Text" xml:space="preserve">
     <value>Condition</value>
-  </data>
-  <data name="Delete_Condition_TextBlock.Text" xml:space="preserve">
-    <value>Press delete when there are selected items</value>
-  </data>
-  <data name="Delete_Function_TextBlock.Text" xml:space="preserve">
-    <value>Delete Selected Lyrics</value>
-  </data>
-  <data name="FastBackOrForward500ms_Condition_TextBlock.Text" xml:space="preserve">
-    <value>Left / Right Arrow Key</value>
-  </data>
-  <data name="FastBackOrForward500ms_Function_TextBlock.Text" xml:space="preserve">
-    <value>Fast Back / Fast Forward 500ms</value>
-  </data>
-  <data name="FastBackOrForward5s_Condition_TextBlock.Text" xml:space="preserve">
-    <value>Shift + Left / Right Arrow Key</value>
-  </data>
-  <data name="FastBackOrForward5s_Function_TextBlock.Text" xml:space="preserve">
-    <value>Fast Back / Fast Forward 5s</value>
   </data>
   <data name="Function_TextBlock.Text" xml:space="preserve">
     <value>Function</value>

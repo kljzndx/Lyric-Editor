@@ -1,0 +1,103 @@
+﻿<?xml version="1.0" encoding="utf-8" ?> 
+<ShortcutKeys>
+  
+  <ShortcutKey Name="输入框内加歌词">
+    <Condition>
+      <en_US>enter song lyric after press Ctrl+Enter</en_US>
+      <zh_CN>输入完歌词后按 Ctrl + Enter</zh_CN>
+    </Condition>
+    <Function>
+      <en_US>Add Lyric</en_US>
+      <zh_CN>添加歌词</zh_CN>
+    </Function>
+  </ShortcutKey>
+
+  <ShortcutKey Name="空格加歌词">
+    <Condition>
+      <en_US>Press spacebar when there are no selected items</en_US>
+      <zh_CN>无选中项时按空格</zh_CN>
+    </Condition>
+    <Function>
+      <en_US>Add Lyric</en_US>
+      <zh_CN>添加歌词</zh_CN>
+    </Function>
+  </ShortcutKey>
+
+  <ShortcutKey Name="修改时间">
+    <Condition>
+      <en_US>Press spacebar when there are selected items</en_US>
+      <zh_CN>有选中项时按空格</zh_CN>
+    </Condition>
+    <Function>
+      <en_US>Modifications to the current time</en_US>
+      <zh_CN>修改为当前时间</zh_CN>
+    </Function>
+  </ShortcutKey>
+
+  <ShortcutKey Name="修改歌词">
+    <Condition>
+      <en_US>press Enter In Lyric input box</en_US>
+      <zh_CN>在歌词输入框内按回车键</zh_CN>
+    </Condition>
+    <Function>
+      <en_US>Modifications to the current lyric</en_US>
+      <zh_CN>修改为当前歌词</zh_CN>
+    </Function>
+  </ShortcutKey>
+
+  <ShortcutKey Name="删除歌词">
+    <Condition>
+      <en_US>Press delete when there are selected items</en_US>
+      <zh_CN>有选中项时按删除键</zh_CN>
+    </Condition>
+    <Function>
+      <en_US>Delete Selected Lyrics</en_US>
+      <zh_CN>删除选中的歌词</zh_CN>
+    </Function>
+  </ShortcutKey>
+
+  <ShortcutKey Name="播放控制">
+    <Condition>
+      <en_US>Press P Key</en_US>
+      <zh_CN>按 P 键</zh_CN>
+    </Condition>
+    <Function>
+      <en_US>Play / Pause</en_US>
+      <zh_CN>播放/暂停</zh_CN>
+    </Function>
+  </ShortcutKey>
+
+  <ShortcutKey Name="音量控制">
+    <Condition>
+      <en_US>Up / Down Arrow Key</en_US>
+      <zh_CN>上/下 方向键</zh_CN>
+    </Condition>
+    <Function>
+      <en_US>Increase / Decrease 10% Volume</en_US>
+      <zh_CN>增大/减小 10%音量</zh_CN>
+    </Function>
+  </ShortcutKey>
+
+  <ShortcutKey Name="快进快退半秒">
+    <Condition>
+      <en_US>Left / Right Arrow Key</en_US>
+      <zh_CN>左/右 方向键</zh_CN>
+    </Condition>
+    <Function>
+      <en_US>Fast Back / Fast Forward 500ms</en_US>
+      <zh_CN>快退/快进 500毫秒</zh_CN>
+    </Function>
+  </ShortcutKey>
+
+  <ShortcutKey Name="快进快退5秒">
+    <Condition>
+      <en_US>Shift + Left / Right Arrow Key</en_US>
+      <zh_CN>Shift + 左/右 方向键</zh_CN>
+    </Condition>
+    <Function>
+      <en_US>Fast Back / Fast Forward 5s</en_US>
+      <zh_CN>快退/快进 5秒</zh_CN>
+    </Function>
+  </ShortcutKey>
+
+</ShortcutKeys>

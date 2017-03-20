@@ -35,6 +35,7 @@ namespace LyricsEditor.UserControls
         public event EventHandler Paused;
         private bool isPressSlider = false;
         public bool IsPressSlider { get => isPressSlider; private set => UserChangePosition(ref isPressSlider, value); }
+        public bool IsPlay { get => Pause_Button.Visibility == Visibility.Visible; }
 
         public TimeSpan PlayPosition
         {
@@ -135,7 +136,7 @@ namespace LyricsEditor.UserControls
         /// 切换显示播放和暂停按钮
         /// </summary>
         /// <param name="isDisplayPlayButton">是否显示播放按钮</param>
-        private void SwitchDisplayPlayAndPauseButton(bool isDisplayPlayButton)
+        public void SwitchDisplayPlayAndPauseButton(bool isDisplayPlayButton)
         {
             if (isDisplayPlayButton)
             {
@@ -157,19 +158,34 @@ namespace LyricsEditor.UserControls
 
             PlayPositionUserChange?.Invoke(this, new PlayPositionUserChangeEventArgs { IsChanging = value, Time = PlayPosition });
         }
+
+        public void Play()
+        {
+            AudioPlayer_MediaElement.Play();
+            StartDisPlayTime();
+            SwitchDisplayPlayAndPauseButton(false);
+        }
+
+        public void Pause()
+        {
+            AudioPlayer_MediaElement.Pause();
+            displayTime_ThreadPoolTimer.Cancel();
+            SwitchDisplayPlayAndPauseButton(true);
+        }
+
         #region 播放器
         private void AudioPlayer_MediaElement_MediaOpened(object sender, RoutedEventArgs e)
         {
             (sender as MediaElement).Play();
             PlayPosithon_Slider.Maximum = musicSource.Alltime.TotalMinutes;
             StartDisPlayTime();
-            SwitchDisplayPlayAndPauseButton(false);
             Play_Button.IsEnabled = true;
             GoBack_Button.IsEnabled = true;
             GoForward_Button.IsEnabled = true;
             settings.IdTag.Title = musicSource.Name;
             settings.IdTag.Artist = musicSource.Artist;
             settings.IdTag.Album = musicSource.Album;
+            SwitchDisplayPlayAndPauseButton(false);
         }
 
         private async void AudioPlayer_MediaElement_MediaFailed(object sender, ExceptionRoutedEventArgs e)
@@ -203,23 +219,19 @@ namespace LyricsEditor.UserControls
 
         private void PlayPosithon_Slider_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
         {
-            AudioPlayer_MediaElement.Position = TimeSpan.FromMinutes(e.NewValue);
+            PlayPosition = TimeSpan.FromMinutes(e.NewValue);
         }
 
         #endregion
         #region 播放器控制按钮
         private  void Play_Button_Click(object sender, RoutedEventArgs e)
         {
-            AudioPlayer_MediaElement.Play();
-            StartDisPlayTime();
-            SwitchDisplayPlayAndPauseButton(false);
+            Play();
         }
 
         private void Pause_Button_Click(object sender, RoutedEventArgs e)
         {
-            AudioPlayer_MediaElement.Pause();
-            displayTime_ThreadPoolTimer.Cancel();
-            SwitchDisplayPlayAndPauseButton(true);
+            Pause();
         }
 
         private void GoBack_Button_Click(object sender, RoutedEventArgs e)

@@ -52,10 +52,10 @@
                         <Button x:Name="OpenFile" Content="&#xE1A5;" FontFamily="Segoe MDL2 Assets" />
                     </StackPanel>
                 </Grid>-->
-                
+
                 <usctrl:AudioPlayer x:Name="AudioPlayer" Grid.Row="1" Played="AudioPlayer_Played" Paused="AudioPlayer_Paused" PlayPositionUserChange="AudioPlayer_PlayPositionUserChange"/>
-                <usctrl:ShortcutKeysDescribedPanel x:Name="ShortcutKeysPanel" Grid.RowSpan="3" Canvas.ZIndex="2"/>
-                <usctrl:UpdateLogPanel x:Name="UpdateLogPanel" Grid.RowSpan="3" Canvas.ZIndex="1"/>
+                <usctrl:ShortcutKeysDescribedPanel x:Name="ShortcutKeysPanel" Grid.RowSpan="4" Canvas.ZIndex="2"/>
+                <usctrl:UpdateLogPanel x:Name="UpdateLogPanel" Grid.RowSpan="4" Canvas.ZIndex="1"/>
                 <usctrl:BlurBackgroundImage x:Name="BackgroundImage" Grid.Row="2" Grid.RowSpan="2" Visibility="{x:Bind settings.IsDisplayBackgroundImage,Mode=OneWay,Converter={StaticResource boolToVisibility}}" Opacity="{x:Bind settings.BackgroundOpacity,Mode=OneWay}"/>
 
                 <Grid x:Name="Lyric_Grid" Grid.Row="2">
@@ -64,7 +64,6 @@
                         <RowDefinition/>
                     </Grid.RowDefinitions>
 
-                    
                     <Grid Margin="0,5">
                         <Grid.RowDefinitions>
                             <RowDefinition/>
@@ -178,14 +177,13 @@
             </Grid>
         </SplitView.Content>
     </SplitView>
-    
-    
+
     <Page.BottomAppBar>
         <CommandBar>
             <CommandBar.PrimaryCommands>
                 <AppBarButton x:Name="OpenFile_AppBarButton" x:Uid="/Main/OpenFile_AppBarButton" Icon="OpenFile">
                     <AppBarButton.Flyout>
-                        <MenuFlyout>
+                        <MenuFlyout Opening="MenuFlyout_Opening">
                             <MenuFlyoutItem x:Name="OpenMusic_MenuFlyoutItem" x:Uid="/Main/OpenMusic_MenuFlyoutItem" Click="OpenMusic_MenuFlyoutItem_Click"/>
                             <MenuFlyoutItem x:Name="OpenLRC_MenuFlyoutItem" x:Uid="/Main/OpenLRC_MenuFlyoutItem" Click="OpenLRC_MenuFlyoutItem_Click"/>
                         </MenuFlyout>
