@@ -85,7 +85,10 @@
                                     </MenuFlyout>
                                 </Button.Flyout>
                             </Button>
+                            <Button x:Name="MultilineEdit_Button" Content="&#xE133;" Style="{StaticResource ControllerButton}" Click="MultilineEdit_Button_Click"/>
+                            <Button x:Name="Submit_Button" Content="&#xE081;" Style="{StaticResource ControllerButton}" Visibility="Collapsed" Click="Submit_Button_Click"/>
                             <Button x:Name="AddLyric_Button" Content="&#xE710;" Style="{StaticResource ControllerButton}" Click="AddLyric_Button_Click"/>
+                            <Button x:Name="DelLyric_Button" Content="&#xE108;" Style="{StaticResource ControllerButton}" Click="DelLyric_Button_Click"/>
                             <Button x:Name="ChanageLyric_Button" Content="&#xE70F;" Style="{StaticResource ControllerButton}">
                                 <Button.Flyout>
                                     <MenuFlyout Placement="Bottom">
@@ -94,7 +97,6 @@
                                     </MenuFlyout>
                                 </Button.Flyout>
                             </Button>
-                            <Button x:Name="DelLyric_Button" Content="&#xE107;" Style="{StaticResource ControllerButton}" Click="DelLyric_Button_Click"/>
                         </StackPanel>
                     </Grid>
 
@@ -190,8 +192,11 @@
                     </AppBarButton.Flyout>
                 </AppBarButton>
                 <AppBarButton x:Name="Save_AppBarButton" x:Uid="/Main/Save_AppBarButton" Icon="Save" Click="Save_AppBarButton_Click"/>
-                <AppBarButton x:Name="MultilineEdit_AppBarButton" x:Uid="/Main/MultilineEdit_AppBarButton" Icon="AllApps" Click="MultilineEdit_AppBarButton_Click" />
-                <AppBarButton x:Name="Submit_AppBarButton" x:Uid="/Main/Submit_AppBarButton" Icon="Accept" Visibility="Collapsed" Click="Submit_AppBarButton_Click"/>
+                <AppBarButton x:Name="SaveAs_AppBarButton" x:Uid="/Main/SaveAs_AppBarButton" Click="SaveAs_AppBarButton_Click">
+                    <AppBarButton.Icon>
+                        <FontIcon Glyph="&#xE792;"/>
+                    </AppBarButton.Icon>
+                </AppBarButton>
                 <AppBarButton x:Name="Settings_AppBarButton" x:Uid="/Main/Settings_AppBarButton" Icon="Setting" Click="Settings_AppBarButton_Click"/>
             </CommandBar.PrimaryCommands>
             <CommandBar.SecondaryCommands>

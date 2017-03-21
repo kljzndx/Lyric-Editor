@@ -14,7 +14,7 @@ namespace LyricsEditor.Tools
     
     public static class LyricFileTools
     {
-        public static IStorageFile ThisLRCFile { get; private set; }
+        public static IStorageFile ThisLRCFile { get; set; }
         public static event EventHandler<LyricFileChanageEventArgs> LyricFileChanageEvent;
         
         public static void ChanageFile(IStorageFile file, string content)
@@ -37,10 +37,10 @@ namespace LyricsEditor.Tools
             }
             return thisLRCFile;
         }
-        public static async Task<bool> SaveLyricAsync(IList<Lyric> lyricList, LyricIDTag tag)
+        public static async Task<bool> SaveLyricAsync(IStorageFile file, IList<Lyric> lyricList, LyricIDTag tag)
         {
             StorageFile lrcFile = null;
-            if (LyricFileTools.ThisLRCFile is null)
+            if (file is null)
             {
                 FileSavePicker picker = new FileSavePicker();
                 picker.SuggestedFileName = "New_LRC_File";
@@ -52,7 +52,7 @@ namespace LyricsEditor.Tools
                     return false;
             }
             else
-                lrcFile = LyricFileTools.ThisLRCFile as StorageFile;
+                lrcFile = file as StorageFile;
 
             string fileContent = LyricTools.PrintLyric(lyricList, tag);
 

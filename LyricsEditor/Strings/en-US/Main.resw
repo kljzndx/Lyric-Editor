@@ -144,10 +144,6 @@
 Support Multiline Text</value>
     <comment>歌词输入框</comment>
   </data>
-  <data name="MultilineEdit_AppBarButton.Label" xml:space="preserve">
-    <value>Multiline Edit</value>
-    <comment>"多行编辑"按钮</comment>
-  </data>
   <data name="OpenFile_AppBarButton.Label" xml:space="preserve">
     <value>Open</value>
     <comment>”打开“按钮</comment>
@@ -165,6 +161,9 @@ Support Multiline Text</value>
   <data name="OpenMusic_MenuFlyoutItem.Text" xml:space="preserve">
     <value>Open Music</value>
     <comment>“打开”按钮里的“打开音乐”菜单</comment>
+  </data>
+  <data name="SaveAs_AppBarButton.Label" xml:space="preserve">
+    <value>Save as</value>
   </data>
   <data name="Save_AppBarButton.Label" xml:space="preserve">
     <value>Save</value>
@@ -188,10 +187,6 @@ Support Multiline Text</value>
   </data>
   <data name="ShowUpdateLogPanel_AppBarButton.Label" xml:space="preserve">
     <value>Update Log</value>
-  </data>
-  <data name="Submit_AppBarButton.Label" xml:space="preserve">
-    <value>Submit</value>
-    <comment>"确认"按钮</comment>
   </data>
   <data name="Unselect_MenuFlyoutItem.Text" xml:space="preserve">
     <value>Invert Selection</value>

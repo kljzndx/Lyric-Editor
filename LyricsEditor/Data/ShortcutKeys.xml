@@ -56,6 +56,17 @@
     </Function>
   </ShortcutKey>
 
+  <ShortcutKey Name="清空歌词">
+    <Condition>
+      <en_US>Press Shift + Delete</en_US>
+      <zh_CN>按Shift + 删除键</zh_CN>
+    </Condition>
+    <Function>
+      <en_US>Clear Lyrics List</en_US>
+      <zh_CN>清空歌词列表</zh_CN>
+    </Function>
+  </ShortcutKey>
+
   <ShortcutKey Name="播放控制">
     <Condition>
       <en_US>Press P Key</en_US>

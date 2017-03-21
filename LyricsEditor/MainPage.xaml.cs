@@ -45,7 +45,11 @@ namespace LyricsEditor
         public MainPage()
         {
             this.InitializeComponent();
-            CoreWindow.GetForCurrentThread().KeyDown += MainPage_KeyDown;
+            var theWindow = CoreWindow.GetForCurrentThread();
+
+            theWindow.KeyDown += MainPage_KeyDown;
+            theWindow.KeyUp += TheWindow_KeyUp;
+            
             AppVersionValue_TextBlock.Text = AppInfo.AppVersion;
 
             LyricFileTools.LyricFileChanageEvent +=
@@ -99,6 +103,19 @@ namespace LyricsEditor
                     AudioPlayer.Pause();
                 else
                     AudioPlayer.Play();
+            }
+
+            if (args.VirtualKey == VirtualKey.Shift)
+            {
+                DelLyric_Button.Content = "\uE107";
+            }
+        }
+
+        private void TheWindow_KeyUp(CoreWindow sender, KeyEventArgs args)
+        {
+            if (args.VirtualKey == VirtualKey.Shift)
+            {
+                DelLyric_Button.Content = "\uE108";
             }
         }
 
@@ -221,10 +238,18 @@ namespace LyricsEditor
 
         private void DeleteLyric()
         {
-            foreach (Lyric item in Lyric_ListView.SelectedItems)
-            {
-                lyrics.Remove(item);
-            }
+            bool b = lyrics.Any();
+
+            if (App.isPressShift)
+                lyrics.Clear();
+            else
+                foreach (Lyric item in Lyric_ListView.SelectedItems)
+                    lyrics.Remove(item);
+
+            //如果之前有歌词项而现在没有的话就新建个文件
+            if (b && !lyrics.Any())
+                LyricFileTools.ThisLRCFile = null;
+            
             RefreshTheLyric();
         }
 
@@ -389,6 +414,24 @@ namespace LyricsEditor
             }
         }
 
+        private void MultilineEdit_Button_Click(object sender, RoutedEventArgs e)
+        {
+            Lyric_ListView.SelectionMode = ListViewSelectionMode.Multiple;
+            SelectToolkit_Button.Visibility = Visibility.Visible;
+            MultilineEdit_Button.Visibility = Visibility.Collapsed;
+            Submit_Button.Visibility = Visibility.Visible;
+            ChanageTime_MenuFlyoutItem.IsEnabled = false;
+        }
+
+        private void Submit_Button_Click(object sender, RoutedEventArgs e)
+        {
+            Lyric_ListView.SelectionMode = ListViewSelectionMode.Single;
+            SelectToolkit_Button.Visibility = Visibility.Collapsed;
+            Submit_Button.Visibility = Visibility.Collapsed;
+            MultilineEdit_Button.Visibility = Visibility.Visible;
+            ChanageTime_MenuFlyoutItem.IsEnabled = true;
+        }
+
         private void AddLyric_Button_Click(object sender, RoutedEventArgs e)
         {
             AddLyric();
@@ -461,31 +504,18 @@ namespace LyricsEditor
 
         private async void Save_AppBarButton_Click(object sender, RoutedEventArgs e)
         {
-            await LyricFileTools.SaveLyricAsync(lyrics, settings.IdTag);
+            await LyricFileTools.SaveLyricAsync(LyricFileTools.ThisLRCFile, lyrics, settings.IdTag);
+        }
+
+        private async void SaveAs_AppBarButton_Click(object sender, RoutedEventArgs e)
+        {
+            await LyricFileTools.SaveLyricAsync(null, lyrics, settings.IdTag);
         }
 
         private void Settings_AppBarButton_Click(object sender, RoutedEventArgs e)
         {
             Sidebar_SplitView.IsPaneOpen = !Sidebar_SplitView.IsPaneOpen;
             Sidebar_Frame.Navigate(typeof(Setting_Page));
-        }
-
-        private void MultilineEdit_AppBarButton_Click(object sender, RoutedEventArgs e)
-        {
-            Lyric_ListView.SelectionMode = ListViewSelectionMode.Multiple;
-            SelectToolkit_Button.Visibility = Visibility.Visible;
-            MultilineEdit_AppBarButton.Visibility = Visibility.Collapsed;
-            Submit_AppBarButton.Visibility = Visibility.Visible;
-            ChanageTime_MenuFlyoutItem.IsEnabled = false;
-        }
-
-        private void Submit_AppBarButton_Click(object sender, RoutedEventArgs e)
-        {
-            Lyric_ListView.SelectionMode = ListViewSelectionMode.Single;
-            SelectToolkit_Button.Visibility = Visibility.Collapsed;
-            Submit_AppBarButton.Visibility = Visibility.Collapsed;
-            MultilineEdit_AppBarButton.Visibility = Visibility.Visible;
-            ChanageTime_MenuFlyoutItem.IsEnabled = true;
         }
 
         private async void Feedback_AppBarButton_Click(object sender, RoutedEventArgs e)
@@ -554,9 +584,7 @@ namespace LyricsEditor
                     {
                         await MessageBox.ShowMessageBoxAsync(CharacterLibrary.MessageBox.GetString("UnsupportedFolder"), CharacterLibrary.MessageBox.GetString("Close"));
                     }
-
                 }
-
             }
         }
 
@@ -576,5 +604,6 @@ namespace LyricsEditor
             style.Setters.Add(new Setter { Property = MenuFlyoutPresenter.RequestedThemeProperty, Value = theme });
             theFlyout.MenuFlyoutPresenterStyle = style;
         }
+
     }
 }

@@ -144,10 +144,6 @@
 支持多行文本</value>
     <comment>歌词输入框</comment>
   </data>
-  <data name="MultilineEdit_AppBarButton.Label" xml:space="preserve">
-    <value>多行编辑</value>
-    <comment>"多行编辑"按钮</comment>
-  </data>
   <data name="OpenFile_AppBarButton.Label" xml:space="preserve">
     <value>打开</value>
     <comment>”打开“按钮</comment>
@@ -165,6 +161,9 @@
   <data name="OpenMusic_MenuFlyoutItem.Text" xml:space="preserve">
     <value>打开歌曲</value>
     <comment>“打开”按钮里的“打开音乐”菜单</comment>
+  </data>
+  <data name="SaveAs_AppBarButton.Label" xml:space="preserve">
+    <value>另存为</value>
   </data>
   <data name="Save_AppBarButton.Label" xml:space="preserve">
     <value>保存</value>
@@ -188,10 +187,6 @@
   </data>
   <data name="ShowUpdateLogPanel_AppBarButton.Label" xml:space="preserve">
     <value>更新日志</value>
-  </data>
-  <data name="Submit_AppBarButton.Label" xml:space="preserve">
-    <value>确认</value>
-    <comment>"确认"按钮</comment>
   </data>
   <data name="Unselect_MenuFlyoutItem.Text" xml:space="preserve">
     <value>反向选择</value>
