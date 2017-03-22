@@ -139,6 +139,9 @@
       <DependentUpon>Setting_Page.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Templates\ShortcutKeysItemTemplate.xaml.cs">
+      <DependentUpon>ShortcutKeysItemTemplate.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Tools\LyricFileTools.cs" />
     <Compile Include="Tools\LyricTools.cs" />
     <Compile Include="Templates\LyricItemTemplate.xaml.cs">
@@ -262,6 +265,10 @@
     <Page Include="Templates\LyricItemTemplate.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Templates\ShortcutKeysItemTemplate.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="UserControls\AudioPlayer.xaml">
       <SubType>Designer</SubType>

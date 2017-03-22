@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?> 
 <ShortcutKeys>
   
-  <ShortcutKey Name="输入框内加歌词">
+  <ShortcutKey Name="输入框内加歌词" Class="歌词操作">
     <Condition>
       <en_US>enter song lyric after press Ctrl+Enter</en_US>
       <zh_CN>输入完歌词后按 Ctrl + Enter</zh_CN>
@@ -12,7 +12,7 @@
     </Function>
   </ShortcutKey>
 
-  <ShortcutKey Name="空格加歌词">
+  <ShortcutKey Name="空格加歌词" Class="歌词操作">
     <Condition>
       <en_US>Press spacebar when there are no selected items</en_US>
       <zh_CN>无选中项时按空格</zh_CN>
@@ -23,7 +23,7 @@
     </Function>
   </ShortcutKey>
 
-  <ShortcutKey Name="修改时间">
+  <ShortcutKey Name="修改时间" Class="歌词操作">
     <Condition>
       <en_US>Press spacebar when there are selected items</en_US>
       <zh_CN>有选中项时按空格</zh_CN>
@@ -34,7 +34,7 @@
     </Function>
   </ShortcutKey>
 
-  <ShortcutKey Name="修改歌词">
+  <ShortcutKey Name="修改歌词" Class="歌词操作">
     <Condition>
       <en_US>press Enter In Lyric input box</en_US>
       <zh_CN>在歌词输入框内按回车键</zh_CN>
@@ -45,7 +45,7 @@
     </Function>
   </ShortcutKey>
 
-  <ShortcutKey Name="删除歌词">
+  <ShortcutKey Name="删除歌词" Class="歌词操作">
     <Condition>
       <en_US>Press delete when there are selected items</en_US>
       <zh_CN>有选中项时按删除键</zh_CN>
@@ -56,7 +56,7 @@
     </Function>
   </ShortcutKey>
 
-  <ShortcutKey Name="清空歌词">
+  <ShortcutKey Name="清空歌词" Class="歌词操作">
     <Condition>
       <en_US>Press Shift + Delete</en_US>
       <zh_CN>按Shift + 删除键</zh_CN>
@@ -67,7 +67,7 @@
     </Function>
   </ShortcutKey>
 
-  <ShortcutKey Name="播放控制">
+  <ShortcutKey Name="播放控制" Class="播放器操作">
     <Condition>
       <en_US>Press P Key</en_US>
       <zh_CN>按 P 键</zh_CN>
@@ -78,7 +78,7 @@
     </Function>
   </ShortcutKey>
 
-  <ShortcutKey Name="音量控制">
+  <ShortcutKey Name="音量控制" Class="播放器操作">
     <Condition>
       <en_US>Up / Down Arrow Key</en_US>
       <zh_CN>上/下 方向键</zh_CN>
@@ -89,7 +89,7 @@
     </Function>
   </ShortcutKey>
 
-  <ShortcutKey Name="快进快退半秒">
+  <ShortcutKey Name="快进快退半秒" Class="播放器操作">
     <Condition>
       <en_US>Left / Right Arrow Key</en_US>
       <zh_CN>左/右 方向键</zh_CN>
@@ -100,7 +100,7 @@
     </Function>
   </ShortcutKey>
 
-  <ShortcutKey Name="快进快退5秒">
+  <ShortcutKey Name="快进快退5秒" Class="播放器操作">
     <Condition>
       <en_US>Shift + Left / Right Arrow Key</en_US>
       <zh_CN>Shift + 左/右 方向键</zh_CN>
@@ -108,6 +108,50 @@
     <Function>
       <en_US>Fast Back / Fast Forward 5s</en_US>
       <zh_CN>快退/快进 5秒</zh_CN>
+    </Function>
+  </ShortcutKey>
+
+  <ShortcutKey Name="打开音乐" Class="文件操作">
+    <Condition>
+      <en_US>Ctrl + M</en_US>
+      <zh_CN>Ctrl + M</zh_CN>
+    </Condition>
+    <Function>
+      <en_US>Open Music</en_US>
+      <zh_CN>打开音乐</zh_CN>
+    </Function>
+  </ShortcutKey>
+
+  <ShortcutKey Name="打开歌词" Class="文件操作">
+    <Condition>
+      <en_US>Ctrl + L</en_US>
+      <zh_CN>Ctrl + L</zh_CN>
+    </Condition>
+    <Function>
+      <en_US>Open Lyric</en_US>
+      <zh_CN>打开歌词</zh_CN>
+    </Function>
+  </ShortcutKey>
+
+  <ShortcutKey Name="保存歌词" Class="文件操作">
+    <Condition>
+      <en_US>Ctrl + S</en_US>
+      <zh_CN>Ctrl + S</zh_CN>
+    </Condition>
+    <Function>
+      <en_US>Save Lyric</en_US>
+      <zh_CN>保存歌词</zh_CN>
+    </Function>
+  </ShortcutKey>
+
+  <ShortcutKey Name="另存为歌词" Class="文件操作">
+    <Condition>
+      <en_US>Ctrl + Shift + S</en_US>
+      <zh_CN>Ctrl + Shift + S</zh_CN>
+    </Condition>
+    <Function>
+      <en_US>Save as Lyric</en_US>
+      <zh_CN>另存为歌词</zh_CN>
     </Function>
   </ShortcutKey>
 

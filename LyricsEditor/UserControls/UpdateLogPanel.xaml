@@ -39,7 +39,7 @@
         </Storyboard>
     </UserControl.Resources>
     
-    <Grid x:Name="Root_Grid" Width="400" Height="450" RenderTransformOrigin="0.5,0.5" Visibility="Collapsed" Background="{ThemeResource AppBarBackgroundThemeBrush}">
+    <Grid x:Name="Root_Grid" Width="400" Height="400" RenderTransformOrigin="0.5,0.5" Visibility="Collapsed" Background="{ThemeResource AppBarBackgroundThemeBrush}" BorderBrush="{ThemeResource SystemControlBackgroundAccentBrush}" BorderThickness="2">
         <Grid.RenderTransform>
             <CompositeTransform x:Name="RootGrid_Transform" ScaleX="0" ScaleY="0"/>
         </Grid.RenderTransform>

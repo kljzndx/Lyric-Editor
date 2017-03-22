@@ -152,14 +152,14 @@ Support Multiline Text</value>
     <value>Open Lyric</value>
   </data>
   <data name="OpenLRC_MenuFlyoutItem.Text" xml:space="preserve">
-    <value>Open Lyric</value>
+    <value>Open Lyric   Ctrl + L</value>
     <comment>“打开”按钮里的“打开歌词”菜单</comment>
   </data>
   <data name="OpenMusic_Button.Content" xml:space="preserve">
     <value>Open Music</value>
   </data>
   <data name="OpenMusic_MenuFlyoutItem.Text" xml:space="preserve">
-    <value>Open Music</value>
+    <value>Open Music   Ctrl + M</value>
     <comment>“打开”按钮里的“打开音乐”菜单</comment>
   </data>
   <data name="SaveAs_AppBarButton.Label" xml:space="preserve">

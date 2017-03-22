@@ -74,9 +74,10 @@ namespace LyricsEditor
                 ShortcutKeysPanel.PopUp();
         }
 
-        private void MainPage_KeyDown(CoreWindow sender, KeyEventArgs args)
+        private async void MainPage_KeyDown(CoreWindow sender, KeyEventArgs args)
         {
             var selectItem = Lyric_ListView.SelectedItem as Lyric;
+
             //添加歌词
             if (args.VirtualKey == VirtualKey.Space && !InputBoxAvailableFocus && selectItem is null)
                 AddLyric();
@@ -108,6 +109,28 @@ namespace LyricsEditor
             if (args.VirtualKey == VirtualKey.Shift)
             {
                 DelLyric_Button.Content = "\uE107";
+            }
+
+            if (App.isPressCtrl)
+            {
+                if (App.isPressShift && args.VirtualKey == VirtualKey.S)
+                {
+                    await LyricFileTools.SaveLyricAsync(null, lyrics, settings.IdTag);
+                    return;
+                }
+
+                switch (args.VirtualKey)
+                {
+                    case VirtualKey.M:
+                        await music.OpenFile();
+                        break;
+                    case VirtualKey.L:
+                        await LyricFileTools.OpenFileAsync();
+                        break;
+                    case VirtualKey.S:
+                        await LyricFileTools.SaveLyricAsync(LyricFileTools.ThisLRCFile, lyrics, settings.IdTag);
+                        break;
+                }
             }
         }
 

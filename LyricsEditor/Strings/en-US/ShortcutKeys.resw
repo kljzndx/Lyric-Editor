@@ -117,16 +117,25 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AudioPlayerClass_Expander.Header" xml:space="preserve">
+    <value>Audio Player Operation</value>
+  </data>
   <data name="Close_Button.Content" xml:space="preserve">
     <value>Close</value>
   </data>
   <data name="Conditions_TextBlock.Text" xml:space="preserve">
     <value>Condition</value>
   </data>
+  <data name="FileClass_Expander.Header" xml:space="preserve">
+    <value>File Operation</value>
+  </data>
   <data name="Function_TextBlock.Text" xml:space="preserve">
     <value>Function</value>
   </data>
   <data name="Introduction_TextBlock.Text" xml:space="preserve">
     <value>Shortcut keys described</value>
+  </data>
+  <data name="LyricEditClass_Expander.Header" xml:space="preserve">
+    <value>Lyric Edit Operation</value>
   </data>
 </root>

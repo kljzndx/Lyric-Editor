@@ -24,7 +24,9 @@ namespace LyricsEditor.UserControls
 {
     public sealed partial class ShortcutKeysDescribedPanel : UserControl
     {
-        private ObservableCollection<ShortcutKey> shortcutKeys = new ObservableCollection<ShortcutKey>();
+        private ObservableCollection<ShortcutKey> lyricEditClass = new ObservableCollection<ShortcutKey>();
+        private ObservableCollection<ShortcutKey> audioPlayerClass = new ObservableCollection<ShortcutKey>();
+        private ObservableCollection<ShortcutKey> fileClass = new ObservableCollection<ShortcutKey>();
 
         public ShortcutKeysDescribedPanel()
         {
@@ -58,14 +60,28 @@ namespace LyricsEditor.UserControls
             string content = await FileIO.ReadTextAsync(file);
 
             XDocument dcm = XDocument.Parse(content);
+
             foreach (var item in dcm.Element("ShortcutKeys").Elements("ShortcutKey"))
             {
+                string theClass = item.Attribute("Class").Value;
                 var shortcutKey = new ShortcutKey();
                 string language = AppInfo.LanguageCode == "zh-CN" ? "zh_CN" : "en_US";
 
                 shortcutKey.Condition = item.Element("Condition").Element(language).Value;
                 shortcutKey.Function = item.Element("Function").Element(language).Value;
-                shortcutKeys.Add(shortcutKey);
+
+                switch (theClass)
+                {
+                    case "歌词操作":
+                        lyricEditClass.Add(shortcutKey);
+                        break;
+                    case "播放器操作":
+                        audioPlayerClass.Add(shortcutKey);
+                        break;
+                    case "文件操作":
+                        fileClass.Add(shortcutKey);
+                        break;
+                }
             }
         }
     }

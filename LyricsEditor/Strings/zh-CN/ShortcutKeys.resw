@@ -117,16 +117,25 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AudioPlayerClass_Expander.Header" xml:space="preserve">
+    <value>播放器操作</value>
+  </data>
   <data name="Close_Button.Content" xml:space="preserve">
     <value>关闭</value>
   </data>
   <data name="Conditions_TextBlock.Text" xml:space="preserve">
     <value>条件</value>
   </data>
+  <data name="FileClass_Expander.Header" xml:space="preserve">
+    <value>文件操作</value>
+  </data>
   <data name="Function_TextBlock.Text" xml:space="preserve">
     <value>功能</value>
   </data>
   <data name="Introduction_TextBlock.Text" xml:space="preserve">
     <value>快捷键介绍</value>
+  </data>
+  <data name="LyricEditClass_Expander.Header" xml:space="preserve">
+    <value>歌词编辑操作</value>
   </data>
 </root>

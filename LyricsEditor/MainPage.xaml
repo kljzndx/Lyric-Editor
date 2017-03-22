@@ -53,9 +53,9 @@
                     </StackPanel>
                 </Grid>-->
 
-                <usctrl:AudioPlayer x:Name="AudioPlayer" Grid.Row="1" Played="AudioPlayer_Played" Paused="AudioPlayer_Paused" PlayPositionUserChange="AudioPlayer_PlayPositionUserChange"/>
-                <usctrl:ShortcutKeysDescribedPanel x:Name="ShortcutKeysPanel" Grid.RowSpan="4" Canvas.ZIndex="2"/>
-                <usctrl:UpdateLogPanel x:Name="UpdateLogPanel" Grid.RowSpan="4" Canvas.ZIndex="1"/>
+                <usctrl:AudioPlayer x:Name="AudioPlayer" Grid.Row="1" TabNavigation="Cycle" Played="AudioPlayer_Played" Paused="AudioPlayer_Paused" PlayPositionUserChange="AudioPlayer_PlayPositionUserChange"/>
+                <usctrl:ShortcutKeysDescribedPanel x:Name="ShortcutKeysPanel" Grid.RowSpan="4" Canvas.ZIndex="1"/>
+                <usctrl:UpdateLogPanel x:Name="UpdateLogPanel" Grid.RowSpan="4" Canvas.ZIndex="2"/>
                 <usctrl:BlurBackgroundImage x:Name="BackgroundImage" Grid.Row="2" Grid.RowSpan="2" Visibility="{x:Bind settings.IsDisplayBackgroundImage,Mode=OneWay,Converter={StaticResource boolToVisibility}}" Opacity="{x:Bind settings.BackgroundOpacity,Mode=OneWay}"/>
 
                 <Grid x:Name="Lyric_Grid" Grid.Row="2">
@@ -168,8 +168,8 @@
                         </Image>
 
                         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                            <Button x:Uid="/Main/OpenMusic_Button" Width="130" Margin="0,5" Click="OpenMusic_MenuFlyoutItem_Click"/>
-                            <Button x:Uid="/Main/OpenLRC_Button" Width="130" Margin="0,5" Click="OpenLRC_MenuFlyoutItem_Click"/>
+                            <Button x:Uid="/Main/OpenMusic_Button" Width="130" Margin="0,5" ToolTipService.ToolTip="Ctrl + M" Click="OpenMusic_MenuFlyoutItem_Click"/>
+                            <Button x:Uid="/Main/OpenLRC_Button" Width="130" Margin="0,5" ToolTipService.ToolTip="Ctrl + L" Click="OpenLRC_MenuFlyoutItem_Click"/>
                             <Button x:Name="HideMenu_Button" x:Uid="/Main/HideMenu_Button" Width="130" Margin="0,5" Click="HideMenu_Button_Click"/>
                         </StackPanel>
                     </Grid>
@@ -191,8 +191,8 @@
                         </MenuFlyout>
                     </AppBarButton.Flyout>
                 </AppBarButton>
-                <AppBarButton x:Name="Save_AppBarButton" x:Uid="/Main/Save_AppBarButton" Icon="Save" Click="Save_AppBarButton_Click"/>
-                <AppBarButton x:Name="SaveAs_AppBarButton" x:Uid="/Main/SaveAs_AppBarButton" Click="SaveAs_AppBarButton_Click">
+                <AppBarButton x:Name="Save_AppBarButton" x:Uid="/Main/Save_AppBarButton" ToolTipService.ToolTip="Ctrl + S" Icon="Save" Click="Save_AppBarButton_Click"/>
+                <AppBarButton x:Name="SaveAs_AppBarButton" x:Uid="/Main/SaveAs_AppBarButton" ToolTipService.ToolTip="Ctrl + Shift + S" Click="SaveAs_AppBarButton_Click">
                     <AppBarButton.Icon>
                         <FontIcon Glyph="&#xE792;"/>
                     </AppBarButton.Icon>

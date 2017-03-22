@@ -2,6 +2,16 @@
 <UpdateLogs>
 
       <UpdateLog>
+        <Version>1.13.0</Version>
+        <Content>
+1，快捷键介绍弹窗增加分类
+2，增加4个文件操作快捷键
+3，修复点击播放器内任意一个按钮后输入框会被激活的问题
+        </Content>
+        <Date>2017/03/22</Date>
+      </UpdateLog>
+
+      <UpdateLog>
         <Version>1.12.0</Version>
         <Content>
 1，低栏增加另存为按钮
