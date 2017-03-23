@@ -96,6 +96,9 @@ namespace LyricsEditor
             //删除歌词
             if (args.VirtualKey == VirtualKey.Delete && !InputBoxAvailableFocus)
                 DeleteLyric();
+            //歌词列表排序
+            if (args.VirtualKey == VirtualKey.S && !InputBoxAvailableFocus)
+                LyricSort();
 
             //播放控制
             if (args.VirtualKey == VirtualKey.P && !InputBoxAvailableFocus && music.File != null)
@@ -302,6 +305,16 @@ namespace LyricsEditor
             RefreshTheLyric();
         }
 
+        private void LyricSort()
+        {
+            if (lyrics.Count > 1)
+                for (int i = lyrics.Count; i > 0; i--)
+                    for (int j = 0; j < i - 1; j++)
+                        if (lyrics[j].CompareTo(lyrics[j + 1]) > 0)
+                            lyrics.Move(j, j + 1);
+            RefreshTheLyric();
+        }
+
         #endregion
         #region 播放器
 
@@ -491,14 +504,9 @@ namespace LyricsEditor
                 LyricContent_TextBox.Text = String.Empty;
         }
 
-        private void Reload_Button_Click(object sender, RoutedEventArgs e)
+        private void Sort_Button_Click(object sender, RoutedEventArgs e)
         {
-            if (lyrics.Count > 1)
-                for (int i = lyrics.Count; i > 0; i--)
-                    for (int j = 0; j < i - 1; j++)
-                        if (lyrics[j].CompareTo(lyrics[j + 1]) > 0)
-                            lyrics.Move(j, j + 1);
-            RefreshTheLyric();
+            LyricSort();
         }
 
         private void ListEnd_Rectangle_Tapped(object sender, TappedRoutedEventArgs e)

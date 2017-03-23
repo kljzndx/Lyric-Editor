@@ -3,8 +3,8 @@
   
   <ShortcutKey Name="输入框内加歌词" Class="歌词操作">
     <Condition>
-      <en_US>enter song lyric after press Ctrl+Enter</en_US>
-      <zh_CN>输入完歌词后按 Ctrl + Enter</zh_CN>
+      <en_US>press Ctrl + Enter In Lyric input box</en_US>
+      <zh_CN>在歌词输入框内按 Ctrl + Enter</zh_CN>
     </Condition>
     <Function>
       <en_US>Add Lyric</en_US>
@@ -64,6 +64,17 @@
     <Function>
       <en_US>Clear Lyrics List</en_US>
       <zh_CN>清空歌词列表</zh_CN>
+    </Function>
+  </ShortcutKey>
+
+  <ShortcutKey Name="歌词排序" Class="歌词操作">
+    <Condition>
+      <en_US>Press S Key</en_US>
+      <zh_CN>按 S 键</zh_CN>
+    </Condition>
+    <Function>
+      <en_US>Lyrics List Sort</en_US>
+      <zh_CN>歌词列表排序</zh_CN>
     </Function>
   </ShortcutKey>
 

@@ -2,6 +2,16 @@
 <UpdateLogs>
 
       <UpdateLog>
+        <Version>1.13.2</Version>
+        <Content>
+1，增加“自动排序”快捷键
+2，快捷键介绍弹窗增加个数显示
+3，修复更新日志弹窗的所有版本页面里的更新内容不会自动换行的问题
+        </Content>
+        <Date>2017/03/23</Date>
+      </UpdateLog>
+
+      <UpdateLog>
         <Version>1.13.0</Version>
         <Content>
 1，快捷键介绍弹窗增加分类

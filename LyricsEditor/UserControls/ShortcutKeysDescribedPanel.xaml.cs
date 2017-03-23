@@ -83,6 +83,10 @@ namespace LyricsEditor.UserControls
                         break;
                 }
             }
+
+            LyricEditClass_Expander.Header += $" ({lyricEditClass.Count})";
+            AudioPlayerClass_Expander.Header += $" ({audioPlayerClass.Count})";
+            FileClass_Expander.Header += $" ({fileClass.Count})";
         }
     }
 }

@@ -73,13 +73,13 @@
         <TextBlock x:Uid="/ShortcutKeys/Introduction_TextBlock" Foreground="White" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Top" FontWeight="Bold"/>
         <ScrollViewer Grid.Row="1">
             <StackPanel>
-                <ctol:Expander x:Uid="/ShortcutKeys/LyricEditClass_Expander" IsExpanded="False" HorizontalContentAlignment="Stretch">
+                <ctol:Expander x:Name="LyricEditClass_Expander" x:Uid="/ShortcutKeys/LyricEditClass_Expander" IsExpanded="False" HorizontalContentAlignment="Stretch">
                     <ListView ItemsSource="{x:Bind lyricEditClass}" Style="{StaticResource ListStyle}"/>
                 </ctol:Expander>
-                <ctol:Expander x:Uid="/ShortcutKeys/AudioPlayerClass_Expander" IsExpanded="False" HorizontalContentAlignment="Stretch">
+                <ctol:Expander x:Name="AudioPlayerClass_Expander" x:Uid="/ShortcutKeys/AudioPlayerClass_Expander" IsExpanded="False" HorizontalContentAlignment="Stretch">
                     <ListView ItemsSource="{x:Bind audioPlayerClass}" Style="{StaticResource ListStyle}"/>
                 </ctol:Expander>
-                <ctol:Expander x:Uid="/ShortcutKeys/FileClass_Expander" IsExpanded="False" HorizontalContentAlignment="Stretch">
+                <ctol:Expander x:Name="FileClass_Expander" x:Uid="/ShortcutKeys/FileClass_Expander" IsExpanded="False" HorizontalContentAlignment="Stretch">
                     <ListView ItemsSource="{x:Bind fileClass}" Style="{StaticResource ListStyle}"/>
                 </ctol:Expander>
             </StackPanel>

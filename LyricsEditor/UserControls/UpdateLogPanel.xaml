@@ -95,7 +95,7 @@
                                     <TextBlock Grid.Column="2" Text="更新日志" FontWeight="Bold"/>
                                 </Grid>
                                 <TextBlock Text="{x:Bind Date}" TextWrapping="Wrap" HorizontalAlignment="Right"/>
-                                <TextBlock Text="{x:Bind Content}" Grid.Row="1"/>
+                                <TextBlock Text="{x:Bind Content}" Grid.Row="1" TextWrapping="Wrap"/>
                             </Grid>
                         </DataTemplate>
                     </ListView.ItemTemplate>

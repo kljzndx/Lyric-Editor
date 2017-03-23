@@ -122,7 +122,7 @@
                         </Grid>
                     </ScrollViewer>
 
-                    <Button x:Name="Reload_Button" Grid.Row="1" Padding="0" HorizontalAlignment="Right" VerticalAlignment="Bottom" Click="Reload_Button_Click" Width="50" Height="50" FontFamily="Segoe MDL2 Assets" FontSize="22" Margin="0,0,50,50">
+                    <Button x:Name="Sort_Button" Grid.Row="1" Padding="0" HorizontalAlignment="Right" VerticalAlignment="Bottom" Click="Sort_Button_Click" Width="50" Height="50" FontFamily="Segoe MDL2 Assets" FontSize="22" Margin="0,0,50,50">
                         <Button.Template>
                             <ControlTemplate>
                                 <Grid x:Name="Root_Grid" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}" Padding="{TemplateBinding Padding}">
