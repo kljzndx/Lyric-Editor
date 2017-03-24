@@ -56,6 +56,7 @@
                 <usctrl:AudioPlayer x:Name="AudioPlayer" Grid.Row="1" TabNavigation="Cycle" Played="AudioPlayer_Played" Paused="AudioPlayer_Paused" PlayPositionUserChange="AudioPlayer_PlayPositionUserChange"/>
                 <usctrl:ShortcutKeysDescribedPanel x:Name="ShortcutKeysPanel" Grid.RowSpan="4" Canvas.ZIndex="1"/>
                 <usctrl:UpdateLogPanel x:Name="UpdateLogPanel" Grid.RowSpan="4" Canvas.ZIndex="2"/>
+                <usctrl:GetReviewsPanel x:Name="GetReviewsPanel" Grid.RowSpan="4" Canvas.ZIndex="3"/>
                 <usctrl:BlurBackgroundImage x:Name="BackgroundImage" Grid.Row="2" Grid.RowSpan="2" Visibility="{x:Bind settings.IsDisplayBackgroundImage,Mode=OneWay,Converter={StaticResource boolToVisibility}}" Opacity="{x:Bind settings.BackgroundOpacity,Mode=OneWay}"/>
 
                 <Grid x:Name="Lyric_Grid" Grid.Row="2">

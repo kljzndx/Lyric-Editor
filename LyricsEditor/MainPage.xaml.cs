@@ -72,6 +72,8 @@ namespace LyricsEditor
 
             if (AppInfo.BootCount++ == 1)
                 ShortcutKeysPanel.PopUp();
+            //else if (AppInfo.BootCount >= 10 && !AppInfo.IsReviewsed)
+                GetReviewsPanel.StartDisplay();
         }
 
         private async void MainPage_KeyDown(CoreWindow sender, KeyEventArgs args)

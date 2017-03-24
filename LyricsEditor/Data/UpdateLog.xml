@@ -2,6 +2,18 @@
 <UpdateLogs>
 
       <UpdateLog>
+        <Version>1.13.3</Version>
+        <Content>
+经过接近两个月的开发，总算是把各个功能都完善的差不多了
+自此，本应用正式搁置
+除非有人报告bug，否则一般不会再更新
+
+1，新增“求打分”弹窗
+        </Content>
+        <Date>2017/03/24</Date>
+      </UpdateLog>
+
+      <UpdateLog>
         <Version>1.13.2</Version>
         <Content>
 1，增加“自动排序”快捷键

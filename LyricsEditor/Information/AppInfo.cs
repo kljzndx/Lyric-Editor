@@ -35,7 +35,15 @@ namespace LyricsEditor.Information
                 settings.SettingsObject.Values["BootCount"] = value;
             }
         }
-
+        public static bool IsReviewsed
+        {
+            get
+            {
+                settings.CreateSetting(nameof(IsReviewsed), false);
+                return (bool)settings.SettingsObject.Values["IsReviewsed"];
+            }
+            set => settings.SettingsObject.Values["IsReviewsed"] = value;
+        }
 
         public static string PrintInfo()
         {
