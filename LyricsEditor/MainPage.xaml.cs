@@ -61,6 +61,8 @@ namespace LyricsEditor
 
             music.MusicChanageEvent += BackgroundImage.RefreshAlbumImage;
             music.MusicChanageEvent += AudioPlayer.SwitchMusic;
+
+            LyricPreview.Tapped += (s, e) => Lyric_ListView.SelectedIndex = -1;
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
@@ -510,19 +512,7 @@ namespace LyricsEditor
         {
             LyricSort();
         }
-
-        private void ListEnd_Rectangle_Tapped(object sender, TappedRoutedEventArgs e)
-        {
-            Lyric_ListView.SelectedIndex = -1;
-        }
-
-        private void ListEnd_Rectangle_SizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            if (e.NewSize.Height == 50)
-            {
-                LyricList_ScrollViewer.VerticalScrollBarVisibility = ScrollBarVisibility.Auto;
-            }
-        }
+        
         #endregion
         #region 低栏
         private async void OpenMusic_MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
