@@ -40,6 +40,7 @@ namespace LyricsEditor
         private ObservableCollection<Lyric> lyrics = new ObservableCollection<Lyric>();
         private Setting settings = Setting.GetSettingObject();
         private bool InputBoxAvailableFocus = false;
+        private bool isMultilineEdit { get => Lyric_ListView.SelectionMode == ListViewSelectionMode.Multiple; }
         private ThreadPoolTimer lyricPreview_ThreadPoolTimer;
 
         public MainPage()
@@ -85,6 +86,9 @@ namespace LyricsEditor
             //添加歌词
             if (args.VirtualKey == VirtualKey.Space && !InputBoxAvailableFocus && selectItem is null)
                 AddLyric();
+
+            if (args.VirtualKey == VirtualKey.C && !InputBoxAvailableFocus && selectItem is Lyric)
+                CopyLyrics();
 
             //修改歌词
             if (args.VirtualKey == VirtualKey.Space && !InputBoxAvailableFocus && selectItem is Lyric)
@@ -264,6 +268,23 @@ namespace LyricsEditor
                 (Lyric_ListView.ItemsPanelRoot.Children[line] as ListViewItem).IsSelected = true;
             }
             RefreshTheLyric();
+        }
+
+        private void CopyLyrics()
+        {
+            if (Lyric_ListView.SelectedItem is null)
+                return;
+
+            TimeSpan theTime = AudioPlayer.PlayPosition;
+            TimeSpan lrcTime = (Lyric_ListView.SelectedItem as Lyric).Time;
+            bool b = theTime >= lrcTime;
+            var temp = b ? theTime - lrcTime : lrcTime - theTime;
+            foreach (Lyric item in Lyric_ListView.SelectedItems)
+            {
+                var l = new Lyric { Time = item.Time, Content = item.Content };
+                l.Time = b ? l.Time + temp : l.Time - temp;
+                lyrics.Add(l);
+            }
         }
 
         private void DeleteLyric()
@@ -457,24 +478,25 @@ namespace LyricsEditor
         private void MultilineEdit_Button_Click(object sender, RoutedEventArgs e)
         {
             Lyric_ListView.SelectionMode = ListViewSelectionMode.Multiple;
-            SelectToolkit_Button.Visibility = Visibility.Visible;
-            MultilineEdit_Button.Visibility = Visibility.Collapsed;
-            Submit_Button.Visibility = Visibility.Visible;
             ChanageTime_MenuFlyoutItem.IsEnabled = false;
+            this.Bindings.Update();
         }
 
         private void Submit_Button_Click(object sender, RoutedEventArgs e)
         {
             Lyric_ListView.SelectionMode = ListViewSelectionMode.Single;
-            SelectToolkit_Button.Visibility = Visibility.Collapsed;
-            Submit_Button.Visibility = Visibility.Collapsed;
-            MultilineEdit_Button.Visibility = Visibility.Visible;
             ChanageTime_MenuFlyoutItem.IsEnabled = true;
+            this.Bindings.Update();
         }
 
         private void AddLyric_Button_Click(object sender, RoutedEventArgs e)
         {
             AddLyric();
+        }
+
+        private void CopyLyric_Button_Click(object sender, RoutedEventArgs e)
+        {
+            CopyLyrics();
         }
 
         private void DelLyric_Button_Click(object sender, RoutedEventArgs e)
@@ -496,14 +518,8 @@ namespace LyricsEditor
 
         private void Lyric_ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var selects = (sender as ListView).SelectedItems;
-            if (selects.Any())
-            {
-                string text = String.Empty;
-                foreach (Lyric item in selects)
-                    text += item.Content + "\r\n";
-                LyricContent_TextBox.Text = text.Trim();
-            }
+            if ((sender as ListView).SelectedItem is Lyric l)
+                LyricContent_TextBox.Text = l.Content.Trim();
             else
                 LyricContent_TextBox.Text = String.Empty;
         }

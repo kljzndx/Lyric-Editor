@@ -76,7 +76,7 @@
                         </Grid.ColumnDefinitions>
                         <TextBox x:Name="LyricContent_TextBox" x:Uid="/Main/LyricContent_TextBox" VerticalAlignment="Center" AcceptsReturn="False" TextWrapping="Wrap" GotFocus="LyricContent_TextBox_GotFocus" LostFocus="LyricContent_TextBox_LostFocus" MaxHeight="100" KeyDown="LyricContent_TextBox_KeyDown"/>
                         <StackPanel x:Name="LyricEditButton_StackPanel" Orientation="Horizontal" HorizontalAlignment="Center">
-                            <Button x:Name="SelectToolkit_Button" Content="&#xE0A2;" Style="{StaticResource ControllerButton}" Visibility="Collapsed">
+                            <Button x:Name="SelectToolkit_Button" Content="&#xE0A2;" Style="{StaticResource ControllerButton}" Visibility="{x:Bind isMultilineEdit,Converter={StaticResource boolToVisibility}}">
                                 <Button.Flyout>
                                     <MenuFlyout>
                                         <MenuFlyoutItem x:Name="Unselect_MenuFlyoutItem" x:Uid="/Main/Unselect_MenuFlyoutItem" Click="Unselect_MenuFlyoutItem_Click"/>
@@ -86,9 +86,10 @@
                                     </MenuFlyout>
                                 </Button.Flyout>
                             </Button>
-                            <Button x:Name="MultilineEdit_Button" Content="&#xE133;" Style="{StaticResource ControllerButton}" Click="MultilineEdit_Button_Click"/>
-                            <Button x:Name="Submit_Button" Content="&#xE081;" Style="{StaticResource ControllerButton}" Visibility="Collapsed" Click="Submit_Button_Click"/>
-                            <Button x:Name="AddLyric_Button" Content="&#xE710;" Style="{StaticResource ControllerButton}" Click="AddLyric_Button_Click"/>
+                            <Button x:Name="MultilineEdit_Button" Content="&#xE133;" Style="{StaticResource ControllerButton}" Visibility="{x:Bind isMultilineEdit,Converter={StaticResource boolToVisibility_Reverse}}" Click="MultilineEdit_Button_Click"/>
+                            <Button x:Name="Submit_Button" Content="&#xE081;" Style="{StaticResource ControllerButton}" Visibility="{x:Bind isMultilineEdit,Converter={StaticResource boolToVisibility}}" Click="Submit_Button_Click"/>
+                            <Button x:Name="AddLyric_Button" Content="&#xE710;" Style="{StaticResource ControllerButton}" Visibility="{x:Bind isMultilineEdit,Converter={StaticResource boolToVisibility_Reverse}}" Click="AddLyric_Button_Click"/>
+                            <Button x:Name="CopyLyric_Button" Content="&#xE16F;" Style="{StaticResource ControllerButton}" Visibility="{x:Bind isMultilineEdit,Converter={StaticResource boolToVisibility}}" Click="CopyLyric_Button_Click"/>
                             <Button x:Name="DelLyric_Button" Content="&#xE108;" Style="{StaticResource ControllerButton}" Click="DelLyric_Button_Click"/>
                             <Button x:Name="ChanageLyric_Button" Content="&#xE70F;" Style="{StaticResource ControllerButton}">
                                 <Button.Flyout>

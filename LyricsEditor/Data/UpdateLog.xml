@@ -2,6 +2,24 @@
 <UpdateLogs>
 
       <UpdateLog>
+        <Version>1.14.0</Version>
+        <Content>
+1，多行编辑状态下新增复制按钮
+功能说明：复制所选歌词项到当前时间点并保留时间间隔
+
+2，增加“复制歌词”快捷键
+3，精简部分代码
+
+--------------------
+
+下一次更新估计要等到半个月之后了
+我要用MVVM框架彻底重写这个应用
+PS：重构太麻烦，而且容易出Bug
+        </Content>
+        <Date>2017/03/28</Date>
+      </UpdateLog>
+
+      <UpdateLog>
         <Version>1.13.6</Version>
         <Content>
 我回来了。。。

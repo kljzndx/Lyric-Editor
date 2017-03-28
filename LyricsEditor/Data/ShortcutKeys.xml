@@ -23,6 +23,17 @@
     </Function>
   </ShortcutKey>
 
+  <ShortcutKey Name="复制歌词" Class="歌词操作">
+    <Condition>
+      <en_US>Press C Key</en_US>
+      <zh_CN>按 C 键</zh_CN>
+    </Condition>
+    <Function>
+      <en_US>Copy Lyric</en_US>
+      <zh_CN>复制歌词</zh_CN>
+    </Function>
+  </ShortcutKey>
+
   <ShortcutKey Name="修改时间" Class="歌词操作">
     <Condition>
       <en_US>Press spacebar when there are selected items</en_US>

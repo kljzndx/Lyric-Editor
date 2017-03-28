@@ -73,19 +73,13 @@
         <ScrollViewer Grid.Row="1">
             <StackPanel>
                 <local:Expander x:Name="LyricEditClass_Expander" x:Uid="/ShortcutKeys/LyricEditClass_Expander" IsExpanded="False" HorizontalContentAlignment="Stretch">
-                    <local:Expander.ExpandContent>
-                        <ListView ItemsSource="{x:Bind lyricEditClass}" Style="{StaticResource ListStyle}"/>
-                    </local:Expander.ExpandContent>
+                    <ListView ItemsSource="{x:Bind lyricEditClass}" Style="{StaticResource ListStyle}"/>
                 </local:Expander>
                 <local:Expander x:Name="AudioPlayerClass_Expander" x:Uid="/ShortcutKeys/AudioPlayerClass_Expander" IsExpanded="False" HorizontalContentAlignment="Stretch">
-                    <local:Expander.ExpandContent>
-                        <ListView ItemsSource="{x:Bind audioPlayerClass}" Style="{StaticResource ListStyle}"/>
-                    </local:Expander.ExpandContent>
+                    <ListView ItemsSource="{x:Bind audioPlayerClass}" Style="{StaticResource ListStyle}"/>
                 </local:Expander>
                 <local:Expander x:Name="FileClass_Expander" x:Uid="/ShortcutKeys/FileClass_Expander" IsExpanded="False" HorizontalContentAlignment="Stretch">
-                    <local:Expander.ExpandContent>
-                        <ListView ItemsSource="{x:Bind fileClass}" Style="{StaticResource ListStyle}"/>
-                    </local:Expander.ExpandContent>
+                    <ListView ItemsSource="{x:Bind fileClass}" Style="{StaticResource ListStyle}"/>
                 </local:Expander>
             </StackPanel>
         </ScrollViewer>

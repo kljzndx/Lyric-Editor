@@ -10,6 +10,7 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
+using Windows.UI.Xaml.Markup;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
@@ -17,6 +18,7 @@ using Windows.UI.Xaml.Navigation;
 
 namespace LyricsEditor.UserControls
 {
+    [ContentProperty(Name = "ExpandContent")]
     public sealed partial class Expander : UserControl
     {
         
@@ -44,6 +46,8 @@ namespace LyricsEditor.UserControls
         public static readonly DependencyProperty IsExpandedProperty =
             DependencyProperty.Register(nameof(IsExpanded), typeof(bool), typeof(Expander), new PropertyMetadata(false));
         
+        
+
         public object ExpandContent
         {
             get { return (object)GetValue(ExpandContentProperty); }
