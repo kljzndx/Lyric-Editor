@@ -1,0 +1,112 @@
+﻿<UserControl
+    x:Class="SimpleLyricEditor.Views.UserControls.UpdateLogDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:SimpleLyricEditor.Views.UserControls"
+    xmlns:model="using:SimpleLyricEditor.Models"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="400" Loaded="UserControl_Loaded">
+
+    <UserControl.Resources>
+
+        <Storyboard x:Name="PopUp_Storyboard">
+            <DoubleAnimation Duration="0:0:0.5" To="1" Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleX)" Storyboard.TargetName="Main_Grid" d:IsOptimized="True">
+                <DoubleAnimation.EasingFunction>
+                    <BackEase EasingMode="EaseOut"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+            <DoubleAnimation Duration="0:0:0.5" To="1" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleY)" Storyboard.TargetName="Main_Grid" d:IsOptimized="True">
+                <DoubleAnimation.EasingFunction>
+                    <BackEase EasingMode="EaseOut"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+        </Storyboard>
+
+        <Storyboard x:Name="Disappear_Storyboard" Completed="Disappear_Storyboard_Completed">
+            <DoubleAnimation Duration="0:0:0.5" From="1" To="0" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleX)" Storyboard.TargetName="Main_Grid">
+                <DoubleAnimation.EasingFunction>
+                    <BackEase EasingMode="EaseIn"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+            <DoubleAnimation Duration="0:0:0.5" From="1" To="0" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleY)" Storyboard.TargetName="Main_Grid">
+                <DoubleAnimation.EasingFunction>
+                    <BackEase EasingMode="EaseIn"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+        </Storyboard>
+
+    </UserControl.Resources>
+
+    <Grid x:Name="Main_Grid" Margin="50" Background="{ThemeResource AppBarBackgroundThemeBrush}" BorderBrush="{ThemeResource SystemControlBackgroundAccentBrush}" BorderThickness="2" Padding="5" RenderTransformOrigin="0.5,0.5">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.RenderTransform>
+            <CompositeTransform x:Name="MainGrid_Transform"/>
+        </Grid.RenderTransform>
+        <Pivot>
+            <PivotItem x:Uid="/UpdateLogDialog/CurrentVersion_PivotItem">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <TextBlock x:Uid="/UpdateLogDialog/AppName_TextBlock" FontWeight="Bold"/>
+                        <TextBlock Text="{x:Bind thisLog.Version}" Margin="5,0" FontWeight="Bold"/>
+                        <TextBlock x:Uid="/UpdateLogDialog/UpdateLog_TextBlock" FontWeight="Bold"/>
+                    </StackPanel>
+
+                    <ScrollViewer Grid.Row="1" Margin="0,10">
+                        <TextBlock Text="{x:Bind thisLog.Content}" TextWrapping="Wrap"/>
+                    </ScrollViewer>
+
+                    <TextBlock Grid.Row="2" Text="{x:Bind thisLog.Date}" TextAlignment="Right"/>
+                </Grid>
+            </PivotItem>
+            <PivotItem x:Uid="/UpdateLogDialog/AllVersion_PivotItem">
+                <ListView ItemsSource="{x:Bind logs}">
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="Padding" Value="10,0"/>
+                            <Setter Property="Margin" Value="0,5"/>
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                    <ListView.ItemTemplate>
+                        <DataTemplate x:DataType="model:UpdateLog">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock x:Uid="/UpdateLogDialog/AppName_TextBlock" FontWeight="Bold"/>
+                                        <TextBlock Text="{x:Bind Version}" Margin="5,0" FontWeight="Bold"/>
+                                        <TextBlock x:Uid="/UpdateLogDialog/UpdateLog_TextBlock" FontWeight="Bold"/>
+                                    </StackPanel>
+                                    <TextBlock Grid.Column="1" Text="{x:Bind Date}"/>
+                                </Grid>
+                                <TextBlock Grid.Row="1" Margin="0,5" Text="{x:Bind Content}"/>
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </PivotItem>
+        </Pivot>
+        <Button x:Name="Close_Button" x:Uid="/UpdateLogDialog/Close_Button" Grid.Row="1" Margin="10" HorizontalAlignment="Stretch" Click="{x:Bind Disappear_Storyboard.Begin}"/>
+    </Grid>
+</UserControl>

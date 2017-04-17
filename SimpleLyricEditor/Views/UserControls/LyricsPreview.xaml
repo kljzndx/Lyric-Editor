@@ -1,0 +1,33 @@
+﻿<UserControl
+    x:Class="SimpleLyricEditor.Views.UserControls.LyricsPreview"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:SimpleLyricEditor.Views.UserControls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="400">
+    <UserControl.Resources>
+        <Storyboard x:Name="FadeIn_Storybeard">
+            <DoubleAnimation Duration="0:0:0.1" From="0" To="1" Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="Preview_TextBlock"/>
+            <DoubleAnimation Duration="0:0:0.1" From="0" To="1" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleY)" Storyboard.TargetName="Preview_TextBlock"/>
+        </Storyboard>
+        <Storyboard x:Name="FadeOut_Storybeard" Completed="FadeOut_Storybeard_Completed">
+            <DoubleAnimation Duration="0:0:0.1" From="1" To="0" Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="Preview_TextBlock"/>
+            <DoubleAnimation Duration="0:0:0.1" From="1" To="0" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleY)" Storyboard.TargetName="Preview_TextBlock"/>
+        </Storyboard>
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Rectangle Fill="{ThemeResource SystemControlBackgroundAccentBrush}" Opacity="{x:Bind settings.PreviewBackgroundOpacity,Mode=OneWay}"/>
+        <TextBlock x:Name="Preview_TextBlock" Margin="0,5" TextWrapping="Wrap" Text="{x:Bind ThisLyric.Content,Mode=OneTime}" FontSize="{x:Bind settings.PreviewFontSize,Mode=OneWay}" TextAlignment="Center" VerticalAlignment="Center" Opacity="0" RenderTransformOrigin="0.5,0.5">
+            <TextBlock.RenderTransform>
+                <CompositeTransform ScaleY="0"/>
+            </TextBlock.RenderTransform>
+        </TextBlock>
+    </Grid>
+</UserControl>

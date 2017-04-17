@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<UpdateLogs>
+
+      <UpdateLog>
+        <Version>2.0.0</Version>
+        <Content>
+hi，好久不见了。。。
+经过半个多月的努力我总算把老版本的各种功能加上了
+本次更新没有任何新功能 不过改进倒是不少
+嗯。。。就扯到这吧
+
+1，播放器和歌词预览共用一个定时器
+2，该有提示的地方都有提示了
+3，弹窗都加上自适应了
+4，代码复用性大幅提升
+        </Content>
+        <Date>2017/04/17</Date>
+      </UpdateLog>
+
+      <UpdateLog>
+        <Version>1.14.0</Version>
+        <Content>
+1，多行编辑状态下新增复制按钮
+功能说明：复制所选歌词项到当前时间点并保留时间间隔
+
+2，增加“复制歌词”快捷键
+3，精简部分代码
+
+--------------------
+
+下一次更新估计要等到半个月之后了
+我要用MVVM框架彻底重写这个应用
+PS：重构太麻烦，而且容易出Bug
+        </Content>
+        <Date>2017/03/28</Date>
+      </UpdateLog>
+
+      <UpdateLog>
+        <Version>1.13.6</Version>
+        <Content>
+我回来了。。。
+看来这应用真是一个忠实用户都没有
+这两天内没有一个评分/评论的用户
+也对。。。毕竟是个工具应用
+
+这版本我把快捷键介绍弹窗里的分类条更换成了我自制的控件
+本来想加个展开动画的，可由于获取不到内容的高度，只能作罢
+就扯到这里吧
+
+1，现在点击预览区域即可取消歌词列表选择
+2，修复在明亮主题下快捷键介绍弹窗的分类条会变成暗色的问题
+3，精简部分代码
+        </Content>
+        <Date>2017/03/27</Date>
+      </UpdateLog>
+
+      <UpdateLog>
+        <Version>1.13.4</Version>
+        <Content>
+1，新增“求打分”弹窗
+        </Content>
+        <Date>2017/03/25</Date>
+      </UpdateLog>
+
+      <UpdateLog>
+        <Version>1.13.2</Version>
+        <Content>
+1，增加“自动排序”快捷键
+2，快捷键介绍弹窗增加个数显示
+3，修复更新日志弹窗的所有版本页面里的更新内容不会自动换行的问题
+        </Content>
+        <Date>2017/03/23</Date>
+      </UpdateLog>
+
+      <UpdateLog>
+        <Version>1.13.0</Version>
+        <Content>
+1，快捷键介绍弹窗增加分类
+2，增加4个文件操作快捷键
+3，修复点击播放器内任意一个按钮后输入框会被激活的问题
+        </Content>
+        <Date>2017/03/22</Date>
+      </UpdateLog>
+
+      <UpdateLog>
+        <Version>1.12.0</Version>
+        <Content>
+1，低栏增加另存为按钮
+2，多行编辑按钮从低栏搬到歌词编辑区
+3，增加清空歌词列表快捷键
+4，当歌词列表被清空时会自动新建文件
+        </Content>
+        <Date>2017/03/21</Date>
+      </UpdateLog>
+
+      <UpdateLog>
+        <Version>1.11.0</Version>
+        <Content>
+1，背景图片增加淡入淡出效果
+2，播放/暂停快捷键更改为P键
+        </Content>
+        <Date>2017/03/20</Date>
+      </UpdateLog>
+  
+      <UpdateLog>
+        <Version>1.10.6</Version>
+        <Content>
+1，紧急修复无选中项时按空格会弹出“请勿修改多行时间”的问题
+        </Content>
+        <Date>2017/03/19</Date>
+      </UpdateLog>
+  
+      <UpdateLog>
+        <Version>1.10.5</Version>
+        <Content>
+1，快捷键介绍弹窗改版
+2，增加 播放/暂停 快捷键
+3，修复暂停时拖动进度条后预览区域显示的还是之前的歌词的问题
+4，修复点击低栏的打开按钮有可能出现惨白或惨黑的菜单的问题
+5，精简部分代码
+        </Content>
+        <Date>2017/03/19</Date>
+      </UpdateLog>
+  
+      <UpdateLog>
+        <Version>1.10.2</Version>
+        <Content>
+1，修复有时候歌词预览不会切换的问题
+2，时间刷新频率提升到50毫秒/一次（之前为100毫秒/一次）
+        </Content>
+        <Date>2017/03/18</Date>
+      </UpdateLog>
+  
+      <UpdateLog>
+        <Version>1.10.1</Version>
+        <Content>
+1，歌词预览提前100毫秒切换
+2，修复没有歌词项时拖动进度条会报错的问题
+        </Content>
+        <Date>2017/03/17</Date>
+      </UpdateLog>
+  
+      <UpdateLog>
+        <Version>1.10.0</Version>
+        <Content>
+1，新增歌词预览功能
+2，增加“预览区域内字体大小“设置
+3，调整快捷菜单的背景的不透明度为40%（之前为70%）
+4，修复删除歌词按钮在多选状态下功能不正常的问题
+        </Content>
+        <Date>2017/03/17</Date>
+    </UpdateLog>
+  
+    <UpdateLog>
+        <Version>1.9.0</Version>
+        <Content>
+1，增加更新日志弹窗
+2，增加播放速度调整按钮
+3，增加选择工具按钮
+4，增加歌词修改快捷键
+5，支持即时切换主题
+6，支持在当前位置添加歌词
+        </Content>
+        <Date>2017/03/13</Date>
+    </UpdateLog>
+  
+    <UpdateLog>
+        <Version>1.6.1</Version>
+        <Content>
+1，新增支持从外部拖拽歌曲/歌词文件到应用内
+2，修复第一次设置背景图片时会报错的问题
+        </Content>
+        <Date>2017/03/06</Date>
+    </UpdateLog>
+  
+    <UpdateLog>
+        <Version>1.5.5</Version>
+        <Content>
+1，新增支持GBK编码
+2，增加三个快捷键
+3，快捷键介绍面板适配手机
+4，增加“背景图片来源设置”
+        </Content>
+        <Date>2017/03/05</Date>
+    </UpdateLog>
+  
+    <UpdateLog>
+        <Version>1.4.0</Version>
+        <Content>正式发布</Content>
+        <Date>2017/02/27</Date>
+    </UpdateLog>
+  
+</UpdateLogs>

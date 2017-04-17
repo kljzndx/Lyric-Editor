@@ -1,0 +1,1 @@
+﻿public enum BackgroundSourceTypeEnum { AlbumImage, LocalImage }

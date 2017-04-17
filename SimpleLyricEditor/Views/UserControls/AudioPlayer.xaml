@@ -1,0 +1,49 @@
+﻿<UserControl
+    x:Class="SimpleLyricEditor.Views.UserControls.AudioPlayer"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:SimpleLyricEditor.Views.UserControls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="400">
+
+    <Grid Background="{ThemeResource AppBarBackgroundThemeBrush}">
+        <MediaElement x:Name="AudioPlayer_MediaElement" AutoPlay="False" Position="{x:Bind Time,Mode=OneWay}" DefaultPlaybackRate="{x:Bind settings.PlaybackRate,Mode=OneWay}" PlaybackRate="{x:Bind settings.PlaybackRate,Mode=OneWay}" Volume="{x:Bind settings.Volume,Mode=OneWay}" MediaOpened="AudioPlayer_MediaElement_MediaOpened" MediaFailed="AudioPlayer_MediaElement_MediaFailed" MediaEnded="AudioPlayer_MediaElement_MediaEnded"/>
+        <StackPanel Margin="5,0">
+            <TextBlock Text="{x:Bind MusicSource.File.Path,Mode=OneWay}" TextAlignment="Center" TextWrapping="Wrap" Margin="0,5"/>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Slider x:Name="Position_Slider" Value="{x:Bind Time,Mode=TwoWay,Converter={StaticResource TimeSpanToDouble}}" Maximum="{x:Bind MusicSource.AllTime,Mode=OneWay,Converter={StaticResource TimeSpanToDouble}}" ThumbToolTipValueConverter="{StaticResource TimeSpanToString}" Style="{StaticResource MediaSliderStyle}" Height="40" SmallChange="0.01" StepFrequency="0.01" TickFrequency="1" />
+                <TextBlock Grid.Column="1" Margin="5,0,0,0" Text="{x:Bind Time,Mode=OneWay,Converter={StaticResource TimeSpanToString}}" VerticalAlignment="Center"/>
+            </Grid>
+            <RelativePanel>
+                <StackPanel x:Name="PlayOrPause_StackPanel" x:Uid="/AudioPlayer/PlayOrPause_StackPanel" Orientation="Horizontal" RelativePanel.AlignHorizontalCenterWithPanel="True">
+                    <Button x:Name="Play_Button" Content="&#xE102;" Style="{StaticResource ControllerButton}" Visibility="{x:Bind IsPlay,Mode=OneWay,Converter={StaticResource BoolToVisibility_Reverse}}" Click="{x:Bind Play}"/>
+                    <Button x:Name="Pause_Button" Content="&#xE103;" Style="{StaticResource ControllerButton}" Visibility="{x:Bind IsPlay,Mode=OneWay,Converter={StaticResource BoolToVisibility}}" Click="{x:Bind Pause}"/>
+                </StackPanel>
+                <Button x:Name="FastRewind_Button" x:Uid="/AudioPlayer/FastRewind_Button" Content="&#xE100;" Style="{StaticResource ControllerButton}" RelativePanel.LeftOf="PlayOrPause_StackPanel" IsEnabled="{x:Bind IsAvailableSource}" Click="{x:Bind FastRewind}"/>
+                <Button x:Name="FastForward_Button" x:Uid="/AudioPlayer/FastForward_Button" Content="&#xE101;" Style="{StaticResource ControllerButton}" RelativePanel.RightOf="PlayOrPause_StackPanel" IsEnabled="{x:Bind IsAvailableSource}" Click="{x:Bind FastForward}"/>
+
+                <Button x:Name="PlaybackRate_Button" Content="&#xEC4A;" Style="{StaticResource ControllerButton}">
+                    <Button.Flyout>
+                        <Flyout Placement="Bottom">
+                            <Slider x:Uid="/AudioPlayer/PlaybackRate_Slider" Width="200" Value="{x:Bind settings.PlaybackRate,Mode=TwoWay,Converter={StaticResource PercentageToDouble}}" Maximum="200"/>
+                        </Flyout>
+                    </Button.Flyout>
+                </Button>
+                <Button x:Name="Volume_Button" x:Uid="/AudioPlayer/Volume_Button" Content="&#xE767;" Style="{StaticResource ControllerButton}" RelativePanel.AlignRightWithPanel="True">
+                    <Button.Flyout>
+                        <Flyout Placement="Bottom">
+                            <Slider x:Uid="/AudioPlayer/Volume_Slider" Width="200" Value="{x:Bind settings.Volume,Mode=TwoWay,Converter={StaticResource PercentageToDouble}}"/>
+                        </Flyout>
+                    </Button.Flyout>
+                </Button>
+            </RelativePanel>
+        </StackPanel>
+    </Grid>
+</UserControl>

@@ -1,0 +1,39 @@
+﻿<Page
+    x:Class="SimpleLyricEditor.Views.SettingsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:SimpleLyricEditor.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <StackPanel Padding="10">
+        <ComboBox x:Name="Theme_ComboBox" x:Uid="/Settings/Theme_ComboBox" Margin="0,10" SelectionChanged="Theme_ComboBox_SelectionChanged">
+            <ComboBoxItem x:Uid="/Settings/Theme_Default_ComboBoxItem"/>
+            <ComboBoxItem x:Uid="/Settings/Theme_Light_ComboBoxItem"/>
+            <ComboBoxItem x:Uid="/Settings/Theme_Dark_ComboBoxItem"/>
+        </ComboBox>
+
+        <ToggleSwitch x:Uid="/Settings/BackgroundDisplay_ToggleSwitch" IsOn="{x:Bind model.Settings.IsDisplayBackground,Mode=TwoWay}"/>
+        <StackPanel Visibility="{x:Bind model.Settings.IsDisplayBackground,Mode=OneWay,Converter={StaticResource BoolToVisibility}}" Margin="0,10">
+            <TextBlock x:Uid="/Settings/BackgroundImageSource_TextBlock"/>
+            <RadioButton x:Name="BackgroundImageSource_AlbumImage_RadioButton" x:Uid="/Settings/BackgroundImageSource_AlbumImage_RadioButton" Checked="{x:Bind model.SwitchSourceType_AlbumImage}"/>
+            <RadioButton x:Name="BackgroundImageSource_LocalImage_RadioButton" x:Uid="/Settings/BackgroundImageSource_LocalImage_RadioButton" Checked="{x:Bind model.SwitchSourceType_LocalImage}"/>
+            
+            <Grid Visibility="{x:Bind BackgroundImageSource_LocalImage_RadioButton.IsChecked,Mode=OneWay,Converter={StaticResource BoolToVisibility}}">
+                <TextBox Text="{x:Bind model.Settings.LocalBackgroundImagePath,Mode=OneWay}"/>
+                <Rectangle Fill="#00000000" Tapped="{x:Bind model.PickerImageFile}"/>
+            </Grid>
+            
+            <Slider x:Uid="/Settings/BackgroundBlurDegree_Slider" Value="{x:Bind model.Settings.BackgroundBlurDegree,Mode=TwoWay}" Maximum="20" IsEnabled="{x:Bind model.Settings.IsBlurUsability}"/>
+            <TextBlock x:Uid="/Settings/BackgroundBlurDegreeUnavailable_TextBlock" Foreground="Red" Visibility="{x:Bind model.Settings.IsBlurUsability,Converter={StaticResource BoolToVisibility_Reverse}}"/>
+            
+            <Slider x:Uid="/Settings/BackgroundOpacity_Slider" Value="{x:Bind model.Settings.BackgroundOpacity,Mode=TwoWay,Converter={StaticResource PercentageToDouble}}"/>
+        </StackPanel>
+        <ToggleSwitch x:Uid="/Settings/LyricsPreviewDisplay_ToggleSwitch" IsOn="{x:Bind model.Settings.IsDisplayLyricsPreview,Mode=TwoWay}"/>
+        <StackPanel Visibility="{x:Bind model.Settings.IsDisplayLyricsPreview,Mode=OneWay,Converter={StaticResource BoolToVisibility}}">
+            <Slider x:Uid="/Settings/LyricsPreviewFontSize_Slider" Minimum="15" Value="{x:Bind model.Settings.PreviewFontSize,Mode=TwoWay}" Maximum="32"/>
+            <Slider x:Uid="/Settings/LyricsPreviewBackgroundOpacity_Slider" Value="{x:Bind model.Settings.PreviewBackgroundOpacity,Mode=TwoWay,Converter={StaticResource PercentageToDouble}}"/>
+        </StackPanel>
+    </StackPanel>
+</Page>

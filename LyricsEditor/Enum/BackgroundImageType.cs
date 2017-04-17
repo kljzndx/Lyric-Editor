@@ -1,1 +1,0 @@
-﻿public enum BackgroundImageTypeEnum { UserDefined, AlbumImage }
