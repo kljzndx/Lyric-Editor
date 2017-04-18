@@ -28,7 +28,7 @@ namespace SimpleLyricEditor.Tools
                     byte min = Byte.Parse(item.Groups[1].Value);
                     byte s = Byte.Parse(item.Groups[2].Value);
                     byte ms = Byte.Parse(item.Groups[3].Value);
-                    lyrics.Add(new Lyric { Time = new TimeSpan(0, 0, min, s, ms), Content = item.Groups[4].Value.Trim() });
+                    lyrics.Add(new Lyric { Time = new TimeSpan(0, 0, min, s, ms * 10), Content = item.Groups[4].Value.Trim() });
                 }
             }
             else
@@ -46,7 +46,7 @@ namespace SimpleLyricEditor.Tools
             foreach (Lyric item in lyrics)
                 result += item.ToString() + "\r\n";
 
-            return result;
+            return result.Trim();
         }
 
         private static string GetTagValue(string input,string tagName)

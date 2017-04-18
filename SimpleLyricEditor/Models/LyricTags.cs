@@ -3,6 +3,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using GalaSoft.MvvmLight;
+using HappyStudio.UwpToolsLibrary.Information;
 
 namespace SimpleLyricEditor.Models
 {
@@ -40,6 +41,8 @@ namespace SimpleLyricEditor.Models
             tags += WriteTag("ar", artist);
             tags += WriteTag("al", album);
             tags += WriteTag("by", lyricsAuthor);
+            tags += WriteTag("re", $"{AppInfo.Name} For UWP");
+            tags += WriteTag("ve", AppInfo.Version);
             return tags.Trim();
         }
     }

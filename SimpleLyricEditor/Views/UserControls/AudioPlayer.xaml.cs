@@ -165,13 +165,24 @@ namespace SimpleLyricEditor.Views.UserControls
                 FastRewind_Button.Content = "\uE0A6";
                 FastForward_Button.Content = "\uE0AB";
             }
-
-            if (args.VirtualKey == VirtualKey.Left)
-                FastRewind();
-
-            if (args.VirtualKey == VirtualKey.Right)
-                FastForward();
-
+            if (!App.IsInputBoxGotFocus)
+            {
+                switch (args.VirtualKey)
+                {
+                    case VirtualKey.P:
+                        if (IsPlay)
+                            Pause();
+                        else
+                            Play();
+                        break;
+                    case VirtualKey.Left:
+                        FastRewind();
+                        break;
+                    case VirtualKey.Right:
+                        FastForward();
+                        break;
+                }
+            }
             if (args.VirtualKey == VirtualKey.M && App.IsPressCtrl)
                 OpenMusicFile();
         }

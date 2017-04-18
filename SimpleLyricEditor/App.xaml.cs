@@ -32,8 +32,12 @@ namespace SimpleLyricEditor
         private CoreWindow window;
 
         public static ViewModelLocator Locator = new ViewModelLocator();
-        public static bool IsPressCtrl;
-        public static bool IsPressShift;
+        public static bool IsPressCtrl { get; private set; }
+        public static bool IsPressShift { get; private set; }
+
+        //指示输入框是否已获得焦点
+        public static bool IsInputBoxGotFocus { get; set; }
+
 
         /// <summary>
         /// 初始化单一实例应用程序对象。这是执行的创作代码的第一行，

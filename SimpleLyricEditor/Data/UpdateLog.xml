@@ -2,6 +2,17 @@
 <UpdateLogs>
 
       <UpdateLog>
+        <Version>2.0.1</Version>
+        <Content>
+1，现在双击歌词列表项可以直接跳转到这个歌词的时间上
+PS：快捷键：G
+2，修复歌词预览功能不会预览第一条歌词的问题
+3，修复歌词时间的毫秒部分没有被正确解析的问题
+        </Content>
+        <Date>2017/04/18</Date>
+      </UpdateLog>
+
+      <UpdateLog>
         <Version>2.0.0</Version>
         <Content>
 hi，好久不见了。。。

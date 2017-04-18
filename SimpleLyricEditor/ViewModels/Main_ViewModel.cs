@@ -57,9 +57,6 @@ namespace SimpleLyricEditor.ViewModels
         //歌词文件
         public StorageFile LyricFile { get; set; }
 
-        //指示输入框是否已获得焦点
-        public bool IsInputBoxGotFocus { get; private set; }
-
         public string Version { get; } = AppInfo.Version;
 
         public Main_ViewModel()
@@ -80,12 +77,12 @@ namespace SimpleLyricEditor.ViewModels
 
         public void InputBoxGotFocus()
         {
-            IsInputBoxGotFocus = true;
+            App.IsInputBoxGotFocus = true;
         }
 
         public void InputBoxLostFocus()
         {
-            IsInputBoxGotFocus = false;
+            App.IsInputBoxGotFocus = false;
         }
 
         public async void GetReviews()
@@ -110,6 +107,22 @@ namespace SimpleLyricEditor.ViewModels
         public async void Feedback()
         {
             await EmailEx.SendAsync("kljzndx@outlook.com", $"{AppInfo.Name} {AppInfo.Version} {(AppInfo.Name == "简易歌词编辑器" ? "反馈" : "Feedback")}", String.Empty);
+        }
+
+        public async void GoToCurrentLyricTime()
+        {
+            try
+            {
+                ThisTime = (selectedItems.SingleOrDefault() as Lyric).Time;
+            }
+            catch (NullReferenceException)
+            {
+                return;
+            }
+            catch (InvalidOperationException)
+            {
+                await MessageBox.ShowAsync(CharacterLibrary.ErrorDialog.GetString("SelectedMultipleItemsError"), CharacterLibrary.ErrorDialog.GetString("Close"));
+            }
         }
 
         #region Lyrics Operations
@@ -185,7 +198,7 @@ namespace SimpleLyricEditor.ViewModels
             }
             catch (InvalidOperationException)
             {
-                await MessageBox.ShowAsync(CharacterLibrary.ErrorDialog.GetString("ChangeTimeError"), CharacterLibrary.ErrorDialog.GetString("Close"));
+                await MessageBox.ShowAsync(CharacterLibrary.ErrorDialog.GetString("SelectedMultipleItemsError"), CharacterLibrary.ErrorDialog.GetString("Close"));
             }
         }
 
@@ -193,7 +206,7 @@ namespace SimpleLyricEditor.ViewModels
         {
             foreach (Lyric sltItem in selectedItems)
                 sltItem.Content = lyricContent.Split('\r')[0].Trim();
-
+            
             LyricsListChanged?.Invoke(this, EventArgs.Empty);
         }
 #endregion
@@ -216,23 +229,33 @@ namespace SimpleLyricEditor.ViewModels
 
         private void Window_KeyDown(CoreWindow sender, KeyEventArgs args)
         {
-            if (args.VirtualKey == VirtualKey.Space && !selectedItems.Any() && !IsInputBoxGotFocus)
-                AddLyric();
-
-            if (args.VirtualKey == VirtualKey.C && !IsInputBoxGotFocus)
-                CopyLyrics();
-
-            if (args.VirtualKey == VirtualKey.Space && selectedItems.Any() && !IsInputBoxGotFocus)
+            if (!App.IsInputBoxGotFocus)
             {
-                ChangeTime();
-                SelectedIndex = selectedIndex < lyrics.Count - 1 ? selectedIndex + 1 : -1;
+                switch (args.VirtualKey)
+                {
+                    case VirtualKey.Space:
+                        if (selectedItems.Any())
+                        {
+                            ChangeTime();
+                            SelectedIndex = selectedIndex < lyrics.Count - 1 ? selectedIndex + 1 : -1;
+                        }
+                        else
+                            AddLyric();
+                        break;
+                    case VirtualKey.C:
+                        CopyLyrics();
+                        break;
+                    case VirtualKey.Delete:
+                        DelLyric();
+                        break;
+                    case VirtualKey.S:
+                        LyricsSort();
+                        break;
+                    case VirtualKey.G:
+                        GoToCurrentLyricTime();
+                        break;
+                }
             }
-
-            if (args.VirtualKey == VirtualKey.Delete && !IsInputBoxGotFocus)
-                DelLyric();
-
-            if (args.VirtualKey == VirtualKey.S && !IsInputBoxGotFocus)
-                LyricsSort();
 
             if (App.IsPressCtrl)
             {
@@ -249,8 +272,6 @@ namespace SimpleLyricEditor.ViewModels
                         break;
                     case VirtualKey.S:
                         SaveLyricFile();
-                        break;
-                    default:
                         break;
                 }
             }

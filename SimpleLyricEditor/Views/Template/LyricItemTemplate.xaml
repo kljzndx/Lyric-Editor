@@ -9,8 +9,12 @@
     d:DesignHeight="300"
     d:DesignWidth="400">
 
-    <StackPanel Orientation="Horizontal">
-        <TextBlock Text="{x:Bind lyric.Time,Mode=OneWay,Converter={StaticResource TimeSpanToString}}" Margin="5,0"/>
-        <TextBlock Text="{x:Bind lyric.Content,Mode=OneWay}" TextWrapping="Wrap" Margin="5,0"/>
-    </StackPanel>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <TextBlock Text="{x:Bind lyric.Time,Mode=OneWay,Converter={StaticResource TimeSpanToString}}" Margin="5,0" VerticalAlignment="Center"/>
+        <TextBlock Grid.Column="1" Text="{x:Bind lyric.Content,Mode=OneWay}" TextWrapping="Wrap" Margin="5,0" VerticalAlignment="Center"/>
+    </Grid>
 </UserControl>

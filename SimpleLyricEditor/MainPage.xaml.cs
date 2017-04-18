@@ -59,16 +59,14 @@ namespace SimpleLyricEditor
         {
             if (args.VirtualKey == VirtualKey.Shift)
                 DelLyric_Button.Content = "\uE107";
-
-            if (args.VirtualKey == VirtualKey.Space && !model.IsInputBoxGotFocus)
-                this.Focus(FocusState.Pointer);
-
-            if (args.VirtualKey == VirtualKey.P && !model.IsInputBoxGotFocus)
+            if (!App.IsInputBoxGotFocus)
             {
-                if (audioPlayer.IsPlay)
-                    audioPlayer.Pause();
-                else
-                    audioPlayer.Play();
+                switch (args.VirtualKey)
+                {
+                    case VirtualKey.Space:
+                        this.Focus(FocusState.Pointer);
+                        break;
+                }
             }
         }
 
@@ -98,11 +96,14 @@ namespace SimpleLyricEditor
 
                 if (App.IsPressCtrl)
                     model.AddLyric();
-                else if (model.SelectedItems.Any())
+                else if (Lyrics_ListView.SelectedItems.Any())
+                {
                     model.ChangeContent();
+                    Lyrics_ListView.SelectedIndex = Lyrics_ListView.SelectedIndex < Lyrics_ListView.Items.Count - 1 ? Lyrics_ListView.SelectedIndex + 1 : -1;
+                }
                 else
                 {
-                    model.LyricContent += "\n";
+                    t.Text += "\n";
                     t.Select(t.Text.Length, 0);
                 }
             }
@@ -188,6 +189,15 @@ namespace SimpleLyricEditor
                 }
             }
         }
-        
+
+        private void LyricItemTemplate_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
+        {
+            model.GoToCurrentLyricTime();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            model.GoToCurrentLyricTime();
+        }
     }
 }

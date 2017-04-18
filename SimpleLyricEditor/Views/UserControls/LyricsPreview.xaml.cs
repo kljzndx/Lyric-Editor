@@ -109,7 +109,7 @@ namespace SimpleLyricEditor.Views.UserControls
                 }
                 catch (InvalidOperationException)
                 {
-                    nextLyricID = 1;
+                    nextLyricID = 0;
                 }
                 return;
             }

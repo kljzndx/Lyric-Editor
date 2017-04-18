@@ -67,9 +67,10 @@ namespace SimpleLyricEditor.Tools
             StorageFile result = null;
             if (file is null)
             {
-                FileSavePicker picker = new FileSavePicker();
-                picker.DefaultFileExtension = ".lrc";
-
+                FileSavePicker picker = new FileSavePicker()
+                {
+                    DefaultFileExtension = ".lrc"
+                };
                 var types = new List<string>();
                 types.Add(".lrc");
                 picker.FileTypeChoices.Add("LRC File", types);
