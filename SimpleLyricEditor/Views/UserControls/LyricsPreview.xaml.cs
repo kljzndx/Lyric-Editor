@@ -1,4 +1,6 @@
-﻿using SimpleLyricEditor.Models;
+﻿using SimpleLyricEditor.EventArgss;
+using SimpleLyricEditor.Models;
+using SimpleLyricEditor.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -21,11 +23,13 @@ namespace SimpleLyricEditor.Views.UserControls
 {
     public sealed partial class LyricsPreview : UserControl
     {
-        private Settings settings = Settings.GetSettingsObject();
-        
-        private Lyric thisLyric = Lyric.Empty;
+        public event EventHandler<LyricSwitchEventArgs> LyricSwitched;
 
-        public Lyric ThisLyric
+        private Settings settings = Settings.GetSettingsObject();
+
+        private LyricItem thisLyric = LyricItem.Empty;
+
+        public LyricItem ThisLyric
         {
             get => thisLyric;
             set
@@ -33,7 +37,7 @@ namespace SimpleLyricEditor.Views.UserControls
                 if (thisLyric.Equals(value))
                     return;
 
-                bool isNull = thisLyric.Equals(Lyric.Empty);
+                bool isNull = thisLyric.Equals(LyricItem.Empty);
 
                 thisLyric = value;
 
@@ -44,20 +48,22 @@ namespace SimpleLyricEditor.Views.UserControls
                 }
                 else
                     FadeOut_Storybeard.Begin();
+
+                LyricSwitched?.Invoke(this, new LyricSwitchEventArgs(value));
             }
         }
 
         private int nextLyricID;
         
-        public IList<Lyric> Lyrics
+        public IList<LyricItem> Lyrics
         {
-            get { return (IList<Lyric>)GetValue(LyricsProperty); }
+            get { return (IList<LyricItem>)GetValue(LyricsProperty); }
             set { SetValue(LyricsProperty, value); }
         }
 
         // Using a DependencyProperty as the backing store for Lyrics.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty LyricsProperty =
-            DependencyProperty.Register("Lyrics", typeof(IList<Lyric>), typeof(LyricsPreview), new PropertyMetadata(new List<Lyric>()));
+            DependencyProperty.Register("Lyrics", typeof(IList<LyricItem>), typeof(LyricsPreview), new PropertyMetadata(new List<Lyric>()));
 
 
 
@@ -96,13 +102,13 @@ namespace SimpleLyricEditor.Views.UserControls
         {
             if (!Lyrics.Any())
             {
-                ThisLyric = Lyric.Empty;
+                ThisLyric = LyricItem.Empty;
                 return;
             }
             
             if (Position <= Lyrics.First().Time)
             {
-                ThisLyric = Lyric.Empty;
+                ThisLyric = LyricItem.Empty;
                 try
                 {
                     nextLyricID = Lyrics.Single() is Lyric ? 0 : 1;

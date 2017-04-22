@@ -1,4 +1,4 @@
-﻿using SimpleLyricEditor.Models;
+﻿using SimpleLyricEditor.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -20,11 +20,20 @@ namespace SimpleLyricEditor.Views.Template
 {
     public sealed partial class LyricItemTemplate : UserControl
     {
-        private Lyric lyric { get => DataContext as Lyric; }
+        public event EventHandler GotoThisTime_Click;
+
+        private LyricItem lyricItem { get => DataContext as LyricItem; }
+
+        
         public LyricItemTemplate()
         {
             this.InitializeComponent();
             DataContextChanged += (s, e) => this.Bindings.Update();
+        }
+
+        private void GotoThisTime()
+        {
+            GotoThisTime_Click?.Invoke(lyricItem, EventArgs.Empty);
         }
     }
 }

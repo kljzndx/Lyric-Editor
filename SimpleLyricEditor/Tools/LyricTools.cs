@@ -1,4 +1,5 @@
 ﻿using SimpleLyricEditor.Models;
+using SimpleLyricEditor.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -11,9 +12,9 @@ namespace SimpleLyricEditor.Tools
 {
     public static class LyricTools
     {
-        public static ObservableCollection<Lyric> LrcParse(string content, LyricTags tags)
+        public static ObservableCollection<LyricItem> LrcParse(string content, LyricTags tags)
         {
-            ObservableCollection<Lyric> lyrics = new ObservableCollection<Lyric>();
+            ObservableCollection<LyricItem> lyrics = new ObservableCollection<LyricItem>();
 
             tags.SongName = String.IsNullOrEmpty(tags.SongName) ? GetTagValue(content, "ti") : String.Empty;
             tags.Artist = String.IsNullOrEmpty(tags.Artist) ? GetTagValue(content, "ar") : String.Empty;
@@ -28,22 +29,22 @@ namespace SimpleLyricEditor.Tools
                     byte min = Byte.Parse(item.Groups[1].Value);
                     byte s = Byte.Parse(item.Groups[2].Value);
                     byte ms = Byte.Parse(item.Groups[3].Value);
-                    lyrics.Add(new Lyric { Time = new TimeSpan(0, 0, min, s, ms * 10), Content = item.Groups[4].Value.Trim() });
+                    lyrics.Add(new LyricItem { Time = new TimeSpan(0, 0, min, s, ms * 10), Content = item.Groups[4].Value.Trim() });
                 }
             }
             else
                 foreach (string item in content.Split('\n'))
-                    lyrics.Add(new Lyric { Time = TimeSpan.Zero, Content = item.Trim() });
+                    lyrics.Add(new LyricItem { Time = TimeSpan.Zero, Content = item.Trim() });
 
             return lyrics;
         }
 
-        public static string PrintLyric(LyricTags tags, Collection<Lyric> lyrics)
+        public static string PrintLyric(LyricTags tags, Collection<LyricItem> lyrics)
         {
             string result = String.Empty;
             result += tags.ToString() + "\r\n\r\n";
 
-            foreach (Lyric item in lyrics)
+            foreach (LyricItem item in lyrics)
                 result += item.ToString() + "\r\n";
 
             return result.Trim();

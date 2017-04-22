@@ -11,10 +11,22 @@
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"/>
             <ColumnDefinition/>
+            <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
-        <TextBlock Text="{x:Bind lyric.Time,Mode=OneWay,Converter={StaticResource TimeSpanToString}}" Margin="5,0" VerticalAlignment="Center"/>
-        <TextBlock Grid.Column="1" Text="{x:Bind lyric.Content,Mode=OneWay}" TextWrapping="Wrap" Margin="5,0" VerticalAlignment="Center"/>
+        <Rectangle Grid.ColumnSpan="2" Fill="#00000000"/>
+        <Grid VerticalAlignment="Center">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Text="{x:Bind lyricItem.Time,Mode=OneWay,Converter={StaticResource TimeSpanToString}}" Margin="5,0"/>
+            <TextBlock Grid.Column="1" Text="{x:Bind lyricItem.Content,Mode=OneWay}" TextWrapping="Wrap" Margin="5,0"/>
+        </Grid>
+
+        <Button x:Uid="/LyricEdit/GotoThisLyricTime_Button" Grid.Column="1" Padding="5" Visibility="{x:Bind lyricItem.IsSelected,Mode=OneWay,Converter={StaticResource BoolToVisibility}}" Click="{x:Bind GotoThisTime}" Margin="0,0,5,0">
+            <SymbolIcon Symbol="Download" Width="30" Height="30"/>
+        </Button>
     </Grid>
 </UserControl>

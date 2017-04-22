@@ -124,6 +124,7 @@
     </Compile>
     <Compile Include="Enums\BackgroundSourceTypeEnum.cs" />
     <Compile Include="EventArgss\LyricFileChangeEventArgs.cs" />
+    <Compile Include="EventArgss\LyricSwitchEventArgs.cs" />
     <Compile Include="EventArgss\MusicFileChangeEventArgs.cs" />
     <Compile Include="EventArgss\PositionChangeEventArgs.cs" />
     <Compile Include="Models\CharacterLibrary.cs" />
@@ -147,6 +148,7 @@
     <Compile Include="ValueConverters\TimeSpanToDouble.cs" />
     <Compile Include="ValueConverters\TimeSpanToString.cs" />
     <Compile Include="Extensions\TimeSpan_Extension.cs" />
+    <Compile Include="ViewModels\LyricItem.cs" />
     <Compile Include="ViewModels\Main_ViewModel.cs" />
     <Compile Include="ViewModels\Settings_ViewModel.cs" />
     <Compile Include="ViewModels\ViewModelLocator.cs" />

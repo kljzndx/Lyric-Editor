@@ -2,6 +2,15 @@
 <UpdateLogs>
 
       <UpdateLog>
+        <Version>2.1.0</Version>
+        <Content>
+1，增加“跳转到此歌词项的时间上”的按钮
+2，修复必须双击内容才能跳转的问题
+        </Content>
+        <Date>2017/04/22</Date>
+      </UpdateLog>
+
+      <UpdateLog>
         <Version>2.0.1</Version>
         <Content>
 1，现在双击歌词列表项可以直接跳转到这个歌词的时间上

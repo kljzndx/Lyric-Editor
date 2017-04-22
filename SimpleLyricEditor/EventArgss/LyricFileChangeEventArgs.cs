@@ -7,8 +7,13 @@ using Windows.Storage;
 
 namespace SimpleLyricEditor.EventArgss
 {
-    public class LyricFileChangeEventArgs:EventArgs
+    public class LyricFileChangeEventArgs : EventArgs
     {
-        public StorageFile File { get; set; }
+        public StorageFile NewFile { get; set; }
+
+        public LyricFileChangeEventArgs(StorageFile file)
+        {
+            NewFile = file;
+        }
     }
 }

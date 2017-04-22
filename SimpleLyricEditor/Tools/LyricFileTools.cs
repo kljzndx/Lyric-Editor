@@ -9,6 +9,7 @@ using Windows.Storage.Pickers;
 using System.Runtime.InteropServices.WindowsRuntime;
 using SimpleLyricEditor.Models;
 using System.Collections.ObjectModel;
+using SimpleLyricEditor.ViewModels;
 
 namespace SimpleLyricEditor.Tools
 {
@@ -19,7 +20,7 @@ namespace SimpleLyricEditor.Tools
 
         public static void ChangeFile(StorageFile file)
         {
-            LyricFileChanged?.Invoke(null, new LyricFileChangeEventArgs { File = file });
+            LyricFileChanged?.Invoke(null, new LyricFileChangeEventArgs(file));
         }
 
         public static async Task<StorageFile> OpenFileAsync()
@@ -62,7 +63,7 @@ namespace SimpleLyricEditor.Tools
             return content;
         }
 
-        public static async Task<StorageFile> SaveFileAsync(LyricTags tags, Collection<Lyric> lyrics, StorageFile file = null)
+        public static async Task<StorageFile> SaveFileAsync(LyricTags tags, Collection<LyricItem> lyrics, StorageFile file = null)
         {
             StorageFile result = null;
             if (file is null)
@@ -86,7 +87,7 @@ namespace SimpleLyricEditor.Tools
             await FileIO.WriteTextAsync(result, LyricTools.PrintLyric(tags, lyrics));
 
             if (file is null)
-                LyricFileChanged?.Invoke(null, new LyricFileChangeEventArgs { File = result });
+                ChangeFile(result);
 
             return result;
         }

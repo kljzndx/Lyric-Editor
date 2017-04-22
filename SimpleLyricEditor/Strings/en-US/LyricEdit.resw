@@ -147,6 +147,10 @@ Shortcut keys : Delete</value>
   <data name="ExitMultilineEditMode_Button.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
     <value>Exit Multiline Edit Mode</value>
   </data>
+  <data name="GotoThisLyricTime_Button.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Go to the time of this lyric item
+Shortcut Key : G</value>
+  </data>
   <data name="LyricContent_TextBox.PlaceholderText" xml:space="preserve">
     <value>Please Enter Lyric
 Support Multiline Text</value>

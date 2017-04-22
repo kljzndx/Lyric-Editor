@@ -17,6 +17,7 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        
         <cvt:TimeSpanToString x:Key="TimeSpanToString"/>
         <cvt:TimeSpanToDouble x:Key="TimeSpanToDouble"/>
         <cvt:BoolToVisibility x:Key="BoolToVisibility"/>

@@ -86,11 +86,16 @@ namespace SimpleLyricEditor.Views.UserControls
             window.KeyUp += Window_KeyUp;
         }
 
+        public void ChangeTime(TimeSpan time, bool isUserChange = false)
+        {
+            Time = time;
+
+            PositionChanged?.Invoke(this, new PositionChangeEventArgs(isUserChange, time));
+        }
+
         private void ReloadTime(bool isUserChange = false)
         {
-            Time = AudioPlayer_MediaElement.Position;
-
-            PositionChanged?.Invoke(this, new PositionChangeEventArgs(isUserChange, Time));
+            ChangeTime(AudioPlayer_MediaElement.Position, isUserChange);
         }
 
         public async void ReloadTime(ThreadPoolTimer timer)

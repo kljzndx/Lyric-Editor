@@ -89,6 +89,17 @@
     </Function>
   </ShortcutKey>
 
+  <ShortcutKey Name="跳转到所选歌词项的时间上" Class="歌词操作">
+    <Condition>
+      <en_US>Press G Key</en_US>
+      <zh_CN>按 G 键</zh_CN>
+    </Condition>
+    <Function>
+      <en_US>Go to the time of the selected lyric</en_US>
+      <zh_CN>跳转到所选歌词项的时间上</zh_CN>
+    </Function>
+  </ShortcutKey>
+
   <ShortcutKey Name="播放控制" Class="播放器操作">
     <Condition>
       <en_US>Press P Key</en_US>

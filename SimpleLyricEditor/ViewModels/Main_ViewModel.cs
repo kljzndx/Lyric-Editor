@@ -35,8 +35,8 @@ namespace SimpleLyricEditor.ViewModels
         public LyricTags Tags { get => tags; set => Set(ref tags, value); }
 
         //歌词列表
-        private ObservableCollection<Lyric> lyrics = new ObservableCollection<Lyric>();
-        public ObservableCollection<Lyric> Lyrics { get => lyrics; set => Set(ref lyrics, value); }
+        private ObservableCollection<LyricItem> lyrics = new ObservableCollection<LyricItem>();
+        public ObservableCollection<LyricItem> Lyrics { get => lyrics; set => Set(ref lyrics, value); }
 
         //当前是否是多行编辑状态
         private bool isMultilineEditMode = false;
@@ -65,7 +65,7 @@ namespace SimpleLyricEditor.ViewModels
             LyricFileTools.LyricFileChanged +=
                 async (s, e) =>
                 {
-                    Lyrics = LyricTools.LrcParse(await LyricFileTools.ReadFileAsync(e.File), tags);
+                    Lyrics = LyricTools.LrcParse(await LyricFileTools.ReadFileAsync(e.NewFile), tags);
                     LyricsListChanged?.Invoke(this, EventArgs.Empty);
                 };
 
@@ -94,11 +94,13 @@ namespace SimpleLyricEditor.ViewModels
                       Settings.SettingObject.Values["IsReviewsed"] = true;
                   };
 
-            ContentDialog dialog = new ContentDialog();
-            dialog.Title = CharacterLibrary.GetReviewsDialog.GetString("Title");
-            dialog.Content = CharacterLibrary.GetReviewsDialog.GetString("Content");
-            dialog.PrimaryButtonText = CharacterLibrary.GetReviewsDialog.GetString("Good");
-            dialog.SecondaryButtonText = CharacterLibrary.GetReviewsDialog.GetString("NotGood");
+            ContentDialog dialog = new ContentDialog()
+            {
+                Title = CharacterLibrary.GetReviewsDialog.GetString("Title"),
+                Content = CharacterLibrary.GetReviewsDialog.GetString("Content"),
+                PrimaryButtonText = CharacterLibrary.GetReviewsDialog.GetString("Good"),
+                SecondaryButtonText = CharacterLibrary.GetReviewsDialog.GetString("NotGood")
+            };
             dialog.PrimaryButtonClick += headler;
             dialog.SecondaryButtonClick += headler;
             await dialog.ShowAsync();
@@ -107,22 +109,6 @@ namespace SimpleLyricEditor.ViewModels
         public async void Feedback()
         {
             await EmailEx.SendAsync("kljzndx@outlook.com", $"{AppInfo.Name} {AppInfo.Version} {(AppInfo.Name == "简易歌词编辑器" ? "反馈" : "Feedback")}", String.Empty);
-        }
-
-        public async void GoToCurrentLyricTime()
-        {
-            try
-            {
-                ThisTime = (selectedItems.SingleOrDefault() as Lyric).Time;
-            }
-            catch (NullReferenceException)
-            {
-                return;
-            }
-            catch (InvalidOperationException)
-            {
-                await MessageBox.ShowAsync(CharacterLibrary.ErrorDialog.GetString("SelectedMultipleItemsError"), CharacterLibrary.ErrorDialog.GetString("Close"));
-            }
         }
 
         #region Lyrics Operations
@@ -141,7 +127,7 @@ namespace SimpleLyricEditor.ViewModels
         {
             var contents = lyricContent.Split('\r');
             foreach (var item in contents)
-                lyrics.Add(new Lyric { Time = thisTime, Content = item.Trim() });
+                lyrics.Add(new LyricItem { Time = thisTime, Content = item.Trim() });
 
             if (selectedIndex != -1 && contents.Length == 1)
             {
@@ -166,7 +152,7 @@ namespace SimpleLyricEditor.ViewModels
             bool isBig = thisTime >= firstTime;
             TimeSpan interpolate = isBig ? thisTime - firstTime : firstTime - thisTime;
             foreach (Lyric item in SelectedItems)
-                lyrics.Add(new Lyric { Time = isBig ? item.Time + interpolate : item.Time - interpolate, Content = item.Content.Trim() });
+                lyrics.Add(new LyricItem { Time = isBig ? item.Time + interpolate : item.Time - interpolate, Content = item.Content.Trim() });
 
             LyricsSort();
         }
@@ -176,7 +162,7 @@ namespace SimpleLyricEditor.ViewModels
             if (App.IsPressShift)
                 lyrics.Clear();
             else
-                foreach (Lyric item in selectedItems)
+                foreach (LyricItem item in selectedItems)
                     lyrics.Remove(item);
 
             if (!lyrics.Any())
@@ -189,7 +175,7 @@ namespace SimpleLyricEditor.ViewModels
         {
             try
             {
-                (selectedItems.SingleOrDefault() as Lyric).Time = thisTime;
+                (selectedItems.SingleOrDefault() as LyricItem).Time = thisTime;
                 LyricsListChanged?.Invoke(this, EventArgs.Empty);
             }
             catch (NullReferenceException)
@@ -204,12 +190,13 @@ namespace SimpleLyricEditor.ViewModels
 
         public void ChangeContent()
         {
-            foreach (Lyric sltItem in selectedItems)
+            foreach (LyricItem sltItem in selectedItems)
                 sltItem.Content = lyricContent.Split('\r')[0].Trim();
             
             LyricsListChanged?.Invoke(this, EventArgs.Empty);
         }
-#endregion
+
+        #endregion
         #region Lyric File Operations
         public async void OpenLyricFile()
         {
@@ -225,7 +212,15 @@ namespace SimpleLyricEditor.ViewModels
         {
             LyricFile = await LyricFileTools.SaveFileAsync(tags, lyrics, null);
         }
-#endregion
+        
+        public void AssociatedTags(Music music)
+        {
+            tags.SongName = music.Name;
+            tags.Artist = music.Artist;
+            tags.Album = music.Album;
+        }
+
+        #endregion
 
         private void Window_KeyDown(CoreWindow sender, KeyEventArgs args)
         {
@@ -250,9 +245,6 @@ namespace SimpleLyricEditor.ViewModels
                         break;
                     case VirtualKey.S:
                         LyricsSort();
-                        break;
-                    case VirtualKey.G:
-                        GoToCurrentLyricTime();
                         break;
                 }
             }

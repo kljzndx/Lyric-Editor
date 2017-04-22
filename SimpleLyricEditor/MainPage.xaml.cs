@@ -1,4 +1,5 @@
-﻿using SimpleLyricEditor.Models;
+﻿using HappyStudio.UwpToolsLibrary.Auxiliarys;
+using SimpleLyricEditor.Models;
 using SimpleLyricEditor.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -6,6 +7,7 @@ using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.System;
@@ -42,18 +44,38 @@ namespace SimpleLyricEditor
                     else
                         lyricsPreview.PreviewLyric();
                 };
+            audioPlayer.MusicFileChanged += (s, e) => model.AssociatedTags(e.NewMusic);
 
             model.LyricsListChanged += (s, e) => lyricsPreview.RepositionLyric();
             
+
             CoreWindow window = CoreWindow.GetForCurrentThread();
             window.KeyDown += Window_KeyDown;
             window.KeyUp += Window_KeyUp;
+
         }
 
         private void HideFastMenu()
         {
             FastMenu_Grid.Visibility = Visibility.Collapsed;
         }
+
+        private async void GotoThisLyricTime()
+        {
+            try
+            {
+                audioPlayer.ChangeTime((Lyrics_ListView.SelectedItems.SingleOrDefault() as Lyric).Time, true);
+            }
+            catch (NullReferenceException)
+            {
+                return;
+            }
+            catch (InvalidOperationException)
+            {
+                await MessageBox.ShowAsync(CharacterLibrary.ErrorDialog.GetString("SelectedMultipleItemsError"), CharacterLibrary.ErrorDialog.GetString("Close"));
+            }
+        }
+
 
         private void Window_KeyDown(CoreWindow sender, KeyEventArgs args)
         {
@@ -65,6 +87,9 @@ namespace SimpleLyricEditor
                 {
                     case VirtualKey.Space:
                         this.Focus(FocusState.Pointer);
+                        break;
+                    case VirtualKey.G:
+                        GotoThisLyricTime();
                         break;
                 }
             }
@@ -80,9 +105,15 @@ namespace SimpleLyricEditor
         {
             string content = String.Empty;
 
-            foreach (Lyric item in (sender as ListView).SelectedItems)
-                content += item.Content + "\r\n";
+            foreach (LyricItem item in e.RemovedItems)
+                item.IsSelected = false;
 
+            foreach (LyricItem item in (sender as ListView).SelectedItems)
+            {
+                content += item.Content + "\r\n";
+                item.IsSelected = true;
+            }
+            
             model.LyricContent = content.Trim();
         }
 
@@ -117,8 +148,10 @@ namespace SimpleLyricEditor
         private void MenuFlyout_Opened(object sender, object e)
         {
             var menu = sender as MenuFlyout;
-            Style s = new Style();
-            s.TargetType = typeof(MenuFlyoutPresenter);
+            Style s = new Style()
+            {
+                TargetType = typeof(MenuFlyoutPresenter)
+            };
             s.Setters.Add(new Setter { Property = MenuFlyoutPresenter.RequestedThemeProperty, Value = model.Settings.PageTheme });
             menu.MenuFlyoutPresenterStyle = s;
         }
@@ -192,12 +225,12 @@ namespace SimpleLyricEditor
 
         private void LyricItemTemplate_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
         {
-            model.GoToCurrentLyricTime();
+            GotoThisLyricTime();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void LyricItemTemplate_GotoThisTime_Click(object sender, EventArgs e)
         {
-            model.GoToCurrentLyricTime();
+            audioPlayer.ChangeTime((sender as Lyric).Time, true);
         }
     }
 }
