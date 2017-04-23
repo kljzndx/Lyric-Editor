@@ -28,9 +28,8 @@ namespace SimpleLyricEditor.Models
             AllTime = TimeSpan.Zero;
         }
 
-        public static async Task<Music> Parse(IStorageFile iFile)
+        public static async Task<Music> ParseAsync(StorageFile file)
         {
-            var file = iFile as StorageFile;
             var propertys = await file.Properties.GetMusicPropertiesAsync();
             BitmapImage albumImage = new BitmapImage();
             albumImage.SetSource(await file.GetScaledImageAsThumbnailAsync(Windows.Storage.FileProperties.ThumbnailMode.MusicView));

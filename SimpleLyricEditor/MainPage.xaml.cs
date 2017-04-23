@@ -1,5 +1,6 @@
 ﻿using HappyStudio.UwpToolsLibrary.Auxiliarys;
 using SimpleLyricEditor.Models;
+using SimpleLyricEditor.Tools;
 using SimpleLyricEditor.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -8,8 +9,10 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
+using Windows.ApplicationModel.DataTransfer;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Storage;
 using Windows.System;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
@@ -44,10 +47,16 @@ namespace SimpleLyricEditor
                     else
                         lyricsPreview.PreviewLyric();
                 };
-            audioPlayer.MusicFileChanged += (s, e) => model.AssociatedTags(e.NewMusic);
+
+            audioPlayer.MusicFileChanged +=
+                (s, e) =>
+                {
+                    model.AssociatedTags(e.NewMusic);
+                    lyricsPreview.RepositionLyric();
+                };
 
             model.LyricsListChanged += (s, e) => lyricsPreview.RepositionLyric();
-            
+
 
             CoreWindow window = CoreWindow.GetForCurrentThread();
             window.KeyDown += Window_KeyDown;
@@ -75,8 +84,7 @@ namespace SimpleLyricEditor
                 await MessageBox.ShowAsync(CharacterLibrary.ErrorDialog.GetString("SelectedMultipleItemsError"), CharacterLibrary.ErrorDialog.GetString("Close"));
             }
         }
-
-
+        
         private void Window_KeyDown(CoreWindow sender, KeyEventArgs args)
         {
             if (args.VirtualKey == VirtualKey.Shift)
@@ -101,22 +109,7 @@ namespace SimpleLyricEditor
                 DelLyric_Button.Content = "\uE10A";
         }
 
-        private void Lyrics_ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            string content = String.Empty;
-
-            foreach (LyricItem item in e.RemovedItems)
-                item.IsSelected = false;
-
-            foreach (LyricItem item in (sender as ListView).SelectedItems)
-            {
-                content += item.Content + "\r\n";
-                item.IsSelected = true;
-            }
-            
-            model.LyricContent = content.Trim();
-        }
-
+        #region 歌词编辑区
         private void LyricsContent_TextBox_KeyDown(object sender, KeyRoutedEventArgs e)
         {
             if (e.Key == VirtualKey.Enter && sender is TextBox t)
@@ -138,22 +131,6 @@ namespace SimpleLyricEditor
                     t.Select(t.Text.Length, 0);
                 }
             }
-        }
-
-        private void Settings_AppBarButton_Click(object sender, RoutedEventArgs e)
-        {
-            HidePanel_SplitView.IsPaneOpen = !HidePanel_SplitView.IsPaneOpen;
-        }
-        
-        private void MenuFlyout_Opened(object sender, object e)
-        {
-            var menu = sender as MenuFlyout;
-            Style s = new Style()
-            {
-                TargetType = typeof(MenuFlyoutPresenter)
-            };
-            s.Setters.Add(new Setter { Property = MenuFlyoutPresenter.RequestedThemeProperty, Value = model.Settings.PageTheme });
-            menu.MenuFlyoutPresenterStyle = s;
         }
 
         private void MultilineEditMode_Button_Click(object sender, RoutedEventArgs e)
@@ -222,6 +199,23 @@ namespace SimpleLyricEditor
                 }
             }
         }
+        #endregion
+        #region 歌词列表
+        private void Lyrics_ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            string content = String.Empty;
+
+            foreach (LyricItem item in e.RemovedItems)
+                item.IsSelected = false;
+
+            foreach (LyricItem item in (sender as ListView).SelectedItems)
+            {
+                content += item.Content + "\r\n";
+                item.IsSelected = true;
+            }
+
+            model.LyricContent = content.Trim();
+        }
 
         private void LyricItemTemplate_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
         {
@@ -232,5 +226,71 @@ namespace SimpleLyricEditor
         {
             audioPlayer.ChangeTime((sender as Lyric).Time, true);
         }
+        #endregion
+        #region 低栏
+        private void MenuFlyout_Opened(object sender, object e)
+        {
+            var menu = sender as MenuFlyout;
+            Style s = new Style()
+            {
+                TargetType = typeof(MenuFlyoutPresenter)
+            };
+            s.Setters.Add(new Setter { Property = RequestedThemeProperty, Value = model.Settings.PageTheme });
+            menu.MenuFlyoutPresenterStyle = s;
+        }
+
+        private void Settings_AppBarButton_Click(object sender, RoutedEventArgs e)
+        {
+            HidePanel_SplitView.IsPaneOpen = !HidePanel_SplitView.IsPaneOpen;
+        }
+        #endregion
+
+        private void Main_Grid_DragOver(object sender, DragEventArgs e)
+        {
+            e.AcceptedOperation = Windows.ApplicationModel.DataTransfer.DataPackageOperation.Link;
+            e.DragUIOverride.Caption = CharacterLibrary.DragOrDrop.GetString("Caption");
+        }
+
+        private async void Main_Grid_Drop(object sender, DragEventArgs e)
+        {
+            if (!e.DataView.Contains(StandardDataFormats.StorageItems))
+                return;
+            var items = await e.DataView.GetStorageItemsAsync();
+
+            bool isMusicFound = false;
+            bool isLyricFound = false;
+
+            foreach (var item in items)
+            {
+                if (item is StorageFile file)
+                {
+                    switch (file.FileType)
+                    {
+                        case ".mp3":
+                        case ".flac":
+                        case ".wav":
+                        case ".aac":
+                        case ".m4a":
+                            if (!isMusicFound)
+                            {
+                                audioPlayer.ChangeMusic(await Music.ParseAsync(file));
+                                isMusicFound = true;
+                            }
+                            break;
+                        case ".txt":
+                        case ".lrc":
+                            if (!isLyricFound)
+                            {
+                                LyricFileTools.ChangeFile(file);
+                                isLyricFound = true;
+                            }
+                            break;
+                    }
+                }
+                if (isMusicFound && isLyricFound)
+                    break;
+            }
+        }
+        
     }
 }

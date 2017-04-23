@@ -60,7 +60,7 @@ namespace SimpleLyricEditor.Views.UserControls
         public Music MusicSource
         {
             get { return (Music)GetValue(MusicProperty); }
-            set
+            private set
             {
                 SetValue(MusicProperty, value);
                 this.Bindings.Update();
@@ -121,8 +121,14 @@ namespace SimpleLyricEditor.Views.UserControls
             if (musicFile is null)
                 return;
 
-            MusicSource = await Music.Parse(musicFile);
+            MusicSource = await Music.ParseAsync(musicFile);
             AudioPlayer_MediaElement.SetSource(await musicFile.OpenAsync(FileAccessMode.Read), musicFile.ContentType);
+        }
+
+        public async void ChangeMusic(Music newSource)
+        {
+            MusicSource = newSource;
+            AudioPlayer_MediaElement.SetSource(await newSource.File.OpenAsync(FileAccessMode.Read), newSource.File.ContentType);
         }
 
         #region 播放控制

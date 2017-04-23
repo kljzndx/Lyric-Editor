@@ -111,6 +111,11 @@ namespace SimpleLyricEditor.ViewModels
             await EmailEx.SendAsync("kljzndx@outlook.com", $"{AppInfo.Name} {AppInfo.Version} {(AppInfo.Name == "简易歌词编辑器" ? "反馈" : "Feedback")}", String.Empty);
         }
 
+        public void Deselect()
+        {
+            SelectedIndex = -1;
+        }
+
         #region Lyrics Operations
 
         public void LyricsSort()

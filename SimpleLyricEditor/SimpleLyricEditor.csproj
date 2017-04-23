@@ -95,6 +95,8 @@
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
     <None Include="project.json" />
+    <PRIResource Include="Strings\en-US\DragOrDrop.resw" />
+    <PRIResource Include="Strings\zh-CN\DragOrDrop.resw" />
     <PRIResource Include="Strings\en-US\FastMenu.resw" />
     <PRIResource Include="Strings\zh-CN\FastMenu.resw" />
     <PRIResource Include="Strings\zh-CN\GetReviewsDialog.resw" />
