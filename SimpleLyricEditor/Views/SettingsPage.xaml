@@ -7,7 +7,11 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <StackPanel Padding="10">
+    <StackPanel Padding="12">
+        <StackPanel Margin="0,10">
+            <TextBox x:Name="DefaultLyricAuthor_TextBox" x:Uid="/Settings/DefaultLyricAuthor_TextBox" Text="{x:Bind model.Settings.DefaultLyricAuthor,Mode=TwoWay}"/>
+            <TextBlock x:Name="DefaultLyricAuthorTip_TextBlock" x:Uid="/Settings/DefaultLyricAuthorTip_TextBlock" TextWrapping="Wrap"/>
+        </StackPanel>
         <ComboBox x:Name="Theme_ComboBox" x:Uid="/Settings/Theme_ComboBox" Margin="0,10" SelectionChanged="Theme_ComboBox_SelectionChanged">
             <ComboBoxItem x:Uid="/Settings/Theme_Default_ComboBoxItem"/>
             <ComboBoxItem x:Uid="/Settings/Theme_Light_ComboBoxItem"/>

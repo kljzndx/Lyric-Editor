@@ -124,7 +124,7 @@
     <value>歌手</value>
   </data>
   <data name="LyricsAuthor_TextBox.Header" xml:space="preserve">
-    <value>LRC文件制作者</value>
+    <value>LRC文件作者名</value>
   </data>
   <data name="LyricsFileInfo_ContentDialog.SecondaryButtonText" xml:space="preserve">
     <value>关闭</value>

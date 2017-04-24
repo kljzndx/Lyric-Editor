@@ -27,13 +27,14 @@ namespace SimpleLyricEditor.Models
             songName = String.Empty;
             artist = String.Empty;
             album = String.Empty;
-            lyricsAuthor = String.Empty;
+            lyricsAuthor = Settings.GetSettingsObject().DefaultLyricAuthor;
         }
 
         public string WriteTag(string tagName, string value)
         {
             return !String.IsNullOrEmpty(value) ? $"[{tagName}:{value}]\r\n" : String.Empty;
         }
+
         public override string ToString()
         {
             string tags = String.Empty;

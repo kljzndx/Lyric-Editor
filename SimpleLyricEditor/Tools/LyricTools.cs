@@ -16,10 +16,14 @@ namespace SimpleLyricEditor.Tools
         {
             ObservableCollection<LyricItem> lyrics = new ObservableCollection<LyricItem>();
 
-            tags.SongName = String.IsNullOrEmpty(tags.SongName) ? GetTagValue(content, "ti") : String.Empty;
-            tags.Artist = String.IsNullOrEmpty(tags.Artist) ? GetTagValue(content, "ar") : String.Empty;
-            tags.Album = String.IsNullOrEmpty(tags.Album) ? GetTagValue(content, "al") : String.Empty;
-            tags.LyricsAuthor = String.IsNullOrEmpty(tags.LyricsAuthor) ? GetTagValue(content, "by") : String.Empty;
+            if (String.IsNullOrEmpty(tags.SongName))
+                tags.SongName = GetTagValue(content, "ti");
+            if (String.IsNullOrEmpty(tags.Artist))
+                tags.Artist = GetTagValue(content, "ar");
+            if (String.IsNullOrEmpty(tags.Album))
+                tags.Album = GetTagValue(content, "al");
+            if (String.IsNullOrEmpty(tags.LyricsAuthor))
+                tags.LyricsAuthor = GetTagValue(content, "by");
 
             Regex rege = new Regex(@"\[(\d{2}):(\d{2}).(\d{2})\](.*)");
             if (rege.IsMatch(content))
@@ -50,7 +54,7 @@ namespace SimpleLyricEditor.Tools
             return result.Trim();
         }
 
-        private static string GetTagValue(string input,string tagName)
+        private static string GetTagValue(string input, string tagName)
         {
             Regex rege = new Regex($@"\[{tagName}:(.*)\]");
             var tagvalue = rege.Match(input);

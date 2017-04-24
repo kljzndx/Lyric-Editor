@@ -65,7 +65,8 @@ namespace SimpleLyricEditor.ViewModels
             LyricFileTools.LyricFileChanged +=
                 async (s, e) =>
                 {
-                    Lyrics = LyricTools.LrcParse(await LyricFileTools.ReadFileAsync(e.NewFile), tags);
+                    LyricFile = e.NewFile;
+                    Lyrics = LyricTools.LrcParse(await LyricFileTools.ReadFileAsync(LyricFile), tags);
                     LyricsListChanged?.Invoke(this, EventArgs.Empty);
                 };
 
@@ -205,17 +206,17 @@ namespace SimpleLyricEditor.ViewModels
         #region Lyric File Operations
         public async void OpenLyricFile()
         {
-            LyricFile = await LyricFileTools.OpenFileAsync();
+            await LyricFileTools.OpenFileAsync();
         }
 
         public async void SaveLyricFile()
         {
-            LyricFile = await LyricFileTools.SaveFileAsync(tags, lyrics, LyricFile);
+            await LyricFileTools.SaveFileAsync(tags, lyrics, LyricFile);
         }
 
         public async void SaveAsLyricFile()
         {
-            LyricFile = await LyricFileTools.SaveFileAsync(tags, lyrics, null);
+            await LyricFileTools.SaveFileAsync(tags, lyrics, null);
         }
         
         public void AssociatedTags(Music music)

@@ -124,7 +124,7 @@
     <value>Artist</value>
   </data>
   <data name="LyricsAuthor_TextBox.Header" xml:space="preserve">
-    <value>LRC File Author</value>
+    <value>LRC File Author Name</value>
   </data>
   <data name="LyricsFileInfo_ContentDialog.SecondaryButtonText" xml:space="preserve">
     <value>Close</value>

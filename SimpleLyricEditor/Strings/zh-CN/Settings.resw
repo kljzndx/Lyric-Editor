@@ -138,6 +138,12 @@
   <data name="BackgroundOpacity_Slider.Header" xml:space="preserve">
     <value>背景不透明度</value>
   </data>
+  <data name="DefaultLyricAuthorTip_TextBlock.Text" xml:space="preserve">
+    <value>更改后需重启应用才能生效</value>
+  </data>
+  <data name="DefaultLyricAuthor_TextBox.Header" xml:space="preserve">
+    <value>默认LRC文件作者名</value>
+  </data>
   <data name="LyricsPreviewBackgroundOpacity_Slider.Header" xml:space="preserve">
     <value>歌词预览区域的背景不透明度</value>
   </data>

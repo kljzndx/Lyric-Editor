@@ -23,17 +23,17 @@ namespace SimpleLyricEditor.Tools
             LyricFileChanged?.Invoke(null, new LyricFileChangeEventArgs(file));
         }
 
-        public static async Task<StorageFile> OpenFileAsync()
+        public static async Task OpenFileAsync()
         {
             StorageFile file = null;
             FileOpenPicker picker = new FileOpenPicker();
             picker.FileTypeFilter.Add(".lrc");
             picker.FileTypeFilter.Add(".txt");
             file = await picker.PickSingleFileAsync();
+
             if (file is StorageFile)
                 ChangeFile(file);
-
-            return file;
+            
         }
 
         public static async Task<string> ReadFileAsync(StorageFile file)
@@ -63,7 +63,7 @@ namespace SimpleLyricEditor.Tools
             return content;
         }
 
-        public static async Task<StorageFile> SaveFileAsync(LyricTags tags, Collection<LyricItem> lyrics, StorageFile file = null)
+        public static async Task SaveFileAsync(LyricTags tags, Collection<LyricItem> lyrics, StorageFile file = null)
         {
             StorageFile result = null;
             if (file is null)
@@ -82,14 +82,12 @@ namespace SimpleLyricEditor.Tools
                 result = file;
 
             if (result is null)
-                return null;
+                return;
 
             await FileIO.WriteTextAsync(result, LyricTools.PrintLyric(tags, lyrics));
 
             if (file is null)
                 ChangeFile(result);
-
-            return result;
         }
     }
 }

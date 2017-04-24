@@ -152,6 +152,9 @@ namespace SimpleLyricEditor
                 Window.Current.Activate();
             }
             Tools.LyricFileTools.ChangeFile(args.Files[0] as StorageFile);
+
+            CreateKeySubscription();
+            EnsureSyncContext();
         }
 
         private void Window_KeyDown(CoreWindow sender, KeyEventArgs args)

@@ -33,11 +33,12 @@ namespace SimpleLyricEditor.Views
             BackgroundImageSource_AlbumImage_RadioButton.IsChecked = isAlbumImage;
             BackgroundImageSource_LocalImage_RadioButton.IsChecked = !isAlbumImage;
         }
-
+        
         private void Theme_ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var theBox = sender as ComboBox;
             model.Settings.PageTheme = /* if */ theBox.SelectedIndex == 0 ? ElementTheme.Default : /* else if */ theBox.SelectedIndex == 1 ? ElementTheme.Light : ElementTheme.Dark;
         }
+
     }
 }

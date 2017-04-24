@@ -63,7 +63,7 @@ namespace SimpleLyricEditor.Views.UserControls
 
         // Using a DependencyProperty as the backing store for Lyrics.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty LyricsProperty =
-            DependencyProperty.Register("Lyrics", typeof(IList<LyricItem>), typeof(LyricsPreview), new PropertyMetadata(new List<Lyric>()));
+            DependencyProperty.Register("Lyrics", typeof(IList<LyricItem>), typeof(LyricsPreview), new PropertyMetadata(new List<LyricItem>()));
 
 
 
