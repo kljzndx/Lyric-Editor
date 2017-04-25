@@ -118,6 +118,6 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Caption" xml:space="preserve">
-    <value>Please release the music or lyrics file here</value>
+    <value>Please release the music or Image file here</value>
   </data>
 </root>

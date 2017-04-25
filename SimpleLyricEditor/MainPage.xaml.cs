@@ -258,7 +258,7 @@ namespace SimpleLyricEditor
             var items = await e.DataView.GetStorageItemsAsync();
 
             bool isMusicFound = false;
-            bool isLyricFound = false;
+            bool isImageFound = false;
 
             foreach (var item in items)
             {
@@ -271,26 +271,22 @@ namespace SimpleLyricEditor
                         case ".wav":
                         case ".aac":
                         case ".m4a":
-                            if (!isMusicFound)
-                            {
-                                audioPlayer.ChangeMusic(await Music.ParseAsync(file));
-                                isMusicFound = true;
-                            }
+                            audioPlayer.ChangeMusic(await Music.ParseAsync(file));
+                            isMusicFound = true;
                             break;
-                        case ".txt":
-                        case ".lrc":
-                            if (!isLyricFound)
+                        case ".png":
+                        case ".jpg":
+                            if (!isImageFound)
                             {
-                                LyricFileTools.ChangeFile(file);
-                                isLyricFound = true;
+                                Windows.Storage.AccessCache.StorageApplicationPermissions.FutureAccessList.AddOrReplace("BackgroundImage", file);
+                                model.Settings.LocalBackgroundImagePath = file.Path;
                             }
                             break;
                     }
                 }
-                if (isMusicFound && isLyricFound)
+                if (isMusicFound && isImageFound)
                     break;
             }
         }
-        
     }
 }

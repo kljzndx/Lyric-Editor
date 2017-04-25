@@ -118,6 +118,6 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Caption" xml:space="preserve">
-    <value>请把音乐或者歌词文件释放到此处</value>
+    <value>请把音乐或者图片文件释放到此处</value>
   </data>
 </root>
