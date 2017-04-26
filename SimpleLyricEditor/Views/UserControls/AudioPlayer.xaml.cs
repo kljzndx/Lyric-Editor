@@ -28,13 +28,8 @@ namespace SimpleLyricEditor.Views.UserControls
 {
     public sealed partial class AudioPlayer : UserControl
     {
-        // Using a DependencyProperty as the backing store for IsPlay.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty IsPlayProperty =
-            DependencyProperty.Register(nameof(IsPlay), typeof(bool), typeof(AudioPlayer), new PropertyMetadata(false));
-
-
-        // Using a DependencyProperty as the backing store for Music.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty MusicProperty =
+        // Using a DependencyProperty as the backing store for MusicSource.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty MusicSourceProperty =
             DependencyProperty.Register(nameof(MusicSource), typeof(Music), typeof(AudioPlayer), new PropertyMetadata(Music.Empty));
 
         // Using a DependencyProperty as the backing store for Time.  This enables animation, styling, binding, etc...
@@ -49,20 +44,27 @@ namespace SimpleLyricEditor.Views.UserControls
         public event EventHandler<MusicFileChangeEventArgs> MusicFileChanged;
         public event EventHandler<PositionChangeEventArgs> PositionChanged;
 
+        private bool isPlay;
+
         public bool IsPlay
         {
-            get { return (bool)GetValue(IsPlayProperty); }
-            set { SetValue(IsPlayProperty, value); }
+            get => isPlay;
+            set
+            {
+                isPlay = value;
+                this.Bindings.Update();
+            }
         }
+
 
         public bool IsAvailableSource { get => MusicSource != Music.Empty; }
 
         public Music MusicSource
         {
-            get { return (Music)GetValue(MusicProperty); }
+            get { return (Music)GetValue(MusicSourceProperty); }
             private set
             {
-                SetValue(MusicProperty, value);
+                SetValue(MusicSourceProperty, value);
                 this.Bindings.Update();
             }
         }

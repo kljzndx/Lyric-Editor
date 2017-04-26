@@ -18,6 +18,7 @@
             </Setter>
         </Style>
         
+        <!--用于绑定的值转换器-->
         <cvt:TimeSpanToString x:Key="TimeSpanToString"/>
         <cvt:TimeSpanToDouble x:Key="TimeSpanToDouble"/>
         <cvt:BoolToVisibility x:Key="BoolToVisibility"/>

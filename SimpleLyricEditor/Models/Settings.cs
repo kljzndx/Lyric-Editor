@@ -26,6 +26,9 @@ namespace SimpleLyricEditor.Models
         private double volume;
         public double Volume { get => volume; set => SetSetting(ref volume, value); }
 
+        private double channel;
+        public double Channel { get => channel; set => SetSetting(ref channel, value); }
+
         //默认歌词文件作者名
         private string defaultLyricAuthor;
         public string DefaultLyricAuthor { get => defaultLyricAuthor; set => SetSetting(ref defaultLyricAuthor, value); }
@@ -80,6 +83,7 @@ namespace SimpleLyricEditor.Models
             
             playbackRate = GetSetting(nameof(PlaybackRate), 1D);
             volume = GetSetting(nameof(Volume), 1D);
+            channel = GetSetting(nameof(Channel), 0D);
             defaultLyricAuthor = GetSetting(nameof(DefaultLyricAuthor), String.Empty);
 
             pageTheme = GetSetting(nameof(PageTheme), ElementTheme.Dark.ToString(),

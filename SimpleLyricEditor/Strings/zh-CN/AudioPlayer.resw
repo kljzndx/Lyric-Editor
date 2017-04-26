@@ -140,4 +140,7 @@
   <data name="Volume_Button.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
     <value>快捷键：上/下 方向键</value>
   </data>
+  <data name="Channel_TextBlock.Text" xml:space="preserve">
+    <value>声道</value>
+  </data>
 </root>

@@ -110,20 +110,18 @@
                         </StackPanel>
                     </Grid>
 
-                    <ScrollViewer x:Name="Lyrics_ScrollViewer" Grid.Row="1">
-                        <ListView x:Name="Lyrics_ListView" ItemsSource="{x:Bind model.Lyrics,Mode=OneWay}" IsItemClickEnabled="False" SelectedIndex="{x:Bind model.SelectedIndex,Mode=TwoWay}" SelectionChanged="Lyrics_ListView_SelectionChanged">
-                            <ListView.ItemContainerStyle>
-                                <Style TargetType="ListViewItem">
-                                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                                </Style>
-                            </ListView.ItemContainerStyle>
-                            <ListView.ItemTemplate>
-                                <DataTemplate x:DataType="vm:LyricItem">
-                                    <temp:LyricItemTemplate MinHeight="44" DoubleTapped="LyricItemTemplate_DoubleTapped" GotoThisTime_Click="LyricItemTemplate_GotoThisTime_Click"/>
-                                </DataTemplate>
-                            </ListView.ItemTemplate>
-                        </ListView>
-                    </ScrollViewer>
+                    <ListView x:Name="Lyrics_ListView" Grid.Row="1" ItemsSource="{x:Bind model.Lyrics,Mode=OneWay}" IsItemClickEnabled="False" SelectedIndex="{x:Bind model.SelectedIndex,Mode=TwoWay}" SelectionChanged="Lyrics_ListView_SelectionChanged">
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="ListViewItem">
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                            </Style>
+                        </ListView.ItemContainerStyle>
+                        <ListView.ItemTemplate>
+                            <DataTemplate x:DataType="vm:LyricItem">
+                                <temp:LyricItemTemplate MinHeight="44" DoubleTapped="LyricItemTemplate_DoubleTapped" GotoThisTime_Click="LyricItemTemplate_GotoThisTime_Click"/>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
                     <Button x:Uid="/LyricEdit/LyricsSort_Button" Background="{ThemeResource SystemControlBackgroundAccentBrush}" VerticalAlignment="Bottom" HorizontalAlignment="Right" Grid.Row="1" Width="50" Height="50" Margin="0,0,50,50" Click="{x:Bind model.LyricsSort}">
                         <Button.Template>
                             <ControlTemplate TargetType="Button">

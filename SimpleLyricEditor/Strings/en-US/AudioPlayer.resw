@@ -140,4 +140,7 @@ Shortcut : P</value>
   <data name="Volume_Button.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
     <value>Shortcut Keys : Up / Down Arrow Key</value>
   </data>
+  <data name="Channel_TextBlock.Text" xml:space="preserve">
+    <value>Channel</value>
+  </data>
 </root>

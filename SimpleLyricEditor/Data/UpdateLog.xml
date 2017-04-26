@@ -2,6 +2,15 @@
 <UpdateLogs>
 
       <UpdateLog>
+        <Version>2.3.2</Version>
+        <Content>
+1，增加声道设置
+PS：和音量设置在一起
+        </Content>
+        <Date>2017/04/26</Date>
+      </UpdateLog>
+
+      <UpdateLog>
         <Version>2.3.1</Version>
         <Content>
 1，因从外部拖进来的文件是只读的，所以现已不能将歌词文件拖进应用

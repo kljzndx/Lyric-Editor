@@ -10,7 +10,7 @@
     d:DesignWidth="400">
 
     <Grid Background="{ThemeResource AppBarBackgroundThemeBrush}">
-        <MediaElement x:Name="AudioPlayer_MediaElement" AutoPlay="False" Position="{x:Bind Time,Mode=OneWay}" DefaultPlaybackRate="{x:Bind settings.PlaybackRate,Mode=OneWay}" PlaybackRate="{x:Bind settings.PlaybackRate,Mode=OneWay}" Volume="{x:Bind settings.Volume,Mode=OneWay}" MediaOpened="AudioPlayer_MediaElement_MediaOpened" MediaFailed="AudioPlayer_MediaElement_MediaFailed" MediaEnded="AudioPlayer_MediaElement_MediaEnded"/>
+        <MediaElement x:Name="AudioPlayer_MediaElement" AutoPlay="False" Position="{x:Bind Time,Mode=OneWay}" DefaultPlaybackRate="{x:Bind settings.PlaybackRate,Mode=OneWay}" PlaybackRate="{x:Bind settings.PlaybackRate,Mode=OneWay}" Volume="{x:Bind settings.Volume,Mode=OneWay}" Balance="{x:Bind settings.Channel,Mode=OneWay}" MediaOpened="AudioPlayer_MediaElement_MediaOpened" MediaFailed="AudioPlayer_MediaElement_MediaFailed" MediaEnded="AudioPlayer_MediaElement_MediaEnded"/>
         <StackPanel Margin="5,0">
             <TextBlock Text="{x:Bind MusicSource.File.Path,Mode=OneWay}" TextAlignment="Center" TextWrapping="Wrap" Margin="0,5"/>
             <Grid>
@@ -23,8 +23,8 @@
             </Grid>
             <RelativePanel>
                 <StackPanel x:Name="PlayOrPause_StackPanel" x:Uid="/AudioPlayer/PlayOrPause_StackPanel" Orientation="Horizontal" RelativePanel.AlignHorizontalCenterWithPanel="True">
-                    <Button x:Name="Play_Button" Content="&#xE102;" Style="{StaticResource ControllerButton}" Visibility="{x:Bind IsPlay,Mode=OneWay,Converter={StaticResource BoolToVisibility_Reverse}}" Click="{x:Bind Play}"/>
-                    <Button x:Name="Pause_Button" Content="&#xE103;" Style="{StaticResource ControllerButton}" Visibility="{x:Bind IsPlay,Mode=OneWay,Converter={StaticResource BoolToVisibility}}" Click="{x:Bind Pause}"/>
+                    <Button x:Name="Play_Button" Content="&#xE102;" Style="{StaticResource ControllerButton}" Visibility="{x:Bind IsPlay,Mode=OneTime,Converter={StaticResource BoolToVisibility_Reverse}}" Click="{x:Bind Play}"/>
+                    <Button x:Name="Pause_Button" Content="&#xE103;" Style="{StaticResource ControllerButton}" Visibility="{x:Bind IsPlay,Mode=OneTime,Converter={StaticResource BoolToVisibility}}" Click="{x:Bind Pause}"/>
                 </StackPanel>
                 <Button x:Name="FastRewind_Button" x:Uid="/AudioPlayer/FastRewind_Button" Content="&#xE100;" Style="{StaticResource ControllerButton}" RelativePanel.LeftOf="PlayOrPause_StackPanel" IsEnabled="{x:Bind IsAvailableSource}" Click="{x:Bind FastRewind}"/>
                 <Button x:Name="FastForward_Button" x:Uid="/AudioPlayer/FastForward_Button" Content="&#xE101;" Style="{StaticResource ControllerButton}" RelativePanel.RightOf="PlayOrPause_StackPanel" IsEnabled="{x:Bind IsAvailableSource}" Click="{x:Bind FastForward}"/>
@@ -39,7 +39,28 @@
                 <Button x:Name="Volume_Button" x:Uid="/AudioPlayer/Volume_Button" Content="&#xE767;" Style="{StaticResource ControllerButton}" RelativePanel.AlignRightWithPanel="True">
                     <Button.Flyout>
                         <Flyout Placement="Bottom">
-                            <Slider x:Uid="/AudioPlayer/Volume_Slider" Width="200" Value="{x:Bind settings.Volume,Mode=TwoWay,Converter={StaticResource PercentageToDouble}}"/>
+                            <StackPanel>
+                                <Slider x:Uid="/AudioPlayer/Volume_Slider" Width="200" Margin="0,5" Value="{x:Bind settings.Volume,Mode=TwoWay,Converter={StaticResource PercentageToDouble}}"/>
+                                <Grid Width="200" Margin="0,5">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+
+                                    <TextBlock x:Uid="/AudioPlayer/Channel_TextBlock"/>
+
+                                    <Grid Grid.Row="1">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Text="L" VerticalAlignment="Center"/>
+                                        <Slider Grid.Column="1" Margin="5" Minimum="-1" Value="{x:Bind settings.Channel,Mode=TwoWay}" Maximum="1" SmallChange="0.1" LargeChange="0.5" StepFrequency="0.1"/>
+                                        <TextBlock Grid.Column="2" Text="R" VerticalAlignment="Center"/>
+                                    </Grid>
+                                </Grid>
+                            </StackPanel>
                         </Flyout>
                     </Button.Flyout>
                 </Button>
