@@ -26,7 +26,7 @@ namespace SimpleLyricEditor.ViewModels
         public event EventHandler LyricsListChanged;
 
         public Settings Settings = Settings.GetSettingsObject();
-
+        
         //当前播放进度
         private TimeSpan thisTime;
         public TimeSpan ThisTime { get => thisTime; set => Set(ref thisTime, value); }

@@ -45,13 +45,15 @@ namespace SimpleLyricEditor.Tools
 
         public static string PrintLyric(LyricTags tags, Collection<LyricItem> lyrics)
         {
-            string result = String.Empty;
-            result += tags.ToString() + "\r\n\r\n";
+            StringBuilder sb = new StringBuilder();
 
-            foreach (LyricItem item in lyrics)
-                result += item.ToString() + "\r\n";
+            sb.AppendLine(tags.ToString());
+            sb.AppendLine(String.Empty);
 
-            return result.Trim();
+            foreach (Lyric item in lyrics)
+                sb.AppendLine(item.ToString());
+
+            return sb.ToString();
         }
 
         private static string GetTagValue(string input, string tagName)

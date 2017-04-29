@@ -70,6 +70,7 @@ namespace SimpleLyricEditor
                                              $"请说明你做了什么\nPlease introduce what you do\n\n\n\n设备名：{SystemInfo.DeviceName}\n设备类型：{SystemInfo.DeviceType}\n系统版本：{SystemInfo.BuildVersion}\n{error.ToString()}"));
 
             await MessageBox.ShowAsync(Models.CharacterLibrary.ErrorDialog.GetString("Title"), error.Content, buttons, Models.CharacterLibrary.ErrorDialog.GetString("Close"));
+            Application.Current.Exit();
         }
 
         private void EnsureSyncContext()

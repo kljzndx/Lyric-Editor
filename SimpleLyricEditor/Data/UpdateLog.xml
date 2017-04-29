@@ -2,6 +2,17 @@
 <UpdateLogs>
 
       <UpdateLog>
+        <Version>2.4.0</Version>
+        <Content>
+1，大幅提升保存速度
+
+由于没什么可更新的了
+所以。。在没人报告bug或者要求加功能的情况下我一般不会更新的了
+        </Content>
+        <Date>2017/04/29</Date>
+      </UpdateLog>
+
+      <UpdateLog>
         <Version>2.3.2</Version>
         <Content>
 1，增加声道设置
