@@ -73,8 +73,19 @@
       <zh_CN>按Shift + 删除键</zh_CN>
     </Condition>
     <Function>
-      <en_US>Clear Lyrics List</en_US>
-      <zh_CN>清空歌词列表</zh_CN>
+      <en_US>Clear Lyrics List and Create a New File</en_US>
+      <zh_CN>清空歌词列表并新建文件</zh_CN>
+    </Function>
+  </ShortcutKey>
+
+  <ShortcutKey Name="切换歌词" Class="歌词操作">
+    <Condition>
+      <en_US>Press Up / Down Arrow Key</en_US>
+      <zh_CN>按 上/下 方向键</zh_CN>
+    </Condition>
+    <Function>
+      <en_US>Switch Lyric Item Select</en_US>
+      <zh_CN>切换歌词项选择</zh_CN>
     </Function>
   </ShortcutKey>
 
@@ -111,17 +122,6 @@
     </Function>
   </ShortcutKey>
 
-  <ShortcutKey Name="音量控制" Class="播放器操作">
-    <Condition>
-      <en_US>Up / Down Arrow Key</en_US>
-      <zh_CN>上/下 方向键</zh_CN>
-    </Condition>
-    <Function>
-      <en_US>Increase / Decrease 10% Volume</en_US>
-      <zh_CN>增大/减小 10%音量</zh_CN>
-    </Function>
-  </ShortcutKey>
-
   <ShortcutKey Name="快进快退半秒" Class="播放器操作">
     <Condition>
       <en_US>Left / Right Arrow Key</en_US>
@@ -141,6 +141,17 @@
     <Function>
       <en_US>Fast Back / Fast Forward 5s</en_US>
       <zh_CN>快退/快进 5秒</zh_CN>
+    </Function>
+  </ShortcutKey>
+
+  <ShortcutKey Name="新建文件" Class="文件操作">
+    <Condition>
+      <en_US>Press Shift + Delete</en_US>
+      <zh_CN>按Shift + 删除键</zh_CN>
+    </Condition>
+    <Function>
+      <en_US>New File</en_US>
+      <zh_CN>新建文件</zh_CN>
     </Function>
   </ShortcutKey>
 

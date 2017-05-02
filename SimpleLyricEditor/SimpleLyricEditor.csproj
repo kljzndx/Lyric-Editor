@@ -95,6 +95,8 @@
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
     <None Include="project.json" />
+    <PRIResource Include="Strings\en-US\LyricsListClearDialog.resw" />
+    <PRIResource Include="Strings\zh-CN\LyricsListClearDialog.resw" />
     <PRIResource Include="Strings\en-US\DragOrDrop.resw" />
     <PRIResource Include="Strings\zh-CN\DragOrDrop.resw" />
     <PRIResource Include="Strings\en-US\FastMenu.resw" />
@@ -126,6 +128,7 @@
     </Compile>
     <Compile Include="Enums\BackgroundSourceTypeEnum.cs" />
     <Compile Include="EventArgss\LyricFileChangeEventArgs.cs" />
+    <Compile Include="EventArgss\LyricItemChangeEventAegs.cs" />
     <Compile Include="EventArgss\LyricSwitchEventArgs.cs" />
     <Compile Include="EventArgss\MusicFileChangeEventArgs.cs" />
     <Compile Include="EventArgss\PositionChangeEventArgs.cs" />

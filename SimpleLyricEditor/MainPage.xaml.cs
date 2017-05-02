@@ -14,6 +14,7 @@ using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Storage;
 using Windows.System;
+using Windows.System.Threading;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -33,6 +34,7 @@ namespace SimpleLyricEditor
     public sealed partial class MainPage : Page
     {
         private Main_ViewModel model = App.Locator.Main;
+        private bool isListViewGotFocus;
         public MainPage()
         {
             this.InitializeComponent();
@@ -55,9 +57,13 @@ namespace SimpleLyricEditor
                     lyricsPreview.RepositionLyric();
                 };
 
-            model.LyricsListChanged += (s, e) => lyricsPreview.RepositionLyric();
-
-
+            model.LyricItemChanged += (s, e) =>
+            {
+                lyricsPreview.RepositionLyric();
+                if (e.ChangeType == EventArgss.LyricItemOperationType.Add && Lyrics_ListView.SelectedItem is null)
+                    ThreadPoolTimer.CreateTimer(async (t) => await Dispatcher.RunAsync(CoreDispatcherPriority.Normal,() => Lyrics_ListView.ScrollIntoView(Lyrics_ListView.Items.Last())), TimeSpan.FromMilliseconds(100));
+            };
+            
             CoreWindow window = CoreWindow.GetForCurrentThread();
             window.KeyDown += Window_KeyDown;
             window.KeyUp += Window_KeyUp;
@@ -98,6 +104,27 @@ namespace SimpleLyricEditor
                         break;
                     case VirtualKey.G:
                         GotoThisLyricTime();
+                        break;
+                    case VirtualKey.Up:
+                        if (Lyrics_ListView.SelectedIndex == -1)
+                            Lyrics_ListView.SelectedIndex = Lyrics_ListView.Items.Count - 1;
+                        else
+                        {
+                            //抵消器，防止出现一次跳两行的情况
+                            if (isListViewGotFocus && Lyrics_ListView.SelectedIndex != 0)
+                                Lyrics_ListView.SelectedIndex++;
+
+                            Lyrics_ListView.SelectedIndex = Lyrics_ListView.SelectedIndex > 0 ? Lyrics_ListView.SelectedIndex - 1 : -1;
+                        }
+                        this.Focus(FocusState.Pointer);
+                        break;
+                    case VirtualKey.Down:
+                        //抵消器，防止出现一次跳两行的情况
+                        if (isListViewGotFocus && Lyrics_ListView.SelectedIndex != Lyrics_ListView.Items.Count - 1 && Lyrics_ListView.SelectedIndex != -1)
+                            Lyrics_ListView.SelectedIndex--;
+                        
+                        Lyrics_ListView.SelectedIndex = Lyrics_ListView.SelectedIndex < Lyrics_ListView.Items.Count - 1 ? Lyrics_ListView.SelectedIndex + 1 : -1;
+                        this.Focus(FocusState.Pointer);
                         break;
                 }
             }
@@ -201,22 +228,37 @@ namespace SimpleLyricEditor
         }
         #endregion
         #region 歌词列表
+        private void Lyrics_ListView_GotFocus(object sender, RoutedEventArgs e)
+        {
+            isListViewGotFocus = true;
+        }
+
+        private void Lyrics_ListView_LostFocus(object sender, RoutedEventArgs e)
+        {
+            isListViewGotFocus = false;
+        }
+
         private void Lyrics_ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            var currentListView = sender as ListView;
             string content = String.Empty;
 
             foreach (LyricItem item in e.RemovedItems)
                 item.IsSelected = false;
 
-            foreach (LyricItem item in (sender as ListView).SelectedItems)
+            foreach (LyricItem item in currentListView.SelectedItems)
             {
                 content += item.Content + "\r\n";
                 item.IsSelected = true;
             }
 
             model.LyricContent = content.Trim();
-        }
 
+            if (e.AddedItems.Any())
+                currentListView.ScrollIntoView(e.AddedItems.Last());
+            
+        }
+        
         private void LyricItemTemplate_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
         {
             GotoThisLyricTime();
@@ -288,5 +330,6 @@ namespace SimpleLyricEditor
                     break;
             }
         }
+
     }
 }

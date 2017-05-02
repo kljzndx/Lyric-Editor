@@ -2,6 +2,28 @@
 <UpdateLogs>
 
       <UpdateLog>
+        <Version>2.5.2</Version>
+        <Content>
+1，现在按上下方向键切换列表项时没有白边框了
+2，修复通过空格键修改歌词项时间有可能会始终修改最后一行的问题
+        </Content>
+        <Date>2017/05/02</Date>
+      </UpdateLog>
+
+      <UpdateLog>
+        <Version>2.5.0</Version>
+        <Content>
+1，补全删除按钮的提示文本
+2，清空歌词列表时会弹出确认对话框
+3，现在 新增/选中 项会永远显示在可见区域内
+4，上下方向键功能由调整音量更改为选中 上/下 一行歌词
+5，快捷键列表弹窗背景变暗
+6，歌词输入框从两行变为一行
+        </Content>
+        <Date>2017/05/01</Date>
+      </UpdateLog>
+
+      <UpdateLog>
         <Version>2.4.0</Version>
         <Content>
 1，大幅提升保存速度
@@ -81,6 +103,7 @@ hi，好久不见了。。。
 2，该有提示的地方都有提示了
 3，弹窗都加上自适应了
 4，代码复用性大幅提升
+5，更新中磁贴图标
         </Content>
         <Date>2017/04/17</Date>
       </UpdateLog>

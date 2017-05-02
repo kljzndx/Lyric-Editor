@@ -110,7 +110,7 @@
                         </StackPanel>
                     </Grid>
 
-                    <ListView x:Name="Lyrics_ListView" Grid.Row="1" ItemsSource="{x:Bind model.Lyrics,Mode=OneWay}" IsItemClickEnabled="False" SelectedIndex="{x:Bind model.SelectedIndex,Mode=TwoWay}" SelectionChanged="Lyrics_ListView_SelectionChanged">
+                    <ListView x:Name="Lyrics_ListView" Grid.Row="1" ItemsSource="{x:Bind model.Lyrics,Mode=OneWay}" IsItemClickEnabled="False" SelectedIndex="{x:Bind model.SelectedIndex,Mode=TwoWay}" SelectionChanged="Lyrics_ListView_SelectionChanged" GotFocus="Lyrics_ListView_GotFocus" LostFocus="Lyrics_ListView_LostFocus">
                         <ListView.ItemContainerStyle>
                             <Style TargetType="ListViewItem">
                                 <Setter Property="HorizontalContentAlignment" Value="Stretch"/>

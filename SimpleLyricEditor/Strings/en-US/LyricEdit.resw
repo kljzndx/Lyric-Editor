@@ -142,7 +142,8 @@ Shortcut Keys : C</value>
   </data>
   <data name="DelLyric_Button.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
     <value>Delete Lyric
-Shortcut keys : Delete</value>
+Shortcut keys : Delete
+Press Shift to Clear Lyrics List Item and Create a New File</value>
   </data>
   <data name="ExitMultilineEditMode_Button.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
     <value>Exit Multiline Edit Mode</value>
@@ -152,8 +153,7 @@ Shortcut keys : Delete</value>
 Shortcut Key : G</value>
   </data>
   <data name="LyricContent_TextBox.PlaceholderText" xml:space="preserve">
-    <value>Please Enter Lyric
-Support Multiline Text</value>
+    <value>Please Enter Lyric , Support Multiline Text</value>
   </data>
   <data name="LyricsSort_Button.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
     <value>Sort

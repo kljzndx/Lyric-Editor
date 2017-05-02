@@ -63,30 +63,33 @@
 
     </UserControl.Resources>
 
-
-    <Grid x:Name="Main_Grid" Background="{ThemeResource SystemControlBackgroundAccentBrush}" Padding="10" Margin="50" RenderTransformOrigin="0.5,0.5">
+    <Grid x:Name="Main_Grid" Background="{ThemeResource SystemControlBackgroundAccentBrush}" RenderTransformOrigin="0.5,0.5" Margin="50">
         <Grid.RenderTransform>
             <CompositeTransform x:Name="MainGrid_Transform"/>
         </Grid.RenderTransform>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
-        <TextBlock x:Uid="/ShortcutKeysDialog/Title_TextBlock" FontSize="18" FontWeight="Bold" TextAlignment="Center"/>
-        <ScrollViewer Grid.Row="1" Margin="0,10">
-            <StackPanel>
-                <ctol:Expander x:Uid="/ShortcutKeysDialog/LyricsEditOperations_Expander" FontSize="18" Margin="0,5">
-                    <ListView ItemsSource="{x:Bind lyricEditOperation}"/>
-                </ctol:Expander>
-                <ctol:Expander x:Uid="/ShortcutKeysDialog/AudioPlayerOperations_Expander" FontSize="18" Margin="0,5">
-                    <ListView ItemsSource="{x:Bind audioPlayerOperation}"/>
-                </ctol:Expander>
-                <ctol:Expander x:Uid="/ShortcutKeysDialog/FileOperations_Expander" FontSize="18" Margin="0,5">
-                    <ListView ItemsSource="{x:Bind fileOperation}"/>
-                </ctol:Expander>
-            </StackPanel>
-        </ScrollViewer>
-        <Button x:Uid="/ShortcutKeysDialog/Close_Button" Grid.Row="2" HorizontalAlignment="Stretch" Click="{x:Bind Disappear_Storyboard.Begin}" FontSize="18" FontWeight="Bold"/>
+        <Rectangle Fill="Black" Opacity="0.3"/>
+        <Grid Padding="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            
+            <TextBlock x:Uid="/ShortcutKeysDialog/Title_TextBlock" FontSize="18" FontWeight="Bold" TextAlignment="Center"/>
+            <ScrollViewer Grid.Row="1" Margin="0,10">
+                <StackPanel>
+                    <ctol:Expander x:Uid="/ShortcutKeysDialog/LyricsEditOperations_Expander" FontSize="18" Margin="0,5">
+                        <ListView ItemsSource="{x:Bind lyricEditOperation}"/>
+                    </ctol:Expander>
+                    <ctol:Expander x:Uid="/ShortcutKeysDialog/AudioPlayerOperations_Expander" FontSize="18" Margin="0,5">
+                        <ListView ItemsSource="{x:Bind audioPlayerOperation}"/>
+                    </ctol:Expander>
+                    <ctol:Expander x:Uid="/ShortcutKeysDialog/FileOperations_Expander" FontSize="18" Margin="0,5">
+                        <ListView ItemsSource="{x:Bind fileOperation}"/>
+                    </ctol:Expander>
+                </StackPanel>
+            </ScrollViewer>
+            <Button x:Uid="/ShortcutKeysDialog/Close_Button" Grid.Row="2" HorizontalAlignment="Stretch" Click="{x:Bind Disappear_Storyboard.Begin}" FontSize="18" FontWeight="Bold"/>
+        </Grid>
     </Grid>
 </UserControl>

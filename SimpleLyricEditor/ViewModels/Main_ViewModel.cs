@@ -1,6 +1,7 @@
 ﻿using GalaSoft.MvvmLight;
 using HappyStudio.UwpToolsLibrary.Auxiliarys;
 using HappyStudio.UwpToolsLibrary.Information;
+using SimpleLyricEditor.EventArgss;
 using SimpleLyricEditor.Models;
 using SimpleLyricEditor.Tools;
 using System;
@@ -23,7 +24,7 @@ namespace SimpleLyricEditor.ViewModels
 {
     public class Main_ViewModel : ViewModelBase
     {
-        public event EventHandler LyricsListChanged;
+        public event EventHandler<LyricItemChangeEventAegs> LyricItemChanged;
 
         public Settings Settings = Settings.GetSettingsObject();
         
@@ -68,7 +69,7 @@ namespace SimpleLyricEditor.ViewModels
                 {
                     LyricFile = e.NewFile;
                     Lyrics = LyricTools.LrcParse(await LyricFileTools.ReadFileAsync(LyricFile), tags);
-                    LyricsListChanged?.Invoke(this, EventArgs.Empty);
+                    LyricItemChanged?.Invoke(this, new LyricItemChangeEventAegs(LyricItemOperationType.Refresh));
                 };
 
             if (Settings.GetSetting("BootCount", 1) >= 10 && !Settings.GetSetting("IsReviewsed", false))
@@ -127,7 +128,7 @@ namespace SimpleLyricEditor.ViewModels
                     if (lyrics[j].CompareTo(lyrics[j + 1]) > 0)
                         lyrics.Move(j, j + 1);
 
-            LyricsListChanged?.Invoke(this, EventArgs.Empty);
+            LyricItemChanged?.Invoke(this, new LyricItemChangeEventAegs(LyricItemOperationType.Refresh));
         }
 
         public void AddLyric()
@@ -142,7 +143,7 @@ namespace SimpleLyricEditor.ViewModels
                 SelectedIndex++;
             }
 
-            LyricsListChanged?.Invoke(this, EventArgs.Empty);
+            LyricItemChanged?.Invoke(this, new LyricItemChangeEventAegs(LyricItemOperationType.Add));
         }
 
         public void CopyLyrics()
@@ -164,10 +165,20 @@ namespace SimpleLyricEditor.ViewModels
             LyricsSort();
         }
 
-        public void DelLyric()
+        public async void DelLyric()
         {
             if (App.IsPressShift)
-                lyrics.Clear();
+            {
+                ContentDialog dialog = new ContentDialog()
+                {
+                    Title = CharacterLibrary.LyricsListClearDialog.GetString("Title"),
+                    Content = CharacterLibrary.LyricsListClearDialog.GetString("Content"),
+                    PrimaryButtonText = CharacterLibrary.LyricsListClearDialog.GetString("Yes"),
+                    SecondaryButtonText = CharacterLibrary.LyricsListClearDialog.GetString("No")
+                };
+                dialog.PrimaryButtonClick += (s, e) => lyrics.Clear();
+                await dialog.ShowAsync();
+            }
             else
                 foreach (LyricItem item in selectedItems)
                     lyrics.Remove(item);
@@ -175,15 +186,18 @@ namespace SimpleLyricEditor.ViewModels
             if (!lyrics.Any())
                 LyricFile = null;
 
-            LyricsListChanged?.Invoke(this, EventArgs.Empty);
+            LyricItemChanged?.Invoke(this, new LyricItemChangeEventAegs(LyricItemOperationType.Del));
         }
 
         public async void ChangeTime()
         {
+            if (!selectedItems.Any())
+                return;
+
             try
             {
                 (selectedItems.SingleOrDefault() as LyricItem).Time = thisTime;
-                LyricsListChanged?.Invoke(this, EventArgs.Empty);
+                LyricItemChanged?.Invoke(this, new LyricItemChangeEventAegs(LyricItemOperationType.ChangeTime));
             }
             catch (NullReferenceException)
             {
@@ -197,10 +211,13 @@ namespace SimpleLyricEditor.ViewModels
 
         public void ChangeContent()
         {
+            if (!selectedItems.Any())
+                return;
+
             foreach (LyricItem sltItem in selectedItems)
                 sltItem.Content = lyricContent.Split('\r')[0].Trim();
             
-            LyricsListChanged?.Invoke(this, EventArgs.Empty);
+            LyricItemChanged?.Invoke(this, new LyricItemChangeEventAegs(LyricItemOperationType.ChangeContent));
         }
 
         #endregion

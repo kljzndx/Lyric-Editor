@@ -117,64 +117,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AddLyric_Button.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>添加歌词
-快捷键：空格</value>
+  <data name="Content" xml:space="preserve">
+    <value>你真的要清空歌词列表项吗？</value>
   </data>
-  <data name="ChangeContent_MenuFlyoutItem.Text" xml:space="preserve">
-    <value>修改为当前内容</value>
+  <data name="No" xml:space="preserve">
+    <value>否</value>
   </data>
-  <data name="ChangeContent_MenuFlyoutItem.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>快捷键：在歌词输入框中按回车</value>
+  <data name="Title" xml:space="preserve">
+    <value>清空歌词列表项</value>
   </data>
-  <data name="ChangeLyric_Button.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>修改歌词</value>
-  </data>
-  <data name="ChangeTime_MenuFlyoutItem.Text" xml:space="preserve">
-    <value>修改为当前时间</value>
-  </data>
-  <data name="ChangeTime_MenuFlyoutItem.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>快捷键：空格</value>
-  </data>
-  <data name="CopyLyrics_Button.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>复制歌词（保留时间间隔）
-快捷键：C</value>
-  </data>
-  <data name="DelLyric_Button.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>删除歌词
-快捷键：删除键
-按住 Shift 可清空歌词列表项并新建文件</value>
-  </data>
-  <data name="ExitMultilineEditMode_Button.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>退出多行编辑模式</value>
-  </data>
-  <data name="GotoThisLyricTime_Button.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>跳转到此歌词项的时间上
-快捷键：G</value>
-  </data>
-  <data name="LyricContent_TextBox.PlaceholderText" xml:space="preserve">
-    <value>请输入歌词，支持多行文本</value>
-  </data>
-  <data name="LyricsSort_Button.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>排序
-快捷键：S</value>
-  </data>
-  <data name="MultilineEditMode_Button.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>多行编辑模式</value>
-  </data>
-  <data name="SelectTools_Button.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>选择工具</value>
-  </data>
-  <data name="Select_AfterItem_MenuFlyoutItem.Text" xml:space="preserve">
-    <value>选择之后项</value>
-  </data>
-  <data name="Select_BeforeItem_MenuFlyoutItem.Text" xml:space="preserve">
-    <value>选择之前项</value>
-  </data>
-  <data name="Select_Paragraph_MenuFlyoutItem.Text" xml:space="preserve">
-    <value>选择段落</value>
-  </data>
-  <data name="Select_Reverse_MenuFlyoutItem.Text" xml:space="preserve">
-    <value>反向选择</value>
+  <data name="Yes" xml:space="preserve">
+    <value>是</value>
   </data>
 </root>
