@@ -38,7 +38,7 @@ namespace SimpleLyricEditor.Views.UserControls
 
         private ThreadPoolTimer ReloadTimeTimer;
         private Settings settings = Settings.GetSettingsObject();
-
+        
         public event EventHandler Played;
         public event EventHandler Paused;
         public event EventHandler<MusicFileChangeEventArgs> MusicFileChanged;
@@ -49,16 +49,18 @@ namespace SimpleLyricEditor.Views.UserControls
         public bool IsPlay
         {
             get => isPlay;
-            set
+            private set
             {
                 isPlay = value;
                 this.Bindings.Update();
             }
         }
-
-
+        
         public bool IsAvailableSource { get => MusicSource != Music.Empty; }
 
+        /// <summary>
+        /// 音乐源
+        /// </summary>
         public Music MusicSource
         {
             get { return (Music)GetValue(MusicSourceProperty); }
@@ -68,7 +70,9 @@ namespace SimpleLyricEditor.Views.UserControls
                 this.Bindings.Update();
             }
         }
-
+        /// <summary>
+        /// 当前进度
+        /// </summary>
         public TimeSpan Time
         {
             get { return (TimeSpan)GetValue(TimeProperty); }
@@ -83,31 +87,34 @@ namespace SimpleLyricEditor.Views.UserControls
             //为进度条订阅指针释放路由事件，至于为什么不在前台订阅嘛。。。自己看看最后一个参数就知道了
             Position_Slider.AddHandler(PointerReleasedEvent, new PointerEventHandler((s, e) => PositionChanged?.Invoke(this, new PositionChangeEventArgs(true, Time))), true);
 
+            //获取窗口对象以订阅全局的键 按下和弹起 事件
             CoreWindow window = CoreWindow.GetForCurrentThread();
             window.KeyDown += Window_KeyDown;
             window.KeyUp += Window_KeyUp;
         }
 
-        public void ChangeTime(TimeSpan time, bool isUserChange = false)
+        public void ChangeTime(TimeSpan time)
         {
             Time = time;
 
-            PositionChanged?.Invoke(this, new PositionChangeEventArgs(isUserChange, time));
+            PositionChanged?.Invoke(this, new PositionChangeEventArgs(true, time));
         }
 
-        private void ReloadTime(bool isUserChange = false)
+        private void ReloadTime()
         {
-            ChangeTime(AudioPlayer_MediaElement.Position, isUserChange);
-        }
+            Time = AudioPlayer_MediaElement.Position;
 
-        public async void ReloadTime(ThreadPoolTimer timer)
-        {
-            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => ReloadTime());
+            PositionChanged?.Invoke(this, new PositionChangeEventArgs(false, Time));
         }
-
+        
         public void StartReloadTimeTimer()
         {
-            ReloadTimeTimer = ThreadPoolTimer.CreatePeriodicTimer(ReloadTime, TimeSpan.FromMilliseconds(50), ReloadTime);
+            async void reloadTime(ThreadPoolTimer timer)
+            {
+                await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, ReloadTime);
+            }
+
+            ReloadTimeTimer = ThreadPoolTimer.CreatePeriodicTimer(reloadTime, TimeSpan.FromMilliseconds(50), reloadTime);
         }
 
         public async void OpenMusicFile()
@@ -127,7 +134,7 @@ namespace SimpleLyricEditor.Views.UserControls
             AudioPlayer_MediaElement.SetSource(await musicFile.OpenAsync(FileAccessMode.Read), musicFile.ContentType);
         }
 
-        public async void ChangeMusic(Music newSource)
+        public async void ChangeSource(Music newSource)
         {
             MusicSource = newSource;
             AudioPlayer_MediaElement.SetSource(await newSource.File.OpenAsync(FileAccessMode.Read), newSource.File.ContentType);
@@ -159,15 +166,13 @@ namespace SimpleLyricEditor.Views.UserControls
         public void FastRewind()
         {
             short ms = App.IsPressShift ? (short)5000 : (short)500;
-            Time = Time >= TimeSpan.FromMilliseconds(ms) ? Time - TimeSpan.FromMilliseconds(ms) : TimeSpan.Zero;
-            ReloadTime(true);
+            ChangeTime(Time >= TimeSpan.FromMilliseconds(ms) ? Time - TimeSpan.FromMilliseconds(ms) : TimeSpan.Zero);
         }
 
         public void FastForward()
         {
             short ms = App.IsPressShift ? (short)5000 : (short)500;
-            Time = Time <= MusicSource.AllTime - TimeSpan.FromMilliseconds(ms) ? Time + TimeSpan.FromMilliseconds(ms) : MusicSource.AllTime;
-            ReloadTime(true);
+            ChangeTime(Time <= MusicSource.AllTime - TimeSpan.FromMilliseconds(ms) ? Time + TimeSpan.FromMilliseconds(ms) : MusicSource.AllTime);
         }
         #endregion
 

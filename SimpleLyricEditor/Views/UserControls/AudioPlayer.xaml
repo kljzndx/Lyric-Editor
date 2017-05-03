@@ -12,7 +12,9 @@
     <Grid Background="{ThemeResource AppBarBackgroundThemeBrush}">
         <MediaElement x:Name="AudioPlayer_MediaElement" AutoPlay="False" Position="{x:Bind Time,Mode=OneWay}" DefaultPlaybackRate="{x:Bind settings.PlaybackRate,Mode=OneWay}" PlaybackRate="{x:Bind settings.PlaybackRate,Mode=OneWay}" Volume="{x:Bind settings.Volume,Mode=OneWay}" Balance="{x:Bind settings.Channel,Mode=OneWay}" MediaOpened="AudioPlayer_MediaElement_MediaOpened" MediaFailed="AudioPlayer_MediaElement_MediaFailed" MediaEnded="AudioPlayer_MediaElement_MediaEnded"/>
         <StackPanel Margin="5,0">
+            <!--音乐文件路径-->
             <TextBlock Text="{x:Bind MusicSource.File.Path,Mode=OneWay}" TextAlignment="Center" TextWrapping="Wrap" Margin="0,5"/>
+            <!--进度条-->
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
@@ -21,6 +23,7 @@
                 <Slider x:Name="Position_Slider" Value="{x:Bind Time,Mode=TwoWay,Converter={StaticResource TimeSpanToDouble}}" Maximum="{x:Bind MusicSource.AllTime,Mode=OneWay,Converter={StaticResource TimeSpanToDouble}}" ThumbToolTipValueConverter="{StaticResource TimeSpanToString}" Style="{StaticResource MediaSliderStyle}" Height="40" SmallChange="0.01" StepFrequency="0.01" TickFrequency="1" />
                 <TextBlock Grid.Column="1" Margin="5,0,0,0" Text="{x:Bind Time,Mode=OneWay,Converter={StaticResource TimeSpanToString}}" VerticalAlignment="Center"/>
             </Grid>
+            <!--控制按钮区域-->
             <RelativePanel>
                 <StackPanel x:Name="PlayOrPause_StackPanel" x:Uid="/AudioPlayer/PlayOrPause_StackPanel" Orientation="Horizontal" RelativePanel.AlignHorizontalCenterWithPanel="True">
                     <Button x:Name="Play_Button" Content="&#xE102;" Style="{StaticResource ControllerButton}" Visibility="{x:Bind IsPlay,Mode=OneTime,Converter={StaticResource BoolToVisibility_Reverse}}" Click="{x:Bind Play}"/>
@@ -41,6 +44,7 @@
                         <Flyout Placement="Bottom">
                             <StackPanel>
                                 <Slider x:Uid="/AudioPlayer/Volume_Slider" Width="200" Margin="0,5" Value="{x:Bind settings.Volume,Mode=TwoWay,Converter={StaticResource PercentageToDouble}}"/>
+                                <!--声道设置-->
                                 <Grid Width="200" Margin="0,5">
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="Auto"/>

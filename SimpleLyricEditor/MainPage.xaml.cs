@@ -79,7 +79,7 @@ namespace SimpleLyricEditor
         {
             try
             {
-                audioPlayer.ChangeTime((Lyrics_ListView.SelectedItems.SingleOrDefault() as Lyric).Time, true);
+                audioPlayer.ChangeTime((Lyrics_ListView.SelectedItems.SingleOrDefault() as Lyric).Time);
             }
             catch (NullReferenceException)
             {
@@ -266,7 +266,7 @@ namespace SimpleLyricEditor
 
         private void LyricItemTemplate_GotoThisTime_Click(object sender, EventArgs e)
         {
-            audioPlayer.ChangeTime((sender as Lyric).Time, true);
+            audioPlayer.ChangeTime((sender as Lyric).Time);
         }
         #endregion
         #region 低栏
@@ -313,7 +313,7 @@ namespace SimpleLyricEditor
                         case ".wav":
                         case ".aac":
                         case ".m4a":
-                            audioPlayer.ChangeMusic(await Music.ParseAsync(file));
+                            audioPlayer.ChangeSource(await Music.ParseAsync(file));
                             isMusicFound = true;
                             break;
                         case ".png":
