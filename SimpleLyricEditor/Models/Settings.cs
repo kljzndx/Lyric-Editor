@@ -64,9 +64,12 @@ namespace SimpleLyricEditor.Models
         private bool isDisplayLyricsPreview;
         public bool IsDisplayLyricsPreview { get => isDisplayLyricsPreview; set => SetSetting(ref isDisplayLyricsPreview, value); }
 
-        //预览区域字体大小
-        private double previewFontSize;
-        public double PreviewFontSize { get => previewFontSize; set => SetSetting(ref previewFontSize, value); }
+        //单行歌词预览区域字体大小
+        private double singleLineLyricPreviewFontSize;
+        public double SingleLineLyricPreviewFontSize { get => singleLineLyricPreviewFontSize; set => SetSetting(ref singleLineLyricPreviewFontSize, value); }
+
+        private double scrollLyricsPreviewFontSize;
+        public double ScrollLyricsPreviewFontSize { get => scrollLyricsPreviewFontSize; set => SetSetting(ref scrollLyricsPreviewFontSize, value); }
 
         //预览区域背景透明度
         private double previewBackgroundOpacity;
@@ -80,6 +83,7 @@ namespace SimpleLyricEditor.Models
             RenameSettingKey("BackgroundImageType", nameof(BackgroundSourceType));
             RenameSettingValue(nameof(BackgroundSourceType), "UserDefined", "LocalImage");
             RenameSettingKey("UserDefinedBackgroundImagePath", nameof(LocalBackgroundImagePath));
+            RenameSettingKey("PreviewFontSize", nameof(SingleLineLyricPreviewFontSize));
             
             playbackRate = GetSetting(nameof(PlaybackRate), 1D);
             volume = GetSetting(nameof(Volume), 1D);
@@ -98,7 +102,8 @@ namespace SimpleLyricEditor.Models
             backgroundBlurDegree = IsBlurUsability ? GetSetting(nameof(BackgroundBlurDegree), 5D) : 0D;
             backgroundOpacity = GetSetting(nameof(BackgroundOpacity), 0.3);
             isDisplayLyricsPreview = GetSetting(nameof(isDisplayLyricsPreview), true);
-            previewFontSize = GetSetting(nameof(PreviewFontSize), SystemInfo.DeviceType == "Windows.Mobile" ? 18D : 24D);
+            singleLineLyricPreviewFontSize = GetSetting(nameof(SingleLineLyricPreviewFontSize), SystemInfo.DeviceType == "Windows.Mobile" ? 18D : 24D);
+            scrollLyricsPreviewFontSize = GetSetting(nameof(ScrollLyricsPreviewFontSize), 15D);
             previewBackgroundOpacity = GetSetting(nameof(PreviewBackgroundOpacity), 0.3);
         }
         

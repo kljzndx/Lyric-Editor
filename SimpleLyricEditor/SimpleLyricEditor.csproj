@@ -163,6 +163,9 @@
     <Compile Include="Views\Template\LyricItemTemplate.xaml.cs">
       <DependentUpon>LyricItemTemplate.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Template\MultipleLyricItemTemplate.xaml.cs">
+      <DependentUpon>MultipleLyricItemTemplate.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Template\ShortcutKeysItemTemplate.xaml.cs">
       <DependentUpon>ShortcutKeysItemTemplate.xaml</DependentUpon>
     </Compile>
@@ -172,8 +175,11 @@
     <Compile Include="Views\UserControls\BlurBackgroundImage.xaml.cs">
       <DependentUpon>BlurBackgroundImage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\UserControls\LyricsPreview.xaml.cs">
-      <DependentUpon>LyricsPreview.xaml</DependentUpon>
+    <Compile Include="Views\UserControls\MultipleLyricPreview.xaml.cs">
+      <DependentUpon>MultipleLyricPreview.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserControls\SingleLyricPreview.xaml.cs">
+      <DependentUpon>SingleLyricPreview.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\UserControls\ShortcutKeysDialog.xaml.cs">
       <DependentUpon>ShortcutKeysDialog.xaml</DependentUpon>
@@ -285,6 +291,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Template\MultipleLyricItemTemplate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Template\ShortcutKeysItemTemplate.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -297,7 +307,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\UserControls\LyricsPreview.xaml">
+    <Page Include="Views\UserControls\MultipleLyricPreview.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserControls\SingleLyricPreview.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

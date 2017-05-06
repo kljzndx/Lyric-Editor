@@ -1,4 +1,5 @@
 ﻿using HappyStudio.UwpToolsLibrary.Auxiliarys;
+using HappyStudio.UwpToolsLibrary.Information;
 using SimpleLyricEditor.Models;
 using SimpleLyricEditor.Tools;
 using SimpleLyricEditor.ViewModels;
@@ -9,6 +10,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
+using Windows.ApplicationModel.Core;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
@@ -16,6 +18,7 @@ using Windows.Storage;
 using Windows.System;
 using Windows.System.Threading;
 using Windows.UI.Core;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -41,25 +44,34 @@ namespace SimpleLyricEditor
 
             model.SelectedItems = Lyrics_ListView.SelectedItems;
 
-            audioPlayer.PositionChanged +=
-                (s, e) =>
+            audioPlayer.PositionChanged += (s, e) =>
+            {
+                if (e.IsUserChange)
                 {
-                    if (e.IsUserChange)
-                        lyricsPreview.RepositionLyric();
-                    else
-                        lyricsPreview.PreviewLyric();
-                };
+                    singleLyricPreview.RepositionLyric();
+                    multipleLyricPreview.Reposition();
+                }
+                else
+                {
+                    singleLyricPreview.PreviewLyric();
+                    multipleLyricPreview.RefreshLyric();
+                }
+            };
 
-            audioPlayer.MusicFileChanged +=
-                (s, e) =>
-                {
-                    model.AssociatedTags(e.NewMusic);
-                    lyricsPreview.RepositionLyric();
-                };
+            audioPlayer.MusicFileChanged += (s, e) =>
+            {
+                model.AssociatedTags(e.NewMusic);
+
+                singleLyricPreview.RepositionLyric();
+                multipleLyricPreview.Reposition();
+            };
 
             model.LyricItemChanged += (s, e) =>
             {
-                lyricsPreview.RepositionLyric();
+                singleLyricPreview.RepositionLyric();
+                multipleLyricPreview.Reposition();
+
+                //添加歌词时自动定位到新加的歌词项
                 if (e.ChangeType == EventArgss.LyricItemOperationType.Add && Lyrics_ListView.SelectedItem is null)
                     ThreadPoolTimer.CreateTimer(async (t) => await Dispatcher.RunAsync(CoreDispatcherPriority.Normal,() => Lyrics_ListView.ScrollIntoView(Lyrics_ListView.Items.Last())), TimeSpan.FromMilliseconds(100));
             };
@@ -68,6 +80,7 @@ namespace SimpleLyricEditor
             window.KeyDown += Window_KeyDown;
             window.KeyUp += Window_KeyUp;
 
+            MiniMode_StackPanel.Visibility = SystemInfo.BuildVersion >= 15063 ? Visibility.Visible : Visibility.Collapsed;
         }
 
         private void HideFastMenu()
@@ -255,8 +268,12 @@ namespace SimpleLyricEditor
             model.LyricContent = content.Trim();
 
             if (e.AddedItems.Any())
-                currentListView.ScrollIntoView(e.AddedItems.Last());
-            
+            {
+                int interpolation = ((int)currentListView.ActualHeight / 44) / 2;
+                int selectedIndex = currentListView.SelectedIndex + currentListView.SelectedItems.Count - 1;
+                int resuit = selectedIndex > interpolation ? selectedIndex - interpolation : 0;
+                currentListView.ScrollIntoView(currentListView.Items[resuit], ScrollIntoViewAlignment.Leading);
+            }
         }
         
         private void LyricItemTemplate_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
@@ -331,5 +348,45 @@ namespace SimpleLyricEditor
             }
         }
 
+        private void Expand_Button_Click(object sender, RoutedEventArgs e)
+        {
+            model.IsDisplayScrollLyricsPreview = true;
+            Grid.SetRow(LyricsPreview_Grid, 1);
+        }
+
+        private void Fold_Button_Click(object sender, RoutedEventArgs e)
+        {
+            model.IsDisplayScrollLyricsPreview = false;
+            Grid.SetRow(LyricsPreview_Grid, 2);
+        }
+
+        private async void MiniMode_Button_Click(object sender, RoutedEventArgs e)
+        {
+            ViewModePreferences c = ViewModePreferences.CreateDefault(ApplicationViewMode.CompactOverlay);
+            c.CustomSize = new Size(500, 500);
+            bool b = await ApplicationView.GetForCurrentView().TryEnterViewModeAsync(ApplicationViewMode.CompactOverlay,c);
+
+            if (b)
+            {
+                (sender as Button).Visibility = Visibility.Collapsed;
+                ExitMiniMode_Button.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                ContentDialog dialog = new ContentDialog()
+                {
+                    Content = CharacterLibrary.ErrorDialog.GetString("MiniModeEnterError"),
+                    SecondaryButtonText = CharacterLibrary.ErrorDialog.GetString("Close")
+                };
+                await dialog.ShowAsync();
+            }
+        }
+
+        private async void ExitMiniMode_Button_Click(object sender, RoutedEventArgs e)
+        {
+            await ApplicationView.GetForCurrentView().TryEnterViewModeAsync(ApplicationViewMode.Default);
+            (sender as Button).Visibility = Visibility.Collapsed;
+            MiniMode_Button.Visibility = Visibility.Visible;
+        }
     }
 }

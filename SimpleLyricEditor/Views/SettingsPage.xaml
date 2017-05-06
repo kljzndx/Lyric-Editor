@@ -36,7 +36,8 @@
         </StackPanel>
         <ToggleSwitch x:Uid="/Settings/LyricsPreviewDisplay_ToggleSwitch" IsOn="{x:Bind model.Settings.IsDisplayLyricsPreview,Mode=TwoWay}"/>
         <StackPanel Visibility="{x:Bind model.Settings.IsDisplayLyricsPreview,Mode=OneWay,Converter={StaticResource BoolToVisibility}}">
-            <Slider x:Uid="/Settings/LyricsPreviewFontSize_Slider" Minimum="15" Value="{x:Bind model.Settings.PreviewFontSize,Mode=TwoWay}" Maximum="32"/>
+            <Slider x:Uid="/Settings/SingleLineLyricsPreviewFontSize_Slider" Minimum="15" Value="{x:Bind model.Settings.SingleLineLyricPreviewFontSize,Mode=TwoWay}" Maximum="32"/>
+            <Slider x:Uid="/Settings/ScrollLyricsPreviewFontSize_Slider" Minimum="13" Value="{x:Bind model.Settings.ScrollLyricsPreviewFontSize,Mode=TwoWay}" Maximum="24"/>
             <Slider x:Uid="/Settings/LyricsPreviewBackgroundOpacity_Slider" Value="{x:Bind model.Settings.PreviewBackgroundOpacity,Mode=TwoWay,Converter={StaticResource PercentageToDouble}}"/>
         </StackPanel>
     </StackPanel>

@@ -150,8 +150,11 @@
   <data name="LyricsPreviewDisplay_ToggleSwitch.Header" xml:space="preserve">
     <value>歌词预览显示</value>
   </data>
-  <data name="LyricsPreviewFontSize_Slider.Header" xml:space="preserve">
-    <value>歌词预览区域的字体大小</value>
+  <data name="ScrollLyricsPreviewFontSize_Slider.Header" xml:space="preserve">
+    <value>滚动歌词预览字体大小</value>
+  </data>
+  <data name="SingleLineLyricsPreviewFontSize_Slider.Header" xml:space="preserve">
+    <value>单行歌词预览区域的字体大小</value>
   </data>
   <data name="Theme_ComboBox.Header" xml:space="preserve">
     <value>主题</value>

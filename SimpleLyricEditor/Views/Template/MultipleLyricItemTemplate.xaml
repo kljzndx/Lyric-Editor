@@ -1,0 +1,13 @@
+﻿<UserControl
+    x:Class="SimpleLyricEditor.Views.Template.MultipleLyricItemTemplate"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:SimpleLyricEditor.Views.Template"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="400">
+
+    <TextBlock x:Name="Main_TextBlock" Text="{x:Bind lyric.Content,Mode=OneWay}" FontSize="{x:Bind settings.ScrollLyricsPreviewFontSize,Mode=OneWay}" TextAlignment="Center"/>
+</UserControl>

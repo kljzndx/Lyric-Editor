@@ -127,6 +127,9 @@
     <value>Error Report</value>
     <comment>错误报告邮件主题内容</comment>
   </data>
+  <data name="MiniModeEnterError" xml:space="preserve">
+    <value>Your device does not support mini mode</value>
+  </data>
   <data name="OpenMusicError" xml:space="preserve">
     <value>This music cannot be decoded</value>
   </data>

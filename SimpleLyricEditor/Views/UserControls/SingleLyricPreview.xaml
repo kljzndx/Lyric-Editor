@@ -1,5 +1,5 @@
 ﻿<UserControl
-    x:Class="SimpleLyricEditor.Views.UserControls.LyricsPreview"
+    x:Class="SimpleLyricEditor.Views.UserControls.SingleLyricPreview"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:SimpleLyricEditor.Views.UserControls"
@@ -24,8 +24,8 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <Rectangle Fill="{ThemeResource SystemControlBackgroundAccentBrush}" Opacity="{x:Bind settings.PreviewBackgroundOpacity,Mode=OneWay}"/>
-        <TextBlock x:Name="Preview_TextBlock" Margin="0,5" TextWrapping="Wrap" Text="{x:Bind ThisLyric.Content,Mode=OneTime}" FontSize="{x:Bind settings.PreviewFontSize,Mode=OneWay}" TextAlignment="Center" VerticalAlignment="Center" Opacity="0" RenderTransformOrigin="0.5,0.5">
+        <Rectangle Fill="{x:Bind Background,Mode=OneWay}"/>
+        <TextBlock x:Name="Preview_TextBlock" Margin="0,5" TextWrapping="Wrap" Text="{x:Bind ThisLyric.Content,Mode=OneTime}" FontSize="{x:Bind settings.SingleLineLyricPreviewFontSize,Mode=OneWay}" TextAlignment="Center" VerticalAlignment="Center" Opacity="0" RenderTransformOrigin="0.5,0.5">
             <TextBlock.RenderTransform>
                 <CompositeTransform ScaleY="0"/>
             </TextBlock.RenderTransform>

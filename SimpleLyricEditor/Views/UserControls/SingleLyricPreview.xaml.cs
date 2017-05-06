@@ -21,7 +21,7 @@ using Windows.UI.Xaml.Navigation;
 
 namespace SimpleLyricEditor.Views.UserControls
 {
-    public sealed partial class LyricsPreview : UserControl
+    public sealed partial class SingleLyricPreview : UserControl
     {
         public event EventHandler<LyricSwitchEventArgs> LyricSwitched;
 
@@ -37,7 +37,7 @@ namespace SimpleLyricEditor.Views.UserControls
                 if (thisLyric.Equals(value))
                     return;
 
-                bool isNull = thisLyric.Equals(LyricItem.Empty);
+                bool isNull = String.IsNullOrEmpty(thisLyric.Content);
 
                 thisLyric = value;
 
@@ -63,23 +63,23 @@ namespace SimpleLyricEditor.Views.UserControls
 
         // Using a DependencyProperty as the backing store for Lyrics.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty LyricsProperty =
-            DependencyProperty.Register("Lyrics", typeof(IList<LyricItem>), typeof(LyricsPreview), new PropertyMetadata(new List<LyricItem>()));
+            DependencyProperty.Register("Lyrics", typeof(IList<LyricItem>), typeof(SingleLyricPreview), new PropertyMetadata(new List<LyricItem>()));
 
 
 
         public TimeSpan Position
         {
-            get { return (TimeSpan)GetValue(PositionProperty); }
-            set { SetValue(PositionProperty, value + TimeSpan.FromMilliseconds(100)); }
+            get { return ((TimeSpan)GetValue(PositionProperty)) + TimeSpan.FromMilliseconds(100); }
+            set { SetValue(PositionProperty, value); }
         }
 
         // Using a DependencyProperty as the backing store for Position.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty PositionProperty =
-            DependencyProperty.Register("Position", typeof(TimeSpan), typeof(LyricsPreview), new PropertyMetadata(TimeSpan.Zero));
+            DependencyProperty.Register("Position", typeof(TimeSpan), typeof(SingleLyricPreview), new PropertyMetadata(TimeSpan.Zero));
 
 
 
-        public LyricsPreview()
+        public SingleLyricPreview()
         {
             this.InitializeComponent();
         }

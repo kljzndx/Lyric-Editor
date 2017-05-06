@@ -60,11 +60,11 @@
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
+                <ctol:AudioPlayer x:Name="audioPlayer" Time="{x:Bind model.ThisTime,Mode=TwoWay}" MusicFileChanged="{x:Bind blurBackgroundImage.AudioPlayer_MusicFileChanged}"/>
+
                 <ctol:BlurBackgroundImage x:Name="blurBackgroundImage" Grid.Row="1" Grid.RowSpan="2" Opacity="{x:Bind model.Settings.BackgroundOpacity,Mode=OneWay}" Visibility="{x:Bind model.Settings.IsDisplayBackground,Mode=OneWay,Converter={StaticResource BoolToVisibility}}"/>
 
-                <ctol:AudioPlayer x:Name="audioPlayer" Time="{x:Bind model.ThisTime,Mode=TwoWay}" MusicFileChanged="blurBackgroundImage.AudioPlayer_MusicFileChanged"/>
-
-                <Grid Grid.Row="1">
+                <Grid x:Name="LyricsEditor_Grid" Grid.Row="1"  Visibility="{x:Bind model.IsDisplayScrollLyricsPreview,Mode=OneWay,Converter={StaticResource BoolToVisibility_Reverse}}">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition/>
@@ -180,7 +180,38 @@
                     </StackPanel>
                 </ContentDialog>
 
-                <ctol:LyricsPreview x:Name="lyricsPreview" Grid.Row="2" Lyrics="{x:Bind model.Lyrics,Mode=OneWay}" Position="{x:Bind model.ThisTime,Mode=OneWay}" Visibility="{x:Bind model.Settings.IsDisplayLyricsPreview,Mode=OneWay,Converter={StaticResource BoolToVisibility}}" Tapped="{x:Bind model.Deselect}"/>
+                <Grid x:Name="LyricsPreview_Grid" Grid.Row="2" Visibility="{x:Bind model.Settings.IsDisplayLyricsPreview,Mode=OneWay,Converter={StaticResource BoolToVisibility}}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+
+                    <Rectangle Grid.RowSpan="2" Fill="{ThemeResource SystemControlBackgroundAccentBrush}" Opacity="{x:Bind model.Settings.PreviewBackgroundOpacity,Mode=OneWay}"/>
+
+                    <StackPanel>
+                        <Button x:Name="Expand_Button" HorizontalAlignment="Stretch" Visibility="{x:Bind model.IsDisplayScrollLyricsPreview,Mode=OneWay,Converter={StaticResource BoolToVisibility_Reverse}}" Click="Expand_Button_Click">
+                            <FontIcon Glyph="&#xE010;"/>
+                        </Button>
+
+                        <Button x:Name="Fold_Button" HorizontalAlignment="Stretch" Visibility="{x:Bind model.IsDisplayScrollLyricsPreview,Mode=OneWay,Converter={StaticResource BoolToVisibility}}" Click="Fold_Button_Click">
+                            <FontIcon Glyph="&#xE011;"/>
+                        </Button>
+                    </StackPanel>
+
+                    <ctol:SingleLyricPreview x:Name="singleLyricPreview" Grid.Row="1" Lyrics="{x:Bind model.Lyrics,Mode=OneWay}" Position="{x:Bind model.ThisTime,Mode=OneWay}" Visibility="{x:Bind model.IsDisplayScrollLyricsPreview,Mode=OneWay,Converter={StaticResource BoolToVisibility_Reverse}}" Tapped="{x:Bind model.Deselect}"/>
+                    <ctol:MultipleLyricPreview x:Name="multipleLyricPreview" Grid.Row="1" LyricsList="{x:Bind model.Lyrics,Mode=OneWay}" Position="{x:Bind audioPlayer.Time,Mode=OneWay}" Visibility="{x:Bind model.IsDisplayScrollLyricsPreview,Mode=OneWay,Converter={StaticResource BoolToVisibility}}"/>
+                    
+                    <StackPanel x:Name="MiniMode_StackPanel" Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="20" Visibility="{x:Bind model.IsDisplayScrollLyricsPreview,Mode=OneWay,Converter={StaticResource BoolToVisibility}}">
+                        <Button x:Name="MiniMode_Button" Padding="10" Click="MiniMode_Button_Click">
+                            <SymbolIcon Symbol="Pin"/>
+                        </Button>
+                        <Button x:Name="ExitMiniMode_Button" Padding="10" Visibility="Collapsed" Click="ExitMiniMode_Button_Click">
+                            <SymbolIcon Symbol="UnPin"/>
+                        </Button>
+                    </StackPanel>
+                    
+                </Grid>
+
                 <ctol:ShortcutKeysDialog x:Name="shortcutKeysDialog" Grid.RowSpan="3"/>
                 <ctol:UpdateLogDialog x:Name="updateLogDialog" Grid.RowSpan="3"/>
             </Grid>
@@ -188,7 +219,7 @@
         </SplitView.Content>
     </SplitView>
     <Page.BottomAppBar>
-        <CommandBar>
+        <CommandBar Visibility="Visible">
             <CommandBar.PrimaryCommands>
 
                 <AppBarButton x:Uid="/BottomBar/Open_AppBarButton" Icon="OpenFile">

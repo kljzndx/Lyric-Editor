@@ -59,6 +59,9 @@ namespace SimpleLyricEditor.ViewModels
         //歌词文件
         public StorageFile LyricFile { get; set; }
 
+        private bool isDisplayScrollLyricsPreview;
+        public bool IsDisplayScrollLyricsPreview { get => isDisplayScrollLyricsPreview; set => Set(ref isDisplayScrollLyricsPreview, value); }
+
         public string Version { get; } = AppInfo.Version;
 
         public Main_ViewModel()
@@ -167,6 +170,9 @@ namespace SimpleLyricEditor.ViewModels
 
         public async void DelLyric()
         {
+            if (!SelectedItems.Any())
+                return;
+            
             if (App.IsPressShift)
             {
                 ContentDialog dialog = new ContentDialog()
@@ -185,7 +191,7 @@ namespace SimpleLyricEditor.ViewModels
 
             if (!lyrics.Any())
                 LyricFile = null;
-
+            
             LyricItemChanged?.Invoke(this, new LyricItemChangeEventAegs(LyricItemOperationType.Del));
         }
 
@@ -265,7 +271,9 @@ namespace SimpleLyricEditor.ViewModels
                         CopyLyrics();
                         break;
                     case VirtualKey.Delete:
+                        int sid = selectedIndex;
                         DelLyric();
+                        SelectedIndex = sid < lyrics.Count ? sid : lyrics.Count - 1;
                         break;
                     case VirtualKey.S:
                         LyricsSort();

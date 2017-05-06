@@ -127,6 +127,9 @@
     <value>错误报告</value>
     <comment>错误报告邮件主题内容</comment>
   </data>
+  <data name="MiniModeEnterError" xml:space="preserve">
+    <value>你的设备不支持迷你模式</value>
+  </data>
   <data name="OpenMusicError" xml:space="preserve">
     <value>此音乐无法解码</value>
   </data>

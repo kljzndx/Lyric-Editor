@@ -10,13 +10,23 @@ namespace SimpleLyricEditor.Models
 {
     public class Lyric : ObservableObject, IComparable
     {
-        public static Lyric Empty { get; protected set; } = new Lyric();
+        public static Lyric Empty { get; } = new Lyric();
 
         private TimeSpan time;
         public TimeSpan Time { get => time; set => Set(ref time, value); }
 
         private string content;
-        public string Content { get => content; set => Set(ref content, value); }
+        public string Content
+        {
+            get => content;
+            set
+            {
+                if (String.IsNullOrWhiteSpace(value))
+                    Set(ref content, String.Empty);
+                else
+                    Set(ref content, value);
+            }
+        }
 
         public Lyric()
         {
