@@ -233,5 +233,16 @@ namespace SimpleLyricEditor.Views.UserControls
             Time = TimeSpan.Zero;
         }
 
+        private void Play_Button_Click(object sender, RoutedEventArgs e)
+        {
+            Play();
+            Pause_Button.Focus(FocusState.Pointer);
+        }
+
+        private void Pause_Button_Click(object sender, RoutedEventArgs e)
+        {
+            Pause();
+            Play_Button.Focus(FocusState.Pointer);
+        }
     }
 }

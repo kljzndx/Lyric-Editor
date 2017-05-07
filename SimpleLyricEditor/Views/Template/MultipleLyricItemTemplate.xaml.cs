@@ -45,7 +45,7 @@ namespace SimpleLyricEditor.Views.Template
                             else
                             {
                                 Main_TextBlock.FontWeight = FontWeights.Normal;
-                                Main_TextBlock.FontSize -= 2;
+                                Main_TextBlock.FontSize = settings.ScrollLyricsPreviewFontSize;
                             }
                         }
                     };

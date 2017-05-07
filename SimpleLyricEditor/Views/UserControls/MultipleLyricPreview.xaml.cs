@@ -27,6 +27,7 @@ namespace SimpleLyricEditor.Views.UserControls
         
         private Settings settings = Settings.GetSettingsObject();
         private bool isMouseEntered;
+        private bool isStartPreview;
 
         public TimeSpan Position
         {
@@ -67,20 +68,9 @@ namespace SimpleLyricEditor.Views.UserControls
 
         public void RefreshLyric()
         {
-            if (!LyricsList.Any())
+            if (!LyricsList.Any() || !isStartPreview)
                 return;
-
-            if (currentLyric is LyricItem)
-                switch (this.Visibility)
-                {
-                    case Visibility.Visible:
-                        currentLyric.IsSelected = true;
-                        break;
-                    case Visibility.Collapsed:
-                        currentLyric.IsSelected = false;
-                        break;
-                }
-
+            
             if (Position.ToLyricTimeString().Remove(7) == LyricsList[nextLyricID].Time.ToLyricTimeString().Remove(7))
             {
                 CurrentLyric = LyricsList[nextLyricID];
@@ -91,6 +81,9 @@ namespace SimpleLyricEditor.Views.UserControls
 
         public void ScrollList(int currentLyricID)
         {
+            if (!LyricsList.Any())
+                return;
+
             //计算要提前多少项
             int interpolation = ((int)Main_ListView.ActualHeight / 44) / 2;
 
@@ -101,7 +94,7 @@ namespace SimpleLyricEditor.Views.UserControls
 
         public void Reposition()
         {
-            if (!LyricsList.Any())
+            if (!LyricsList.Any() || !isStartPreview)
                 return;
             
             if (Position.CompareTo(LyricsList.First().Time) <= -1)
@@ -130,10 +123,24 @@ namespace SimpleLyricEditor.Views.UserControls
             
         }
 
+        public void StartPreview()
+        {
+            isStartPreview = true;
+            Reposition();
+        }
+
+        public void StopPreview()
+        {
+            isStartPreview = false;
+            CurrentLyric = null;
+            nextLyricID = 0;
+        }
+
         private void Main_ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             foreach (LyricItem item in e.AddedItems)
-                item.IsSelected = true;
+                if (base.Visibility == Visibility.Visible)
+                    item.IsSelected = true;
             foreach (LyricItem item in e.RemovedItems)
                 item.IsSelected = false;
 

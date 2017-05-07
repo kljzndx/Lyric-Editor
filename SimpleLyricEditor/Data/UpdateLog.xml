@@ -2,6 +2,17 @@
 <UpdateLogs>
 
       <UpdateLog>
+        <Version>2.6.4</Version>
+        <Content>
+1，在已打开音乐的情况下点击播放/暂停按钮不会激活歌词文本框
+2，修复当前选中项的跳转按钮有可能会消失的问题
+3，修复Shift+Del在无选中项时没反应的问题
+4，修复清空列表项后会崩溃的问题
+        </Content>
+        <Date>2017/05/07</Date>
+      </UpdateLog>
+
+      <UpdateLog>
         <Version>2.6.0</Version>
         <Content>
 1，新增滚动歌词预览功能

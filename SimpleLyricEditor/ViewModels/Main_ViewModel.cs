@@ -170,9 +170,6 @@ namespace SimpleLyricEditor.ViewModels
 
         public async void DelLyric()
         {
-            if (!SelectedItems.Any())
-                return;
-            
             if (App.IsPressShift)
             {
                 ContentDialog dialog = new ContentDialog()

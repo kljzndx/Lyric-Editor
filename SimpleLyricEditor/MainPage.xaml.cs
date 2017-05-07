@@ -267,7 +267,7 @@ namespace SimpleLyricEditor
 
             model.LyricContent = content.Trim();
 
-            if (e.AddedItems.Any())
+            if (e.AddedItems.Any() && currentListView.SelectionMode == ListViewSelectionMode.Single)
             {
                 int interpolation = ((int)currentListView.ActualHeight / 44) / 2;
                 int selectedIndex = currentListView.SelectedIndex + currentListView.SelectedItems.Count - 1;
@@ -352,12 +352,22 @@ namespace SimpleLyricEditor
         {
             model.IsDisplayScrollLyricsPreview = true;
             Grid.SetRow(LyricsPreview_Grid, 1);
+            
+            foreach (LyricItem item in Lyrics_ListView.SelectedItems)
+                item.IsSelected = false;
+
+            multipleLyricPreview.StartPreview();
         }
 
         private void Fold_Button_Click(object sender, RoutedEventArgs e)
         {
             model.IsDisplayScrollLyricsPreview = false;
             Grid.SetRow(LyricsPreview_Grid, 2);
+            
+            foreach (LyricItem item in Lyrics_ListView.SelectedItems)
+                item.IsSelected = true;
+
+            multipleLyricPreview.StopPreview();
         }
 
         private async void MiniMode_Button_Click(object sender, RoutedEventArgs e)
