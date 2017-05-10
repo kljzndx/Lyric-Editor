@@ -37,6 +37,7 @@ namespace SimpleLyricEditor
 
         //指示输入框是否已获得焦点
         public static bool IsInputBoxGotFocus { get; set; }
+        public static bool IsSuspend { get; private set; }
 
 
         /// <summary>
@@ -47,7 +48,9 @@ namespace SimpleLyricEditor
         {
             this.InitializeComponent();
             this.Suspending += OnSuspending;
+            this.Resuming += OnResuming;
             this.UnhandledException += OnUnhandledException;
+
         }
 
         private void CreateKeySubscription()
@@ -111,6 +114,7 @@ namespace SimpleLyricEditor
                 if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
                 {
                     //TODO: 从之前挂起的应用程序加载状态
+                    IsSuspend = false;
                 }
 
                 // 将框架放在当前窗口中
@@ -194,8 +198,15 @@ namespace SimpleLyricEditor
         private void OnSuspending(object sender, SuspendingEventArgs e)
         {
             var deferral = e.SuspendingOperation.GetDeferral();
+            IsSuspend = true;
             //TODO: 保存应用程序状态并停止任何后台活动
             deferral.Complete();
         }
+
+        private void OnResuming(object sender, object e)
+        {
+            IsSuspend = false;
+        }
+
     }
 }
