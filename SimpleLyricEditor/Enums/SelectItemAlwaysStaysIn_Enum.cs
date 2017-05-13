@@ -1,0 +1,1 @@
+﻿public enum SelectItemAlwaysStaysIn_Enum { Top,Center,Bottom, ViewableArea }

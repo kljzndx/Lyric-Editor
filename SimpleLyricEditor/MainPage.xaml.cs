@@ -267,12 +267,31 @@ namespace SimpleLyricEditor
 
             model.LyricContent = content.Trim();
 
-            if (e.AddedItems.Any() && currentListView.SelectionMode == ListViewSelectionMode.Single)
+            if (currentListView.SelectionMode == ListViewSelectionMode.Single && e.AddedItems.Any())
             {
-                int interpolation = ((int)currentListView.ActualHeight / 44) / 2;
-                int selectedIndex = currentListView.SelectedIndex + currentListView.SelectedItems.Count - 1;
-                int resuit = selectedIndex > interpolation ? selectedIndex - interpolation : 0;
-                currentListView.ScrollIntoView(currentListView.Items[resuit], ScrollIntoViewAlignment.Leading);
+                int ViewItemsCount = (int)currentListView.ActualHeight / 44;
+                int selectedIndex = currentListView.SelectedIndex;
+                int resuit = 0;
+                ScrollIntoViewAlignment s = ScrollIntoViewAlignment.Leading;
+                switch (model.Settings.SelectItemAlwaysStaysIn)
+                {
+                    case SelectItemAlwaysStaysIn_Enum.Top:
+                        resuit = selectedIndex;
+                        break;
+                    case SelectItemAlwaysStaysIn_Enum.Center:
+                        resuit = selectedIndex > (ViewItemsCount / 2) ? selectedIndex - (ViewItemsCount / 2) : 0;
+                        break;
+                    case SelectItemAlwaysStaysIn_Enum.Bottom:
+                        resuit = selectedIndex > ViewItemsCount ? selectedIndex - (ViewItemsCount - 1) : 0;
+                        break;
+                    case SelectItemAlwaysStaysIn_Enum.ViewableArea:
+                        resuit = selectedIndex;
+                        s = ScrollIntoViewAlignment.Default;
+                        break;
+                    default:
+                        throw new Exception("未找到与当前值对应的分支");
+                }
+                currentListView.ScrollIntoView(currentListView.Items[resuit], s);
             }
         }
         
@@ -323,7 +342,7 @@ namespace SimpleLyricEditor
             {
                 if (item is StorageFile file)
                 {
-                    switch (file.FileType)
+                    switch (file.FileType.ToLower())
                     {
                         case ".mp3":
                         case ".flac":

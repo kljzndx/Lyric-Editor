@@ -153,6 +153,21 @@
   <data name="ScrollLyricsPreviewFontSize_Slider.Header" xml:space="preserve">
     <value>Font size for Scroll Lyric preview area</value>
   </data>
+  <data name="SelectItemAlwaysStaysIn_Bottom_ComboBoxItem.Content" xml:space="preserve">
+    <value>Bottom</value>
+  </data>
+  <data name="SelectItemAlwaysStaysIn_Center_ComboBoxItem.Content" xml:space="preserve">
+    <value>Center</value>
+  </data>
+  <data name="SelectItemAlwaysStaysIn_ComboBox.Header" xml:space="preserve">
+    <value>Select item always stays in</value>
+  </data>
+  <data name="SelectItemAlwaysStaysIn_Top_ComboBoxItem.Content" xml:space="preserve">
+    <value>Top</value>
+  </data>
+  <data name="SelectItemAlwaysStaysIn_ViewableArea_ComboBoxItem.Content" xml:space="preserve">
+    <value>Viewable area</value>
+  </data>
   <data name="SingleLineLyricsPreviewFontSize_Slider.Header" xml:space="preserve">
     <value>Font size for Single Line Lyric preview area</value>
   </data>

@@ -327,7 +327,7 @@ namespace SimpleLyricEditor.Views.UserControls
         private void AudioPlayer_MediaElement_MediaEnded(object sender, RoutedEventArgs e)
         {
             Pause();
-            Time = TimeSpan.Zero;
+            SetTime(TimeSpan.Zero);
         }
 
         private void Play_Button_Click(object sender, RoutedEventArgs e)

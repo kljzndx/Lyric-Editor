@@ -75,6 +75,8 @@ namespace SimpleLyricEditor.Models
         private double previewBackgroundOpacity;
         public double PreviewBackgroundOpacity { get => previewBackgroundOpacity; set => SetSetting(ref previewBackgroundOpacity, value); }
 
+        private SelectItemAlwaysStaysIn_Enum selectItemAlwaysStaysIn;
+        public SelectItemAlwaysStaysIn_Enum SelectItemAlwaysStaysIn { get => selectItemAlwaysStaysIn; set => SetSetting(ref selectItemAlwaysStaysIn, value, value.ToString()); }
 
         private Settings()
         {
@@ -85,19 +87,14 @@ namespace SimpleLyricEditor.Models
             RenameSettingKey("UserDefinedBackgroundImagePath", nameof(LocalBackgroundImagePath));
             RenameSettingKey("PreviewFontSize", nameof(SingleLineLyricPreviewFontSize));
             
+            //初始化设置
             playbackRate = GetSetting(nameof(PlaybackRate), 1D);
             volume = GetSetting(nameof(Volume), 1D);
             channel = GetSetting(nameof(Channel), 0D);
             defaultLyricAuthor = GetSetting(nameof(DefaultLyricAuthor), String.Empty);
-
-            pageTheme = GetSetting(nameof(PageTheme), ElementTheme.Dark.ToString(),
-                s => /* if */ s == ElementTheme.Default.ToString() ? ElementTheme.Default : /* else if */ s == ElementTheme.Light.ToString() ? ElementTheme.Light : ElementTheme.Dark);
-
+            pageTheme = GetSetting(nameof(PageTheme), ElementTheme.Dark.ToString(), s => (ElementTheme)Enum.Parse(typeof(ElementTheme), s));
             isDisplayBackGround = GetSetting(nameof(IsDisplayBackground), true);
-
-            backgroundSourceType = GetSetting(nameof(BackgroundSourceType), BackgroundSourceTypeEnum.AlbumImage.ToString(),
-                s => s == BackgroundSourceTypeEnum.AlbumImage.ToString() ? BackgroundSourceTypeEnum.AlbumImage : BackgroundSourceTypeEnum.LocalImage);
-
+            backgroundSourceType = GetSetting(nameof(BackgroundSourceType), BackgroundSourceTypeEnum.AlbumImage.ToString(), s => (BackgroundSourceTypeEnum)Enum.Parse(typeof(BackgroundSourceTypeEnum), s));
             localBackgroundImagePath = GetSetting(nameof(LocalBackgroundImagePath), String.Empty);
             backgroundBlurDegree = IsBlurUsability ? GetSetting(nameof(BackgroundBlurDegree), 5D) : 0D;
             backgroundOpacity = GetSetting(nameof(BackgroundOpacity), 0.3);
@@ -105,6 +102,7 @@ namespace SimpleLyricEditor.Models
             singleLineLyricPreviewFontSize = GetSetting(nameof(SingleLineLyricPreviewFontSize), SystemInfo.DeviceType == "Windows.Mobile" ? 18D : 24D);
             scrollLyricsPreviewFontSize = GetSetting(nameof(ScrollLyricsPreviewFontSize), 15D);
             previewBackgroundOpacity = GetSetting(nameof(PreviewBackgroundOpacity), 0.3);
+            selectItemAlwaysStaysIn = GetSetting(nameof(SelectItemAlwaysStaysIn), SelectItemAlwaysStaysIn_Enum.ViewableArea.ToString(), s => (SelectItemAlwaysStaysIn_Enum)Enum.Parse(typeof(SelectItemAlwaysStaysIn_Enum), s));
         }
         
         public static Settings GetSettingsObject()

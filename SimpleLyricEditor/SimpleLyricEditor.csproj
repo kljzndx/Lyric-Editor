@@ -127,6 +127,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Enums\BackgroundSourceTypeEnum.cs" />
+    <Compile Include="Enums\SelectItemAlwaysStaysIn_Enum.cs" />
     <Compile Include="EventArgss\LyricFileChangeEventArgs.cs" />
     <Compile Include="EventArgss\LyricItemChangeEventAegs.cs" />
     <Compile Include="EventArgss\LyricSwitchEventArgs.cs" />

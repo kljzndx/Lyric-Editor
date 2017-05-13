@@ -25,15 +25,15 @@ namespace SimpleLyricEditor.Tools
             if (String.IsNullOrEmpty(tags.LyricsAuthor))
                 tags.LyricsAuthor = GetTagValue(content, "by");
 
-            Regex rege = new Regex(@"\[(\d{2}):(\d{2}).(\d{2})\](.*)");
+            Regex rege = new Regex(@"\[(\d{1,2}):(\d{1,2}).(\d{2,3})\](.*)");
             if (rege.IsMatch(content))
             {
                 foreach (Match item in rege.Matches(content))
                 {
                     byte min = Byte.Parse(item.Groups[1].Value);
                     byte s = Byte.Parse(item.Groups[2].Value);
-                    byte ms = Byte.Parse(item.Groups[3].Value);
-                    lyrics.Add(new LyricItem { Time = new TimeSpan(0, 0, min, s, ms * 10), Content = item.Groups[4].Value.Trim() });
+                    byte ms =  Byte.Parse(item.Groups[3].Value);
+                    lyrics.Add(new LyricItem { Time = new TimeSpan(0, 0, min, s, ms < 100 ? ms * 10 : ms), Content = item.Groups[4].Value.Trim() });
                 }
             }
             else

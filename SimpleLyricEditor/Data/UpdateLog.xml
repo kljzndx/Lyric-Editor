@@ -2,6 +2,14 @@
 <UpdateLogs>
 
       <UpdateLog>
+        <Version>2.8.0</Version>
+        <Content>
+1，新增“选中项保持在什么部位”的设置
+        </Content>
+        <Date>2017/05/13</Date>
+      </UpdateLog>
+
+      <UpdateLog>
         <Version>2.7.0</Version>
         <Content>
 1，支持后台播放及系统控制按钮
