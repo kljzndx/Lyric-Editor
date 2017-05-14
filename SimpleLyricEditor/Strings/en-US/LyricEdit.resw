@@ -118,8 +118,9 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AddLyric_Button.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Add Lyric
-Shortcut keys : Space</value>
+    <value>Add Lyrics
+Shortcut keys : Space
+Press Shift to Add Lyrics to Above</value>
   </data>
   <data name="ChangeContent_MenuFlyoutItem.Text" xml:space="preserve">
     <value>Modifications to the current lyric</value>

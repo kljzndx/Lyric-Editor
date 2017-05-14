@@ -144,16 +144,30 @@ namespace SimpleLyricEditor.ViewModels
             foreach (var item in contents)
             {
                 addItems.Add(new LyricItem() { Time = thisTime, Content = item.Trim() });
-                if (App.IsPressShift)
-                    lyrics.Insert(id++, new LyricItem { Time = thisTime, Content = item.Trim() });
-                else if (selectedIndex != -1)
+
+                if (selectedItems.Any())
                 {
-                    lyrics.Insert(selectedIndex + 1, new LyricItem() { Time = ThisTime, Content = LyricContent });
-                    SelectedIndex++;
+                    if (App.IsPressShift)
+                    {
+                        lyrics.Insert(selectedIndex > 0 ? selectedIndex - 1 : 0, new LyricItem() { Time = ThisTime, Content = LyricContent });
+                        SelectedIndex--;
+                    }
+                    else
+                    {
+                        lyrics.Insert(selectedIndex + 1, new LyricItem() { Time = ThisTime, Content = LyricContent });
+                        SelectedIndex++;
+                    }
                 }
                 else
-                    lyrics.Add(new LyricItem() { Time = thisTime, Content = item.Trim() });
+                {
+                    if (App.IsPressShift)
+                        lyrics.Insert(id++, new LyricItem { Time = thisTime, Content = item.Trim() });
+                    else
+                        lyrics.Add(new LyricItem() { Time = thisTime, Content = item.Trim() });
+                }
             }
+
+            lyricContent = String.Empty;
 
             LyricItemChanged?.Invoke(this, new LyricItemChangeEventAegs(LyricItemOperationType.Add, addItems));
         }
@@ -241,11 +255,13 @@ namespace SimpleLyricEditor.ViewModels
 
         public async void SaveLyricFile()
         {
+            LyricsSort();
             await LyricFileTools.SaveFileAsync(tags, lyrics, LyricFile);
         }
 
         public async void SaveAsLyricFile()
         {
+            LyricsSort();
             await LyricFileTools.SaveFileAsync(tags, lyrics, null);
         }
         

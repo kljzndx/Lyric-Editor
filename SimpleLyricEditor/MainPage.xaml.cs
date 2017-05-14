@@ -76,7 +76,10 @@ namespace SimpleLyricEditor
                     ThreadPoolTimer.CreateTimer(async (t) => await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                     {
                         if (App.IsPressShift)
+                        {
                             Lyrics_ListView.SelectedItem = Lyrics_ListView.Items[e.Lyrics.Count - 1];
+                            Lyrics_ListView.SelectedItem = null;
+                        }
                         else
                             Lyrics_ListView.ScrollIntoView(Lyrics_ListView.Items.LastOrDefault());
                     }), TimeSpan.FromMilliseconds(100));

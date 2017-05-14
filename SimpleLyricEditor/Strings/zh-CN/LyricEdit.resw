@@ -119,7 +119,8 @@
   </resheader>
   <data name="AddLyric_Button.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
     <value>添加歌词
-快捷键：空格</value>
+快捷键：空格
+按住 Shift 可往上添加歌词</value>
   </data>
   <data name="ChangeContent_MenuFlyoutItem.Text" xml:space="preserve">
     <value>修改为当前内容</value>

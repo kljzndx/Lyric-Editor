@@ -2,12 +2,23 @@
 <UpdateLogs>
 
       <UpdateLog>
+        <Version>2.8.6</Version>
+        <Content>
+1，添加歌词到顶端升级为往上添加歌词
+2，现在 保存/另存为 时会先把歌词列表自动排序后再保存
+3，现在添加歌词后输入框里的文本会被清空
+4，补充添加歌词按钮的说明提示
+        </Content>
+        <Date>2017/05/14</Date>
+      </UpdateLog>
+
+      <UpdateLog>
         <Version>2.8.2</Version>
         <Content>
 1，现在按住shift时执行添加歌词命令会把歌词添加到顶端
 2，歌词输入框现在可按 Shift + Enter 强制换行
         </Content>
-        <Date>2017/05/13</Date>
+        <Date>2017/05/14</Date>
       </UpdateLog>
 
       <UpdateLog>
