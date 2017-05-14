@@ -95,7 +95,7 @@
                                     </MenuFlyout>
                                 </Button.Flyout>
                             </Button>
-                            <Button x:Uid="/LyricEdit/AddLyric_Button" Content="&#xE109;" Style="{StaticResource ControllerButton}" Click="{x:Bind model.AddLyric}"/>
+                            <Button x:Name="AddLyric_Button" x:Uid="/LyricEdit/AddLyric_Button" Content="&#xE109;" Style="{StaticResource ControllerButton}" Click="{x:Bind model.AddLyric}"/>
                             <Button x:Uid="/LyricEdit/CopyLyrics_Button" Content="&#xE8C8;" Style="{StaticResource ControllerButton}" Visibility="{x:Bind model.IsMultilineEditMode,Mode=OneWay,Converter={StaticResource BoolToVisibility}}" Click="{x:Bind model.CopyLyrics}"/>
                             <Button x:Name="DelLyric_Button" x:Uid="/LyricEdit/DelLyric_Button" Content="&#xE10A;" Style="{StaticResource ControllerButton}" Click="{x:Bind model.DelLyric}"/>
                             <Button x:Uid="/LyricEdit/ChangeLyric_Button" Content="&#xE104;" Style="{StaticResource ControllerButton}">

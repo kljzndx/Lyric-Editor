@@ -73,9 +73,15 @@ namespace SimpleLyricEditor
 
                 //添加歌词时自动定位到新加的歌词项
                 if (e.ChangeType == EventArgss.LyricItemOperationType.Add && Lyrics_ListView.SelectedItem is null)
-                    ThreadPoolTimer.CreateTimer(async (t) => await Dispatcher.RunAsync(CoreDispatcherPriority.Normal,() => Lyrics_ListView.ScrollIntoView(Lyrics_ListView.Items.Last())), TimeSpan.FromMilliseconds(100));
+                    ThreadPoolTimer.CreateTimer(async (t) => await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                    {
+                        if (App.IsPressShift)
+                            Lyrics_ListView.SelectedItem = Lyrics_ListView.Items[e.Lyrics.Count - 1];
+                        else
+                            Lyrics_ListView.ScrollIntoView(Lyrics_ListView.Items.LastOrDefault());
+                    }), TimeSpan.FromMilliseconds(100));
             };
-            
+
             CoreWindow window = CoreWindow.GetForCurrentThread();
             window.KeyDown += Window_KeyDown;
             window.KeyUp += Window_KeyUp;
@@ -103,11 +109,15 @@ namespace SimpleLyricEditor
                 await MessageBox.ShowAsync(CharacterLibrary.ErrorDialog.GetString("SelectedMultipleItemsError"), CharacterLibrary.ErrorDialog.GetString("Close"));
             }
         }
-        
+
         private void Window_KeyDown(CoreWindow sender, KeyEventArgs args)
         {
             if (args.VirtualKey == VirtualKey.Shift)
+            {
+                AddLyric_Button.Content = "\uE94D";
                 DelLyric_Button.Content = "\uE107";
+            }
+
             if (!App.IsInputBoxGotFocus)
             {
                 switch (args.VirtualKey)
@@ -135,7 +145,7 @@ namespace SimpleLyricEditor
                         //抵消器，防止出现一次跳两行的情况
                         if (isListViewGotFocus && Lyrics_ListView.SelectedIndex != Lyrics_ListView.Items.Count - 1 && Lyrics_ListView.SelectedIndex != -1)
                             Lyrics_ListView.SelectedIndex--;
-                        
+
                         Lyrics_ListView.SelectedIndex = Lyrics_ListView.SelectedIndex < Lyrics_ListView.Items.Count - 1 ? Lyrics_ListView.SelectedIndex + 1 : -1;
                         this.Focus(FocusState.Pointer);
                         break;
@@ -146,7 +156,10 @@ namespace SimpleLyricEditor
         private void Window_KeyUp(CoreWindow sender, KeyEventArgs args)
         {
             if (args.VirtualKey == VirtualKey.Shift)
+            {
+                AddLyric_Button.Content = "\uE109";
                 DelLyric_Button.Content = "\uE10A";
+            }
         }
 
         #region 歌词编辑区
@@ -158,18 +171,23 @@ namespace SimpleLyricEditor
 
                 model.LyricContent = t.Text;
 
+                void NewLine()
+                {
+                    t.Text += "\n";
+                    t.Select(t.Text.Length, 0);
+                }
+
                 if (App.IsPressCtrl)
                     model.AddLyric();
+                else if (App.IsPressShift)
+                    NewLine();
                 else if (Lyrics_ListView.SelectedItems.Any())
                 {
                     model.ChangeContent();
                     Lyrics_ListView.SelectedIndex = Lyrics_ListView.SelectedIndex < Lyrics_ListView.Items.Count - 1 ? Lyrics_ListView.SelectedIndex + 1 : -1;
                 }
                 else
-                {
-                    t.Text += "\n";
-                    t.Select(t.Text.Length, 0);
-                }
+                    NewLine();
             }
         }
 
@@ -294,7 +312,7 @@ namespace SimpleLyricEditor
                 currentListView.ScrollIntoView(currentListView.Items[resuit], s);
             }
         }
-        
+
         private void LyricItemTemplate_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
         {
             GotoThisLyricTime();
@@ -371,7 +389,7 @@ namespace SimpleLyricEditor
         {
             model.IsDisplayScrollLyricsPreview = true;
             Grid.SetRow(LyricsPreview_Grid, 1);
-            
+
             foreach (LyricItem item in Lyrics_ListView.SelectedItems)
                 item.IsSelected = false;
 
@@ -382,7 +400,7 @@ namespace SimpleLyricEditor
         {
             model.IsDisplayScrollLyricsPreview = false;
             Grid.SetRow(LyricsPreview_Grid, 2);
-            
+
             foreach (LyricItem item in Lyrics_ListView.SelectedItems)
                 item.IsSelected = true;
 
@@ -393,7 +411,7 @@ namespace SimpleLyricEditor
         {
             ViewModePreferences c = ViewModePreferences.CreateDefault(ApplicationViewMode.CompactOverlay);
             c.CustomSize = new Size(500, 500);
-            bool b = await ApplicationView.GetForCurrentView().TryEnterViewModeAsync(ApplicationViewMode.CompactOverlay,c);
+            bool b = await ApplicationView.GetForCurrentView().TryEnterViewModeAsync(ApplicationViewMode.CompactOverlay, c);
 
             if (b)
             {

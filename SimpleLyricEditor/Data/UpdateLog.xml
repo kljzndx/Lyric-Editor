@@ -2,6 +2,15 @@
 <UpdateLogs>
 
       <UpdateLog>
+        <Version>2.8.2</Version>
+        <Content>
+1，现在按住shift时执行添加歌词命令会把歌词添加到顶端
+2，歌词输入框现在可按 Shift + Enter 强制换行
+        </Content>
+        <Date>2017/05/13</Date>
+      </UpdateLog>
+
+      <UpdateLog>
         <Version>2.8.0</Version>
         <Content>
 1，新增“选中项保持在什么部位”的设置

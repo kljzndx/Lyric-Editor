@@ -137,16 +137,25 @@ namespace SimpleLyricEditor.ViewModels
         public void AddLyric()
         {
             var contents = lyricContent.Split('\r');
-            foreach (var item in contents)
-                lyrics.Add(new LyricItem { Time = thisTime, Content = item.Trim() });
 
-            if (selectedIndex != -1 && contents.Length == 1)
+            int id = 0;
+            List<LyricItem> addItems = new List<LyricItem>();
+
+            foreach (var item in contents)
             {
-                lyrics.Move(lyrics.Count - 1, selectedIndex + 1);
-                SelectedIndex++;
+                addItems.Add(new LyricItem() { Time = thisTime, Content = item.Trim() });
+                if (App.IsPressShift)
+                    lyrics.Insert(id++, new LyricItem { Time = thisTime, Content = item.Trim() });
+                else if (selectedIndex != -1)
+                {
+                    lyrics.Insert(selectedIndex + 1, new LyricItem() { Time = ThisTime, Content = LyricContent });
+                    SelectedIndex++;
+                }
+                else
+                    lyrics.Add(new LyricItem() { Time = thisTime, Content = item.Trim() });
             }
 
-            LyricItemChanged?.Invoke(this, new LyricItemChangeEventAegs(LyricItemOperationType.Add));
+            LyricItemChanged?.Invoke(this, new LyricItemChangeEventAegs(LyricItemOperationType.Add, addItems));
         }
 
         public void CopyLyrics()

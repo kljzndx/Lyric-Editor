@@ -23,6 +23,17 @@
     </Function>
   </ShortcutKey>
 
+  <ShortcutKey Name="添加歌词至起始处" Class="歌词操作">
+    <Condition>
+      <en_US>Press SHIFT while executing add lyrics command</en_US>
+      <zh_CN>按住 shift 时执行添加歌词命令</zh_CN>
+    </Condition>
+    <Function>
+      <en_US>Add Lyric To Start</en_US>
+      <zh_CN>添加歌词至起始处</zh_CN>
+    </Function>
+  </ShortcutKey>
+
   <ShortcutKey Name="复制歌词" Class="歌词操作">
     <Condition>
       <en_US>Press C Key</en_US>
