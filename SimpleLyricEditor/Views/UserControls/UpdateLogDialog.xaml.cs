@@ -1,4 +1,5 @@
 ﻿using HappyStudio.UwpToolsLibrary.Information;
+using Microsoft.Services.Store.Engagement;
 using SimpleLyricEditor.Models;
 using System;
 using System.Collections.Generic;
@@ -27,6 +28,7 @@ namespace SimpleLyricEditor.Views.UserControls
         private UpdateLog thisLog = new UpdateLog();
         private ObservableCollection<UpdateLog> logs = new ObservableCollection<UpdateLog>();
         private Settings settings = Settings.GetSettingsObject();
+        private StoreServicesCustomEventLogger storeLogger => StoreServicesCustomEventLogger.GetDefault();
 
         public UpdateLogDialog()
         {
@@ -39,7 +41,10 @@ namespace SimpleLyricEditor.Views.UserControls
         private async void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             if (settings.GetSetting("UpdateLogVersion", "1.4.0") != AppInfo.Version)
+            {
+                settings.SettingObject.Values["IsReviewsed"] = false;
                 Show();
+            }
 
             StorageFile file = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Data/UpdateLog.xml"));
             string content = await FileIO.ReadTextAsync(file);
@@ -63,6 +68,7 @@ namespace SimpleLyricEditor.Views.UserControls
         {
             Main_Grid.Visibility = Visibility.Visible;
             PopUp_Storyboard.Begin();
+            storeLogger.Log("打开更新日志面板");
         }
 
     }

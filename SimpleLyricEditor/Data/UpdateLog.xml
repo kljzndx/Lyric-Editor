@@ -2,6 +2,34 @@
 <UpdateLogs>
 
       <UpdateLog>
+        <Version>2.8.11</Version>
+        <Content>
+1，现在可以通过反馈中心反馈问题和建议了
+        </Content>
+        <Date>2017/05/18</Date>
+      </UpdateLog>
+
+      <UpdateLog>
+        <Version>2.8.10</Version>
+        <Content>
+1，现在可以通过F1键来打开快捷键列表弹窗了
+2，修复在有选中项时添加多行歌词功能不正常的问题
+        </Content>
+        <Date>2017/05/17</Date>
+      </UpdateLog>
+
+      <UpdateLog>
+        <Version>2.8.8</Version>
+        <Content>
+1，给歌词文本框加上快捷键提示
+
+由于没什么功能可以加的了，所以。。我又要暂停更新了 (★ ω ★)。。。
+欢迎反馈问题和建议
+        </Content>
+        <Date>2017/05/15</Date>
+      </UpdateLog>
+
+      <UpdateLog>
         <Version>2.8.6</Version>
         <Content>
 1，添加歌词到顶端升级为往上添加歌词

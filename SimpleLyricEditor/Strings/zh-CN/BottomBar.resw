@@ -149,7 +149,7 @@
     <value>设置</value>
   </data>
   <data name="ShortcutKeysList_AppBarButton.Label" xml:space="preserve">
-    <value>快捷键列表</value>
+    <value>快捷键列表    F1</value>
   </data>
   <data name="UpdateLog_AppBarButton.Label" xml:space="preserve">
     <value>更新日志</value>

@@ -1,4 +1,5 @@
 ﻿using HappyStudio.UwpToolsLibrary.Information;
+using Microsoft.Services.Store.Engagement;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -9,6 +10,7 @@ using System.Xml.Linq;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Storage;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -26,12 +28,19 @@ namespace SimpleLyricEditor.Views.UserControls
         private ObservableCollection<Models.ShortcutKey> lyricEditOperation = new ObservableCollection<Models.ShortcutKey>();
         private ObservableCollection<Models.ShortcutKey> audioPlayerOperation = new ObservableCollection<Models.ShortcutKey>();
         private ObservableCollection<Models.ShortcutKey> fileOperation = new ObservableCollection<Models.ShortcutKey>();
+        private StoreServicesCustomEventLogger storeLogger => StoreServicesCustomEventLogger.GetDefault();
+
         public ShortcutKeysDialog()
         {
             this.InitializeComponent();
             Main_Grid.Visibility = Visibility.Collapsed;
             MainGrid_Transform.ScaleX = 0;
             MainGrid_Transform.ScaleY = 0;
+            CoreWindow.GetForCurrentThread().KeyDown += (s, e) =>
+            {
+                if (e.VirtualKey == Windows.System.VirtualKey.F1)
+                    Show();
+            };
         }
 
         private async void UserControl_Loaded(object sender, RoutedEventArgs e)
@@ -67,6 +76,7 @@ namespace SimpleLyricEditor.Views.UserControls
         {
             Main_Grid.Visibility = Visibility.Visible;
             PopUp_Storyboard.Begin();
+            storeLogger.Log("打开快捷键列表面板");
         }
     }
 }

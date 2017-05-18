@@ -1,4 +1,5 @@
 ﻿using HappyStudio.UwpToolsLibrary.Auxiliarys;
+using Microsoft.Services.Store.Engagement;
 using SimpleLyricEditor.EventArgss;
 using SimpleLyricEditor.Models;
 using System;
@@ -41,7 +42,9 @@ namespace SimpleLyricEditor.Views.UserControls
         private ThreadPoolTimer RefreshTime_Timer;
         private ThreadPoolTimer RefreshSMTCTime_Timer;
         private Settings settings = Settings.GetSettingsObject();
-        
+        private StoreServicesCustomEventLogger storeLogger => StoreServicesCustomEventLogger.GetDefault();
+
+
         public event EventHandler Played;
         public event EventHandler Paused;
         public event EventHandler<MusicFileChangeEventArgs> MusicFileChanged;
@@ -92,7 +95,7 @@ namespace SimpleLyricEditor.Views.UserControls
             Application.Current.Resuming += Application_Resuming;
 
             //为进度条订阅指针释放路由事件，至于为什么不在前台订阅嘛。。。自己看看最后一个参数就知道了
-            Position_Slider.AddHandler(PointerReleasedEvent, new PointerEventHandler((s, e) => PositionChanged?.Invoke(this, new PositionChangeEventArgs(true, Time))), true);
+            Position_Slider.AddHandler(PointerReleasedEvent, new PointerEventHandler((s, e) => SetTime(Time)), true);
 
             //获取窗口对象以订阅全局的键 按下和弹起 事件
             CoreWindow window = CoreWindow.GetForCurrentThread();
@@ -147,8 +150,7 @@ namespace SimpleLyricEditor.Views.UserControls
             if (musicFile is null)
                 return;
 
-            MusicSource = await Music.ParseAsync(musicFile);
-            AudioPlayer_MediaElement.SetSource(await musicFile.OpenAsync(FileAccessMode.Read), musicFile.ContentType);
+            SetSource(await Music.ParseAsync(musicFile));
         }
 
         public void SetTime(TimeSpan time)
@@ -156,12 +158,14 @@ namespace SimpleLyricEditor.Views.UserControls
             Time = time;
 
             PositionChanged?.Invoke(this, new PositionChangeEventArgs(true, time));
+            storeLogger.Log("更改播放进度");
         }
 
         public async void SetSource(Music newSource)
         {
             MusicSource = newSource;
             AudioPlayer_MediaElement.SetSource(await newSource.File.OpenAsync(FileAccessMode.Read), newSource.File.ContentType);
+            storeLogger.Log("更改音乐源");
         }
 
         public void SetupSystemMediaTransportControls()
@@ -210,6 +214,7 @@ namespace SimpleLyricEditor.Views.UserControls
                     StartRefreshTimeTimer();
                 StartRefreshSMTCTimeTimer();
                 Played?.Invoke(this, EventArgs.Empty);
+                storeLogger.Log("开始播放音乐");
             }
         }
 
@@ -220,6 +225,7 @@ namespace SimpleLyricEditor.Views.UserControls
             RefreshTime_Timer?.Cancel();
             RefreshSMTCTime_Timer.Cancel();
             Paused?.Invoke(this, EventArgs.Empty);
+            storeLogger.Log("暂停播放音乐");
         }
 
         public void FastRewind()

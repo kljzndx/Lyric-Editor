@@ -156,6 +156,12 @@ Shortcut Key : G</value>
   <data name="LyricContent_TextBox.PlaceholderText" xml:space="preserve">
     <value>Please Enter Lyric , Support Multiline Text</value>
   </data>
+  <data name="LyricContent_TextBox.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Shortcut Keys List
+Enter -&gt; Newline / Modify currently selected item content
+Shift + Enter -&gt; Forcing a Newline
+Ctrl + Enter -&gt; Add Lyric Items</value>
+  </data>
   <data name="LyricsSort_Button.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
     <value>Sort
 Shortcut Keys : S</value>

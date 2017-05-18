@@ -149,7 +149,7 @@ Info</value>
     <value>Settings</value>
   </data>
   <data name="ShortcutKeysList_AppBarButton.Label" xml:space="preserve">
-    <value>List of Shortcut Keys</value>
+    <value>List of Shortcut Keys    F1</value>
   </data>
   <data name="UpdateLog_AppBarButton.Label" xml:space="preserve">
     <value>Update Log</value>
