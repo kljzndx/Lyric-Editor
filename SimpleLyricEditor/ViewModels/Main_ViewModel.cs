@@ -116,19 +116,7 @@ namespace SimpleLyricEditor.ViewModels
             dialog.SecondaryButtonClick += headler;
             await dialog.ShowAsync();
         }
-
-        public async void Feedback()
-        {
-            if (!StoreServicesFeedbackLauncher.IsSupported() || !await StoreServicesFeedbackLauncher.GetDefault().LaunchAsync())
-                await EmailEx.SendAsync("kljzndx@outlook.com", $"{AppInfo.Name} {AppInfo.Version} {(AppInfo.Name == "简易歌词编辑器" ? "反馈" : "Feedback")}", String.Empty);
-            storeLogger.Log("反馈问题和建议");
-        }
-
-        public void Deselect()
-        {
-            SelectedIndex = -1;
-        }
-
+        
         #region Lyrics Operations
 
         public void LyricsSort()

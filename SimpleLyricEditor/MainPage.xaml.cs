@@ -1,5 +1,6 @@
 ﻿using HappyStudio.UwpToolsLibrary.Auxiliarys;
 using HappyStudio.UwpToolsLibrary.Information;
+using Microsoft.Services.Store.Engagement;
 using SimpleLyricEditor.Models;
 using SimpleLyricEditor.Tools;
 using SimpleLyricEditor.ViewModels;
@@ -90,6 +91,7 @@ namespace SimpleLyricEditor
             window.KeyUp += Window_KeyUp;
 
             MiniMode_StackPanel.Visibility = SystemInfo.BuildVersion >= 15063 ? Visibility.Visible : Visibility.Collapsed;
+            FeedbackInFeedbackHub_MenuFlyoutItem.Visibility = StoreServicesFeedbackLauncher.IsSupported() ? Visibility.Visible : Visibility.Collapsed;
         }
 
         private void HideFastMenu()
@@ -339,68 +341,7 @@ namespace SimpleLyricEditor
             model.storeLogger.Log("通过跳转按钮跳转到选定歌词项的时间上");
         }
         #endregion
-        #region 低栏
-        private void MenuFlyout_Opened(object sender, object e)
-        {
-            var menu = sender as MenuFlyout;
-            Style s = new Style()
-            {
-                TargetType = typeof(MenuFlyoutPresenter)
-            };
-            s.Setters.Add(new Setter { Property = RequestedThemeProperty, Value = model.Settings.PageTheme });
-            menu.MenuFlyoutPresenterStyle = s;
-        }
-
-        private void Settings_AppBarButton_Click(object sender, RoutedEventArgs e)
-        {
-            HidePanel_SplitView.IsPaneOpen = !HidePanel_SplitView.IsPaneOpen;
-            model.storeLogger.Log("打开设置面板");
-        }
-        #endregion
-
-        private void Main_Grid_DragOver(object sender, DragEventArgs e)
-        {
-            e.AcceptedOperation = Windows.ApplicationModel.DataTransfer.DataPackageOperation.Link;
-            e.DragUIOverride.Caption = CharacterLibrary.DragOrDrop.GetString("Caption");
-        }
-
-        private async void Main_Grid_Drop(object sender, DragEventArgs e)
-        {
-            if (!e.DataView.Contains(StandardDataFormats.StorageItems))
-                return;
-            var items = await e.DataView.GetStorageItemsAsync();
-
-            bool isMusicFound = false;
-            bool isImageFound = false;
-
-            foreach (var item in items)
-            {
-                if (item is StorageFile file)
-                {
-                    switch (file.FileType.ToLower())
-                    {
-                        case ".mp3":
-                        case ".flac":
-                        case ".wav":
-                        case ".aac":
-                        case ".m4a":
-                            audioPlayer.SetSource(await Music.ParseAsync(file));
-                            isMusicFound = true;
-                            break;
-                        case ".png":
-                        case ".jpg":
-                            if (!isImageFound)
-                            {
-                                Windows.Storage.AccessCache.StorageApplicationPermissions.FutureAccessList.AddOrReplace("BackgroundImage", file);
-                                model.Settings.LocalBackgroundImagePath = file.Path;
-                            }
-                            break;
-                    }
-                }
-                if (isMusicFound && isImageFound)
-                    break;
-            }
-        }
+        #region 预览区域
 
         private void Expand_Button_Click(object sender, RoutedEventArgs e)
         {
@@ -456,5 +397,114 @@ namespace SimpleLyricEditor
             MiniMode_Button.Visibility = Visibility.Visible;
             model.storeLogger.Log("退出迷你模式");
         }
+
+        #endregion
+        #region 低栏
+        private void MenuFlyout_Opened(object sender, object e)
+        {
+            var menu = sender as MenuFlyout;
+            Style s = new Style()
+            {
+                TargetType = typeof(MenuFlyoutPresenter)
+            };
+            s.Setters.Add(new Setter { Property = RequestedThemeProperty, Value = model.Settings.PageTheme });
+            menu.MenuFlyoutPresenterStyle = s;
+        }
+
+        private void Settings_AppBarButton_Click(object sender, RoutedEventArgs e)
+        {
+            HidePanel_SplitView.IsPaneOpen = !HidePanel_SplitView.IsPaneOpen;
+            model.storeLogger.Log("打开设置面板");
+        }
+
+        private async void FeedbackInEmail_MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
+        {
+            await EmailEx.SendAsync("kljzndx@outlook.com", $"{AppInfo.Name} {AppInfo.Version} {(AppInfo.Name == "简易歌词编辑器" ? "反馈" : "Feedback")}", String.Empty);
+        }
+
+        private async void FeedbackInSkype_MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
+        {
+            DataPackage dp = new DataPackage();
+            dp.RequestedOperation = DataPackageOperation.Copy;
+            dp.SetText("kljzndx@outlook.com");
+            Clipboard.Clear();
+            Clipboard.SetContent(dp);
+
+            bool isZhCn = AppInfo.Name == "简易歌词编辑器";
+            ContentDialog dialog = new ContentDialog() { Title = isZhCn ? "Skype账号" : "Skype Account", Content = isZhCn ? "Skype账号已复制" : "Skype Account Copied", SecondaryButtonText = isZhCn ? "关闭" : "Close" };
+            await dialog.ShowAsync();
+        }
+
+        private async void FeedbackInFeedbackHub_MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
+        {
+            if (!await StoreServicesFeedbackLauncher.GetDefault().LaunchAsync())
+            {
+                ContentDialog dialog = new ContentDialog() { Title = CharacterLibrary.ErrorDialog.GetString("Title"), Content = CharacterLibrary.ErrorDialog.GetString("ShowFeedbackHubError"), SecondaryButtonText = CharacterLibrary.ErrorDialog.GetString("Close") };
+                await dialog.ShowAsync();
+            }
+        }
+
+        #endregion
+
+        private void Main_Grid_DragOver(object sender, DragEventArgs e)
+        {
+            e.AcceptedOperation = Windows.ApplicationModel.DataTransfer.DataPackageOperation.Link;
+            e.DragUIOverride.Caption = CharacterLibrary.DragOrDrop.GetString("Caption");
+        }
+
+        private async void Main_Grid_Drop(object sender, DragEventArgs e)
+        {
+            if (!e.DataView.Contains(StandardDataFormats.StorageItems))
+                return;
+            var items = await e.DataView.GetStorageItemsAsync();
+
+            bool isMusicFound = false;
+            bool isImageFound = false;
+
+            foreach (var item in items)
+            {
+                if (item is StorageFile file)
+                {
+                    switch (file.FileType.ToLower())
+                    {
+                        case ".mp3":
+                        case ".flac":
+                        case ".wav":
+                        case ".aac":
+                        case ".m4a":
+                            audioPlayer.SetSource(await Music.ParseAsync(file));
+                            isMusicFound = true;
+                            break;
+                        case ".png":
+                        case ".jpg":
+                            if (!isImageFound)
+                            {
+                                Windows.Storage.AccessCache.StorageApplicationPermissions.FutureAccessList.AddOrReplace("BackgroundImage", file);
+                                model.Settings.LocalBackgroundImagePath = file.Path;
+                            }
+                            break;
+                    }
+                }
+                if (isMusicFound && isImageFound)
+                    break;
+            }
+        }
+
+        private void LyricsFileInfo_ContentDialog_Opened(ContentDialog sender, ContentDialogOpenedEventArgs args)
+        {
+            model.InputBoxGotFocus();
+            model.storeLogger.Log("打开歌词文件信息弹窗");
+        }
+
+        private void LyricsFileInfo_ContentDialog_Closed(ContentDialog sender, ContentDialogClosedEventArgs args)
+        {
+            model.InputBoxLostFocus();
+        }
+
+        private void SingleLyricPreview_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            Lyrics_ListView.SelectedIndex = -1;
+        }
+
     }
 }

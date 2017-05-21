@@ -9,9 +9,10 @@ namespace SimpleLyricEditor.Models
 {
     public static class CharacterLibrary
     {
-        public static ResourceLoader ErrorDialog { get => ResourceLoader.GetForCurrentView("ErrorDialog"); }
-        public static ResourceLoader GetReviewsDialog { get => ResourceLoader.GetForCurrentView("GetReviewsDialog"); }
-        public static ResourceLoader LyricsListClearDialog { get => ResourceLoader.GetForCurrentView("LyricsListClearDialog"); }
-        public static ResourceLoader DragOrDrop { get => ResourceLoader.GetForCurrentView("DragOrDrop"); }
+        public static ResourceLoader App => ResourceLoader.GetForCurrentView("App");
+        public static ResourceLoader ErrorDialog => ResourceLoader.GetForCurrentView("ErrorDialog");
+        public static ResourceLoader GetReviewsDialog => ResourceLoader.GetForCurrentView("GetReviewsDialog");
+        public static ResourceLoader LyricsListClearDialog => ResourceLoader.GetForCurrentView("LyricsListClearDialog");
+        public static ResourceLoader DragOrDrop => ResourceLoader.GetForCurrentView("DragOrDrop");
     }
 }

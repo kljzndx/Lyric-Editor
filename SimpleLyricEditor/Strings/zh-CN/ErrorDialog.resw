@@ -136,6 +136,9 @@
   <data name="SelectedMultipleItemsError" xml:space="preserve">
     <value>请不要选中多项</value>
   </data>
+  <data name="ShowFeedbackHubError" xml:space="preserve">
+    <value>无法启动反馈中心</value>
+  </data>
   <data name="Title" xml:space="preserve">
     <value>出错了！</value>
   </data>
