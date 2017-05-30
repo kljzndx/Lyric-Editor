@@ -2,6 +2,15 @@
 <UpdateLogs>
 
       <UpdateLog>
+        <Version>2.9.0</Version>
+        <Content>
+1，优化播放器逻辑
+2，在歌词文本框内通过回车键修改歌词内容后 如果后面没有歌词项将自动取消输入框的焦点
+        </Content>
+        <Date>2017/05/30</Date>
+      </UpdateLog>
+
+      <UpdateLog>
         <Version>2.8.12</Version>
         <Content>
 1，扩展反馈渠道

@@ -1,4 +1,5 @@
 ﻿using HappyStudio.UwpToolsLibrary.Auxiliarys;
+using HappyStudio.UwpToolsLibrary.Information;
 using Microsoft.Services.Store.Engagement;
 using SimpleLyricEditor.EventArgss;
 using SimpleLyricEditor.Models;
@@ -45,10 +46,10 @@ namespace SimpleLyricEditor.Views.UserControls
         private StoreServicesCustomEventLogger storeLogger => StoreServicesCustomEventLogger.GetDefault();
 
 
-        public event EventHandler Played;
-        public event EventHandler Paused;
-        public event EventHandler<MusicFileChangeEventArgs> MusicFileChanged;
-        public event EventHandler<PositionChangeEventArgs> PositionChanged;
+        public event TypedEventHandler<AudioPlayer, EventArgs> Played;
+        public event TypedEventHandler<AudioPlayer, EventArgs> Paused;
+        public event TypedEventHandler<AudioPlayer, MusicFileChangeEventArgs> MusicFileChanged;
+        public event TypedEventHandler<AudioPlayer, PositionChangeEventArgs> PositionChanged;
 
         private bool isPlay;
         private SystemMediaTransportControls systemMediaTransportControls;
@@ -183,49 +184,19 @@ namespace SimpleLyricEditor.Views.UserControls
             systemMediaTransportControls.PropertyChanged += SystemMediaTransportControls_PropertyChanged;
         }
 
-        private void SystemMediaTransportControls_PropertyChanged(SystemMediaTransportControls sender, SystemMediaTransportControlsPropertyChangedEventArgs args)
-        {
-            if (args.Property == SystemMediaTransportControlsProperty.SoundLevel)
-            {
-                switch (sender.SoundLevel)
-                {
-                    case SoundLevel.Muted:
-                        Pause();
-                        break;
-                    case SoundLevel.Low:
-                    case SoundLevel.Full:
-                        Play();
-                        break;
-                }
-            }
-        }
-
         #region 播放控制
 
         public void Play()
         {
-            if (!IsAvailableSource)
-                OpenMusicFile();
-            else
-            {
-                IsPlay = true;
+            if (IsAvailableSource)
                 AudioPlayer_MediaElement.Play();
-                if (!App.IsSuspend)
-                    StartRefreshTimeTimer();
-                StartRefreshSMTCTimeTimer();
-                Played?.Invoke(this, EventArgs.Empty);
-                storeLogger.Log("开始播放音乐");
-            }
+            else
+                OpenMusicFile();
         }
 
         public void Pause()
         {
-            IsPlay = false;
             AudioPlayer_MediaElement.Pause();
-            RefreshTime_Timer?.Cancel();
-            RefreshSMTCTime_Timer.Cancel();
-            Paused?.Invoke(this, EventArgs.Empty);
-            storeLogger.Log("暂停播放音乐");
         }
 
         public void FastRewind()
@@ -257,7 +228,7 @@ namespace SimpleLyricEditor.Views.UserControls
 
         private async void SystemMediaTransportControls_ButtonPressed(SystemMediaTransportControls sender, SystemMediaTransportControlsButtonPressedEventArgs args)
         {
-            await base.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
                 switch (args.Button)
                 {
@@ -277,6 +248,23 @@ namespace SimpleLyricEditor.Views.UserControls
                         break;
                 }
             });
+        }
+
+        private async void SystemMediaTransportControls_PropertyChanged(SystemMediaTransportControls sender, SystemMediaTransportControlsPropertyChangedEventArgs args)
+        {
+            if (args.Property == SystemMediaTransportControlsProperty.SoundLevel)
+            {
+                switch (sender.SoundLevel)
+                {
+                    case SoundLevel.Muted:
+                        await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, Pause);
+                        break;
+                    case SoundLevel.Low:
+                    case SoundLevel.Full:
+                        await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, Play);
+                        break;
+                }
+            }
         }
 
         private void Window_KeyDown(CoreWindow sender, KeyEventArgs args)
@@ -327,12 +315,18 @@ namespace SimpleLyricEditor.Views.UserControls
         {
             MusicSource = Music.Empty;
             Pause();
-            MessageBox.ShowAsync(CharacterLibrary.ErrorDialog.GetString("OpenMusicError"), CharacterLibrary.ErrorDialog.GetString("Close"));
+            MessageBox.ShowAsync(
+                CharacterLibrary.ErrorDialog.GetString("OpenMusicError") +
+                Environment.NewLine +
+                AppInfo.Name == "简易歌词编辑器" ? "以下为错误详细信息" : "The following is error detail" +
+                Environment.NewLine +
+                e.ErrorMessage, 
+                CharacterLibrary.ErrorDialog.GetString("Close")
+            );
         }
 
         private void AudioPlayer_MediaElement_MediaEnded(object sender, RoutedEventArgs e)
         {
-            Pause();
             SetTime(TimeSpan.Zero);
         }
 
@@ -360,9 +354,22 @@ namespace SimpleLyricEditor.Views.UserControls
                     break;
                 case MediaElementState.Playing:
                     systemMediaTransportControls.PlaybackStatus = MediaPlaybackStatus.Playing;
+
+                    IsPlay = true;
+                    if (!App.IsSuspend)
+                        StartRefreshTimeTimer();
+                    StartRefreshSMTCTimeTimer();
+                    Played?.Invoke(this, EventArgs.Empty);
+                    storeLogger.Log("开始播放音乐");
                     break;
                 case MediaElementState.Paused:
                     systemMediaTransportControls.PlaybackStatus = MediaPlaybackStatus.Paused;
+
+                    IsPlay = false;
+                    RefreshTime_Timer?.Cancel();
+                    RefreshSMTCTime_Timer?.Cancel();
+                    Paused?.Invoke(this, EventArgs.Empty);
+                    storeLogger.Log("暂停播放音乐");
                     break;
                 case MediaElementState.Stopped:
                     systemMediaTransportControls.PlaybackStatus = MediaPlaybackStatus.Stopped;

@@ -194,6 +194,9 @@ namespace SimpleLyricEditor
                 {
                     model.ChangeContent();
                     Lyrics_ListView.SelectedIndex = Lyrics_ListView.SelectedIndex < Lyrics_ListView.Items.Count - 1 ? Lyrics_ListView.SelectedIndex + 1 : -1;
+                    
+                    if (Lyrics_ListView.SelectedIndex == -1)
+                        this.Focus(FocusState.Pointer);
                 }
                 else
                     NewLine();
