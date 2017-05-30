@@ -233,10 +233,10 @@ namespace SimpleLyricEditor.Views.UserControls
                 switch (args.Button)
                 {
                     case SystemMediaTransportControlsButton.Play:
-                        Play();
+                        AudioPlayer_MediaElement.Play();
                         break;
                     case SystemMediaTransportControlsButton.Pause:
-                        Pause();
+                        AudioPlayer_MediaElement.Pause();
                         break;
                     case SystemMediaTransportControlsButton.Rewind:
                     case SystemMediaTransportControlsButton.Previous:
@@ -257,11 +257,11 @@ namespace SimpleLyricEditor.Views.UserControls
                 switch (sender.SoundLevel)
                 {
                     case SoundLevel.Muted:
-                        await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, Pause);
+                        await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, AudioPlayer_MediaElement.Pause);
                         break;
                     case SoundLevel.Low:
                     case SoundLevel.Full:
-                        await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, Play);
+                        await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, AudioPlayer_MediaElement.Play);
                         break;
                 }
             }
@@ -373,6 +373,7 @@ namespace SimpleLyricEditor.Views.UserControls
                     break;
                 case MediaElementState.Stopped:
                     systemMediaTransportControls.PlaybackStatus = MediaPlaybackStatus.Stopped;
+
                     break;
             }
         }
