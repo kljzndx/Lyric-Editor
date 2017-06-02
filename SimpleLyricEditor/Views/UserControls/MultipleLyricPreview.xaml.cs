@@ -24,8 +24,12 @@ namespace SimpleLyricEditor.Views.UserControls
     {
         // Using a DependencyProperty as the backing store for LyricsList.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty LyricsListProperty = DependencyProperty.Register("LyricsList", typeof(IList<LyricItem>), typeof(MultipleLyricPreview), new PropertyMetadata(new List<LyricItem>()));
-        
+
         private Settings settings = Settings.GetSettingsObject();
+
+        /// <summary>
+        /// 用来判断是否停止自动滚动
+        /// </summary>
         private bool isMouseEntered;
         private bool isStartPreview;
 
@@ -70,7 +74,7 @@ namespace SimpleLyricEditor.Views.UserControls
         {
             if (!LyricsList.Any() || !isStartPreview)
                 return;
-            
+
             if (Position.ToLyricTimeString().Remove(7) == LyricsList[nextLyricID].Time.ToLyricTimeString().Remove(7))
             {
                 CurrentLyric = LyricsList[nextLyricID];
@@ -96,7 +100,7 @@ namespace SimpleLyricEditor.Views.UserControls
         {
             if (!LyricsList.Any() || !isStartPreview)
                 return;
-            
+
             if (Position.CompareTo(LyricsList.First().Time) <= -1)
             {
                 CurrentLyric = null;
@@ -115,12 +119,12 @@ namespace SimpleLyricEditor.Views.UserControls
             {
                 if (Position.CompareTo(LyricsList[i].Time) == -1)
                 {
-                    CurrentLyric = LyricsList[i-1];
+                    CurrentLyric = LyricsList[i - 1];
                     nextLyricID = i;
                     break;
                 }
             }
-            
+
         }
 
         public void StartPreview()
@@ -139,8 +143,7 @@ namespace SimpleLyricEditor.Views.UserControls
         private void Main_ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             foreach (LyricItem item in e.AddedItems)
-                if (base.Visibility == Visibility.Visible)
-                    item.IsSelected = true;
+                item.IsSelected = true;
             foreach (LyricItem item in e.RemovedItems)
                 item.IsSelected = false;
 

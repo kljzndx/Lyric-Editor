@@ -26,8 +26,8 @@
             <!--控制按钮区域-->
             <RelativePanel>
                 <StackPanel x:Name="PlayOrPause_StackPanel" x:Uid="/AudioPlayer/PlayOrPause_StackPanel" Orientation="Horizontal" RelativePanel.AlignHorizontalCenterWithPanel="True">
-                    <Button x:Name="Play_Button" Content="&#xE102;" Style="{StaticResource ControllerButton}" Visibility="{x:Bind IsPlay,Mode=OneTime,Converter={StaticResource BoolToVisibility_Reverse}}" Click="Play_Button_Click"/>
-                    <Button x:Name="Pause_Button" Content="&#xE103;" Style="{StaticResource ControllerButton}" Visibility="{x:Bind IsPlay,Mode=OneTime,Converter={StaticResource BoolToVisibility}}" Click="Pause_Button_Click"/>
+                    <Button x:Name="Play_Button" Content="&#xE102;" Style="{StaticResource ControllerButton}" Visibility="{x:Bind IsPlay,Mode=OneTime,Converter={StaticResource BoolToVisibility_Reverse}}" Click="{x:Bind Play}"/>
+                    <Button x:Name="Pause_Button" Content="&#xE103;" Style="{StaticResource ControllerButton}" Visibility="{x:Bind IsPlay,Mode=OneTime,Converter={StaticResource BoolToVisibility}}" Click="{x:Bind Pause}"/>
                 </StackPanel>
                 <Button x:Name="FastRewind_Button" x:Uid="/AudioPlayer/FastRewind_Button" Content="&#xE100;" Style="{StaticResource ControllerButton}" RelativePanel.LeftOf="PlayOrPause_StackPanel" IsEnabled="{x:Bind IsAvailableSource}" Click="{x:Bind FastRewind}"/>
                 <Button x:Name="FastForward_Button" x:Uid="/AudioPlayer/FastForward_Button" Content="&#xE101;" Style="{StaticResource ControllerButton}" RelativePanel.RightOf="PlayOrPause_StackPanel" IsEnabled="{x:Bind IsAvailableSource}" Click="{x:Bind FastForward}"/>

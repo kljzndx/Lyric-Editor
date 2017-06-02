@@ -63,7 +63,7 @@ namespace SimpleLyricEditor.Views.UserControls
                 this.Bindings.Update();
             }
         }
-        
+
         public bool IsAvailableSource { get => MusicSource != Music.Empty; }
 
         /// <summary>
@@ -110,11 +110,11 @@ namespace SimpleLyricEditor.Views.UserControls
 
             PositionChanged?.Invoke(this, new PositionChangeEventArgs(false, Time));
         }
-        
+
         private void StartRefreshTimeTimer()
         {
             async void reloadTime(ThreadPoolTimer timer) => await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, RefreshTime);
-            
+
             RefreshTime_Timer = ThreadPoolTimer.CreatePeriodicTimer(reloadTime, TimeSpan.FromMilliseconds(50), reloadTime);
         }
 
@@ -133,7 +133,7 @@ namespace SimpleLyricEditor.Views.UserControls
 
         private void StartRefreshSMTCTimeTimer()
         {
-            async void refreshSMTCTimer(ThreadPoolTimer timer) => await this.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, RefreshSMTCTime);
+            async void refreshSMTCTimer(ThreadPoolTimer timer) => await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, RefreshSMTCTime);
 
             RefreshSMTCTime_Timer = ThreadPoolTimer.CreatePeriodicTimer(refreshSMTCTimer, TimeSpan.FromSeconds(5), refreshSMTCTimer);
         }
@@ -157,6 +157,7 @@ namespace SimpleLyricEditor.Views.UserControls
         public void SetTime(TimeSpan time)
         {
             Time = time;
+            RefreshSMTCTime();
 
             PositionChanged?.Invoke(this, new PositionChangeEventArgs(true, time));
             storeLogger.Log("更改播放进度");
@@ -180,10 +181,10 @@ namespace SimpleLyricEditor.Views.UserControls
             systemMediaTransportControls.IsNextEnabled = true;
             systemMediaTransportControls.PlaybackStatus = MediaPlaybackStatus.Closed;
             systemMediaTransportControls.ButtonPressed += SystemMediaTransportControls_ButtonPressed;
-            systemMediaTransportControls.PlaybackPositionChangeRequested += (s, a) => SetTime(a.RequestedPlaybackPosition);
+            systemMediaTransportControls.PlaybackPositionChangeRequested += async (s, e) => await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => SetTime(e.RequestedPlaybackPosition));
             systemMediaTransportControls.PropertyChanged += SystemMediaTransportControls_PropertyChanged;
         }
-
+        
         #region 播放控制
 
         public void Play()
@@ -320,7 +321,7 @@ namespace SimpleLyricEditor.Views.UserControls
                 Environment.NewLine +
                 AppInfo.Name == "简易歌词编辑器" ? "以下为错误详细信息" : "The following is error detail" +
                 Environment.NewLine +
-                e.ErrorMessage, 
+                e.ErrorMessage,
                 CharacterLibrary.ErrorDialog.GetString("Close")
             );
         }
@@ -329,19 +330,7 @@ namespace SimpleLyricEditor.Views.UserControls
         {
             SetTime(TimeSpan.Zero);
         }
-
-        private void Play_Button_Click(object sender, RoutedEventArgs e)
-        {
-            Play();
-            Pause_Button.Focus(FocusState.Pointer);
-        }
-
-        private void Pause_Button_Click(object sender, RoutedEventArgs e)
-        {
-            Pause();
-            Play_Button.Focus(FocusState.Pointer);
-        }
-
+        
         private void AudioPlayer_MediaElement_CurrentStateChanged(object sender, RoutedEventArgs e)
         {
             switch ((sender as MediaElement).CurrentState)
@@ -356,6 +345,8 @@ namespace SimpleLyricEditor.Views.UserControls
                     systemMediaTransportControls.PlaybackStatus = MediaPlaybackStatus.Playing;
 
                     IsPlay = true;
+                    Pause_Button.Focus(FocusState.Pointer);
+
                     if (!App.IsSuspend)
                         StartRefreshTimeTimer();
                     StartRefreshSMTCTimeTimer();
@@ -366,6 +357,8 @@ namespace SimpleLyricEditor.Views.UserControls
                     systemMediaTransportControls.PlaybackStatus = MediaPlaybackStatus.Paused;
 
                     IsPlay = false;
+                    Play_Button.Focus(FocusState.Pointer);
+
                     RefreshTime_Timer?.Cancel();
                     RefreshSMTCTime_Timer?.Cancel();
                     Paused?.Invoke(this, EventArgs.Empty);

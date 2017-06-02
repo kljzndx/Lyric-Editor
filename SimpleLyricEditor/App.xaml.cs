@@ -50,7 +50,7 @@ namespace SimpleLyricEditor
             this.Suspending += OnSuspending;
             this.Resuming += OnResuming;
             this.UnhandledException += OnUnhandledException;
-
+            EnsureSyncContext();
         }
 
         private void CreateKeySubscription()
