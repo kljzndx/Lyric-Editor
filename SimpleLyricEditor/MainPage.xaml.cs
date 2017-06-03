@@ -45,6 +45,12 @@ namespace SimpleLyricEditor
 
             model.SelectedItems = Lyrics_ListView.SelectedItems;
 
+            audioPlayer.Played += (s, e) =>
+            {
+                singleLyricPreview.RepositionLyric();
+                multipleLyricPreview.Reposition();
+            };
+
             audioPlayer.PositionChanged += (s, e) =>
             {
                 if (e.IsUserChange)
@@ -77,10 +83,7 @@ namespace SimpleLyricEditor
                     ThreadPoolTimer.CreateTimer(async (t) => await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                     {
                         if (App.IsPressShift)
-                        {
-                            Lyrics_ListView.SelectedItem = Lyrics_ListView.Items[e.Lyrics.Count - 1];
-                            Lyrics_ListView.SelectedItem = null;
-                        }
+                            Lyrics_ListView.ScrollIntoView(Lyrics_ListView.Items.FirstOrDefault());
                         else
                             Lyrics_ListView.ScrollIntoView(Lyrics_ListView.Items.LastOrDefault());
                     }), TimeSpan.FromMilliseconds(100));

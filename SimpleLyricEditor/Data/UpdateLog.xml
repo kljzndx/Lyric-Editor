@@ -2,7 +2,7 @@
 <UpdateLogs>
 
       <UpdateLog>
-        <Version>2.9.3</Version>
+        <Version>2.9.4</Version>
         <Content>
 1，继续优化播放器
 2，修复点击播放/暂停按钮后会激活文本框的问题
@@ -11,7 +11,7 @@
 请再重新发送一次错误报告
 若该报告还是没法说明问题，那么我将在下个版本增加异常退出时自动备份的功能
         </Content>
-        <Date>2017/06/02</Date>
+        <Date>2017/06/03</Date>
       </UpdateLog>
 
       <UpdateLog>

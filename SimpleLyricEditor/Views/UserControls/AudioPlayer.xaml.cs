@@ -115,7 +115,7 @@ namespace SimpleLyricEditor.Views.UserControls
         {
             async void reloadTime(ThreadPoolTimer timer) => await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, RefreshTime);
 
-            RefreshTime_Timer = ThreadPoolTimer.CreatePeriodicTimer(reloadTime, TimeSpan.FromMilliseconds(50), reloadTime);
+            RefreshTime_Timer = ThreadPoolTimer.CreatePeriodicTimer(reloadTime, TimeSpan.FromMilliseconds(50));
         }
 
         private void RefreshSMTCTime()
@@ -135,7 +135,7 @@ namespace SimpleLyricEditor.Views.UserControls
         {
             async void refreshSMTCTimer(ThreadPoolTimer timer) => await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, RefreshSMTCTime);
 
-            RefreshSMTCTime_Timer = ThreadPoolTimer.CreatePeriodicTimer(refreshSMTCTimer, TimeSpan.FromSeconds(5), refreshSMTCTimer);
+            RefreshSMTCTime_Timer = ThreadPoolTimer.CreatePeriodicTimer(refreshSMTCTimer, TimeSpan.FromSeconds(5));
         }
 
         public async void OpenMusicFile()
@@ -328,7 +328,10 @@ namespace SimpleLyricEditor.Views.UserControls
 
         private void AudioPlayer_MediaElement_MediaEnded(object sender, RoutedEventArgs e)
         {
-            SetTime(TimeSpan.Zero);
+            Time = TimeSpan.Zero;
+            RefreshTime();
+            RefreshSMTCTime();
+            storeLogger.Log("播放完毕");
         }
         
         private void AudioPlayer_MediaElement_CurrentStateChanged(object sender, RoutedEventArgs e)
