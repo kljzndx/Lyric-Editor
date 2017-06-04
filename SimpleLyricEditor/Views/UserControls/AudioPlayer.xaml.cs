@@ -102,6 +102,15 @@ namespace SimpleLyricEditor.Views.UserControls
             CoreWindow window = CoreWindow.GetForCurrentThread();
             window.KeyDown += Window_KeyDown;
             window.KeyUp += Window_KeyUp;
+            Unloaded += AudioPlayer_Unloaded;
+        }
+
+        private void AudioPlayer_Unloaded(object sender, RoutedEventArgs e)
+        {
+            //用于解决内存泄露
+            CoreWindow window = CoreWindow.GetForCurrentThread();
+            window.KeyDown -= Window_KeyDown;
+            window.KeyUp -= Window_KeyUp;
         }
 
         private void RefreshTime()
