@@ -2,6 +2,15 @@
 <UpdateLogs>
 
       <UpdateLog>
+        <Version>2.9.6</Version>
+        <Content>
+1，增加自动备份功能，崩溃后再打开会自动恢复
+2，修复在滚动预览模式下快速更改进度有可能导致崩溃的问题
+        </Content>
+        <Date>2017/06/06</Date>
+      </UpdateLog>
+
+      <UpdateLog>
         <Version>2.9.4</Version>
         <Content>
 1，继续优化播放器

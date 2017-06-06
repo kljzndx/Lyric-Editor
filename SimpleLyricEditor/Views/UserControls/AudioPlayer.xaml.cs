@@ -1,6 +1,5 @@
 ﻿using HappyStudio.UwpToolsLibrary.Auxiliarys;
 using HappyStudio.UwpToolsLibrary.Information;
-using Microsoft.Services.Store.Engagement;
 using SimpleLyricEditor.EventArgss;
 using SimpleLyricEditor.Models;
 using System;
@@ -43,7 +42,6 @@ namespace SimpleLyricEditor.Views.UserControls
         private ThreadPoolTimer RefreshTime_Timer;
         private ThreadPoolTimer RefreshSMTCTime_Timer;
         private Settings settings = Settings.GetSettingsObject();
-        private StoreServicesCustomEventLogger storeLogger => StoreServicesCustomEventLogger.GetDefault();
 
 
         public event TypedEventHandler<AudioPlayer, EventArgs> Played;
@@ -105,14 +103,6 @@ namespace SimpleLyricEditor.Views.UserControls
             Unloaded += AudioPlayer_Unloaded;
         }
 
-        private void AudioPlayer_Unloaded(object sender, RoutedEventArgs e)
-        {
-            //用于解决内存泄露
-            CoreWindow window = CoreWindow.GetForCurrentThread();
-            window.KeyDown -= Window_KeyDown;
-            window.KeyUp -= Window_KeyUp;
-        }
-
         private void RefreshTime()
         {
             Time = AudioPlayer_MediaElement.Position;
@@ -169,14 +159,12 @@ namespace SimpleLyricEditor.Views.UserControls
             RefreshSMTCTime();
 
             PositionChanged?.Invoke(this, new PositionChangeEventArgs(true, time));
-            storeLogger.Log("更改播放进度");
         }
 
         public async void SetSource(Music newSource)
         {
             MusicSource = newSource;
             AudioPlayer_MediaElement.SetSource(await newSource.File.OpenAsync(FileAccessMode.Read), newSource.File.ContentType);
-            storeLogger.Log("更改音乐源");
         }
 
         public void SetupSystemMediaTransportControls()
@@ -315,6 +303,14 @@ namespace SimpleLyricEditor.Views.UserControls
             }
         }
 
+        private void AudioPlayer_Unloaded(object sender, RoutedEventArgs e)
+        {
+            //用于解决内存泄露
+            CoreWindow window = CoreWindow.GetForCurrentThread();
+            window.KeyDown -= Window_KeyDown;
+            window.KeyUp -= Window_KeyUp;
+        }
+
         private void AudioPlayer_MediaElement_MediaOpened(object sender, RoutedEventArgs e)
         {
             Play();
@@ -340,7 +336,6 @@ namespace SimpleLyricEditor.Views.UserControls
             Time = TimeSpan.Zero;
             RefreshTime();
             RefreshSMTCTime();
-            storeLogger.Log("播放完毕");
         }
         
         private void AudioPlayer_MediaElement_CurrentStateChanged(object sender, RoutedEventArgs e)
@@ -363,7 +358,6 @@ namespace SimpleLyricEditor.Views.UserControls
                         StartRefreshTimeTimer();
                     StartRefreshSMTCTimeTimer();
                     Played?.Invoke(this, EventArgs.Empty);
-                    storeLogger.Log("开始播放音乐");
                     break;
                 case MediaElementState.Paused:
                     systemMediaTransportControls.PlaybackStatus = MediaPlaybackStatus.Paused;
@@ -374,7 +368,6 @@ namespace SimpleLyricEditor.Views.UserControls
                     RefreshTime_Timer?.Cancel();
                     RefreshSMTCTime_Timer?.Cancel();
                     Paused?.Invoke(this, EventArgs.Empty);
-                    storeLogger.Log("暂停播放音乐");
                     break;
                 case MediaElementState.Stopped:
                     systemMediaTransportControls.PlaybackStatus = MediaPlaybackStatus.Stopped;

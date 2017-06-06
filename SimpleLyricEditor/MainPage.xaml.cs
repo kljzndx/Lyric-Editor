@@ -116,7 +116,6 @@ namespace SimpleLyricEditor
             {
                 await MessageBox.ShowAsync(CharacterLibrary.ErrorDialog.GetString("SelectedMultipleItemsError"), CharacterLibrary.ErrorDialog.GetString("Close"));
             }
-            model.storeLogger.Log("通过快捷键跳转到选定歌词项的时间上");
         }
 
         private void Window_KeyDown(CoreWindow sender, KeyEventArgs args)
@@ -149,7 +148,6 @@ namespace SimpleLyricEditor
                             Lyrics_ListView.SelectedIndex = Lyrics_ListView.SelectedIndex > 0 ? Lyrics_ListView.SelectedIndex - 1 : -1;
                         }
                         this.Focus(FocusState.Pointer);
-                        model.storeLogger.Log("选定上一个歌词");
                         break;
                     case VirtualKey.Down:
                         //抵消器，防止出现一次跳两行的情况
@@ -158,7 +156,6 @@ namespace SimpleLyricEditor
 
                         Lyrics_ListView.SelectedIndex = Lyrics_ListView.SelectedIndex < Lyrics_ListView.Items.Count - 1 ? Lyrics_ListView.SelectedIndex + 1 : -1;
                         this.Focus(FocusState.Pointer);
-                        model.storeLogger.Log("选定下一个歌词");
                         break;
                 }
             }
@@ -186,7 +183,6 @@ namespace SimpleLyricEditor
                 {
                     t.Text += "\n";
                     t.Select(t.Text.Length, 0);
-                    model.storeLogger.Log("歌词文本框--换行");
                 }
 
                 if (App.IsPressCtrl)
@@ -210,21 +206,18 @@ namespace SimpleLyricEditor
         {
             Lyrics_ListView.SelectionMode = ListViewSelectionMode.Multiple;
             model.IsMultilineEditMode = true;
-            model.storeLogger.Log("切换到多行编辑模式");
         }
 
         private void ExitMultilineEditMode_Button_Click(object sender, RoutedEventArgs e)
         {
             Lyrics_ListView.SelectionMode = ListViewSelectionMode.Single;
             model.IsMultilineEditMode = false;
-            model.storeLogger.Log("退出多行编辑模式");
         }
 
         private void Select_Reverse_MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
         {
             foreach (ListViewItem item in Lyrics_ListView.ItemsPanelRoot.Children)
                 item.IsSelected = !item.IsSelected;
-            model.storeLogger.Log("选择工具--反选");
         }
 
         private void Select_BeforeItem_MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
@@ -236,8 +229,6 @@ namespace SimpleLyricEditor
                         break;
                     item.IsSelected = true;
                 }
-
-            model.storeLogger.Log("选择工具--选择之前项");
         }
 
         private void Select_AfterItem_MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
@@ -250,8 +241,6 @@ namespace SimpleLyricEditor
                         break;
                     l.IsSelected = true;
                 }
-
-            model.storeLogger.Log("选择工具--选择之后项");
         }
 
         private void Select_Paragraph_MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
@@ -277,7 +266,6 @@ namespace SimpleLyricEditor
                         break;
                     (Lyrics_ListView.ItemsPanelRoot.Children[i] as ListViewItem).IsSelected = true;
                 }
-                model.storeLogger.Log("选择工具--选择段落");
             }
         }
         #endregion
@@ -344,7 +332,6 @@ namespace SimpleLyricEditor
         private void LyricItemTemplate_GotoThisTime_Click(object sender, EventArgs e)
         {
             audioPlayer.SetTime((sender as Lyric).Time);
-            model.storeLogger.Log("通过跳转按钮跳转到选定歌词项的时间上");
         }
         #endregion
         #region 预览区域
@@ -358,7 +345,6 @@ namespace SimpleLyricEditor
                 item.IsSelected = false;
 
             multipleLyricPreview.StartPreview();
-            model.storeLogger.Log("切换到滚动歌词预览模式");
         }
 
         private void Fold_Button_Click(object sender, RoutedEventArgs e)
@@ -370,7 +356,6 @@ namespace SimpleLyricEditor
                 item.IsSelected = true;
 
             multipleLyricPreview.StopPreview();
-            model.storeLogger.Log("切换到编辑模式");
         }
 
         private async void MiniMode_Button_Click(object sender, RoutedEventArgs e)
@@ -393,7 +378,6 @@ namespace SimpleLyricEditor
                 };
                 await dialog.ShowAsync();
             }
-            model.storeLogger.Log("切换到迷你模式");
         }
 
         private async void ExitMiniMode_Button_Click(object sender, RoutedEventArgs e)
@@ -401,7 +385,6 @@ namespace SimpleLyricEditor
             await ApplicationView.GetForCurrentView().TryEnterViewModeAsync(ApplicationViewMode.Default);
             (sender as Button).Visibility = Visibility.Collapsed;
             MiniMode_Button.Visibility = Visibility.Visible;
-            model.storeLogger.Log("退出迷你模式");
         }
 
         #endregion
@@ -420,7 +403,6 @@ namespace SimpleLyricEditor
         private void Settings_AppBarButton_Click(object sender, RoutedEventArgs e)
         {
             HidePanel_SplitView.IsPaneOpen = !HidePanel_SplitView.IsPaneOpen;
-            model.storeLogger.Log("打开设置面板");
         }
 
         private async void FeedbackInEmail_MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
@@ -430,8 +412,10 @@ namespace SimpleLyricEditor
 
         private async void FeedbackInSkype_MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
         {
-            DataPackage dp = new DataPackage();
-            dp.RequestedOperation = DataPackageOperation.Copy;
+            DataPackage dp = new DataPackage()
+            {
+                RequestedOperation = DataPackageOperation.Copy
+            };
             dp.SetText("kljzndx@outlook.com");
             Clipboard.Clear();
             Clipboard.SetContent(dp);
@@ -499,7 +483,6 @@ namespace SimpleLyricEditor
         private void LyricsFileInfo_ContentDialog_Opened(ContentDialog sender, ContentDialogOpenedEventArgs args)
         {
             model.InputBoxGotFocus();
-            model.storeLogger.Log("打开歌词文件信息弹窗");
         }
 
         private void LyricsFileInfo_ContentDialog_Closed(ContentDialog sender, ContentDialogClosedEventArgs args)

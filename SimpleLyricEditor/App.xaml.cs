@@ -21,6 +21,7 @@ using HappyStudio.UwpToolsLibrary.Auxiliarys;
 using HappyStudio.UwpToolsLibrary.Information;
 using Windows.ApplicationModel.Resources;
 using WinRTExceptions;
+using SimpleLyricEditor.Models;
 
 namespace SimpleLyricEditor
 {
@@ -29,6 +30,7 @@ namespace SimpleLyricEditor
     /// </summary>
     sealed partial class App : Application
     {
+        private Settings settings = Settings.GetSettingsObject();
         private CoreWindow window;
 
         public static ViewModelLocator Locator = new ViewModelLocator();
@@ -83,12 +85,14 @@ namespace SimpleLyricEditor
         private void OnSynchronizationContextUnhandledException(object sender, WinRTExceptions.UnhandledExceptionEventArgs e)
         {
             e.Handled = true;
+            settings.SettingObject.Values["IsCollapse"] = true;
             ShowErrorDialog(e.Exception);
         }
 
         private void OnUnhandledException(object sender, Windows.UI.Xaml.UnhandledExceptionEventArgs e)
         {
             e.Handled = true;
+            settings.SettingObject.Values["IsCollapse"] = true;
             ShowErrorDialog(e.Exception);
         }
 

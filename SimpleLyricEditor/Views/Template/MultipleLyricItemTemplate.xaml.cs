@@ -32,12 +32,12 @@ namespace SimpleLyricEditor.Views.Template
             {
                 this.Bindings.Update();
 
-                if(lyric is LyricItem)
+                if (lyric is LyricItem)
                     lyric.PropertyChanged += (se, ev) =>
                     {
                         if (ev.PropertyName == "IsSelected")
                         {
-                            if (lyric.IsSelected)
+                            if (lyric is LyricItem && lyric.IsSelected)
                             {
                                 Main_TextBlock.FontWeight = FontWeights.Bold;
                                 Main_TextBlock.FontSize += 2;
