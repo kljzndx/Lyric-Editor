@@ -337,9 +337,6 @@
     </SDKReference>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="AsyncStackTraceEx">
-      <Version>1.0.1.1</Version>
-    </PackageReference>
     <PackageReference Include="HappyStudio.UwpToolsLibrary">
       <Version>1.0.2</Version>
     </PackageReference>

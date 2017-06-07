@@ -103,7 +103,7 @@ namespace SimpleLyricEditor.Models
             RenameSettingValue(nameof(BackgroundSourceType), "UserDefined", "LocalImage");
             RenameSettingKey("UserDefinedBackgroundImagePath", nameof(LocalBackgroundImagePath));
             RenameSettingKey("PreviewFontSize", nameof(SingleLineLyricPreviewFontSize));
-            
+
             Serialization();
         }
 
@@ -141,22 +141,30 @@ namespace SimpleLyricEditor.Models
 
                 if (settingInfo is null || item.IsInitOnly || item.IsLiteral)
                     continue;
-                
-                item.SetValue(this, GetSetting(settingInfo.SettingName, settingInfo.DefaultValue.ToString(), settingInfo.Convert));
+
+                if (settingInfo.Convert is null)
+                    item.SetValue(this, GetSetting(settingInfo.SettingName, settingInfo.DefaultValue));
+                else
+                    item.SetValue(this, GetSetting(settingInfo.SettingName, settingInfo.DefaultValue.ToString(), settingInfo.Convert));
             }
         }
 
-        public T GetSetting<T>(string key, T defaultValue, Func<string, T> convert = null)
+        public T GetSetting<T>(string key, T defaultValue)
         {
             if (!SettingObject.Values.ContainsKey(key))
                 SettingObject.Values[key] = defaultValue;
 
-            if (convert is null)
-                return (T)SettingObject.Values[key];
-            else
-                return convert(SettingObject.Values[key].ToString());
+            return (T)SettingObject.Values[key];
         }
-        
+
+        public T GetSetting<T>(string key, string defaultValue, Func<string, T> convert)
+        {
+            if (!SettingObject.Values.ContainsKey(key))
+                SettingObject.Values[key] = defaultValue;
+
+            return convert(SettingObject.Values[key].ToString());
+        }
+
         public void SetSetting<T>(ref T field, T value, object settingValue = null, [CallerMemberName] string propertyName = null)
         {
             if (Object.Equals(field, value))
