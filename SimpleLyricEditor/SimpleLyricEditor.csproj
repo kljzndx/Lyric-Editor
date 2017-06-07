@@ -126,6 +126,9 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Attributes\SettingFieldAttributeBase.cs" />
+    <Compile Include="Attributes\SettingFieldByEnumAttribute.cs" />
+    <Compile Include="Attributes\SettingFieldByNormalAttribute.cs" />
     <Compile Include="Enums\BackgroundSourceTypeEnum.cs" />
     <Compile Include="Enums\SelectItemAlwaysStaysIn_Enum.cs" />
     <Compile Include="EventArgss\LyricFileChangeEventArgs.cs" />

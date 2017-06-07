@@ -18,7 +18,7 @@ namespace SimpleLyricEditor.Models
             Code = ex.HResult;
             Source = ex.Source;
             Content = ex.Message;
-            StackTrace = ex.StackTraceEx();
+            StackTrace = ex.StackTrace;
         }
 
         public override string ToString()

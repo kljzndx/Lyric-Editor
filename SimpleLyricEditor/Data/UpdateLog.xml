@@ -2,6 +2,16 @@
 <UpdateLogs>
 
       <UpdateLog>
+        <Version>2.9.9</Version>
+        <Content>
+1，简化初始化设置流程
+2，崩溃报告信息更详细
+3，修复自动备份功能工作不正常的问题
+        </Content>
+        <Date>2017/06/07</Date>
+      </UpdateLog>
+
+      <UpdateLog>
         <Version>2.9.6</Version>
         <Content>
 1，增加自动备份功能，崩溃后再打开会自动恢复

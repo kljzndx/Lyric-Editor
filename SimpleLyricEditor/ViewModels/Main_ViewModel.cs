@@ -31,6 +31,7 @@ namespace SimpleLyricEditor.ViewModels
         public Settings Settings = Settings.GetSettingsObject();
 
         private StorageFile tempFile;
+        private ThreadPoolTimer saveTempFile_Timer;
 
         //当前播放进度
         private TimeSpan thisTime;
@@ -88,10 +89,10 @@ namespace SimpleLyricEditor.ViewModels
             GetTempFile();
             if (Settings.GetSetting("IsCollapse", false))
                 ReadTempFile();
-            ThreadPoolTimer.CreatePeriodicTimer((t) => SaveTempFile(), TimeSpan.FromSeconds(30));
+            saveTempFile_Timer = ThreadPoolTimer.CreatePeriodicTimer((t) => SaveTempFile(), TimeSpan.FromSeconds(30));
             Settings.SettingObject.Values["IsCollapse"] = false;
         }
-
+        
         private async void GetTempFile()
         {
             if (await ApplicationData.Current.TemporaryFolder.TryGetItemAsync("temp.lrc") is IStorageItem file)
@@ -102,14 +103,14 @@ namespace SimpleLyricEditor.ViewModels
 
         private async void SaveTempFile()
         {
-            if (!lyrics.Any())
+            if (lyrics.Any())
                 await LyricFileTools.SaveFileAsync(tags, lyrics, tempFile);
         }
 
         private async void ReadTempFile()
         {
             string content = await LyricFileTools.ReadFileAsync(tempFile);
-            lyrics = LyricTools.LrcParse(content, tags);
+            Lyrics = LyricTools.LrcParse(content, tags);
         }
 
         public void InputBoxGotFocus()
@@ -240,9 +241,6 @@ namespace SimpleLyricEditor.ViewModels
 
         public async void ChangeTime()
         {
-            if (!selectedItems.Any())
-                return;
-
             try
             {
                 (selectedItems.SingleOrDefault() as LyricItem).Time = thisTime;

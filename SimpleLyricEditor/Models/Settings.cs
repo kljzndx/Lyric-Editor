@@ -9,6 +9,8 @@ using System.ComponentModel;
 using Windows.UI.Xaml;
 using Windows.Storage;
 using HappyStudio.UwpToolsLibrary.Information;
+using SimpleLyricEditor.Attributes;
+using System.Reflection;
 
 namespace SimpleLyricEditor.Models
 {
@@ -19,33 +21,41 @@ namespace SimpleLyricEditor.Models
         public readonly ApplicationDataContainer SettingObject = ApplicationData.Current.LocalSettings;
 
         //播放速率
+        [SettingFieldByNormal(nameof(PlaybackRate), 1D)]
         private double playbackRate;
         public double PlaybackRate { get => playbackRate; set => SetSetting(ref playbackRate, value); }
 
         //音量
+        [SettingFieldByNormal(nameof(Volume), 1D)]
         private double volume;
         public double Volume { get => volume; set => SetSetting(ref volume, value); }
 
+        [SettingFieldByNormal(nameof(Channel), 0D)]
         private double channel;
         public double Channel { get => channel; set => SetSetting(ref channel, value); }
 
         //默认歌词文件作者名
+        [SettingFieldByNormal(nameof(DefaultLyricAuthor), "")]
         private string defaultLyricAuthor;
         public string DefaultLyricAuthor { get => defaultLyricAuthor; set => SetSetting(ref defaultLyricAuthor, value); }
 
         //页面主题
+        [SettingFieldByEnum(nameof(PageTheme), "Dark", typeof(ElementTheme))]
         private ElementTheme pageTheme;
         public ElementTheme PageTheme { get => pageTheme; set => SetSetting(ref pageTheme, value, value.ToString()); }
-        
+
         //背景图显示
+        [SettingFieldByNormal(nameof(isDisplayBackGround), true)]
         private bool isDisplayBackGround;
         public bool IsDisplayBackground { get => isDisplayBackGround; set => SetSetting(ref isDisplayBackGround, value); }
 
         //背景源类型
+        [SettingFieldByEnum(nameof(BackgroundSourceType), "AlbumImage", typeof(BackgroundSourceTypeEnum))]
         private BackgroundSourceTypeEnum backgroundSourceType;
         public BackgroundSourceTypeEnum BackgroundSourceType { get => backgroundSourceType; set => SetSetting(ref backgroundSourceType, value, value.ToString()); }
 
         //用户指定的图片的路径
+        [SettingFieldByNormal(nameof(LocalBackgroundImagePath), "")]
         private string localBackgroundImagePath;
         public string LocalBackgroundImagePath { get => localBackgroundImagePath; set => SetSetting(ref localBackgroundImagePath, value); }
 
@@ -53,28 +63,35 @@ namespace SimpleLyricEditor.Models
         public bool IsBlurUsability { get; } = SystemInfo.BuildVersion >= 14393;
 
         //背景模糊度
+        [SettingFieldByNormal(nameof(BackgroundBlurDegree), 5D)]
         private double backgroundBlurDegree;
         public double BackgroundBlurDegree { get => backgroundBlurDegree; set => SetSetting(ref backgroundBlurDegree, value); }
 
         //背景透明度
+        [SettingFieldByNormal(nameof(BackgroundOpacity), 0.3)]
         private double backgroundOpacity;
         public double BackgroundOpacity { get => backgroundOpacity; set => SetSetting(ref backgroundOpacity, value); }
-        
+
         //预览区域显示
+        [SettingFieldByNormal(nameof(IsDisplayLyricsPreview), true)]
         private bool isDisplayLyricsPreview;
         public bool IsDisplayLyricsPreview { get => isDisplayLyricsPreview; set => SetSetting(ref isDisplayLyricsPreview, value); }
 
         //单行歌词预览区域字体大小
+        [SettingFieldByNormal(nameof(SingleLineLyricPreviewFontSize), 20D)]
         private double singleLineLyricPreviewFontSize;
         public double SingleLineLyricPreviewFontSize { get => singleLineLyricPreviewFontSize; set => SetSetting(ref singleLineLyricPreviewFontSize, value); }
 
+        [SettingFieldByNormal(nameof(ScrollLyricsPreviewFontSize), 15D)]
         private double scrollLyricsPreviewFontSize;
         public double ScrollLyricsPreviewFontSize { get => scrollLyricsPreviewFontSize; set => SetSetting(ref scrollLyricsPreviewFontSize, value); }
 
         //预览区域背景透明度
+        [SettingFieldByNormal(nameof(PreviewBackgroundOpacity), 0.3)]
         private double previewBackgroundOpacity;
         public double PreviewBackgroundOpacity { get => previewBackgroundOpacity; set => SetSetting(ref previewBackgroundOpacity, value); }
 
+        [SettingFieldByEnum(nameof(SelectItemAlwaysStaysIn), "ViewableArea", typeof(SelectItemAlwaysStaysIn_Enum))]
         private SelectItemAlwaysStaysIn_Enum selectItemAlwaysStaysIn;
         public SelectItemAlwaysStaysIn_Enum SelectItemAlwaysStaysIn { get => selectItemAlwaysStaysIn; set => SetSetting(ref selectItemAlwaysStaysIn, value, value.ToString()); }
 
@@ -87,24 +104,9 @@ namespace SimpleLyricEditor.Models
             RenameSettingKey("UserDefinedBackgroundImagePath", nameof(LocalBackgroundImagePath));
             RenameSettingKey("PreviewFontSize", nameof(SingleLineLyricPreviewFontSize));
             
-            //初始化设置
-            playbackRate = GetSetting(nameof(PlaybackRate), 1D);
-            volume = GetSetting(nameof(Volume), 1D);
-            channel = GetSetting(nameof(Channel), 0D);
-            defaultLyricAuthor = GetSetting(nameof(DefaultLyricAuthor), String.Empty);
-            pageTheme = GetSetting(nameof(PageTheme), ElementTheme.Dark.ToString(), s => (ElementTheme)Enum.Parse(typeof(ElementTheme), s));
-            isDisplayBackGround = GetSetting(nameof(IsDisplayBackground), true);
-            backgroundSourceType = GetSetting(nameof(BackgroundSourceType), BackgroundSourceTypeEnum.AlbumImage.ToString(), s => (BackgroundSourceTypeEnum)Enum.Parse(typeof(BackgroundSourceTypeEnum), s));
-            localBackgroundImagePath = GetSetting(nameof(LocalBackgroundImagePath), String.Empty);
-            backgroundBlurDegree = IsBlurUsability ? GetSetting(nameof(BackgroundBlurDegree), 5D) : 0D;
-            backgroundOpacity = GetSetting(nameof(BackgroundOpacity), 0.3);
-            isDisplayLyricsPreview = GetSetting(nameof(isDisplayLyricsPreview), true);
-            singleLineLyricPreviewFontSize = GetSetting(nameof(SingleLineLyricPreviewFontSize), SystemInfo.DeviceType == "Windows.Mobile" ? 18D : 24D);
-            scrollLyricsPreviewFontSize = GetSetting(nameof(ScrollLyricsPreviewFontSize), 15D);
-            previewBackgroundOpacity = GetSetting(nameof(PreviewBackgroundOpacity), 0.3);
-            selectItemAlwaysStaysIn = GetSetting(nameof(SelectItemAlwaysStaysIn), SelectItemAlwaysStaysIn_Enum.ViewableArea.ToString(), s => (SelectItemAlwaysStaysIn_Enum)Enum.Parse(typeof(SelectItemAlwaysStaysIn_Enum), s));
+            Serialization();
         }
-        
+
         public static Settings GetSettingsObject()
         {
             if (obj is null)
@@ -128,21 +130,33 @@ namespace SimpleLyricEditor.Models
             if (SettingObject.Values.ContainsKey(key) && SettingObject.Values[key] == oldValue)
                 SettingObject.Values[key] = newValue;
         }
+
+        private void Serialization()
+        {
+            var currentObjctTypeInfo = this.GetType().GetTypeInfo();
+            var fields = currentObjctTypeInfo.DeclaredFields;
+            foreach (FieldInfo item in fields)
+            {
+                SettingFieldAttributeBase settingInfo = item.GetCustomAttribute<SettingFieldAttributeBase>();
+
+                if (settingInfo is null || item.IsInitOnly || item.IsLiteral)
+                    continue;
+                
+                item.SetValue(this, GetSetting(settingInfo.SettingName, settingInfo.DefaultValue.ToString(), settingInfo.Convert));
+            }
+        }
+
+        public T GetSetting<T>(string key, T defaultValue, Func<string, T> convert = null)
+        {
+            if (!SettingObject.Values.ContainsKey(key))
+                SettingObject.Values[key] = defaultValue;
+
+            if (convert is null)
+                return (T)SettingObject.Values[key];
+            else
+                return convert(SettingObject.Values[key].ToString());
+        }
         
-        public T GetSetting<T>(string key, T defaultValue)
-        {
-            if (!SettingObject.Values.ContainsKey(key))
-                SettingObject.Values[key] = defaultValue;
-            return (T)SettingObject.Values[key];
-        }
-
-        public T GetSetting<T>(string key, string defaultValue, Func<string, T> convert)
-        {
-            if (!SettingObject.Values.ContainsKey(key))
-                SettingObject.Values[key] = defaultValue;
-            return convert(SettingObject.Values[key].ToString());
-        }
-
         public void SetSetting<T>(ref T field, T value, object settingValue = null, [CallerMemberName] string propertyName = null)
         {
             if (Object.Equals(field, value))
