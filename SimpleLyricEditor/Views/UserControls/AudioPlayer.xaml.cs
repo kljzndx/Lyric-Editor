@@ -24,6 +24,11 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Windows.ApplicationModel.Core;
+using Windows.UI.ViewManagement;
+using Windows.UI.Xaml.Hosting;
+using Windows.UI.Composition;
+using SimpleLyricEditor.Extensions;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
@@ -102,7 +107,7 @@ namespace SimpleLyricEditor.Views.UserControls
             window.KeyUp += Window_KeyUp;
             Unloaded += AudioPlayer_Unloaded;
         }
-
+        
         private void RefreshTime()
         {
             Time = AudioPlayer_MediaElement.Position;

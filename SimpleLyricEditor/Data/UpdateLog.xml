@@ -2,6 +2,14 @@
 <UpdateLogs>
 
       <UpdateLog>
+        <Version>2.10.0</Version>
+        <Content>
+1，支持毛玻璃特效
+        </Content>
+        <Date>2017/06/11</Date>
+      </UpdateLog>
+
+      <UpdateLog>
         <Version>2.9.10</Version>
         <Content>
 1，简化初始化设置流程

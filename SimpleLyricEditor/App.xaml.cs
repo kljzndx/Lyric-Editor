@@ -65,15 +65,15 @@ namespace SimpleLyricEditor
 
         public async void ShowErrorDialog(Exception ex)
         {
-            Models.Error error = new Models.Error(ex);
+            Error error = new Error(ex);
 
             var buttons = new Dictionary<string, Windows.UI.Popups.UICommandInvokedHandler>();
-            buttons.Add(Models.CharacterLibrary.ErrorDialog.GetString("EmailErrorReport"),
+            buttons.Add(CharacterLibrary.ErrorDialog.GetString("EmailErrorReport"),
                 async c => await EmailEx.SendAsync("kljzndx@outlook.com",
                                              $"{HappyStudio.UwpToolsLibrary.Information.AppInfo.Name} {HappyStudio.UwpToolsLibrary.Information.AppInfo.Version} {Models.CharacterLibrary.ErrorDialog.GetString("ErrorReport")}",
                                              $"请说明你做了什么\nPlease introduce what you do\n\n\n\n设备名：{SystemInfo.DeviceName}\n设备类型：{SystemInfo.DeviceType}\n系统版本：{SystemInfo.BuildVersion}\n{error.ToString()}"));
 
-            await MessageBox.ShowAsync(Models.CharacterLibrary.ErrorDialog.GetString("Title"), error.Content, buttons, Models.CharacterLibrary.ErrorDialog.GetString("Close"));
+            await MessageBox.ShowAsync(CharacterLibrary.ErrorDialog.GetString("Title"), error.Content, buttons, CharacterLibrary.ErrorDialog.GetString("Close"));
             Application.Current.Exit();
         }
 

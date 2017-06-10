@@ -3,6 +3,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:SimpleLyricEditor.Views.UserControls"
+    xmlns:pctrl="using:HappyStudio.UwpToolsLibrary.Control"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
@@ -10,6 +11,9 @@
     d:DesignWidth="400">
 
     <Grid Background="{ThemeResource AppBarBackgroundThemeBrush}">
+        
+        <pctrl:FrostedGlassBackground GlassBackgroundBrush="{ThemeResource AppBarBackgroundThemeBrush}"/>
+        
         <MediaElement x:Name="AudioPlayer_MediaElement" AutoPlay="False" Position="{x:Bind Time,Mode=OneWay}" DefaultPlaybackRate="{x:Bind settings.PlaybackRate,Mode=OneWay}" PlaybackRate="{x:Bind settings.PlaybackRate,Mode=OneWay}" Volume="{x:Bind settings.Volume,Mode=OneWay}" Balance="{x:Bind settings.Channel,Mode=OneWay}" MediaOpened="AudioPlayer_MediaElement_MediaOpened" MediaFailed="AudioPlayer_MediaElement_MediaFailed" MediaEnded="AudioPlayer_MediaElement_MediaEnded" CurrentStateChanged="AudioPlayer_MediaElement_CurrentStateChanged"/>
         <StackPanel Margin="5,0">
             <!--音乐文件路径-->

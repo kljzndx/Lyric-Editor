@@ -7,8 +7,8 @@
     xmlns:vm="using:SimpleLyricEditor.ViewModels"
     xmlns:view="using:SimpleLyricEditor.Views"
     xmlns:ctol="using:SimpleLyricEditor.Views.UserControls"
+    xmlns:pctrl="using:HappyStudio.UwpToolsLibrary.Control"
     xmlns:temp="using:SimpleLyricEditor.Views.Template"
-    xmlns:appinfo="using:HappyStudio.UwpToolsLibrary.Information"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d" RequestedTheme="{x:Bind model.Settings.PageTheme,Mode=OneWay}">
@@ -62,6 +62,7 @@
 
                 <ctol:AudioPlayer x:Name="audioPlayer" Time="{x:Bind model.ThisTime,Mode=TwoWay}" MusicFileChanged="{x:Bind blurBackgroundImage.AudioPlayer_MusicFileChanged}"/>
 
+                <pctrl:FrostedGlassBackground Grid.Row="1" Grid.RowSpan="2" GlassBackgroundBrush="{ThemeResource ApplicationPageBackgroundThemeBrush}"/>
                 <ctol:BlurBackgroundImage x:Name="blurBackgroundImage" Grid.Row="1" Grid.RowSpan="2" Opacity="{x:Bind model.Settings.BackgroundOpacity,Mode=OneWay}" Visibility="{x:Bind model.Settings.IsDisplayBackground,Mode=OneWay,Converter={StaticResource BoolToVisibility}}"/>
 
                 <Grid x:Name="LyricsEditor_Grid" Grid.Row="1"  Visibility="{x:Bind model.IsDisplayScrollLyricsPreview,Mode=OneWay,Converter={StaticResource BoolToVisibility_Reverse}}">
