@@ -121,7 +121,7 @@
     <value>Blur effect only supports win10 1607 or higher</value>
   </data>
   <data name="BackgroundBlurDegree_Slider.Header" xml:space="preserve">
-    <value>Background Blur Degree</value>
+    <value>Background Image Blur Degree</value>
   </data>
   <data name="BackgroundDisplay_ToggleSwitch.Header" xml:space="preserve">
     <value>Background Display</value>
@@ -136,13 +136,19 @@
     <value>Background Image Source</value>
   </data>
   <data name="BackgroundOpacity_Slider.Header" xml:space="preserve">
-    <value>Background Opacity</value>
+    <value>Background Image Opacity</value>
   </data>
   <data name="DefaultLyricAuthorTip_TextBlock.Text" xml:space="preserve">
     <value>Restart application to take effect after changes</value>
   </data>
   <data name="DefaultLyricAuthor_TextBox.Header" xml:space="preserve">
     <value>Default LRC File Author Name</value>
+  </data>
+  <data name="FrostedGlassOpacity_Slider.Header" xml:space="preserve">
+    <value>Frosted Glass Opacity</value>
+  </data>
+  <data name="FrostedGlassUnavailable_TextBlock.Text" xml:space="preserve">
+    <value>Frosted Glass effect only supports win10 1703 or higher</value>
   </data>
   <data name="LyricsPreviewBackgroundOpacity_Slider.Header" xml:space="preserve">
     <value>Background opacity of Lyric preview area</value>

@@ -44,13 +44,7 @@ namespace SimpleLyricEditor
             this.InitializeComponent();
 
             model.SelectedItems = Lyrics_ListView.SelectedItems;
-
-            audioPlayer.Played += (s, e) =>
-            {
-                singleLyricPreview.RepositionLyric();
-                multipleLyricPreview.Reposition();
-            };
-
+            
             audioPlayer.PositionChanged += (s, e) =>
             {
                 if (e.IsUserChange)

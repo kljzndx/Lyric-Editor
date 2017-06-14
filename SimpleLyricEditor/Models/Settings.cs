@@ -60,14 +60,42 @@ namespace SimpleLyricEditor.Models
         public string LocalBackgroundImagePath { get => localBackgroundImagePath; set => SetSetting(ref localBackgroundImagePath, value); }
 
         //模糊可用性
-        public bool IsBlurUsability { get; } = SystemInfo.BuildVersion >= 14393;
+        public bool IsBlurUsability => SystemInfo.BuildVersion >= 14393;
 
         //背景模糊度
         [SettingFieldByNormal(nameof(BackgroundBlurDegree), 5D)]
         private double backgroundBlurDegree;
-        public double BackgroundBlurDegree { get => backgroundBlurDegree; set => SetSetting(ref backgroundBlurDegree, value); }
+        public double BackgroundBlurDegree
+        {
+            get
+            {
+                if (IsBlurUsability)
+                    return backgroundBlurDegree;
+                else
+                    return 0D;
+            }
+            set => SetSetting(ref backgroundBlurDegree, value);
+        }
 
-        //背景透明度
+        //毛玻璃可用性
+        public bool IsFrostedGlassUsability => SystemInfo.BuildVersion >= 15063;
+
+        //毛玻璃不透明度
+        [SettingFieldByNormal(nameof(FrostedGlassOpacity), 0.7)]
+        private double frostedGlassOpacity;
+        public double FrostedGlassOpacity
+        {
+            get
+            {
+                if (IsFrostedGlassUsability)
+                    return frostedGlassOpacity;
+                else
+                    return 0D;
+            }
+            set => SetSetting(ref frostedGlassOpacity, value);
+        }
+
+        //背景不透明度
         [SettingFieldByNormal(nameof(BackgroundOpacity), 0.3)]
         private double backgroundOpacity;
         public double BackgroundOpacity { get => backgroundOpacity; set => SetSetting(ref backgroundOpacity, value); }

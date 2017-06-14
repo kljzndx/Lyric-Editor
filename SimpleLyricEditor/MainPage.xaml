@@ -62,7 +62,7 @@
 
                 <ctol:AudioPlayer x:Name="audioPlayer" Time="{x:Bind model.ThisTime,Mode=TwoWay}" MusicFileChanged="{x:Bind blurBackgroundImage.AudioPlayer_MusicFileChanged}"/>
 
-                <pctrl:FrostedGlassBackground Grid.Row="1" Grid.RowSpan="2" GlassBackgroundBrush="{ThemeResource ApplicationPageBackgroundThemeBrush}"/>
+                <pctrl:FrostedGlassBackground Grid.Row="1" Grid.RowSpan="2" GlassBackgroundBrush="{ThemeResource ApplicationPageBackgroundThemeBrush}" GlassOpacity="{x:Bind model.Settings.FrostedGlassOpacity,Mode=OneWay}"/>
                 <ctol:BlurBackgroundImage x:Name="blurBackgroundImage" Grid.Row="1" Grid.RowSpan="2" Opacity="{x:Bind model.Settings.BackgroundOpacity,Mode=OneWay}" Visibility="{x:Bind model.Settings.IsDisplayBackground,Mode=OneWay,Converter={StaticResource BoolToVisibility}}"/>
 
                 <Grid x:Name="LyricsEditor_Grid" Grid.Row="1"  Visibility="{x:Bind model.IsDisplayScrollLyricsPreview,Mode=OneWay,Converter={StaticResource BoolToVisibility_Reverse}}">
@@ -123,6 +123,7 @@
                             </DataTemplate>
                         </ListView.ItemTemplate>
                     </ListView>
+                    
                     <Button x:Uid="/LyricEdit/LyricsSort_Button" Background="{ThemeResource SystemControlBackgroundAccentBrush}" VerticalAlignment="Bottom" HorizontalAlignment="Right" Grid.Row="1" Width="50" Height="50" Margin="0,0,50,50" Click="{x:Bind model.LyricsSort}">
                         <Button.Template>
                             <ControlTemplate TargetType="Button">

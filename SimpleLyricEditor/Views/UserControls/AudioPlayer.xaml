@@ -12,7 +12,7 @@
 
     <Grid Background="{ThemeResource AppBarBackgroundThemeBrush}">
         
-        <pctrl:FrostedGlassBackground GlassBackgroundBrush="{ThemeResource AppBarBackgroundThemeBrush}"/>
+        <pctrl:FrostedGlassBackground GlassBackgroundBrush="{ThemeResource AppBarBackgroundThemeBrush}" GlassOpacity="{x:Bind settings.FrostedGlassOpacity,Mode=OneWay}"/>
         
         <MediaElement x:Name="AudioPlayer_MediaElement" AutoPlay="False" Position="{x:Bind Time,Mode=OneWay}" DefaultPlaybackRate="{x:Bind settings.PlaybackRate,Mode=OneWay}" PlaybackRate="{x:Bind settings.PlaybackRate,Mode=OneWay}" Volume="{x:Bind settings.Volume,Mode=OneWay}" Balance="{x:Bind settings.Channel,Mode=OneWay}" MediaOpened="AudioPlayer_MediaElement_MediaOpened" MediaFailed="AudioPlayer_MediaElement_MediaFailed" MediaEnded="AudioPlayer_MediaElement_MediaEnded" CurrentStateChanged="AudioPlayer_MediaElement_CurrentStateChanged"/>
         <StackPanel Margin="5,0">

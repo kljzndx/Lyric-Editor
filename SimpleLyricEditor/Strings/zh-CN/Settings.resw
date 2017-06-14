@@ -121,7 +121,7 @@
     <value>模糊效果只支持 win10 1607 以上的版本</value>
   </data>
   <data name="BackgroundBlurDegree_Slider.Header" xml:space="preserve">
-    <value>背景模糊度</value>
+    <value>背景图片模糊度</value>
   </data>
   <data name="BackgroundDisplay_ToggleSwitch.Header" xml:space="preserve">
     <value>背景显示</value>
@@ -136,13 +136,19 @@
     <value>背景图片来源</value>
   </data>
   <data name="BackgroundOpacity_Slider.Header" xml:space="preserve">
-    <value>背景不透明度</value>
+    <value>背景图片不透明度</value>
   </data>
   <data name="DefaultLyricAuthorTip_TextBlock.Text" xml:space="preserve">
     <value>更改后需重启应用才能生效</value>
   </data>
   <data name="DefaultLyricAuthor_TextBox.Header" xml:space="preserve">
     <value>默认LRC文件作者名</value>
+  </data>
+  <data name="FrostedGlassOpacity_Slider.Header" xml:space="preserve">
+    <value>毛玻璃不透明度</value>
+  </data>
+  <data name="FrostedGlassUnavailable_TextBlock.Text" xml:space="preserve">
+    <value>毛玻璃效果只支持 win10 1703 以上的版本</value>
   </data>
   <data name="LyricsPreviewBackgroundOpacity_Slider.Header" xml:space="preserve">
     <value>歌词预览区域的背景不透明度</value>

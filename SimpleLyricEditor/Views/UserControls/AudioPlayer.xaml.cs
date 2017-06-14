@@ -100,7 +100,7 @@ namespace SimpleLyricEditor.Views.UserControls
 
             //为进度条订阅指针释放路由事件，至于为什么不在前台订阅嘛。。。自己看看最后一个参数就知道了
             Position_Slider.AddHandler(PointerReleasedEvent, new PointerEventHandler((s, e) => SetTime(Time)), true);
-
+            
             //获取窗口对象以订阅全局的键 按下和弹起 事件
             CoreWindow window = CoreWindow.GetForCurrentThread();
             window.KeyDown += Window_KeyDown;
@@ -338,9 +338,8 @@ namespace SimpleLyricEditor.Views.UserControls
 
         private void AudioPlayer_MediaElement_MediaEnded(object sender, RoutedEventArgs e)
         {
-            Time = TimeSpan.Zero;
-            RefreshTime();
-            RefreshSMTCTime();
+            Pause();
+            SetTime(TimeSpan.Zero);
         }
         
         private void AudioPlayer_MediaElement_CurrentStateChanged(object sender, RoutedEventArgs e)

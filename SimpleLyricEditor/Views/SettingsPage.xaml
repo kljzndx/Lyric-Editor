@@ -31,7 +31,10 @@
             
             <Slider x:Uid="/Settings/BackgroundBlurDegree_Slider" Value="{x:Bind model.Settings.BackgroundBlurDegree,Mode=TwoWay}" Maximum="20" IsEnabled="{x:Bind model.Settings.IsBlurUsability}"/>
             <TextBlock x:Uid="/Settings/BackgroundBlurDegreeUnavailable_TextBlock" Foreground="Red" Visibility="{x:Bind model.Settings.IsBlurUsability,Converter={StaticResource BoolToVisibility_Reverse}}"/>
-            
+
+            <Slider x:Uid="/Settings/FrostedGlassOpacity_Slider" Value="{x:Bind model.Settings.FrostedGlassOpacity,Mode=TwoWay,Converter={StaticResource PercentageToDouble}}" IsEnabled="{x:Bind model.Settings.IsFrostedGlassUsability}"/>
+            <TextBlock x:Uid="/Settings/FrostedGlassUnavailable_TextBlock" Foreground="Red" Visibility="{x:Bind model.Settings.IsFrostedGlassUsability,Converter={StaticResource BoolToVisibility_Reverse}}"/>
+
             <Slider x:Uid="/Settings/BackgroundOpacity_Slider" Value="{x:Bind model.Settings.BackgroundOpacity,Mode=TwoWay,Converter={StaticResource PercentageToDouble}}"/>
         </StackPanel>
         

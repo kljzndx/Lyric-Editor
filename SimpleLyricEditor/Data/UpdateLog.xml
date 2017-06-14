@@ -2,6 +2,22 @@
 <UpdateLogs>
 
       <UpdateLog>
+        <Version>2.10.2</Version>
+        <Content>
+1，优化播放结束时重置进度逻辑
+        </Content>
+        <Date>2017/06/14</Date>
+      </UpdateLog>
+
+      <UpdateLog>
+        <Version>2.10.1</Version>
+        <Content>
+1，新增毛玻璃不透明度设置
+        </Content>
+        <Date>2017/06/12</Date>
+      </UpdateLog>
+
+      <UpdateLog>
         <Version>2.10.0</Version>
         <Content>
 1，支持毛玻璃特效
