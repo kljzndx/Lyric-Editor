@@ -8,8 +8,8 @@ namespace SimpleLyricEditor.EventArgss
 {
     public class PositionChangeEventArgs : EventArgs
     {
-        public bool IsUserChange { get; set; } = false;
-        public TimeSpan ThisPosition { get; set; } = TimeSpan.Zero;
+        public bool IsUserChange { get; set; }
+        public TimeSpan ThisPosition { get; set; }
 
         public PositionChangeEventArgs(bool isUserChange, TimeSpan thisPosition)
         {

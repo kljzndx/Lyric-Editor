@@ -104,14 +104,14 @@ namespace SimpleLyricEditor.Views.UserControls
 
             Position_Slider.AddHandler(PointerPressedEvent, new PointerEventHandler((s, e) => isPressProgressBar = true), true);
             Position_Slider.AddHandler(PointerReleasedEvent, new PointerEventHandler(Position_Slider_PointerReleased), true);
-            
+
             //获取窗口对象以订阅全局的键 按下和弹起 事件
             CoreWindow window = CoreWindow.GetForCurrentThread();
             window.KeyDown += Window_KeyDown;
             window.KeyUp += Window_KeyUp;
             Unloaded += AudioPlayer_Unloaded;
         }
-        
+
         private void RefreshTime()
         {
             if (isPressProgressBar)
@@ -126,7 +126,7 @@ namespace SimpleLyricEditor.Views.UserControls
         {
             async void reloadTime(ThreadPoolTimer timer) => await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, RefreshTime);
 
-            RefreshTime_Timer = ThreadPoolTimer.CreatePeriodicTimer(reloadTime, TimeSpan.FromMilliseconds(50));
+            RefreshTime_Timer = ThreadPoolTimer.CreatePeriodicTimer(reloadTime, TimeSpan.FromMilliseconds(50), reloadTime);
         }
 
         private void RefreshSMTCTime()
@@ -149,7 +149,7 @@ namespace SimpleLyricEditor.Views.UserControls
         {
             async void refreshSMTCTimer(ThreadPoolTimer timer) => await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, RefreshSMTCTime);
 
-            RefreshSMTCTime_Timer = ThreadPoolTimer.CreatePeriodicTimer(refreshSMTCTimer, TimeSpan.FromSeconds(5));
+            RefreshSMTCTime_Timer = ThreadPoolTimer.CreatePeriodicTimer(refreshSMTCTimer, TimeSpan.FromSeconds(5), refreshSMTCTimer);
         }
 
         public async void OpenMusicFile()
@@ -173,7 +173,7 @@ namespace SimpleLyricEditor.Views.UserControls
             AudioPlayer_MediaElement.Position = time;
             Time = time;
             RefreshSMTCTime();
-            
+
             PositionChanged?.Invoke(this, new PositionChangeEventArgs(true, time));
         }
 
@@ -197,20 +197,32 @@ namespace SimpleLyricEditor.Views.UserControls
             systemMediaTransportControls.PlaybackPositionChangeRequested += async (s, e) => await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => SetTime(e.RequestedPlaybackPosition));
             systemMediaTransportControls.PropertyChanged += SystemMediaTransportControls_PropertyChanged;
         }
-        
+
         #region 播放控制
 
         public void Play()
         {
-            if (IsAvailableSource)
-                AudioPlayer_MediaElement.Play();
-            else
-                OpenMusicFile();
+            AudioPlayer_MediaElement.Play();
+
+            IsPlay = true;
+            Pause_Button.Focus(FocusState.Pointer);
+
+            if (!App.IsSuspend)
+                StartRefreshTimeTimer();
+            StartRefreshSMTCTimeTimer();
+            Played?.Invoke(this, EventArgs.Empty);
         }
 
         public void Pause()
         {
             AudioPlayer_MediaElement.Pause();
+
+            IsPlay = false;
+            Play_Button.Focus(FocusState.Pointer);
+
+            RefreshTime_Timer?.Cancel();
+            RefreshSMTCTime_Timer?.Cancel();
+            Paused?.Invoke(this, EventArgs.Empty);
         }
 
         public void FastRewind()
@@ -245,10 +257,11 @@ namespace SimpleLyricEditor.Views.UserControls
                 switch (args.Button)
                 {
                     case SystemMediaTransportControlsButton.Play:
-                        AudioPlayer_MediaElement.Play();
+                        if (IsAvailableSource)
+                            Play();
                         break;
                     case SystemMediaTransportControlsButton.Pause:
-                        AudioPlayer_MediaElement.Pause();
+                        Pause();
                         break;
                     case SystemMediaTransportControlsButton.Rewind:
                     case SystemMediaTransportControlsButton.Previous:
@@ -348,9 +361,9 @@ namespace SimpleLyricEditor.Views.UserControls
         private void AudioPlayer_MediaElement_MediaEnded(object sender, RoutedEventArgs e)
         {
             Pause();
-            SetTime(TimeSpan.Zero);
+            Time = TimeSpan.Zero;
         }
-        
+
         private void AudioPlayer_MediaElement_CurrentStateChanged(object sender, RoutedEventArgs e)
         {
             switch ((sender as MediaElement).CurrentState)
@@ -363,38 +376,30 @@ namespace SimpleLyricEditor.Views.UserControls
                     break;
                 case MediaElementState.Playing:
                     systemMediaTransportControls.PlaybackStatus = MediaPlaybackStatus.Playing;
-
-                    IsPlay = true;
-                    Pause_Button.Focus(FocusState.Pointer);
-
-                    if (!App.IsSuspend)
-                        StartRefreshTimeTimer();
-                    StartRefreshSMTCTimeTimer();
-                    Played?.Invoke(this, EventArgs.Empty);
                     break;
                 case MediaElementState.Paused:
                     systemMediaTransportControls.PlaybackStatus = MediaPlaybackStatus.Paused;
-
-                    IsPlay = false;
-                    Play_Button.Focus(FocusState.Pointer);
-
-                    RefreshTime_Timer?.Cancel();
-                    RefreshSMTCTime_Timer?.Cancel();
-                    Paused?.Invoke(this, EventArgs.Empty);
                     break;
                 case MediaElementState.Stopped:
                     systemMediaTransportControls.PlaybackStatus = MediaPlaybackStatus.Stopped;
-
                     break;
             }
         }
-        
+
         private void Position_Slider_PointerReleased(object sender, PointerRoutedEventArgs e)
         {
             IValueConverter converter = (TimeSpanToDouble)App.Current.Resources["TimeSpanToDouble"];
             var time = (TimeSpan)converter.ConvertBack((sender as Slider).Value, typeof(TimeSpan), null, this.Language);
             isPressProgressBar = false;
             SetTime(time);
+        }
+
+        private void Play_Button_Click(object sender, RoutedEventArgs e)
+        {
+            if (IsAvailableSource)
+                Play();
+            else
+                OpenMusicFile();
         }
     }
 }
