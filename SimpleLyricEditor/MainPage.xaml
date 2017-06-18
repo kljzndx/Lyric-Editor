@@ -8,6 +8,7 @@
     xmlns:view="using:SimpleLyricEditor.Views"
     xmlns:ctol="using:SimpleLyricEditor.Views.UserControls"
     xmlns:pctrl="using:HappyStudio.UwpToolsLibrary.Control"
+    xmlns:adc="using:JiuYouAdUniversal"
     xmlns:temp="using:SimpleLyricEditor.Views.Template"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -60,7 +61,7 @@
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
-                <ctol:AudioPlayer x:Name="audioPlayer" Time="{x:Bind model.ThisTime,Mode=TwoWay}" MusicFileChanged="{x:Bind blurBackgroundImage.AudioPlayer_MusicFileChanged}"/>
+                <ctol:AudioPlayer x:Name="audioPlayer" Time="{x:Bind model.ThisTime,Mode=TwoWay}" MusicFileChanged="audioPlayer_MusicFileChanged" Played="audioPlayer_Played" Paused="audioPlayer_Paused" PositionChanged="audioPlayer_PositionChanged" />
 
                 <pctrl:FrostedGlassBackground Grid.Row="1" Grid.RowSpan="2" GlassBackgroundBrush="{ThemeResource ApplicationPageBackgroundThemeBrush}" GlassOpacity="{x:Bind model.Settings.FrostedGlassOpacity,Mode=OneWay}"/>
                 <ctol:BlurBackgroundImage x:Name="blurBackgroundImage" Grid.Row="1" Grid.RowSpan="2" Opacity="{x:Bind model.Settings.BackgroundOpacity,Mode=OneWay}" Visibility="{x:Bind model.Settings.IsDisplayBackground,Mode=OneWay,Converter={StaticResource BoolToVisibility}}"/>
@@ -97,16 +98,10 @@
                                 </Button.Flyout>
                             </Button>
                             <Button x:Name="AddLyric_Button" x:Uid="/LyricEdit/AddLyric_Button" Content="&#xE109;" Style="{StaticResource ControllerButton}" Click="{x:Bind model.AddLyric}"/>
+                            <Button x:Uid="/LyricEdit/MoveLyrics_Button" Content="&#xE759;" Style="{StaticResource ControllerButton}" Click="{x:Bind model.MoveLyrics}"/>
                             <Button x:Uid="/LyricEdit/CopyLyrics_Button" Content="&#xE8C8;" Style="{StaticResource ControllerButton}" Visibility="{x:Bind model.IsMultilineEditMode,Mode=OneWay,Converter={StaticResource BoolToVisibility}}" Click="{x:Bind model.CopyLyrics}"/>
-                            <Button x:Name="DelLyric_Button" x:Uid="/LyricEdit/DelLyric_Button" Content="&#xE10A;" Style="{StaticResource ControllerButton}" Click="{x:Bind model.DelLyric}"/>
-                            <Button x:Uid="/LyricEdit/ChangeLyric_Button" Content="&#xE104;" Style="{StaticResource ControllerButton}">
-                                <Button.Flyout>
-                                    <MenuFlyout>
-                                        <MenuFlyoutItem x:Uid="/LyricEdit/ChangeTime_MenuFlyoutItem" Click="{x:Bind model.ChangeTime}"/>
-                                        <MenuFlyoutItem x:Uid="/LyricEdit/ChangeContent_MenuFlyoutItem" Click="{x:Bind model.ChangeContent}"/>
-                                    </MenuFlyout>
-                                </Button.Flyout>
-                            </Button>
+                            <Button x:Name="DelLyric_Button" x:Uid="/LyricEdit/DelLyric_Button" Content="&#xE10A;" Style="{StaticResource ControllerButton}" Click="{x:Bind model.DelLyrics}"/>
+                            <Button x:Uid="/LyricEdit/ModifyLyricsContent_Button" Content="&#xE104;" Style="{StaticResource ControllerButton}" Click="{x:Bind model.ModifyLyricsContent}"/>
 
                         </StackPanel>
                     </Grid>
@@ -168,12 +163,12 @@
                         <StackPanel Margin="5" HorizontalAlignment="Center" VerticalAlignment="Center">
                             <Button x:Uid="/FastMenu/OpenMusicFile_Button" Width="130" Margin="0,5" Click="{x:Bind audioPlayer.OpenMusicFile}"/>
                             <Button x:Uid="/FastMenu/OpenLyricsFile_Button" Width="130" Margin="0,5" Click="{x:Bind model.OpenLyricFile}"/>
-                            <Button x:Uid="/FastMenu/HideThisMenu_Button" Width="130" Margin="0,5" Click="{x:Bind HideFastMenu}"/>
+                            <Button x:Name="HideThisMenu_Button" x:Uid="/FastMenu/HideThisMenu_Button" Width="130" Margin="0,5" Click="HideThisMenu_Button_Click"/>
                         </StackPanel>
                     </Grid>
                 </Grid>
 
-                <ContentDialog x:Name="LyricsFileInfo_ContentDialog" x:Uid="/LyricsFileInfoDialog/LyricsFileInfo_ContentDialog" Grid.RowSpan="3" VerticalAlignment="Center" Opened="LyricsFileInfo_ContentDialog_Opened" Closed="LyricsFileInfo_ContentDialog_Closed">
+                <ContentDialog x:Name="LyricsFileInfo_ContentDialog" x:Uid="/LyricsFileInfoDialog/LyricsFileInfo_ContentDialog" Grid.RowSpan="3" VerticalAlignment="Center" Opened="{x:Bind model.InputBoxGotFocus}" Closed="{x:Bind model.InputBoxLostFocus}">
                     <StackPanel Margin="0,10">
                         <TextBox x:Uid="/LyricsFileInfoDialog/SongName_TextBox" Text="{x:Bind model.Tags.SongName,Mode=TwoWay}"/>
                         <TextBox x:Uid="/LyricsFileInfoDialog/Artist_TextBox" Text="{x:Bind model.Tags.Artist,Mode=TwoWay}"/>
@@ -214,6 +209,13 @@
                     
                 </Grid>
 
+                <Grid x:Name="AdArea_Grid" x:Uid="/AD/AdArea_Grid" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Bottom" Visibility="{x:Bind model.IsDisplayAd,Mode=OneWay,Converter={StaticResource BoolToVisibility}}">
+                    <Border x:Name="AdAreaText_Border" Canvas.ZIndex="1" Background="{ThemeResource SystemControlBackgroundAccentBrush}" Tapped="AdAreaText_Border_Tapped">
+                        <TextBlock x:Uid="/AD/AdArea_TextBlock" TextAlignment="Center" VerticalAlignment="Center" FontSize="18" FontWeight="Bold" Foreground="White"/>
+                    </Border>
+                    <adc:AdControl Canvas.ZIndex="1" ApplicationKey="c6cef00ec55ffc57340a7507d1473f5f" AdClick="{x:Bind model.HideAd}" AdLoadingError="AdControl_AdLoadingError"/>
+                </Grid>
+                
                 <ctol:ShortcutKeysDialog x:Name="shortcutKeysDialog" Grid.RowSpan="3"/>
                 <ctol:UpdateLogDialog x:Name="updateLogDialog" Grid.RowSpan="3"/>
             </Grid>

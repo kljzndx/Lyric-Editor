@@ -21,7 +21,7 @@
     <PackageCertificateThumbprint>1EB941F1B9F1A4C0F64BAE5ADD1C13E09DECD66A</PackageCertificateThumbprint>
     <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
     <AppxBundle>Always</AppxBundle>
-    <AppxBundlePlatforms>x86</AppxBundlePlatforms>
+    <AppxBundlePlatforms>x86|x64|arm</AppxBundlePlatforms>
     <RuntimeIdentifiers>win10-arm;win10-arm-aot;win10-x86;win10-x86-aot;win10-x64;win10-x64-aot</RuntimeIdentifiers>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
@@ -198,6 +198,8 @@
     </AppxManifest>
     <None Include="SimpleLyricEditor_StoreKey.pfx" />
     <None Include="SimpleLyricEditor_TemporaryKey.pfx" />
+    <PRIResource Include="Strings\en-US\AD.resw" />
+    <PRIResource Include="Strings\zh-CN\AD.resw" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\LockScreenLogo.scale-100.png" />
@@ -348,6 +350,9 @@
     </PackageReference>
     <PackageReference Include="HappyStudio.UwpToolsLibrary.Information">
       <Version>1.0.2</Version>
+    </PackageReference>
+    <PackageReference Include="JYAdControl">
+      <Version>2.3.6</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>5.3.3</Version>

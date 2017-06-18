@@ -122,21 +122,6 @@
 Shortcut keys : Space
 Press Shift to Add Lyrics to Above</value>
   </data>
-  <data name="ChangeContent_MenuFlyoutItem.Text" xml:space="preserve">
-    <value>Modifications to the current lyric</value>
-  </data>
-  <data name="ChangeContent_MenuFlyoutItem.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Shortcut keys : Press Enter in Lyric Input Box</value>
-  </data>
-  <data name="ChangeLyric_Button.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Change Lyric</value>
-  </data>
-  <data name="ChangeTime_MenuFlyoutItem.Text" xml:space="preserve">
-    <value>Modifications to the current time</value>
-  </data>
-  <data name="ChangeTime_MenuFlyoutItem.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Shortcut keys : Space</value>
-  </data>
   <data name="CopyLyrics_Button.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
     <value>Copy Lyrics ( Retention time interval )
 Shortcut Keys : C</value>
@@ -165,6 +150,14 @@ Ctrl + Enter -&gt; Add Lyric Items</value>
   <data name="LyricsSort_Button.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
     <value>Sort
 Shortcut Keys : S</value>
+  </data>
+  <data name="ModifyLyricsContent_Button.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Modify Lyrics Content
+Shortcut Key : M</value>
+  </data>
+  <data name="MoveLyrics_Button.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Move Lyrics (Modify Lyric Time)
+Shortcut Key : Space</value>
   </data>
   <data name="MultilineEditMode_Button.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
     <value>Multiline Edit Mode</value>

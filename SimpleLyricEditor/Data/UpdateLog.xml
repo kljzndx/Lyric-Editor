@@ -2,6 +2,16 @@
 <UpdateLogs>
 
       <UpdateLog>
+        <Version>2.10.5</Version>
+        <Content>
+1，添加广告（只在暂停时显示）
+2，修改歌词时间功能独立并支持多行
+3，毛玻璃不透明度设置脱离背景图片设置组
+        </Content>
+        <Date>2017/06/16</Date>
+      </UpdateLog>
+
+      <UpdateLog>
         <Version>2.10.2</Version>
         <Content>
 1，优化播放结束时重置进度逻辑

@@ -39,61 +39,21 @@ namespace SimpleLyricEditor
     {
         private Main_ViewModel model = App.Locator.Main;
         private bool isListViewGotFocus = false;
+        private bool isAdLoadingError = false;
         public MainPage()
         {
             this.InitializeComponent();
 
             model.SelectedItems = Lyrics_ListView.SelectedItems;
             
-            audioPlayer.PositionChanged += (s, e) =>
-            {
-                if (e.IsUserChange)
-                {
-                    singleLyricPreview.RepositionLyric();
-                    multipleLyricPreview.Reposition();
-                }
-                else
-                {
-                    singleLyricPreview.PreviewLyric();
-                    multipleLyricPreview.RefreshLyric();
-                }
-            };
-
-            audioPlayer.MusicFileChanged += (s, e) =>
-            {
-                model.AssociatedTags(e.NewMusic);
-
-                singleLyricPreview.RepositionLyric();
-                multipleLyricPreview.Reposition();
-            };
-
-            model.LyricItemChanged += (s, e) =>
-            {
-                singleLyricPreview.RepositionLyric();
-                multipleLyricPreview.Reposition();
-
-                //添加歌词时自动定位到新加的歌词项
-                if (e.ChangeType == EventArgss.LyricItemOperationType.Add && Lyrics_ListView.SelectedItem is null)
-                    ThreadPoolTimer.CreateTimer(async (t) => await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-                    {
-                        if (App.IsPressShift)
-                            Lyrics_ListView.ScrollIntoView(Lyrics_ListView.Items.FirstOrDefault());
-                        else
-                            Lyrics_ListView.ScrollIntoView(Lyrics_ListView.Items.LastOrDefault());
-                    }), TimeSpan.FromMilliseconds(100));
-            };
-
+            audioPlayer.MusicFileChanged += blurBackgroundImage.AudioPlayer_MusicFileChanged;
+            model.LyricItemChanged += Model_LyricItemChanged;
             CoreWindow window = CoreWindow.GetForCurrentThread();
             window.KeyDown += Window_KeyDown;
             window.KeyUp += Window_KeyUp;
 
             MiniMode_StackPanel.Visibility = SystemInfo.BuildVersion >= 15063 ? Visibility.Visible : Visibility.Collapsed;
             FeedbackInFeedbackHub_MenuFlyoutItem.Visibility = StoreServicesFeedbackLauncher.IsSupported() ? Visibility.Visible : Visibility.Collapsed;
-        }
-
-        private void HideFastMenu()
-        {
-            FastMenu_Grid.Visibility = Visibility.Collapsed;
         }
 
         private async void GotoThisLyricTime()
@@ -164,6 +124,43 @@ namespace SimpleLyricEditor
             }
         }
 
+        #region 播放器
+
+        private void audioPlayer_Played(Views.UserControls.AudioPlayer sender, EventArgs args)
+        {
+            if (model.AdClickDate != DateTime.Now.Date)
+                model.IsDisplayAd = false;
+        }
+
+        private void audioPlayer_Paused(Views.UserControls.AudioPlayer sender, EventArgs args)
+        {
+            if (model.AdClickDate != DateTime.Now.Date)
+                model.IsDisplayAd = true;
+        }
+
+        private void audioPlayer_PositionChanged(Views.UserControls.AudioPlayer sender, EventArgss.PositionChangeEventArgs args)
+        {
+            if (args.IsUserChange)
+            {
+                singleLyricPreview.RepositionLyric();
+                multipleLyricPreview.Reposition();
+            }
+            else
+            {
+                singleLyricPreview.PreviewLyric();
+                multipleLyricPreview.RefreshLyric();
+            }
+        }
+
+        private void audioPlayer_MusicFileChanged(Views.UserControls.AudioPlayer sender, EventArgss.MusicFileChangeEventArgs args)
+        {
+            model.AssociatedTags(args.NewMusic);
+
+            singleLyricPreview.RepositionLyric();
+            multipleLyricPreview.Reposition();
+        }
+
+        #endregion
         #region 歌词编辑区
         private void LyricsContent_TextBox_KeyDown(object sender, KeyRoutedEventArgs e)
         {
@@ -185,7 +182,7 @@ namespace SimpleLyricEditor
                     NewLine();
                 else if (Lyrics_ListView.SelectedItems.Any())
                 {
-                    model.ChangeContent();
+                    model.ModifyLyricsContent();
                     Lyrics_ListView.SelectedIndex = Lyrics_ListView.SelectedIndex < Lyrics_ListView.Items.Count - 1 ? Lyrics_ListView.SelectedIndex + 1 : -1;
                     
                     if (Lyrics_ListView.SelectedIndex == -1)
@@ -318,6 +315,22 @@ namespace SimpleLyricEditor
             }
         }
 
+        private void Model_LyricItemChanged(object sender, EventArgss.LyricItemChangeEventAegs e)
+        {
+            singleLyricPreview.RepositionLyric();
+            multipleLyricPreview.Reposition();
+
+            //添加歌词时自动定位到新加的歌词项
+            if (e.ChangeType == EventArgss.LyricItemOperationType.Add && Lyrics_ListView.SelectedItem is null)
+                ThreadPoolTimer.CreateTimer(async (t) => await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                {
+                    if (App.IsPressShift)
+                        Lyrics_ListView.ScrollIntoView(Lyrics_ListView.Items.FirstOrDefault());
+                    else
+                        Lyrics_ListView.ScrollIntoView(Lyrics_ListView.Items.LastOrDefault());
+                }), TimeSpan.FromMilliseconds(100));
+        }
+
         private void LyricItemTemplate_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
         {
             GotoThisLyricTime();
@@ -334,6 +347,7 @@ namespace SimpleLyricEditor
         {
             model.IsDisplayScrollLyricsPreview = true;
             Grid.SetRow(LyricsPreview_Grid, 1);
+            Grid.SetRow(AdArea_Grid, 1);
 
             foreach (LyricItem item in Lyrics_ListView.SelectedItems)
                 item.IsSelected = false;
@@ -345,6 +359,7 @@ namespace SimpleLyricEditor
         {
             model.IsDisplayScrollLyricsPreview = false;
             Grid.SetRow(LyricsPreview_Grid, 2);
+            Grid.SetRow(AdArea_Grid, 2);
 
             foreach (LyricItem item in Lyrics_ListView.SelectedItems)
                 item.IsSelected = true;
@@ -474,20 +489,26 @@ namespace SimpleLyricEditor
             }
         }
 
-        private void LyricsFileInfo_ContentDialog_Opened(ContentDialog sender, ContentDialogOpenedEventArgs args)
+        private void HideThisMenu_Button_Click(object sender, RoutedEventArgs e)
         {
-            model.InputBoxGotFocus();
+            FastMenu_Grid.Visibility = Visibility.Collapsed;
         }
-
-        private void LyricsFileInfo_ContentDialog_Closed(ContentDialog sender, ContentDialogClosedEventArgs args)
-        {
-            model.InputBoxLostFocus();
-        }
-
+        
         private void SingleLyricPreview_Tapped(object sender, TappedRoutedEventArgs e)
         {
             Lyrics_ListView.SelectedIndex = -1;
         }
 
+        private void AdControl_AdLoadingError(object sender, JiuYouAdUniversal.Models.AdLoadingErrorEventArgs e)
+        {
+            Canvas.SetZIndex(sender as UIElement, 0);
+            isAdLoadingError = true;
+        }
+
+        private void AdAreaText_Border_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            if (isAdLoadingError)
+                model.HideAd();
+        }
     }
 }

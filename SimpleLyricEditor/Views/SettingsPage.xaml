@@ -23,21 +23,21 @@
             <TextBlock x:Uid="/Settings/BackgroundImageSource_TextBlock"/>
             <RadioButton x:Name="BackgroundImageSource_AlbumImage_RadioButton" x:Uid="/Settings/BackgroundImageSource_AlbumImage_RadioButton" Checked="{x:Bind model.SwitchSourceType_AlbumImage}"/>
             <RadioButton x:Name="BackgroundImageSource_LocalImage_RadioButton" x:Uid="/Settings/BackgroundImageSource_LocalImage_RadioButton" Checked="{x:Bind model.SwitchSourceType_LocalImage}"/>
-            
+
             <Grid Visibility="{x:Bind BackgroundImageSource_LocalImage_RadioButton.IsChecked,Mode=OneWay,Converter={StaticResource BoolToVisibility}}">
                 <TextBox Text="{x:Bind model.Settings.LocalBackgroundImagePath,Mode=OneWay}"/>
                 <Rectangle Fill="#00000000" Tapped="{x:Bind model.PickerImageFile}"/>
             </Grid>
-            
+
             <Slider x:Uid="/Settings/BackgroundBlurDegree_Slider" Value="{x:Bind model.Settings.BackgroundBlurDegree,Mode=TwoWay}" Maximum="20" IsEnabled="{x:Bind model.Settings.IsBlurUsability}"/>
             <TextBlock x:Uid="/Settings/BackgroundBlurDegreeUnavailable_TextBlock" Foreground="Red" Visibility="{x:Bind model.Settings.IsBlurUsability,Converter={StaticResource BoolToVisibility_Reverse}}"/>
 
-            <Slider x:Uid="/Settings/FrostedGlassOpacity_Slider" Value="{x:Bind model.Settings.FrostedGlassOpacity,Mode=TwoWay,Converter={StaticResource PercentageToDouble}}" IsEnabled="{x:Bind model.Settings.IsFrostedGlassUsability}"/>
-            <TextBlock x:Uid="/Settings/FrostedGlassUnavailable_TextBlock" Foreground="Red" Visibility="{x:Bind model.Settings.IsFrostedGlassUsability,Converter={StaticResource BoolToVisibility_Reverse}}"/>
-
             <Slider x:Uid="/Settings/BackgroundOpacity_Slider" Value="{x:Bind model.Settings.BackgroundOpacity,Mode=TwoWay,Converter={StaticResource PercentageToDouble}}"/>
         </StackPanel>
-        
+
+        <Slider x:Uid="/Settings/FrostedGlassOpacity_Slider" Value="{x:Bind model.Settings.FrostedGlassOpacity,Mode=TwoWay,Converter={StaticResource PercentageToDouble}}" IsEnabled="{x:Bind model.Settings.IsFrostedGlassUsability}"/>
+        <TextBlock x:Uid="/Settings/FrostedGlassUnavailable_TextBlock" Foreground="Red" Visibility="{x:Bind model.Settings.IsFrostedGlassUsability,Converter={StaticResource BoolToVisibility_Reverse}}"/>
+
         <ToggleSwitch x:Uid="/Settings/LyricsPreviewDisplay_ToggleSwitch" IsOn="{x:Bind model.Settings.IsDisplayLyricsPreview,Mode=TwoWay}"/>
         <StackPanel Visibility="{x:Bind model.Settings.IsDisplayLyricsPreview,Mode=OneWay,Converter={StaticResource BoolToVisibility}}">
             <Slider x:Uid="/Settings/SingleLineLyricsPreviewFontSize_Slider" Minimum="15" Value="{x:Bind model.Settings.SingleLineLyricPreviewFontSize,Mode=TwoWay}" Maximum="32"/>

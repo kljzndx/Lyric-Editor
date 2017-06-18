@@ -142,6 +142,7 @@ namespace SimpleLyricEditor
 
         protected override void OnActivated(IActivatedEventArgs args)
         {
+            CreateKeySubscription();
             EnsureSyncContext();
         }
 
@@ -157,12 +158,12 @@ namespace SimpleLyricEditor
             if (rootFrame.Content is null)
             {
                 rootFrame.Navigate(typeof(MainPage));
-                Window.Current.Activate();
-            }
-            Tools.LyricFileTools.ChangeFile(args.Files[0] as StorageFile);
 
-            CreateKeySubscription();
-            EnsureSyncContext();
+                CreateKeySubscription();
+                EnsureSyncContext();
+            }
+            Window.Current.Activate();
+            Tools.LyricFileTools.ChangeFile(args.Files[0] as StorageFile);
         }
 
         private void Window_KeyDown(CoreWindow sender, KeyEventArgs args)

@@ -48,7 +48,7 @@ namespace SimpleLyricEditor.ViewModels
         //当前是否是多行编辑状态
         private bool isMultilineEditMode = false;
         public bool IsMultilineEditMode { get => isMultilineEditMode; set => Set(ref isMultilineEditMode, value); }
-        
+
         //当前选中项序号
         private int selectedIndex = -1;
         public int SelectedIndex { get => selectedIndex; set => Set(ref selectedIndex, value); }
@@ -66,6 +66,12 @@ namespace SimpleLyricEditor.ViewModels
 
         private bool isDisplayScrollLyricsPreview;
         public bool IsDisplayScrollLyricsPreview { get => isDisplayScrollLyricsPreview; set => Set(ref isDisplayScrollLyricsPreview, value); }
+
+        private DateTime adClickDate;
+        public DateTime AdClickDate { get => adClickDate; set => Settings.SetSetting(ref adClickDate, value, value.Date.ToString("d")); }
+        
+        private bool isDisplayAd;
+        public bool IsDisplayAd { get => isDisplayAd; set => Set(ref isDisplayAd, value); }
 
         public string Version { get; } = AppInfo.Version;
 
@@ -91,59 +97,11 @@ namespace SimpleLyricEditor.ViewModels
                 ReadTempFile();
             saveTempFile_Timer = ThreadPoolTimer.CreatePeriodicTimer((t) => SaveTempFile(), TimeSpan.FromSeconds(30));
             Settings.SettingObject.Values["IsCollapse"] = false;
-        }
-        
-        private async void GetTempFile()
-        {
-            if (await ApplicationData.Current.TemporaryFolder.TryGetItemAsync("temp.lrc") is IStorageItem file)
-                tempFile = file as StorageFile;
-            else
-                tempFile = await ApplicationData.Current.TemporaryFolder.CreateFileAsync("temp.lrc");
+            
+            adClickDate = Settings.GetSetting(nameof(AdClickDate), new DateTime(2017,6,14).ToString("d"), s => DateTime.Parse(s));
+            isDisplayAd = adClickDate != DateTime.Now.Date;
         }
 
-        private async void SaveTempFile()
-        {
-            if (lyrics.Any())
-                await LyricFileTools.SaveFileAsync(tags, lyrics, tempFile);
-        }
-
-        private async void ReadTempFile()
-        {
-            string content = await LyricFileTools.ReadFileAsync(tempFile);
-            Lyrics = LyricTools.LrcParse(content, tags);
-        }
-
-        public void InputBoxGotFocus()
-        {
-            App.IsInputBoxGotFocus = true;
-        }
-
-        public void InputBoxLostFocus()
-        {
-            App.IsInputBoxGotFocus = false;
-        }
-
-        public async void GetReviews()
-        {
-            TypedEventHandler<ContentDialog, ContentDialogButtonClickEventArgs> headler =
-                async (s, e) =>
-                  {
-                      await Windows.System.Launcher.LaunchUriAsync(new Uri("ms-windows-store://review/?ProductId=9mx4frgq4rqs"));
-                      Settings.SettingObject.Values["IsReviewsed"] = true;
-                  };
-
-            ContentDialog dialog = new ContentDialog()
-            {
-                Title = CharacterLibrary.GetReviewsDialog.GetString("Title"),
-                Content = CharacterLibrary.GetReviewsDialog.GetString("Content"),
-                PrimaryButtonText = CharacterLibrary.GetReviewsDialog.GetString("Good"),
-                SecondaryButtonText = CharacterLibrary.GetReviewsDialog.GetString("NotGood")
-            };
-            dialog.PrimaryButtonClick += headler;
-            dialog.SecondaryButtonClick += headler;
-            await dialog.ShowAsync();
-        }
-        
         #region Lyrics Operations
 
         public void LyricsSort()
@@ -202,10 +160,7 @@ namespace SimpleLyricEditor.ViewModels
                 return;
 
             //取出时间最早的歌词
-            var firstTime = TimeSpan.MaxValue;
-            foreach (Lyric item in selectedItems)
-                if (firstTime.CompareTo(item.Time) == 1)
-                    firstTime = item.Time;
+            TimeSpan firstTime = GetEarliestLyricTime();
 
             bool isBig = thisTime >= firstTime;
             TimeSpan interpolate = isBig ? thisTime - firstTime : firstTime - thisTime;
@@ -215,7 +170,35 @@ namespace SimpleLyricEditor.ViewModels
             LyricsSort();
         }
 
-        public async void DelLyric()
+        private TimeSpan GetEarliestLyricTime()
+        {
+            var firstTime = TimeSpan.MaxValue;
+            foreach (Lyric item in selectedItems)
+                if (firstTime.CompareTo(item.Time) == 1)
+                    firstTime = item.Time;
+            return firstTime;
+        }
+
+        public void MoveLyrics()
+        {
+            if (!selectedItems.Any())
+                return;
+
+            TimeSpan fiastTime = GetEarliestLyricTime();
+
+            bool isBig = fiastTime >= thisTime;
+            TimeSpan interpolate = isBig ? fiastTime - thisTime : thisTime - fiastTime;
+
+            foreach (Lyric item in selectedItems)
+                item.Time = isBig ? item.Time - interpolate : item.Time + interpolate;
+
+            if (selectedItems.Count != 1)
+                LyricsSort();
+
+            LyricItemChanged?.Invoke(this, new LyricItemChangeEventAegs(LyricItemOperationType.ChangeTime));
+        }
+
+        public async void DelLyrics()
         {
             if (App.IsPressShift)
             {
@@ -235,35 +218,18 @@ namespace SimpleLyricEditor.ViewModels
 
             if (!lyrics.Any())
                 LyricFile = null;
-            
+
             LyricItemChanged?.Invoke(this, new LyricItemChangeEventAegs(LyricItemOperationType.Del));
         }
-
-        public async void ChangeTime()
-        {
-            try
-            {
-                (selectedItems.SingleOrDefault() as LyricItem).Time = thisTime;
-                LyricItemChanged?.Invoke(this, new LyricItemChangeEventAegs(LyricItemOperationType.ChangeTime));
-            }
-            catch (NullReferenceException)
-            {
-                return;
-            }
-            catch (InvalidOperationException)
-            {
-                await MessageBox.ShowAsync(CharacterLibrary.ErrorDialog.GetString("SelectedMultipleItemsError"), CharacterLibrary.ErrorDialog.GetString("Close"));
-            }
-        }
-
-        public void ChangeContent()
+        
+        public void ModifyLyricsContent()
         {
             if (!selectedItems.Any())
                 return;
 
             foreach (LyricItem sltItem in selectedItems)
                 sltItem.Content = lyricContent.Split('\r')[0].Trim();
-            
+
             LyricItemChanged?.Invoke(this, new LyricItemChangeEventAegs(LyricItemOperationType.ChangeContent));
         }
 
@@ -285,12 +251,75 @@ namespace SimpleLyricEditor.ViewModels
             LyricsSort();
             await LyricFileTools.SaveFileAsync(tags, lyrics, null);
         }
-        
+
         public void AssociatedTags(Music music)
         {
             tags.SongName = music.Name;
             tags.Artist = music.Artist;
             tags.Album = music.Album;
+        }
+
+        #endregion
+        #region Lyric Temp File Operations
+
+        private async void GetTempFile()
+        {
+            if (await ApplicationData.Current.TemporaryFolder.TryGetItemAsync("temp.lrc") is IStorageItem file)
+                tempFile = file as StorageFile;
+            else
+                tempFile = await ApplicationData.Current.TemporaryFolder.CreateFileAsync("temp.lrc");
+        }
+
+        private async void SaveTempFile()
+        {
+            if (lyrics.Any())
+                await LyricFileTools.SaveFileAsync(tags, lyrics, tempFile);
+        }
+
+        private async void ReadTempFile()
+        {
+            string content = await LyricFileTools.ReadFileAsync(tempFile);
+            Lyrics = LyricTools.LrcParse(content, tags);
+        }
+
+        #endregion
+        #region ohter
+
+        public void InputBoxGotFocus()
+        {
+            App.IsInputBoxGotFocus = true;
+        }
+
+        public void InputBoxLostFocus()
+        {
+            App.IsInputBoxGotFocus = false;
+        }
+
+        public async void GetReviews()
+        {
+            TypedEventHandler<ContentDialog, ContentDialogButtonClickEventArgs> headler =
+                async (s, e) =>
+                {
+                    await Windows.System.Launcher.LaunchUriAsync(new Uri("ms-windows-store://review/?ProductId=9mx4frgq4rqs"));
+                    Settings.SettingObject.Values["IsReviewsed"] = true;
+                };
+
+            ContentDialog dialog = new ContentDialog()
+            {
+                Title = CharacterLibrary.GetReviewsDialog.GetString("Title"),
+                Content = CharacterLibrary.GetReviewsDialog.GetString("Content"),
+                PrimaryButtonText = CharacterLibrary.GetReviewsDialog.GetString("Good"),
+                SecondaryButtonText = CharacterLibrary.GetReviewsDialog.GetString("NotGood")
+            };
+            dialog.PrimaryButtonClick += headler;
+            dialog.SecondaryButtonClick += headler;
+            await dialog.ShowAsync();
+        }
+
+        public void HideAd()
+        {
+            AdClickDate = DateTime.Now.Date;
+            IsDisplayAd = false;
         }
 
         #endregion
@@ -304,7 +333,7 @@ namespace SimpleLyricEditor.ViewModels
                     case VirtualKey.Space:
                         if (selectedItems.Any())
                         {
-                            ChangeTime();
+                            MoveLyrics();
                             SelectedIndex = selectedIndex < lyrics.Count - 1 ? selectedIndex + 1 : -1;
                         }
                         else
@@ -313,9 +342,12 @@ namespace SimpleLyricEditor.ViewModels
                     case VirtualKey.C:
                         CopyLyrics();
                         break;
+                    case VirtualKey.M:
+                        ModifyLyricsContent();
+                        break;
                     case VirtualKey.Delete:
                         int sid = selectedIndex;
-                        DelLyric();
+                        DelLyrics();
                         SelectedIndex = sid < lyrics.Count ? sid : lyrics.Count - 1;
                         break;
                     case VirtualKey.S:
@@ -327,7 +359,7 @@ namespace SimpleLyricEditor.ViewModels
             if (App.IsPressCtrl)
             {
                 if (args.VirtualKey == VirtualKey.S && App.IsPressShift)
-                { 
+                {
                     SaveAsLyricFile();
                     return;
                 }

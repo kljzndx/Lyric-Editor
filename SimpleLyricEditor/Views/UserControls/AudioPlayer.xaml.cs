@@ -29,6 +29,7 @@ using Windows.UI.ViewManagement;
 using Windows.UI.Xaml.Hosting;
 using Windows.UI.Composition;
 using SimpleLyricEditor.Extensions;
+using SimpleLyricEditor.ValueConverters;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
@@ -55,6 +56,7 @@ namespace SimpleLyricEditor.Views.UserControls
         public event TypedEventHandler<AudioPlayer, PositionChangeEventArgs> PositionChanged;
 
         private bool isPlay;
+        private bool isPressProgressBar;
         private SystemMediaTransportControls systemMediaTransportControls;
 
         public bool IsPlay
@@ -98,8 +100,10 @@ namespace SimpleLyricEditor.Views.UserControls
             Application.Current.Suspending += Application_Suspending;
             Application.Current.Resuming += Application_Resuming;
 
-            //为进度条订阅指针释放路由事件，至于为什么不在前台订阅嘛。。。自己看看最后一个参数就知道了
-            Position_Slider.AddHandler(PointerReleasedEvent, new PointerEventHandler((s, e) => SetTime(Time)), true);
+            //为进度条订阅 指针按下和释放 路由事件，至于为什么不在前台订阅嘛。。。自己看看最后一个参数就知道了
+
+            Position_Slider.AddHandler(PointerPressedEvent, new PointerEventHandler((s, e) => isPressProgressBar = true), true);
+            Position_Slider.AddHandler(PointerReleasedEvent, new PointerEventHandler(Position_Slider_PointerReleased), true);
             
             //获取窗口对象以订阅全局的键 按下和弹起 事件
             CoreWindow window = CoreWindow.GetForCurrentThread();
@@ -110,6 +114,9 @@ namespace SimpleLyricEditor.Views.UserControls
         
         private void RefreshTime()
         {
+            if (isPressProgressBar)
+                return;
+
             Time = AudioPlayer_MediaElement.Position;
 
             PositionChanged?.Invoke(this, new PositionChangeEventArgs(false, Time));
@@ -124,6 +131,9 @@ namespace SimpleLyricEditor.Views.UserControls
 
         private void RefreshSMTCTime()
         {
+            if (isPressProgressBar)
+                return;
+
             var smtcTimeLineProperties = new SystemMediaTransportControlsTimelineProperties()
             {
                 StartTime = TimeSpan.Zero,
@@ -160,9 +170,10 @@ namespace SimpleLyricEditor.Views.UserControls
 
         public void SetTime(TimeSpan time)
         {
+            AudioPlayer_MediaElement.Position = time;
             Time = time;
             RefreshSMTCTime();
-
+            
             PositionChanged?.Invoke(this, new PositionChangeEventArgs(true, time));
         }
 
@@ -206,14 +217,12 @@ namespace SimpleLyricEditor.Views.UserControls
         {
             short ms = App.IsPressShift ? (short)5000 : (short)500;
             SetTime(Time >= TimeSpan.FromMilliseconds(ms) ? Time - TimeSpan.FromMilliseconds(ms) : TimeSpan.Zero);
-            RefreshSMTCTime();
         }
 
         public void FastForward()
         {
             short ms = App.IsPressShift ? (short)5000 : (short)500;
             SetTime(Time <= MusicSource.AllTime - TimeSpan.FromMilliseconds(ms) ? Time + TimeSpan.FromMilliseconds(ms) : MusicSource.AllTime);
-            RefreshSMTCTime();
         }
         #endregion
 
@@ -378,6 +387,14 @@ namespace SimpleLyricEditor.Views.UserControls
 
                     break;
             }
+        }
+        
+        private void Position_Slider_PointerReleased(object sender, PointerRoutedEventArgs e)
+        {
+            IValueConverter converter = (TimeSpanToDouble)App.Current.Resources["TimeSpanToDouble"];
+            var time = (TimeSpan)converter.ConvertBack((sender as Slider).Value, typeof(TimeSpan), null, this.Language);
+            isPressProgressBar = false;
+            SetTime(time);
         }
     }
 }
