@@ -80,7 +80,6 @@ namespace SimpleLyricEditor.Views.UserControls
             private set
             {
                 SetValue(MusicSourceProperty, value);
-                this.Bindings.Update();
             }
         }
         /// <summary>
@@ -96,7 +95,9 @@ namespace SimpleLyricEditor.Views.UserControls
         public AudioPlayer()
         {
             this.InitializeComponent();
+
             SetupSystemMediaTransportControls();
+
             Application.Current.Suspending += Application_Suspending;
             Application.Current.Resuming += Application_Resuming;
 
@@ -131,7 +132,7 @@ namespace SimpleLyricEditor.Views.UserControls
 
         private void RefreshSMTCTime()
         {
-            if (isPressProgressBar)
+            if (isPressProgressBar || systemMediaTransportControls is null)
                 return;
 
             var smtcTimeLineProperties = new SystemMediaTransportControlsTimelineProperties()
@@ -202,6 +203,9 @@ namespace SimpleLyricEditor.Views.UserControls
 
         public void Play()
         {
+            if (!IsAvailableSource)
+                return;
+
             AudioPlayer_MediaElement.Play();
 
             IsPlay = true;
@@ -257,8 +261,7 @@ namespace SimpleLyricEditor.Views.UserControls
                 switch (args.Button)
                 {
                     case SystemMediaTransportControlsButton.Play:
-                        if (IsAvailableSource)
-                            Play();
+                        Play();
                         break;
                     case SystemMediaTransportControlsButton.Pause:
                         Pause();

@@ -1,5 +1,6 @@
 ﻿using HappyStudio.UwpToolsLibrary.Auxiliarys;
 using HappyStudio.UwpToolsLibrary.Information;
+using JiuYouAdUniversal;
 using Microsoft.Services.Store.Engagement;
 using SimpleLyricEditor.Models;
 using SimpleLyricEditor.Tools;
@@ -503,6 +504,7 @@ namespace SimpleLyricEditor
         {
             Canvas.SetZIndex(sender as UIElement, 0);
             isAdLoadingError = true;
+            MessageBox.ShowAsync(e.Error.Message, "关闭");
         }
 
         private void AdAreaText_Border_Tapped(object sender, TappedRoutedEventArgs e)
