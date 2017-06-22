@@ -2,13 +2,37 @@
 <UpdateLogs>
 
       <UpdateLog>
+        <Version>2.10.9</Version>
+        <Content>
+1，修复不显示广告的问题
+
+----------附 2.10.8 更新日志----------
+
+1，加入微软广告
+2，彻底修复播放完后会闪退的问题
+3，现在按ESC键可快速退出文本输入状态
+        </Content>
+        <Date>2017/06/22</Date>
+      </UpdateLog>
+
+      <UpdateLog>
+        <Version>2.10.8</Version>
+        <Content>
+1，加入微软广告
+2，彻底修复播放完后会闪退的问题
+3，现在按ESC键可快速退出文本输入状态
+        </Content>
+        <Date>2017/06/21</Date>
+      </UpdateLog>
+
+      <UpdateLog>
         <Version>2.10.5</Version>
         <Content>
 1，添加广告（只在暂停时显示）
 2，修改歌词时间功能独立并支持多行
 3，毛玻璃不透明度设置脱离背景图片设置组
         </Content>
-        <Date>2017/06/16</Date>
+        <Date>2017/06/17</Date>
       </UpdateLog>
 
       <UpdateLog>

@@ -97,7 +97,8 @@ namespace SimpleLyricEditor.ViewModels
                 ReadTempFile();
             saveTempFile_Timer = ThreadPoolTimer.CreatePeriodicTimer((t) => SaveTempFile(), TimeSpan.FromSeconds(30));
             Settings.SettingObject.Values["IsCollapse"] = false;
-            
+
+            //Settings.SettingObject.Values.Remove(nameof(AdClickDate));
             adClickDate = Settings.GetSetting(nameof(AdClickDate), new DateTime(2017,6,14).ToString("d"), s => DateTime.Parse(s));
             isDisplayAd = adClickDate != DateTime.Now.Date;
         }

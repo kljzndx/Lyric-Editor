@@ -9,6 +9,8 @@
     xmlns:ctol="using:SimpleLyricEditor.Views.UserControls"
     xmlns:pctrl="using:HappyStudio.UwpToolsLibrary.Control"
     xmlns:adc="using:JiuYouAdUniversal"
+    xmlns:msadc="using:Microsoft.Advertising.WinRT.UI"
+    xmlns:ad="using:Microsoft.Advertising.Shared"
     xmlns:temp="using:SimpleLyricEditor.Views.Template"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -209,11 +211,13 @@
                     
                 </Grid>
 
-                <Grid x:Name="AdArea_Grid" x:Uid="/AD/AdArea_Grid" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Bottom" Visibility="{x:Bind model.IsDisplayAd,Mode=OneWay,Converter={StaticResource BoolToVisibility}}">
-                    <Border x:Name="AdAreaText_Border" Canvas.ZIndex="1" Background="{ThemeResource SystemControlBackgroundAccentBrush}" Tapped="AdAreaText_Border_Tapped">
-                        <TextBlock x:Uid="/AD/AdArea_TextBlock" TextAlignment="Center" VerticalAlignment="Center" FontSize="18" FontWeight="Bold" Foreground="White"/>
+                <Grid x:Name="AdArea_Grid" x:Uid="/AD/AdArea_Grid" Grid.Row="1" Grid.RowSpan="2" HorizontalAlignment="Center" VerticalAlignment="Bottom" Visibility="{x:Bind model.IsDisplayAd,Mode=OneWay,Converter={StaticResource BoolToVisibility}}">
+                    <Border x:Name="MsAdControl_Border" Tapped="{x:Bind model.HideAd}">
+                        <msadc:AdControl x:Name="MsAdControl" Width="300" Height="50" ApplicationId="9mx4frgq4rqs" AdUnitId="348294" OnPointerUp="{x:Bind model.HideAd}" ErrorOccurred="MsAdControl_ErrorOccurred"/>
                     </Border>
-                    <adc:AdControl Canvas.ZIndex="1" ApplicationKey="c6cef00ec55ffc57340a7507d1473f5f" AdClick="{x:Bind model.HideAd}" AdLoadingError="AdControl_AdLoadingError"/>
+                    <Border x:Name="JiuYouAdControl_Border"  Visibility="{x:Bind MsAdControl.HasAd,Mode=OneWay,Converter={StaticResource BoolToVisibility_Reverse}}">
+                        <adc:AdControl x:Name="JiuYouAdControl" ApplicationKey="c6cef00ec55ffc57340a7507d1473f5f" AdClick="{x:Bind model.HideAd}" AdLoadingError="JiuYouAdControl_AdLoadingError"/>
+                    </Border>
                 </Grid>
                 
                 <ctol:ShortcutKeysDialog x:Name="shortcutKeysDialog" Grid.RowSpan="3"/>

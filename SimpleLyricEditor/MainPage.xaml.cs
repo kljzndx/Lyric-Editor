@@ -40,7 +40,6 @@ namespace SimpleLyricEditor
     {
         private Main_ViewModel model = App.Locator.Main;
         private bool isListViewGotFocus = false;
-        private bool isAdLoadingError = false;
         public MainPage()
         {
             this.InitializeComponent();
@@ -49,6 +48,7 @@ namespace SimpleLyricEditor
             
             audioPlayer.MusicFileChanged += blurBackgroundImage.AudioPlayer_MusicFileChanged;
             model.LyricItemChanged += Model_LyricItemChanged;
+
             CoreWindow window = CoreWindow.GetForCurrentThread();
             window.KeyDown += Window_KeyDown;
             window.KeyUp += Window_KeyUp;
@@ -114,6 +114,8 @@ namespace SimpleLyricEditor
                         break;
                 }
             }
+            else if (args.VirtualKey == VirtualKey.Escape)
+                this.Focus(FocusState.Pointer);
         }
 
         private void Window_KeyUp(CoreWindow sender, KeyEventArgs args)
@@ -131,12 +133,14 @@ namespace SimpleLyricEditor
         {
             if (model.AdClickDate != DateTime.Now.Date)
                 model.IsDisplayAd = false;
+            MsAdControl.Suspend();
         }
 
         private void audioPlayer_Paused(Views.UserControls.AudioPlayer sender, EventArgs args)
         {
             if (model.AdClickDate != DateTime.Now.Date)
                 model.IsDisplayAd = true;
+            MsAdControl.Resume();
         }
 
         private void audioPlayer_PositionChanged(Views.UserControls.AudioPlayer sender, EventArgss.PositionChangeEventArgs args)
@@ -500,17 +504,14 @@ namespace SimpleLyricEditor
             Lyrics_ListView.SelectedIndex = -1;
         }
 
-        private void AdControl_AdLoadingError(object sender, JiuYouAdUniversal.Models.AdLoadingErrorEventArgs e)
+        private void JiuYouAdControl_AdLoadingError(object sender, JiuYouAdUniversal.Models.AdLoadingErrorEventArgs e)
         {
-            Canvas.SetZIndex(sender as UIElement, 0);
-            isAdLoadingError = true;
-            //MessageBox.ShowAsync(e.Error.Message, "关闭");
+            JiuYouAdControl.Visibility = Visibility.Collapsed;
         }
 
-        private void AdAreaText_Border_Tapped(object sender, TappedRoutedEventArgs e)
+        private void MsAdControl_ErrorOccurred(object sender, Microsoft.Advertising.WinRT.UI.AdErrorEventArgs e)
         {
-            if (isAdLoadingError)
-                model.HideAd();
+            MsAdControl.Visibility = Visibility.Collapsed;
         }
     }
 }

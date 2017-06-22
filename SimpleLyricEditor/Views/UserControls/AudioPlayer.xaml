@@ -4,11 +4,16 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:SimpleLyricEditor.Views.UserControls"
     xmlns:pctrl="using:HappyStudio.UwpToolsLibrary.Control"
+    xmlns:cvt="using:SimpleLyricEditor.ValueConverters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400">
+
+    <UserControl.Resources>
+        <cvt:TimeSpanToDouble x:Name="timeSpanToDouble"/>
+    </UserControl.Resources>
 
     <Grid Background="{ThemeResource AppBarBackgroundThemeBrush}">
         
@@ -24,7 +29,7 @@
                     <ColumnDefinition/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
-                <Slider x:Name="Position_Slider" Value="{x:Bind Time,Mode=TwoWay,Converter={StaticResource TimeSpanToDouble}}" Maximum="{x:Bind MusicSource.AllTime,Mode=OneWay,Converter={StaticResource TimeSpanToDouble}}" ThumbToolTipValueConverter="{StaticResource TimeSpanToString}" Style="{StaticResource MediaSliderStyle}" Height="40" SmallChange="0.01" StepFrequency="0.01" TickFrequency="1" />
+                <Slider x:Name="Position_Slider" Value="{x:Bind Time,Mode=OneWay,Converter={StaticResource timeSpanToDouble}}" Maximum="{x:Bind MusicSource.AllTime,Mode=OneWay,Converter={StaticResource TimeSpanToDouble}}" ThumbToolTipValueConverter="{StaticResource TimeSpanToString}" Style="{StaticResource MediaSliderStyle}" Height="40" SmallChange="0.01" StepFrequency="0.01" TickFrequency="1" />
                 <TextBlock Grid.Column="1" Margin="5,0,0,0" Text="{x:Bind Time,Mode=OneWay,Converter={StaticResource TimeSpanToString}}" VerticalAlignment="Center"/>
             </Grid>
             <!--控制按钮区域-->

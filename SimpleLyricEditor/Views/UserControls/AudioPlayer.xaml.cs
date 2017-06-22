@@ -29,7 +29,6 @@ using Windows.UI.ViewManagement;
 using Windows.UI.Xaml.Hosting;
 using Windows.UI.Composition;
 using SimpleLyricEditor.Extensions;
-using SimpleLyricEditor.ValueConverters;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
@@ -173,7 +172,6 @@ namespace SimpleLyricEditor.Views.UserControls
         {
             AudioPlayer_MediaElement.Position = time;
             Time = time;
-            RefreshSMTCTime();
 
             PositionChanged?.Invoke(this, new PositionChangeEventArgs(true, time));
         }
@@ -195,8 +193,13 @@ namespace SimpleLyricEditor.Views.UserControls
             systemMediaTransportControls.IsNextEnabled = true;
             systemMediaTransportControls.PlaybackStatus = MediaPlaybackStatus.Closed;
             systemMediaTransportControls.ButtonPressed += SystemMediaTransportControls_ButtonPressed;
-            systemMediaTransportControls.PlaybackPositionChangeRequested += async (s, e) => await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => SetTime(e.RequestedPlaybackPosition));
+            systemMediaTransportControls.PlaybackPositionChangeRequested += SystemMediaTransportControls_PlaybackPositionChangeRequested;
             systemMediaTransportControls.PropertyChanged += SystemMediaTransportControls_PropertyChanged;
+        }
+
+        private async void SystemMediaTransportControls_PlaybackPositionChangeRequested(SystemMediaTransportControls sender, PlaybackPositionChangeRequestedEventArgs args)
+        {
+            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => SetTime(args.RequestedPlaybackPosition));
         }
 
         #region 播放控制
@@ -233,12 +236,14 @@ namespace SimpleLyricEditor.Views.UserControls
         {
             short ms = App.IsPressShift ? (short)5000 : (short)500;
             SetTime(Time >= TimeSpan.FromMilliseconds(ms) ? Time - TimeSpan.FromMilliseconds(ms) : TimeSpan.Zero);
+            RefreshSMTCTime();
         }
 
         public void FastForward()
         {
             short ms = App.IsPressShift ? (short)5000 : (short)500;
             SetTime(Time <= MusicSource.AllTime - TimeSpan.FromMilliseconds(ms) ? Time + TimeSpan.FromMilliseconds(ms) : MusicSource.AllTime);
+            RefreshSMTCTime();
         }
         #endregion
 
@@ -364,37 +369,39 @@ namespace SimpleLyricEditor.Views.UserControls
         private void AudioPlayer_MediaElement_MediaEnded(object sender, RoutedEventArgs e)
         {
             Pause();
-            Time = TimeSpan.Zero;
+            //Time = TimeSpan.Zero;
+
         }
 
         private void AudioPlayer_MediaElement_CurrentStateChanged(object sender, RoutedEventArgs e)
         {
-            switch ((sender as MediaElement).CurrentState)
-            {
-                case MediaElementState.Closed:
-                    systemMediaTransportControls.PlaybackStatus = MediaPlaybackStatus.Closed;
-                    break;
-                case MediaElementState.Buffering:
-                    systemMediaTransportControls.PlaybackStatus = MediaPlaybackStatus.Changing;
-                    break;
-                case MediaElementState.Playing:
-                    systemMediaTransportControls.PlaybackStatus = MediaPlaybackStatus.Playing;
-                    break;
-                case MediaElementState.Paused:
-                    systemMediaTransportControls.PlaybackStatus = MediaPlaybackStatus.Paused;
-                    break;
-                case MediaElementState.Stopped:
-                    systemMediaTransportControls.PlaybackStatus = MediaPlaybackStatus.Stopped;
-                    break;
-            }
+            if (systemMediaTransportControls != null)
+                switch ((sender as MediaElement).CurrentState)
+                {
+                    case MediaElementState.Closed:
+                        systemMediaTransportControls.PlaybackStatus = MediaPlaybackStatus.Closed;
+                        break;
+                    case MediaElementState.Buffering:
+                        systemMediaTransportControls.PlaybackStatus = MediaPlaybackStatus.Changing;
+                        break;
+                    case MediaElementState.Playing:
+                        systemMediaTransportControls.PlaybackStatus = MediaPlaybackStatus.Playing;
+                        break;
+                    case MediaElementState.Paused:
+                        systemMediaTransportControls.PlaybackStatus = MediaPlaybackStatus.Paused;
+                        break;
+                    case MediaElementState.Stopped:
+                        systemMediaTransportControls.PlaybackStatus = MediaPlaybackStatus.Stopped;
+                        break;
+                }
         }
 
         private void Position_Slider_PointerReleased(object sender, PointerRoutedEventArgs e)
         {
-            IValueConverter converter = (TimeSpanToDouble)App.Current.Resources["TimeSpanToDouble"];
-            var time = (TimeSpan)converter.ConvertBack((sender as Slider).Value, typeof(TimeSpan), null, this.Language);
-            isPressProgressBar = false;
+            var time = (TimeSpan)timeSpanToDouble.ConvertBack(((Slider)sender).Value, typeof(TimeSpan), null, this.Language);
             SetTime(time);
+            RefreshSMTCTime();
+            isPressProgressBar = false;
         }
 
         private void Play_Button_Click(object sender, RoutedEventArgs e)
