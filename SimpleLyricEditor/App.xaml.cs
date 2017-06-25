@@ -22,6 +22,7 @@ using HappyStudio.UwpToolsLibrary.Information;
 using Windows.ApplicationModel.Resources;
 using WinRTExceptions;
 using SimpleLyricEditor.Models;
+using Microsoft.HockeyApp;
 
 namespace SimpleLyricEditor
 {
@@ -52,6 +53,7 @@ namespace SimpleLyricEditor
             this.Suspending += OnSuspending;
             this.Resuming += OnResuming;
             this.UnhandledException += OnUnhandledException;
+            HockeyClient.Current.Configure("69cf42d198694fe3b7a5ab0d7eae6370");
         }
 
         private void CreateKeySubscription()

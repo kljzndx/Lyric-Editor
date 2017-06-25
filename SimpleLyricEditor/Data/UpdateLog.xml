@@ -2,15 +2,19 @@
 <UpdateLogs>
 
       <UpdateLog>
+        <Version>2.10.10</Version>
+        <Content>
+1，修复在win10 1511系统上播放速率按钮图标显示为“口”的问题
+2，修复在低版本系统上迷你模式按钮依然会显示的问题
+3，现在按E键可快速进入文本输入状态
+        </Content>
+        <Date>2017/06/25</Date>
+      </UpdateLog>
+
+      <UpdateLog>
         <Version>2.10.9</Version>
         <Content>
 1，修复不显示广告的问题
-
-----------附 2.10.8 更新日志----------
-
-1，加入微软广告
-2，彻底修复播放完后会闪退的问题
-3，现在按ESC键可快速退出文本输入状态
         </Content>
         <Date>2017/06/22</Date>
       </UpdateLog>

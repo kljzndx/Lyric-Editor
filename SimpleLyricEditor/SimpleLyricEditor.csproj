@@ -23,6 +23,7 @@
     <AppxBundle>Always</AppxBundle>
     <AppxBundlePlatforms>x86|x64|arm</AppxBundlePlatforms>
     <RuntimeIdentifiers>win10-arm;win10-arm-aot;win10-x86;win10-x86-aot;win10-x64;win10-x64-aot</RuntimeIdentifiers>
+    <HockeyAppResourceId>69cf42d198694fe3b7a5ab0d7eae6370</HockeyAppResourceId>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
@@ -196,6 +197,8 @@
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
+    <Content Include="Assets\SEGMDL2.TTF" />
+    <None Include="Connected Services\HockeyApp\ConnectedService.json" />
     <None Include="SimpleLyricEditor_StoreKey.pfx" />
     <None Include="SimpleLyricEditor_TemporaryKey.pfx" />
     <PRIResource Include="Strings\en-US\AD.resw" />
@@ -353,6 +356,9 @@
     </PackageReference>
     <PackageReference Include="HappyStudio.UwpToolsLibrary.Information">
       <Version>1.0.2</Version>
+    </PackageReference>
+    <PackageReference Include="HockeySDK.UWP">
+      <Version>4.1.3</Version>
     </PackageReference>
     <PackageReference Include="JYAdControl">
       <Version>2.3.6</Version>

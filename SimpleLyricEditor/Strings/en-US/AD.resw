@@ -120,7 +120,4 @@
   <data name="AdArea_Grid.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
     <value>AD are no longer displayed on the day of clicking AD</value>
   </data>
-  <data name="AdArea_TextBlock.Text" xml:space="preserve">
-    <value>Advertising Area</value>
-  </data>
 </root>

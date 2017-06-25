@@ -200,7 +200,7 @@
                     <ctol:SingleLyricPreview x:Name="singleLyricPreview" Grid.Row="1" Lyrics="{x:Bind model.Lyrics,Mode=OneWay}" Position="{x:Bind model.ThisTime,Mode=OneWay}" Visibility="{x:Bind model.IsDisplayScrollLyricsPreview,Mode=OneWay,Converter={StaticResource BoolToVisibility_Reverse}}" Tapped="SingleLyricPreview_Tapped"/>
                     <ctol:MultipleLyricPreview x:Name="multipleLyricPreview" Grid.Row="1" LyricsList="{x:Bind model.Lyrics,Mode=OneWay}" Position="{x:Bind audioPlayer.Time,Mode=OneWay}" Visibility="{x:Bind model.IsDisplayScrollLyricsPreview,Mode=OneWay,Converter={StaticResource BoolToVisibility}}"/>
                     
-                    <StackPanel x:Name="MiniMode_StackPanel" Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="20" Visibility="{x:Bind model.IsDisplayScrollLyricsPreview,Mode=OneWay,Converter={StaticResource BoolToVisibility}}">
+                    <StackPanel x:Name="MiniMode_StackPanel" Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="20" Visibility="Collapsed">
                         <Button x:Name="MiniMode_Button" Padding="10" Click="MiniMode_Button_Click">
                             <SymbolIcon Symbol="Pin"/>
                         </Button>

@@ -53,7 +53,7 @@ namespace SimpleLyricEditor
             window.KeyDown += Window_KeyDown;
             window.KeyUp += Window_KeyUp;
 
-            MiniMode_StackPanel.Visibility = SystemInfo.BuildVersion >= 15063 ? Visibility.Visible : Visibility.Collapsed;
+            
             FeedbackInFeedbackHub_MenuFlyoutItem.Visibility = StoreServicesFeedbackLauncher.IsSupported() ? Visibility.Visible : Visibility.Collapsed;
         }
 
@@ -111,6 +111,9 @@ namespace SimpleLyricEditor
 
                         Lyrics_ListView.SelectedIndex = Lyrics_ListView.SelectedIndex < Lyrics_ListView.Items.Count - 1 ? Lyrics_ListView.SelectedIndex + 1 : -1;
                         this.Focus(FocusState.Pointer);
+                        break;
+                    case VirtualKey.E:
+                        LyricsContent_TextBox.Focus(FocusState.Pointer);
                         break;
                 }
             }
@@ -352,11 +355,11 @@ namespace SimpleLyricEditor
         {
             model.IsDisplayScrollLyricsPreview = true;
             Grid.SetRow(LyricsPreview_Grid, 1);
-            Grid.SetRow(AdArea_Grid, 1);
 
             foreach (LyricItem item in Lyrics_ListView.SelectedItems)
                 item.IsSelected = false;
 
+            MiniMode_StackPanel.Visibility = SystemInfo.BuildVersion >= 15063 ? Visibility.Visible : Visibility.Collapsed;
             multipleLyricPreview.StartPreview();
         }
 
@@ -364,11 +367,11 @@ namespace SimpleLyricEditor
         {
             model.IsDisplayScrollLyricsPreview = false;
             Grid.SetRow(LyricsPreview_Grid, 2);
-            Grid.SetRow(AdArea_Grid, 2);
 
             foreach (LyricItem item in Lyrics_ListView.SelectedItems)
                 item.IsSelected = true;
 
+            MiniMode_StackPanel.Visibility = Visibility.Collapsed;
             multipleLyricPreview.StopPreview();
         }
 

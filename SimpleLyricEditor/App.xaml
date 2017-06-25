@@ -7,7 +7,7 @@
 
     <Application.Resources>
         <Style x:Key="ControllerButton" TargetType="Button">
-            <Setter Property="FontFamily" Value="Segoe MDL2 Assets"/>
+            <Setter Property="FontFamily" Value="/Assets/SEGMDL2.TTF#Segoe MDL2 Assets"/>
             <Setter Property="FontSize" Value="18"/>
             <Setter Property="Padding" Value="10"/>
             <Setter Property="Margin" Value="5,0"/>
