@@ -2,6 +2,27 @@
 <UpdateLogs>
 
       <UpdateLog>
+        <Version>2.10.13</Version>
+        <Content>
+Hi 好久不见哦，
+最近在学英语，突然想起来这编辑器还不支持多行歌词内容
+于是就回来更新了
+
+1，重构歌词读取逻辑，以便支持多行歌词内容
+2，修改歌词内容按钮，在歌词输入框有多行歌词时不再只修改为第一行歌词
+        </Content>
+        <Date>2017/07/24</Date>
+      </UpdateLog>
+
+      <UpdateLog>
+        <Version>2.10.11</Version>
+        <Content>
+1，现在自动备份功能在已保存过文件的情况下会顺带把此文件也保存一下
+        </Content>
+        <Date>2017/07/03</Date>
+      </UpdateLog>
+
+      <UpdateLog>
         <Version>2.10.10</Version>
         <Content>
 1，修复在win10 1511系统上播放速率按钮图标显示为“口”的问题

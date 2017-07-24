@@ -48,7 +48,12 @@
         <Grid.RenderTransform>
             <CompositeTransform x:Name="MainGrid_Transform"/>
         </Grid.RenderTransform>
-        <Pivot>
+        <Pivot SelectedIndex="0">
+            <!--<PivotItem x:Name="NewVersion_PivotItem" Visibility="Collapsed">
+                <Grid>
+                    
+                </Grid>
+            </PivotItem>-->
             <PivotItem x:Uid="/UpdateLogDialog/CurrentVersion_PivotItem">
                 <Grid>
                     <Grid.RowDefinitions>
@@ -106,6 +111,7 @@
                     </ListView.ItemTemplate>
                 </ListView>
             </PivotItem>
+            
         </Pivot>
         <Button x:Name="Close_Button" x:Uid="/UpdateLogDialog/Close_Button" Grid.Row="1" Margin="10" HorizontalAlignment="Stretch" Click="{x:Bind Disappear_Storyboard.Begin}"/>
     </Grid>

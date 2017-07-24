@@ -69,7 +69,7 @@ namespace SimpleLyricEditor.ViewModels
 
         private DateTime adClickDate;
         public DateTime AdClickDate { get => adClickDate; set => Settings.SetSetting(ref adClickDate, value, value.Date.ToString("d")); }
-        
+
         private bool isDisplayAd;
         public bool IsDisplayAd { get => isDisplayAd; set => Set(ref isDisplayAd, value); }
 
@@ -99,7 +99,7 @@ namespace SimpleLyricEditor.ViewModels
             Settings.SettingObject.Values["IsCollapse"] = false;
 
             //Settings.SettingObject.Values.Remove(nameof(AdClickDate));
-            adClickDate = Settings.GetSetting(nameof(AdClickDate), new DateTime(2017,6,14).ToString("d"), s => DateTime.Parse(s));
+            adClickDate = Settings.GetSetting(nameof(AdClickDate), new DateTime(2017, 6, 14).ToString("d"), s => DateTime.Parse(s));
             isDisplayAd = adClickDate != DateTime.Now.Date;
         }
 
@@ -222,14 +222,14 @@ namespace SimpleLyricEditor.ViewModels
 
             LyricItemChanged?.Invoke(this, new LyricItemChangeEventAegs(LyricItemOperationType.Del));
         }
-        
+
         public void ModifyLyricsContent()
         {
             if (!selectedItems.Any())
                 return;
 
             foreach (LyricItem sltItem in selectedItems)
-                sltItem.Content = lyricContent.Split('\r')[0].Trim();
+                sltItem.Content = lyricContent.Trim();
 
             LyricItemChanged?.Invoke(this, new LyricItemChangeEventAegs(LyricItemOperationType.ChangeContent));
         }
@@ -274,7 +274,12 @@ namespace SimpleLyricEditor.ViewModels
         private async void SaveTempFile()
         {
             if (lyrics.Any())
+            {
                 await LyricFileTools.SaveFileAsync(tags, lyrics, tempFile);
+
+                if (LyricFile is StorageFile)
+                    await LyricFileTools.SaveFileAsync(tags, lyrics, LyricFile);
+            }
         }
 
         private async void ReadTempFile()

@@ -12,6 +12,7 @@ namespace SimpleLyricEditor.Tools
 {
     public static class LyricTools
     {
+
         public static ObservableCollection<LyricItem> LrcParse(string content, LyricTags tags)
         {
             ObservableCollection<LyricItem> lyrics = new ObservableCollection<LyricItem>();
@@ -25,19 +26,45 @@ namespace SimpleLyricEditor.Tools
             if (String.IsNullOrEmpty(tags.LyricsAuthor))
                 tags.LyricsAuthor = GetTagValue(content, "by");
 
-            Regex rege = new Regex(@"\[(\d{1,2}):(\d{1,2}).(\d{2,3})\](.*)");
+            var rege = new Regex(@"\[(\d{1,2}):(\d{1,2}).(\d{2,3})\](.*)");
+            var lines = content.Split('\n');
+            var builder = new StringBuilder();
+
             if (rege.IsMatch(content))
             {
-                foreach (Match item in rege.Matches(content))
+                LyricItem item = LyricItem.Empty;
+                foreach (string line in lines)
                 {
-                    byte min = Byte.Parse(item.Groups[1].Value);
-                    byte s = Byte.Parse(item.Groups[2].Value);
-                    byte ms =  Byte.Parse(item.Groups[3].Value);
-                    lyrics.Add(new LyricItem { Time = new TimeSpan(0, 0, min, s, ms < 100 ? ms * 10 : ms), Content = item.Groups[4].Value.Trim() });
+                    Match match = rege.Match(line);
+                    if (match.Success)
+                    {
+                        if (!item.Equals(LyricItem.Empty))
+                        {
+                            item.Content = builder.ToString().Trim();
+                            lyrics.Add(item);
+                            builder.Clear();
+                        }
+
+                        byte min = Byte.Parse(match.Groups[1].Value);
+                        byte s = Byte.Parse(match.Groups[2].Value);
+                        byte ms = Byte.Parse(match.Groups[3].Value);
+                        item = new LyricItem()
+                        {
+                            Time = new TimeSpan(0, 0, min, s, ms)
+                        };
+
+                        builder.AppendLine(match.Groups[4].Value.Trim());
+                    }
+                    else if(!item.Equals(LyricItem.Empty))
+                        builder.AppendLine(line);
                 }
+
+                //添加最后一个歌词
+                item.Content = builder.ToString().Trim();
+                lyrics.Add(item);
             }
             else
-                foreach (string item in content.Split('\n'))
+                foreach (string item in lines)
                     lyrics.Add(new LyricItem { Time = TimeSpan.Zero, Content = item.Trim() });
 
             return lyrics;
@@ -51,7 +78,7 @@ namespace SimpleLyricEditor.Tools
             sb.AppendLine(String.Empty);
 
             foreach (Lyric item in lyrics)
-                sb.AppendLine(item.ToString());
+                sb.AppendLine(item.ToString().Trim());
 
             return sb.ToString();
         }

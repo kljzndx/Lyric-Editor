@@ -68,7 +68,6 @@ namespace SimpleLyricEditor.Views.UserControls
         {
             Main_Grid.Visibility = Visibility.Visible;
             PopUp_Storyboard.Begin();
-            storeLogger.Log("打开更新日志面板");
         }
 
     }

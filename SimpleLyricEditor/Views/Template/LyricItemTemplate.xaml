@@ -20,7 +20,7 @@
                 <ColumnDefinition/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
-            <TextBlock Text="{x:Bind lyricItem.Time,Mode=OneWay,Converter={StaticResource TimeSpanToString}}" Margin="5,0"/>
+            <TextBlock Text="{x:Bind lyricItem.Time,Mode=OneWay,Converter={StaticResource TimeSpanToString}}" Margin="5,0" VerticalAlignment="Center"/>
             <TextBlock Grid.Column="1" Text="{x:Bind lyricItem.Content,Mode=OneWay}" TextWrapping="Wrap" Margin="5,0"/>
         </Grid>
 

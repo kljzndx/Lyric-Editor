@@ -45,7 +45,7 @@
                 </ScrollViewer>
                 <StackPanel Grid.Row="1" Padding="10">
                     <TextBlock Text="简易歌词编辑器" FontSize="18" Foreground="{ThemeResource SystemControlBackgroundAccentBrush}" HorizontalAlignment="Center"/>
-                    <TextBlock Text="Simple Lyric Editor" FontSize="18" Foreground="{ThemeResource SystemControlBackgroundAccentBrush}" HorizontalAlignment="Center"/>
+                    <TextBlock Text="Simple Lyrics Editor" FontSize="18" Foreground="{ThemeResource SystemControlBackgroundAccentBrush}" HorizontalAlignment="Center"/>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,5">
                         <TextBlock Text="版本 / Version："/>
                         <TextBlock Text="{x:Bind model.Version}"/>
@@ -227,7 +227,7 @@
         </SplitView.Content>
     </SplitView>
     <Page.BottomAppBar>
-        <CommandBar Visibility="Visible">
+        <CommandBar>
             <CommandBar.PrimaryCommands>
 
                 <AppBarButton x:Uid="/BottomBar/Open_AppBarButton" Icon="OpenFile">
