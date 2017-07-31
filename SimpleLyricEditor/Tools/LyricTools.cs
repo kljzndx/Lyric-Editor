@@ -26,7 +26,7 @@ namespace SimpleLyricEditor.Tools
             if (String.IsNullOrEmpty(tags.LyricsAuthor))
                 tags.LyricsAuthor = GetTagValue(content, "by");
 
-            var rege = new Regex(@"\[(\d{1,2}):(\d{1,2}).(\d{2,3})\](.*)");
+            var rege = new Regex(@"\[(\d{1,2}):(\d{1,2}).(\d{2,3})\]\s*(.*)");
             var lines = content.Split('\n');
             var builder = new StringBuilder();
 

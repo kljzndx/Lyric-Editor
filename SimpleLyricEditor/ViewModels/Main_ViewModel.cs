@@ -277,7 +277,7 @@ namespace SimpleLyricEditor.ViewModels
             {
                 await LyricFileTools.SaveFileAsync(tags, lyrics, tempFile);
 
-                if (LyricFile is StorageFile)
+                if (LyricFile is StorageFile && Settings.IsAutoSave)
                     await LyricFileTools.SaveFileAsync(tags, lyrics, LyricFile);
             }
         }

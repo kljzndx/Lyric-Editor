@@ -8,6 +8,8 @@
     mc:Ignorable="d">
 
     <StackPanel Padding="12">
+        <ToggleSwitch x:Uid="/Settings/AutoSave_ToggleSwitch" IsOn="{x:Bind model.Settings.IsAutoSave, Mode=TwoWay}" Margin="0,10"/>
+        
         <StackPanel Margin="0,10">
             <TextBox x:Name="DefaultLyricAuthor_TextBox" x:Uid="/Settings/DefaultLyricAuthor_TextBox" Text="{x:Bind model.Settings.DefaultLyricAuthor,Mode=TwoWay}"/>
             <TextBlock x:Name="DefaultLyricAuthorTip_TextBlock" x:Uid="/Settings/DefaultLyricAuthorTip_TextBlock" TextWrapping="Wrap"/>

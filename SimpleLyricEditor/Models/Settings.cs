@@ -35,7 +35,7 @@ namespace SimpleLyricEditor.Models
         public double Channel { get => channel; set => SetSetting(ref channel, value); }
 
         //默认歌词文件作者名
-        [SettingFieldByNormal(nameof(DefaultLyricAuthor), "")]
+        [SettingFieldByNormal(nameof(DefaultLyricAuthor), "快乐工作室")]
         private string defaultLyricAuthor;
         public string DefaultLyricAuthor { get => defaultLyricAuthor; set => SetSetting(ref defaultLyricAuthor, value); }
 
@@ -123,6 +123,14 @@ namespace SimpleLyricEditor.Models
         private SelectItemAlwaysStaysIn_Enum selectItemAlwaysStaysIn;
         public SelectItemAlwaysStaysIn_Enum SelectItemAlwaysStaysIn { get => selectItemAlwaysStaysIn; set => SetSetting(ref selectItemAlwaysStaysIn, value, value.ToString()); }
 
+        [SettingFieldByNormal(nameof(IsAutoSave), true)]
+        private bool _isAutoSave;
+        public bool IsAutoSave
+        {
+            get => _isAutoSave;
+            set => SetSetting(ref _isAutoSave, value);
+        }
+        
         private Settings()
         {
             //旧设置迁移
@@ -131,6 +139,7 @@ namespace SimpleLyricEditor.Models
             RenameSettingValue(nameof(BackgroundSourceType), "UserDefined", "LocalImage");
             RenameSettingKey("UserDefinedBackgroundImagePath", nameof(LocalBackgroundImagePath));
             RenameSettingKey("PreviewFontSize", nameof(SingleLineLyricPreviewFontSize));
+            RenameSettingValue(nameof(DefaultLyricAuthor), "", "快乐工作室");
 
             Serialization();
         }

@@ -2,6 +2,15 @@
 <UpdateLogs>
 
       <UpdateLog>
+        <Version>2.11.4</Version>
+        <Content>
+1，增加自动保存设置
+2，修改保存文件逻辑 使其完全遵循LRC标准
+        </Content>
+        <Date>2017/07/26</Date>
+      </UpdateLog>
+
+      <UpdateLog>
         <Version>2.10.13</Version>
         <Content>
 Hi 好久不见哦，

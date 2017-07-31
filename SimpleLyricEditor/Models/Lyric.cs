@@ -1,14 +1,10 @@
 ﻿using GalaSoft.MvvmLight;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using SimpleLyricEditor.Extensions;
 
 namespace SimpleLyricEditor.Models
 {
-    public class Lyric : ObservableObject, IComparable
+    public class Lyric : ObservableObject, IComparable<Lyric>
     {
         private TimeSpan time;
         public TimeSpan Time { get => time; set => Set(ref time, value); }
@@ -34,12 +30,12 @@ namespace SimpleLyricEditor.Models
 
         public override string ToString()
         {
-            return $"[{time.ToLyricTimeString()}]{content}";
+            return $"[{time.ToLyricTimeString()}] {content}";
         }
 
-        public int CompareTo(object obj)
+        public int CompareTo(Lyric obj)
         {
-            return ((IComparable)Time).CompareTo(((Lyric)obj).Time);
+            return this.Time.CompareTo(obj.Time);
         }
     }
 }
