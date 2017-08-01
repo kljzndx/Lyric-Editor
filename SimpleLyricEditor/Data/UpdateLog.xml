@@ -2,6 +2,15 @@
 <UpdateLogs>
 
       <UpdateLog>
+        <Version>2.11.6</Version>
+        <Content>
+1，修复因重构读取逻辑而产生的毫秒数只有原本的十分之一的问题
+2，现在多选模式下歌词文本框只会列出第一个选中项
+        </Content>
+        <Date>2017/08/01</Date>
+      </UpdateLog>
+
+      <UpdateLog>
         <Version>2.11.4</Version>
         <Content>
 1，增加自动保存设置

@@ -104,7 +104,7 @@ namespace SimpleLyricEditor.Views.UserControls
 
             Position_Slider.AddHandler(PointerPressedEvent, new PointerEventHandler((s, e) => isPressProgressBar = true), true);
             Position_Slider.AddHandler(PointerReleasedEvent, new PointerEventHandler(Position_Slider_PointerReleased), true);
-
+            
             //获取窗口对象以订阅全局的键 按下和弹起 事件
             CoreWindow window = CoreWindow.GetForCurrentThread();
             window.KeyDown += Window_KeyDown;

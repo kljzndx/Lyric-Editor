@@ -10,7 +10,6 @@
     xmlns:pctrl="using:HappyStudio.UwpToolsLibrary.Control"
     xmlns:adc="using:JiuYouAdUniversal"
     xmlns:msadc="using:Microsoft.Advertising.WinRT.UI"
-    xmlns:ad="using:Microsoft.Advertising.Shared"
     xmlns:temp="using:SimpleLyricEditor.Views.Template"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"

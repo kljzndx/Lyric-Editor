@@ -283,15 +283,18 @@ namespace SimpleLyricEditor
         {
             var currentListView = sender as ListView;
             string content = String.Empty;
+            
+            if (currentListView == null)
+                return;
 
             foreach (LyricItem item in e.RemovedItems)
                 item.IsSelected = false;
 
+            if (currentListView.SelectedItem is Lyric lyric)
+                content = lyric.Content;
+
             foreach (LyricItem item in currentListView.SelectedItems)
-            {
-                content += item.Content + "\r\n";
                 item.IsSelected = true;
-            }
 
             model.LyricContent = content.Trim();
 

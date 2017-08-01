@@ -26,7 +26,7 @@ namespace SimpleLyricEditor.Tools
             if (String.IsNullOrEmpty(tags.LyricsAuthor))
                 tags.LyricsAuthor = GetTagValue(content, "by");
 
-            var rege = new Regex(@"\[(\d{1,2}):(\d{1,2}).(\d{2,3})\]\s*(.*)");
+            var rege = new Regex(@"\[(\d{2}):(\d{2}).(\d{2,3})\]\s*(.*)");
             var lines = content.Split('\n');
             var builder = new StringBuilder();
 
@@ -50,7 +50,7 @@ namespace SimpleLyricEditor.Tools
                         byte ms = Byte.Parse(match.Groups[3].Value);
                         item = new LyricItem()
                         {
-                            Time = new TimeSpan(0, 0, min, s, ms)
+                            Time = new TimeSpan(0, 0, min, s, ms < 100 ? ms * 10 : ms)
                         };
 
                         builder.AppendLine(match.Groups[4].Value.Trim());
