@@ -107,6 +107,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TimeSpanExtension.cs" />
     <EmbeddedResource Include="Properties\SimpleLyricsEditor.ValueConvert.rd.xml" />
   </ItemGroup>
   <ItemGroup>
