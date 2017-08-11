@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{3F6774AC-89A3-49DF-B136-2C3ACFA84AD8}</ProjectGuid>
+    <ProjectGuid>{1B727920-277E-4AC2-B34D-1885AFA989B5}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SimpleLyricsEditor.UserControl</RootNamespace>
-    <AssemblyName>SimpleLyricsEditor.UserControl</AssemblyName>
+    <RootNamespace>SimpleLyricsEditor.Control</RootNamespace>
+    <AssemblyName>SimpleLyricsEditor.Control</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.15063.0</TargetPlatformVersion>
@@ -107,14 +107,11 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Properties\SimpleLyricsEditor.UserControl.rd.xml" />
+    <EmbeddedResource Include="Properties\SimpleLyricsEditor.Control.rd.xml" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="log4net">
-      <Version>2.0.8</Version>
-    </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
-      <Version>5.3.4</Version>
+      <Version>5.2.3</Version>
     </PackageReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
