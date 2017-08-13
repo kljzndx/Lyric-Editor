@@ -14,16 +14,14 @@ namespace SimpleLyricsEditor.DAL
             Artist = string.Empty;
             Album = string.Empty;
             AlbumImage = new BitmapImage();
-            AllTime = TimeSpan.Zero;
         }
 
-        private Music(string name, string artist, string album, BitmapSource albumImage, TimeSpan allTime, StorageFile file)
+        private Music(string name, string artist, string album, BitmapSource albumImage, StorageFile file)
         {
             Name = name;
             Artist = artist;
             Album = album;
             AlbumImage = albumImage;
-            AllTime = allTime;
             File = file;
         }
 
@@ -33,7 +31,6 @@ namespace SimpleLyricsEditor.DAL
         public string Artist { get; set; }
         public string Album { get; set; }
         public BitmapSource AlbumImage { get; set; }
-        public TimeSpan AllTime { get; set; }
         public StorageFile File { get; set; }
 
         public static async Task<Music> Parse(StorageFile file)
@@ -41,7 +38,7 @@ namespace SimpleLyricsEditor.DAL
             var musicProperties = await file.Properties.GetMusicPropertiesAsync();
             var image = new BitmapImage();
             image.SetSource(await file.GetThumbnailAsync(ThumbnailMode.MusicView));
-            return new Music(musicProperties.Title, musicProperties.Artist, musicProperties.Album, image, musicProperties.Duration, file);
+            return new Music(musicProperties.Title, musicProperties.Artist, musicProperties.Album, image, file);
         }
     }
 }
