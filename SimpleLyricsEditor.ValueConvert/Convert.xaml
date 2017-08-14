@@ -1,0 +1,12 @@
+﻿<ResourceDictionary
+    x:Class="SimpleLyricsEditor.ValueConvert.Convert"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:SimpleLyricsEditor.ValueConvert">
+
+    <local:TimeSpanToLyricTimeString x:Key="TimeSpanToLyricTimeString"/>
+    <local:BoolToVisibility x:Key="BoolToVisibility"/>
+    <local:BoolToVisibility_Reverse x:Key="BoolToVisibility_Reverse"/>
+    <local:PercentageToDouble x:Key="PercentageToDouble"/>
+
+</ResourceDictionary>
