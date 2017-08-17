@@ -109,6 +109,7 @@
     <Compile Include="BoolToVisibility.cs" />
     <Compile Include="BoolToVisibility_Reverse.cs" />
     <Compile Include="Convert.cs" />
+    <Compile Include="DoubleToLyricTimeString.cs" />
     <Compile Include="PercentageToDouble.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TimeSpanExtension.cs" />
