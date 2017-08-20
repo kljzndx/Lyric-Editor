@@ -8,6 +8,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
+using SimpleLyricsEditor.Core;
 using SimpleLyricsEditor.DAL;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
@@ -25,8 +26,9 @@ namespace SimpleLyricsEditor.Control
         public static readonly DependencyProperty IsPlayProperty = DependencyProperty.Register(
             nameof(IsPlay), typeof(bool), typeof(AudioPlayer), new PropertyMetadata(false));
 
-        private Music musicTemp;
-        private ThreadPoolTimer refreshTime_Timer;
+        private Music _musicTemp;
+        private ThreadPoolTimer _refreshTimeTimer;
+        private Settings _settings = Settings.Current;
 
         public AudioPlayer()
         {
@@ -36,7 +38,7 @@ namespace SimpleLyricsEditor.Control
             RewindButton_Transform.TranslateX = 44;
             FastForwardButton_Transform.TranslateX = -44;
 
-            Position_Slider.AddHandler(PointerPressedEvent, new PointerEventHandler((s, e) => refreshTime_Timer?.Cancel()), true);
+            Position_Slider.AddHandler(PointerPressedEvent, new PointerEventHandler((s, e) => _refreshTimeTimer?.Cancel()), true);
             Position_Slider.AddHandler(PointerReleasedEvent, new PointerEventHandler(Position_Slider_PointerReleased), true);
 
         }
@@ -66,9 +68,9 @@ namespace SimpleLyricsEditor.Control
             if (source.Equals(Music.Empty))
                 return;
 
-            musicTemp = source;
+            _musicTemp = source;
 
-            Player.SetSource(await musicTemp.File.OpenAsync(FileAccessMode.Read), musicTemp.File.ContentType);
+            Player.SetSource(await _musicTemp.File.OpenAsync(FileAccessMode.Read), _musicTemp.File.ContentType);
         }
 
         public void SetPosition(TimeSpan newPosition)
@@ -104,7 +106,7 @@ namespace SimpleLyricsEditor.Control
                 await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, RefreshTime);
             }
 
-            refreshTime_Timer = ThreadPoolTimer.CreatePeriodicTimer(refreshTime, TimeSpan.FromMilliseconds(50));
+            _refreshTimeTimer = ThreadPoolTimer.CreatePeriodicTimer(refreshTime, TimeSpan.FromMilliseconds(50));
         }
 
         public void DisplayPositionControlButtons()
@@ -128,7 +130,7 @@ namespace SimpleLyricsEditor.Control
         public void Pause()
         {
             Player.Pause();
-            refreshTime_Timer.Cancel();
+            _refreshTimeTimer.Cancel();
             RefreshTime();
         }
 
@@ -178,7 +180,7 @@ namespace SimpleLyricsEditor.Control
 
         private void Player_MediaOpened(object sender, RoutedEventArgs e)
         {
-            Source = musicTemp;
+            Source = _musicTemp;
             DisplayPositionControlButtons();
             Play();
         }

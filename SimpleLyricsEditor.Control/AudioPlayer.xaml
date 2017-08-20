@@ -297,7 +297,7 @@
     </UserControl.Resources>
 
     <StackPanel Padding="{x:Bind Padding, Mode=OneWay}" Background="{x:Bind Background, Mode=OneWay}">
-        <MediaElement x:Name="Player" AutoPlay="False" CurrentStateChanged="Player_CurrentStateChanged" MediaOpened="Player_MediaOpened" MediaEnded="Player_MediaEnded" MediaFailed="Player_MediaFailed"/>
+        <MediaElement x:Name="Player" AutoPlay="False" Volume="{x:Bind _settings.Volume, Mode=OneWay}" DefaultPlaybackRate="{x:Bind _settings.PlaybackRate, Mode=OneWay}" PlaybackRate="{x:Bind _settings.PlaybackRate, Mode=OneWay}" CurrentStateChanged="Player_CurrentStateChanged" MediaOpened="Player_MediaOpened" MediaEnded="Player_MediaEnded" MediaFailed="Player_MediaFailed"/>
         <TextBlock Text="{x:Bind Source.File.Path, Mode=OneWay}" TextAlignment="Center"/>
         <Grid x:Name="Progress_Grid">
             <Grid.ColumnDefinitions>
@@ -313,7 +313,13 @@
         </Grid>
         
         <RelativePanel>
-            <Button Content="&#xEC4A;" Style="{StaticResource ControllerButtonStyle}" RelativePanel.AlignLeftWithPanel="True"/>
+            <Button Content="&#xEC4A;" Style="{StaticResource ControllerButtonStyle}" RelativePanel.AlignLeftWithPanel="True">
+                <Button.Flyout>
+                    <Flyout>
+                        <Slider Width="200" Value="{x:Bind _settings.PlaybackRate, Mode=TwoWay, Converter={StaticResource PercentageToDouble}}" Maximum="200"/>
+                    </Flyout>
+                </Button.Flyout>
+            </Button>
             
             <StackPanel Orientation="Horizontal" RelativePanel.AlignHorizontalCenterWithPanel="True">
                 <Button x:Name="Rewind_Button" Content="&#xE100;" Style="{StaticResource ControllerButtonStyle}" RenderTransformOrigin="0.5,0.5" Click="{x:Bind Rewind}">
@@ -334,7 +340,13 @@
                 </Button>
             </StackPanel>
 
-            <Button Content="&#xE767;" Style="{StaticResource ControllerButtonStyle}" RelativePanel.AlignRightWithPanel="True"/>
+            <Button Content="&#xE767;" Style="{StaticResource ControllerButtonStyle}" RelativePanel.AlignRightWithPanel="True">
+                <Button.Flyout>
+                    <Flyout>
+                        <Slider Width="200" Value="{x:Bind _settings.Volume, Mode=TwoWay, Converter={StaticResource PercentageToDouble}}"/>
+                    </Flyout>
+                </Button.Flyout>
+            </Button>
         </RelativePanel>
     </StackPanel>
 </UserControl>
