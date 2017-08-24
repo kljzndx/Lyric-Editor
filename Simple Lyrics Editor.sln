@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.16
+VisualStudioVersion = 15.0.26730.10
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleLyricsEditor", "SimpleLyricsEditor\SimpleLyricsEditor.csproj", "{62AA91D2-DED2-4FD1-A177-A50BDC2D398D}"
 EndProject
@@ -14,6 +14,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleLyricsEditor.Control", "SimpleLyricsEditor.Control\SimpleLyricsEditor.Control.csproj", "{1B727920-277E-4AC2-B34D-1885AFA989B5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleLyricsEditor.Core", "SimpleLyricsEditor.Core\SimpleLyricsEditor.Core.csproj", "{AF9A2DAD-4ECE-4A03-81D3-DEDE622420F1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleLyricsEditor.IBLL", "SimpleLyricsEditor.IBLL\SimpleLyricsEditor.IBLL.csproj", "{EC1E7E47-5E84-41EB-B54B-AA35D705EB53}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleLyricsEditor.IDAL", "SimpleLyricsEditor.IDAL\SimpleLyricsEditor.IDAL.csproj", "{81479079-CF8A-45FB-A16E-7278FEDD0BA4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -127,8 +131,43 @@ Global
 		{AF9A2DAD-4ECE-4A03-81D3-DEDE622420F1}.Release|x64.Build.0 = Release|x64
 		{AF9A2DAD-4ECE-4A03-81D3-DEDE622420F1}.Release|x86.ActiveCfg = Release|x86
 		{AF9A2DAD-4ECE-4A03-81D3-DEDE622420F1}.Release|x86.Build.0 = Release|x86
+		{EC1E7E47-5E84-41EB-B54B-AA35D705EB53}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EC1E7E47-5E84-41EB-B54B-AA35D705EB53}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EC1E7E47-5E84-41EB-B54B-AA35D705EB53}.Debug|ARM.ActiveCfg = Debug|ARM
+		{EC1E7E47-5E84-41EB-B54B-AA35D705EB53}.Debug|ARM.Build.0 = Debug|ARM
+		{EC1E7E47-5E84-41EB-B54B-AA35D705EB53}.Debug|x64.ActiveCfg = Debug|x64
+		{EC1E7E47-5E84-41EB-B54B-AA35D705EB53}.Debug|x64.Build.0 = Debug|x64
+		{EC1E7E47-5E84-41EB-B54B-AA35D705EB53}.Debug|x86.ActiveCfg = Debug|x86
+		{EC1E7E47-5E84-41EB-B54B-AA35D705EB53}.Debug|x86.Build.0 = Debug|x86
+		{EC1E7E47-5E84-41EB-B54B-AA35D705EB53}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EC1E7E47-5E84-41EB-B54B-AA35D705EB53}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EC1E7E47-5E84-41EB-B54B-AA35D705EB53}.Release|ARM.ActiveCfg = Release|ARM
+		{EC1E7E47-5E84-41EB-B54B-AA35D705EB53}.Release|ARM.Build.0 = Release|ARM
+		{EC1E7E47-5E84-41EB-B54B-AA35D705EB53}.Release|x64.ActiveCfg = Release|x64
+		{EC1E7E47-5E84-41EB-B54B-AA35D705EB53}.Release|x64.Build.0 = Release|x64
+		{EC1E7E47-5E84-41EB-B54B-AA35D705EB53}.Release|x86.ActiveCfg = Release|x86
+		{EC1E7E47-5E84-41EB-B54B-AA35D705EB53}.Release|x86.Build.0 = Release|x86
+		{81479079-CF8A-45FB-A16E-7278FEDD0BA4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{81479079-CF8A-45FB-A16E-7278FEDD0BA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{81479079-CF8A-45FB-A16E-7278FEDD0BA4}.Debug|ARM.ActiveCfg = Debug|ARM
+		{81479079-CF8A-45FB-A16E-7278FEDD0BA4}.Debug|ARM.Build.0 = Debug|ARM
+		{81479079-CF8A-45FB-A16E-7278FEDD0BA4}.Debug|x64.ActiveCfg = Debug|x64
+		{81479079-CF8A-45FB-A16E-7278FEDD0BA4}.Debug|x64.Build.0 = Debug|x64
+		{81479079-CF8A-45FB-A16E-7278FEDD0BA4}.Debug|x86.ActiveCfg = Debug|x86
+		{81479079-CF8A-45FB-A16E-7278FEDD0BA4}.Debug|x86.Build.0 = Debug|x86
+		{81479079-CF8A-45FB-A16E-7278FEDD0BA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{81479079-CF8A-45FB-A16E-7278FEDD0BA4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{81479079-CF8A-45FB-A16E-7278FEDD0BA4}.Release|ARM.ActiveCfg = Release|ARM
+		{81479079-CF8A-45FB-A16E-7278FEDD0BA4}.Release|ARM.Build.0 = Release|ARM
+		{81479079-CF8A-45FB-A16E-7278FEDD0BA4}.Release|x64.ActiveCfg = Release|x64
+		{81479079-CF8A-45FB-A16E-7278FEDD0BA4}.Release|x64.Build.0 = Release|x64
+		{81479079-CF8A-45FB-A16E-7278FEDD0BA4}.Release|x86.ActiveCfg = Release|x86
+		{81479079-CF8A-45FB-A16E-7278FEDD0BA4}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F672763E-9C88-4C18-9516-84A111C24358}
 	EndGlobalSection
 EndGlobal
