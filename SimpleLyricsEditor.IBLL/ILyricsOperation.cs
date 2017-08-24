@@ -2,7 +2,7 @@
 {
     public interface ILyricsOperation
     {
-        void Action();
-        void Unaction();
+        void Do();
+        void Undo();
     }
 }
