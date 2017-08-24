@@ -132,6 +132,10 @@
       <Project>{30bda5b5-8533-4c63-8878-e5fb60ecf23e}</Project>
       <Name>SimpleLyricsEditor.DAL</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SimpleLyricsEditor.IDAL\SimpleLyricsEditor.IDAL.csproj">
+      <Project>{81479079-cf8a-45fb-a16e-7278fedd0ba4}</Project>
+      <Name>SimpleLyricsEditor.IDAL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SimpleLyricsEditor.ValueConvert\SimpleLyricsEditor.ValueConvert.csproj">
       <Project>{7d550156-c386-4928-a077-b048ead45dbd}</Project>
       <Name>SimpleLyricsEditor.ValueConvert</Name>
