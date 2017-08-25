@@ -1,5 +1,6 @@
 ﻿using System;
 using SimpleLyricsEditor.IDAL;
+using SimpleLyricsEditor.ValueConvert;
 
 namespace SimpleLyricsEditor.DAL
 {
@@ -28,7 +29,12 @@ namespace SimpleLyricsEditor.DAL
 
         public int CompareTo(Lyric other)
         {
-            return this.Time.CompareTo(other.Time);
+            return this._time.CompareTo(other.Time);
+        }
+
+        public override string ToString()
+        {
+            return $"[{_time.ToLyricTimeString()}] {_content}";
         }
     }
 }
