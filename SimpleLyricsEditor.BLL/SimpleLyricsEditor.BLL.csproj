@@ -106,6 +106,12 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="LyricsOperations\Add.cs" />
+    <Compile Include="LyricsOperations\Copy.cs" />
+    <Compile Include="LyricsOperations\Modify.cs" />
+    <Compile Include="LyricsOperations\Move.cs" />
+    <Compile Include="LyricsOperations\Remove.cs" />
+    <Compile Include="LyricsOperations\Sort.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\SimpleLyricsEditor.BLL.rd.xml" />
   </ItemGroup>
@@ -114,6 +120,21 @@
       <Version>5.4.0</Version>
     </PackageReference>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SimpleLyricsEditor.DAL\SimpleLyricsEditor.DAL.csproj">
+      <Project>{30bda5b5-8533-4c63-8878-e5fb60ecf23e}</Project>
+      <Name>SimpleLyricsEditor.DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SimpleLyricsEditor.IBLL\SimpleLyricsEditor.IBLL.csproj">
+      <Project>{ec1e7e47-5e84-41eb-b54b-aa35d705eb53}</Project>
+      <Name>SimpleLyricsEditor.IBLL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SimpleLyricsEditor.IDAL\SimpleLyricsEditor.IDAL.csproj">
+      <Project>{81479079-cf8a-45fb-a16e-7278fedd0ba4}</Project>
+      <Name>SimpleLyricsEditor.IDAL</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

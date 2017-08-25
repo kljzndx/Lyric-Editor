@@ -3,10 +3,16 @@ using SimpleLyricsEditor.IDAL;
 
 namespace SimpleLyricsEditor.DAL
 {
-    public class Lyric : ObservableObject
+    public class Lyric : ObservableObject, IComparable<Lyric>
     {
         private string _content;
         private TimeSpan _time;
+
+        public Lyric(TimeSpan time, string content)
+        {
+            _time = time;
+            _content = content;
+        }
 
         public TimeSpan Time
         {
@@ -18,6 +24,11 @@ namespace SimpleLyricsEditor.DAL
         {
             get => _content;
             set => Set(ref _content, value);
+        }
+
+        public int CompareTo(Lyric other)
+        {
+            return this.Time.CompareTo(other.Time);
         }
     }
 }
