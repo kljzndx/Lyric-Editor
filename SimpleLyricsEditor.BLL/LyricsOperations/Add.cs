@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using SimpleLyricsEditor.DAL;
 using SimpleLyricsEditor.IBLL;
 
@@ -6,14 +7,18 @@ namespace SimpleLyricsEditor.BLL.LyricsOperations
 {
     public class Add : ILyricsOperation
     {
-        /// <param name="items">要添加的项目</param>
+        /// <param name="contents"></param>
         /// <param name="insertIndex">为 -1 则添加到最后</param>
         /// <param name="targetList"></param>
-        public Add(IList<Lyric> items, int insertIndex, IList<Lyric> targetList)
+        /// <param name="time"></param>
+        public Add(TimeSpan time, string[] contents, int insertIndex, IList<Lyric> targetList)
         {
-            Items = items;
+            Items = new List<Lyric>();
             InsertIndex = insertIndex;
             TargetList = targetList;
+
+            foreach (var str in contents)
+                Items.Add(new Lyric(time, str.Trim()));
         }
 
         public IList<Lyric> Items { get; set; }
@@ -26,7 +31,7 @@ namespace SimpleLyricsEditor.BLL.LyricsOperations
                 foreach (var lyric in Items)
                     TargetList.Add(lyric);
 
-            foreach(var lyric in Items)
+            foreach (var lyric in Items)
                 TargetList.Insert(InsertIndex, lyric);
         }
 
