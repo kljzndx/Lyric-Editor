@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleLyricsEditor.IBLL", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleLyricsEditor.IDAL", "SimpleLyricsEditor.IDAL\SimpleLyricsEditor.IDAL.csproj", "{81479079-CF8A-45FB-A16E-7278FEDD0BA4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleLyricsEditor.DAL.Factory", "SimpleLyricsEditor.DAL.Factory\SimpleLyricsEditor.DAL.Factory.csproj", "{E4496560-8B76-43E4-AC13-9DCAA5053D43}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -163,6 +165,22 @@ Global
 		{81479079-CF8A-45FB-A16E-7278FEDD0BA4}.Release|x64.Build.0 = Release|x64
 		{81479079-CF8A-45FB-A16E-7278FEDD0BA4}.Release|x86.ActiveCfg = Release|x86
 		{81479079-CF8A-45FB-A16E-7278FEDD0BA4}.Release|x86.Build.0 = Release|x86
+		{E4496560-8B76-43E4-AC13-9DCAA5053D43}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E4496560-8B76-43E4-AC13-9DCAA5053D43}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E4496560-8B76-43E4-AC13-9DCAA5053D43}.Debug|ARM.ActiveCfg = Debug|ARM
+		{E4496560-8B76-43E4-AC13-9DCAA5053D43}.Debug|ARM.Build.0 = Debug|ARM
+		{E4496560-8B76-43E4-AC13-9DCAA5053D43}.Debug|x64.ActiveCfg = Debug|x64
+		{E4496560-8B76-43E4-AC13-9DCAA5053D43}.Debug|x64.Build.0 = Debug|x64
+		{E4496560-8B76-43E4-AC13-9DCAA5053D43}.Debug|x86.ActiveCfg = Debug|x86
+		{E4496560-8B76-43E4-AC13-9DCAA5053D43}.Debug|x86.Build.0 = Debug|x86
+		{E4496560-8B76-43E4-AC13-9DCAA5053D43}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E4496560-8B76-43E4-AC13-9DCAA5053D43}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E4496560-8B76-43E4-AC13-9DCAA5053D43}.Release|ARM.ActiveCfg = Release|ARM
+		{E4496560-8B76-43E4-AC13-9DCAA5053D43}.Release|ARM.Build.0 = Release|ARM
+		{E4496560-8B76-43E4-AC13-9DCAA5053D43}.Release|x64.ActiveCfg = Release|x64
+		{E4496560-8B76-43E4-AC13-9DCAA5053D43}.Release|x64.Build.0 = Release|x64
+		{E4496560-8B76-43E4-AC13-9DCAA5053D43}.Release|x86.ActiveCfg = Release|x86
+		{E4496560-8B76-43E4-AC13-9DCAA5053D43}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
