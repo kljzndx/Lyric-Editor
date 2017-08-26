@@ -9,6 +9,11 @@ namespace SimpleLyricsEditor.DAL
         private string _content;
         private TimeSpan _time;
 
+        public Lyric(TimeSpan time)
+        {
+            _time = time;
+        }
+
         public Lyric(TimeSpan time, string content)
         {
             _time = time;
@@ -24,7 +29,7 @@ namespace SimpleLyricsEditor.DAL
         public string Content
         {
             get => _content;
-            set => Set(ref _content, value);
+            set => Set(ref _content, String.IsNullOrWhiteSpace(value) ? String.Empty : value);
         }
 
         public int CompareTo(Lyric other)
@@ -34,7 +39,7 @@ namespace SimpleLyricsEditor.DAL
 
         public override string ToString()
         {
-            return $"[{_time.ToLyricTimeString()}] {_content}";
+            return $"[{_time.ToLyricTimeString()}] {_content.Trim()}";
         }
     }
 }

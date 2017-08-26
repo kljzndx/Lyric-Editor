@@ -1,5 +1,4 @@
-﻿using System;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 using SimpleLyricsEditor.IDAL;
 
 namespace SimpleLyricsEditor.DAL
@@ -7,14 +6,15 @@ namespace SimpleLyricsEditor.DAL
     public class LyricsTag : ObservableObject
     {
         private readonly Regex _regex;
-        private readonly string _tagNome;
         private string _tagValue;
 
-        public LyricsTag(string tagNome)
+        public LyricsTag(string tagName)
         {
-            _tagNome = tagNome;
-            _regex = new Regex($@"\[{tagNome}:(.*)\]");
+            TagName = tagName;
+            _regex = new Regex($@"\[{tagName}:(.*)\]");
         }
+        
+        public string TagName { get; }
 
         public string TagValue
         {
@@ -22,17 +22,21 @@ namespace SimpleLyricsEditor.DAL
             set => Set(ref _tagValue, value);
         }
 
-        public void GeiTag(string input)
+        public bool GeiTag(string input)
         {
-            Match match = _regex.Match(input);
+            var match = _regex.Match(input);
 
             if (match.Success)
+            {
                 TagValue = match.Groups[1].Value.Trim();
+                return true;
+            }
+            return false;
         }
 
         public override string ToString()
         {
-            return $"[{_tagNome}:{TagValue.Trim()}]";
+            return $"[{TagName}:{TagValue.Trim()}]";
         }
     }
 }
