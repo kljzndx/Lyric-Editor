@@ -5,7 +5,7 @@ using SimpleLyricsEditor.IBLL;
 
 namespace SimpleLyricsEditor.BLL.LyricsOperations
 {
-    public class Sort : ILyricsOperation
+    public class Sort
     {
         public Sort(IList<Lyric> items)
         {
@@ -14,7 +14,7 @@ namespace SimpleLyricsEditor.BLL.LyricsOperations
 
         public IList<Lyric> Items { get; set; }
 
-        public void Do()
+        public void Invoke()
         {
             for (var i = Items.Count; i > 0; i--)
                 for (var j = 0; j < i - 1; j++)
@@ -23,11 +23,6 @@ namespace SimpleLyricsEditor.BLL.LyricsOperations
                         Items.Insert(j + 1, Items[j]);
                         Items.RemoveAt(j);
                     }
-        }
-
-        public void Undo()
-        {
-            throw new NotImplementedException();
         }
     }
 }
