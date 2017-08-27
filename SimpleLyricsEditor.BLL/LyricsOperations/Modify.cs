@@ -4,7 +4,7 @@ using SimpleLyricsEditor.IBLL;
 
 namespace SimpleLyricsEditor.BLL.LyricsOperations
 {
-    public class Modify : ILyricsOperation
+    public class Modify : LyricsOperationBase
     {
         private readonly List<string> _oldContents;
 
@@ -18,7 +18,7 @@ namespace SimpleLyricsEditor.BLL.LyricsOperations
         public IList<Lyric> Items { get; set; }
         public string NewContent { get; }
 
-        public void Do()
+        public override void Do()
         {
             _oldContents.Clear();
             foreach (var lyric in Items)
@@ -28,7 +28,7 @@ namespace SimpleLyricsEditor.BLL.LyricsOperations
             }
         }
 
-        public void Undo()
+        public override void Undo()
         {
             for (var i = 0; i < Items.Count; i++)
                 Items[i].Content = _oldContents[i];

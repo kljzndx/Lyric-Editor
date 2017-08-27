@@ -4,7 +4,7 @@ using SimpleLyricsEditor.IBLL;
 
 namespace SimpleLyricsEditor.BLL.LyricsOperations
 {
-    public class Remove : ILyricsOperation
+    public class Remove : LyricsOperationBase
     {
         public Remove(IList<Lyric> items, int seletionIndex, IList<Lyric> targetList)
         {
@@ -17,13 +17,13 @@ namespace SimpleLyricsEditor.BLL.LyricsOperations
         public int SeletionIndex { get; set; }
         public IList<Lyric> TargetList { get; set; }
 
-        public void Do()
+        public override void Do()
         {
             foreach (var lyric in Items)
                 TargetList.Remove(lyric);
         }
 
-        public void Undo()
+        public override void Undo()
         {
             foreach (var lyric in Items)
                 TargetList.Insert(SeletionIndex, lyric);

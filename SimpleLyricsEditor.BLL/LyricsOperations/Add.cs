@@ -5,7 +5,7 @@ using SimpleLyricsEditor.IBLL;
 
 namespace SimpleLyricsEditor.BLL.LyricsOperations
 {
-    public class Add : ILyricsOperation
+    public class Add : LyricsOperationBase
     {
         /// <param name="contents"></param>
         /// <param name="insertIndex">为 -1 则添加到最后</param>
@@ -25,7 +25,7 @@ namespace SimpleLyricsEditor.BLL.LyricsOperations
         public int InsertIndex { get; set; }
         public IList<Lyric> TargetList { get; set; }
 
-        public void Do()
+        public override void Do()
         {
             if (InsertIndex.Equals(-1))
                 foreach (var lyric in Items)
@@ -35,7 +35,7 @@ namespace SimpleLyricsEditor.BLL.LyricsOperations
                 TargetList.Insert(InsertIndex, lyric);
         }
 
-        public void Undo()
+        public override void Undo()
         {
             foreach (var lyric in Items)
                 TargetList.Remove(lyric);

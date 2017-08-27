@@ -6,7 +6,7 @@ using SimpleLyricsEditor.IBLL;
 
 namespace SimpleLyricsEditor.BLL.LyricsOperations
 {
-    public class Copy : ILyricsOperation
+    public class Copy : LyricsOperationBase
     {
         private readonly TimeSpan _interpolation;
         private readonly bool _isBig;
@@ -26,7 +26,7 @@ namespace SimpleLyricsEditor.BLL.LyricsOperations
         public IList<Lyric> TargetList { get; set; }
         public TimeSpan TargetTime { get; set; }
 
-        public void Do()
+        public override void Do()
         {
             foreach (var lyric in Items)
             {
@@ -35,7 +35,7 @@ namespace SimpleLyricsEditor.BLL.LyricsOperations
             }
         }
 
-        public void Undo()
+        public override void Undo()
         {
             foreach (var lyric in Items)
                 TargetList.Remove(lyric);

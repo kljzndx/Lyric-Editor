@@ -6,7 +6,7 @@ using SimpleLyricsEditor.IBLL;
 
 namespace SimpleLyricsEditor.BLL.LyricsOperations
 {
-    public class Move : ILyricsOperation
+    public class Move : LyricsOperationBase
     {
         private readonly TimeSpan _interpolation;
         private readonly bool _isBig;
@@ -24,13 +24,13 @@ namespace SimpleLyricsEditor.BLL.LyricsOperations
         public IList<Lyric> Items { get; set; }
         public TimeSpan TargetTime { get; set; }
 
-        public void Do()
+        public override void Do()
         {
             foreach (var lyric in Items)
                 lyric.Time = _isBig ? lyric.Time - _interpolation : lyric.Time + _interpolation;
         }
 
-        public void Undo()
+        public override void Undo()
         {
             foreach (var lyric in Items)
                 lyric.Time = !_isBig ? lyric.Time - _interpolation : lyric.Time + _interpolation;
