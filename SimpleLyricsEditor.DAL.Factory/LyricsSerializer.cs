@@ -6,7 +6,7 @@ using System.Text.RegularExpressions;
 
 namespace SimpleLyricsEditor.DAL.Factory
 {
-    public class LyricsSerializer
+    public static class LyricsSerializer
     {
         private static readonly Regex _rege =
             new Regex(@"\[(?<min>\d{2}):(?<sec>\d{2}).(?<ms>\d{2, 3})\]\s?(?<content>.*)");
