@@ -144,6 +144,10 @@
       <Project>{af9a2dad-4ece-4a03-81d3-dede622420f1}</Project>
       <Name>SimpleLyricsEditor.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SimpleLyricsEditor.DAL.Factory\SimpleLyricsEditor.DAL.Factory.csproj">
+      <Project>{e4496560-8b76-43e4-ac13-9dcaa5053d43}</Project>
+      <Name>SimpleLyricsEditor.DAL.Factory</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SimpleLyricsEditor.DAL\SimpleLyricsEditor.DAL.csproj">
       <Project>{30bda5b5-8533-4c63-8878-e5fb60ecf23e}</Project>
       <Name>SimpleLyricsEditor.DAL</Name>
@@ -161,6 +165,7 @@
       <Name>SimpleLyricsEditor.ValueConvert</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
