@@ -1,7 +1,7 @@
 ﻿using System;
 using Windows.Storage;
 
-namespace SimpleLyricsEditor.EventArguments
+namespace SimpleLyricsEditor.Events
 {
     public class LyricsFileChangeEventArgs : EventArgs
     {

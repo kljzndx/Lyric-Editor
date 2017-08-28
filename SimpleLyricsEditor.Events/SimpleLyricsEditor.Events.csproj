@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{F8151AC7-A003-4578-AD08-767D16653EDE}</ProjectGuid>
+    <ProjectGuid>{BA65588F-2FF9-4595-9C01-5FAA0559240A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SimpleLyricsEditor.EventArguments</RootNamespace>
-    <AssemblyName>SimpleLyricsEditor.EventArguments</AssemblyName>
+    <RootNamespace>SimpleLyricsEditor.Events</RootNamespace>
+    <AssemblyName>SimpleLyricsEditor.Events</AssemblyName>
     <DefaultLanguage>zh-CN</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.15063.0</TargetPlatformVersion>
@@ -107,8 +107,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="LyricsFileChangeEventArgs.cs" />
+    <Compile Include="LyricsFileNotification.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Properties\SimpleLyricsEditor.EventArguments.rd.xml" />
+    <EmbeddedResource Include="Properties\SimpleLyricsEditor.Events.rd.xml" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
