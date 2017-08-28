@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Runtime.InteropServices.WindowsRuntime;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.Storage;
 
 namespace SimpleLyricsEditor.Events
