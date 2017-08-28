@@ -106,6 +106,8 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="LyricsFileIO.cs" />
+    <Compile Include="LyricsFilePicker.cs" />
     <Compile Include="LyricsOperations\Add.cs" />
     <Compile Include="LyricsOperations\Copy.cs" />
     <Compile Include="LyricsOperations\Modify.cs" />
