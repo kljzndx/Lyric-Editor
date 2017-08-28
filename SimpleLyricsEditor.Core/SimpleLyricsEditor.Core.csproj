@@ -106,7 +106,9 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Core_Resource.cs" />
+    <Compile Include="Core_Resource.xaml.cs">
+      <DependentUpon>Core_Resource.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings.cs" />
     <EmbeddedResource Include="Properties\SimpleLyricsEditor.Core.rd.xml" />
