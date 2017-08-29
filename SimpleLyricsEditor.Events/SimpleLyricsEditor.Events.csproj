@@ -106,8 +106,9 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="LyricsFileChangeEventArgs.cs" />
+    <Compile Include="FileChangeEventArgs.cs" />
     <Compile Include="LyricsFileNotification.cs" />
+    <Compile Include="MusicFileNotification.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\SimpleLyricsEditor.Events.rd.xml" />
   </ItemGroup>

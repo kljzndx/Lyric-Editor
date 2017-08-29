@@ -3,9 +3,9 @@ using Windows.Storage;
 
 namespace SimpleLyricsEditor.Events
 {
-    public class LyricsFileChangeEventArgs : EventArgs
+    public class FileChangeEventArgs : EventArgs
     {
-        public LyricsFileChangeEventArgs(StorageFile file)
+        public FileChangeEventArgs(StorageFile file)
         {
             File = file;
         }
