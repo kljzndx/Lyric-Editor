@@ -315,7 +315,7 @@
         <RelativePanel>
             <Button Content="&#xEC4A;" Style="{StaticResource ControllerButtonStyle}" RelativePanel.AlignLeftWithPanel="True">
                 <Button.Flyout>
-                    <Flyout>
+                    <Flyout Placement="Bottom">
                         <Slider Width="200" Value="{x:Bind _settings.PlaybackRate, Mode=TwoWay, Converter={StaticResource PercentageToDouble}}" Maximum="200"/>
                     </Flyout>
                 </Button.Flyout>
@@ -342,7 +342,7 @@
 
             <Button Content="&#xE767;" Style="{StaticResource ControllerButtonStyle}" RelativePanel.AlignRightWithPanel="True">
                 <Button.Flyout>
-                    <Flyout>
+                    <Flyout Placement="Bottom">
                         <Slider Width="200" Value="{x:Bind _settings.Volume, Mode=TwoWay, Converter={StaticResource PercentageToDouble}}"/>
                     </Flyout>
                 </Button.Flyout>

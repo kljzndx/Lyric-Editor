@@ -8,8 +8,10 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
+using SimpleLyricsEditor.BLL;
 using SimpleLyricsEditor.Core;
 using SimpleLyricsEditor.DAL;
+using SimpleLyricsEditor.Events;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
@@ -38,9 +40,10 @@ namespace SimpleLyricsEditor.Control
             RewindButton_Transform.TranslateX = 44;
             FastForwardButton_Transform.TranslateX = -44;
 
-            Position_Slider.AddHandler(PointerPressedEvent, new PointerEventHandler((s, e) => _refreshTimeTimer?.Cancel()), true);
+            Position_Slider.AddHandler(PointerPressedEvent, new PointerEventHandler(Position_Slider_PointerPressed), true);
             Position_Slider.AddHandler(PointerReleasedEvent, new PointerEventHandler(Position_Slider_PointerReleased), true);
 
+            MusicFileNotification.FileChanged += MusicFileChanged;
         }
 
         public Music Source
@@ -63,7 +66,7 @@ namespace SimpleLyricsEditor.Control
 
         public TimeSpan Position => Player.Position;
 
-        public async void SetSource(Music source)
+        public async Task SetSource(Music source)
         {
             if (source.Equals(Music.Empty))
                 return;
@@ -81,17 +84,10 @@ namespace SimpleLyricsEditor.Control
 
         public async Task PickMusicFile()
         {
-            var picker = new FileOpenPicker();
-            picker.FileTypeFilter.Add(".wav");
-            picker.FileTypeFilter.Add(".flac");
-            picker.FileTypeFilter.Add(".alac");
-            picker.FileTypeFilter.Add(".aac");
-            picker.FileTypeFilter.Add(".m4a");
-            picker.FileTypeFilter.Add(".mp3");
-            var file = await picker.PickSingleFileAsync();
+            var file = await MusicFileOpenPicker.PickFile();
 
             if (file != null)
-                SetSource(await Music.Parse(file));
+                MusicFileNotification.ChangeFile(file);
         }
 
         private void RefreshTime()
@@ -158,6 +154,11 @@ namespace SimpleLyricsEditor.Control
                 Play();
         }
 
+        private async void MusicFileChanged(object sender, FileChangeEventArgs e)
+        {
+            await SetSource(await Music.Parse(e.File));
+        }
+
         private void Player_CurrentStateChanged(object sender, RoutedEventArgs e)
         {
             switch (Player.CurrentState)
@@ -194,6 +195,11 @@ namespace SimpleLyricsEditor.Control
         private void Player_MediaFailed(object sender, ExceptionRoutedEventArgs e)
         {
             throw new Exception(e.ErrorMessage);
+        }
+
+        private void Position_Slider_PointerPressed(object sender, PointerRoutedEventArgs e)
+        {
+            _refreshTimeTimer?.Cancel();
         }
 
         private void Position_Slider_PointerReleased(object sender, PointerRoutedEventArgs e)
