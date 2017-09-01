@@ -1,5 +1,5 @@
 ﻿using System;
-using SimpleLyricsEditor.IDAL;
+using GalaSoft.MvvmLight;
 using SimpleLyricsEditor.ValueConvert;
 
 namespace SimpleLyricsEditor.DAL
@@ -31,7 +31,7 @@ namespace SimpleLyricsEditor.DAL
             get => _content;
             set => Set(ref _content, String.IsNullOrWhiteSpace(value) ? String.Empty : value);
         }
-
+        
         public int CompareTo(Lyric other)
         {
             return this._time.CompareTo(other.Time);

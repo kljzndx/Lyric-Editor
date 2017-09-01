@@ -1,5 +1,5 @@
 ﻿using System.Text.RegularExpressions;
-using SimpleLyricsEditor.IDAL;
+using GalaSoft.MvvmLight;
 
 namespace SimpleLyricsEditor.DAL
 {
