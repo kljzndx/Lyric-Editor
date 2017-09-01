@@ -1,0 +1,27 @@
+﻿<Page
+    x:Class="SimpleLyricsEditor.Views.UiFramework"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:SimpleLyricsEditor.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <SplitView x:Name="Root_SplitView" DisplayMode="Overlay" PanePlacement="Right">
+        <SplitView.Pane>
+            <Frame x:Name="SecondaryView_Frame"/>
+        </SplitView.Pane>
+        
+        <SplitView.Content>
+            <Frame x:Name="MainView_Frame" SourcePageType="local:MainPage"/>
+        </SplitView.Content>
+    </SplitView>
+    
+    <Page.BottomAppBar>
+        <CommandBar>
+            <CommandBar.PrimaryCommands>
+                <AppBarButton x:Name="Settings_AppBarButton" Icon="Setting" Click="Settings_AppBarButton_Click"/>
+            </CommandBar.PrimaryCommands>
+        </CommandBar>
+    </Page.BottomAppBar>
+</Page>
