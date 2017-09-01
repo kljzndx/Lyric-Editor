@@ -8,12 +8,12 @@ namespace SimpleLyricsEditor.ViewModels
         public ViewModelLocator()
         {
             ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
-            SimpleIoc.Default.Register<Main_ViewModel>();
+            SimpleIoc.Default.Register<MainViewModel>();
         }
 
-        public Main_ViewModel Main
+        public MainViewModel Main
         {
-            get => SimpleIoc.Default.GetInstance<Main_ViewModel>();
+            get => SimpleIoc.Default.GetInstance<MainViewModel>();
         }
     }
 }
