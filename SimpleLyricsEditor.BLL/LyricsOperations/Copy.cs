@@ -11,11 +11,11 @@ namespace SimpleLyricsEditor.BLL.LyricsOperations
         private readonly TimeSpan _interpolation;
         private readonly bool _isBig;
 
-        public Copy(IList<Lyric> items, IList<Lyric> targetList, TimeSpan targetTime)
+        public Copy(IList<Lyric> items, TimeSpan targetTime, IList<Lyric> targetList)
         {
             Items = items;
-            TargetList = targetList;
             TargetTime = targetTime;
+            TargetList = targetList;
 
             var oldTime = items.First().Time;
             _isBig = oldTime > targetTime;
