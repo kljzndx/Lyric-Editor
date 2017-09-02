@@ -34,9 +34,8 @@ namespace SimpleLyricsEditor.DAL.Factory
             var builder = new StringBuilder();
             Lyric item = null;
             var isMatchTag = true;
-            var strs = lines.SkipWhile(String.IsNullOrWhiteSpace);
-
-
+            var strs = lines.Where(l => !String.IsNullOrWhiteSpace(l));
+            
             foreach (var line in strs)
             {
                 if (isMatchTag)
