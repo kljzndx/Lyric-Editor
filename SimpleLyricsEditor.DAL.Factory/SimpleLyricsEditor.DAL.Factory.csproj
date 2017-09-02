@@ -107,10 +107,14 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="LyricsSerializer.cs" />
+    <Compile Include="LyricsTagFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\SimpleLyricsEditor.DAL.Factory.rd.xml" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="HappyStudio.UwpToolsLibrary.Information">
+      <Version>1.0.2</Version>
+    </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>5.4.0</Version>
     </PackageReference>
