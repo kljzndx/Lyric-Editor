@@ -13,6 +13,9 @@ namespace SimpleLyricsEditor.BLL.LyricsOperations
             Items = items;
             _oldContents = new List<string>();
             NewContent = newContent;
+
+            foreach (var lyric in items)
+                _oldContents.Add(lyric.Content);
         }
 
         public IEnumerable<Lyric> Items { get; set; }
@@ -20,12 +23,8 @@ namespace SimpleLyricsEditor.BLL.LyricsOperations
 
         public override void Do()
         {
-            _oldContents.Clear();
             foreach (var lyric in Items)
-            {
-                _oldContents.Add(lyric.Content);
                 lyric.Content = NewContent;
-            }
         }
 
         public override void Undo()
