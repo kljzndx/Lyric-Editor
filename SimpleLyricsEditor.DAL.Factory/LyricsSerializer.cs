@@ -10,7 +10,7 @@ namespace SimpleLyricsEditor.DAL.Factory
     {
         private static readonly Regex TagRegex = new Regex(@"\[.*:.*\]");
         private static readonly Regex LyricRegex =
-            new Regex(@"\[(?<min>\d{2}):(?<sec>\d{2}).(?<ms>\d{2, 3})\]\s?(?<content>.*)");
+            new Regex(@"\[(?<min>\d{2}):(?<sec>\d{2})\.(?<ms>\d{2,3})\]\s?(?<content>.*)");
 
         public static string Serialization(IList<Lyric> lyrics, IList<LyricsTag> tags)
         {
@@ -30,31 +30,26 @@ namespace SimpleLyricsEditor.DAL.Factory
         public static (List<Lyric> lyrics, List<LyricsTag> tags) Deserialization(IList<string> lines)
         {
             var items = new List<Lyric>();
-            var tags = new List<LyricsTag>
-            {
-                new LyricsTag("ti"),
-                new LyricsTag("ar"),
-                new LyricsTag("al"),
-                new LyricsTag("by")
-            };
-
+            var tags = LyricsTagFactory.CreateTags();
             var builder = new StringBuilder();
             Lyric item = null;
             var isMatchTag = true;
+            var strs = lines.SkipWhile(String.IsNullOrWhiteSpace);
 
-            foreach (var line in lines.SkipWhile(string.IsNullOrWhiteSpace))
+
+            foreach (var line in strs)
             {
                 if (isMatchTag)
                     foreach (var tag in tags.TakeWhile(t => string.IsNullOrEmpty(t.TagValue)))
-                        tag.GeiTag(line.ToLower());
+                        tag.GeiTag(line.ToLower().Trim());
                 
-                var match = LyricRegex.Match(line);
+                var match = LyricRegex.Match(line.Trim());
 
                 if (match.Success)
                 {
                     if (item != null)
                     {
-                        item.Content = builder.ToString();
+                        item.Content = builder.ToString().Trim();
                         items.Add(item);
                     }
 
@@ -79,7 +74,7 @@ namespace SimpleLyricsEditor.DAL.Factory
                 }
                 else
                 {
-                    items.Add(new Lyric(TimeSpan.Zero, line));
+                    items.Add(new Lyric(TimeSpan.Zero, line.Trim()));
                     isMatchTag = false;
                 }
             }
