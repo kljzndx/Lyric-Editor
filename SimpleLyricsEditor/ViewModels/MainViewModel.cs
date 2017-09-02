@@ -130,7 +130,7 @@ namespace SimpleLyricsEditor.ViewModels
 
         private async void LyricsFileRunSaved(object sender, FileChangeEventArgs e)
         {
-            string content = LyricsSerializer.Serialization(LyricItems, LyricsTags.Where(t => !String.IsNullOrWhiteSpace(t.TagValue)).ToList());
+            string content = LyricsSerializer.Serialization(LyricItems, LyricsTags.Where(t => !String.IsNullOrWhiteSpace(t.TagValue)));
             await LyricsFileIO.WriteText(e.File, content);
         }
     }
