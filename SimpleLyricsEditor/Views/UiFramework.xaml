@@ -20,8 +20,19 @@
     <Page.BottomAppBar>
         <CommandBar>
             <CommandBar.PrimaryCommands>
-                <AppBarButton x:Name="Settings_AppBarButton" Icon="Setting" Click="Settings_AppBarButton_Click"/>
+                <AppBarButton Icon="OpenFile" Label="设置">
+                    <AppBarButton.Flyout>
+                        <MenuFlyout>
+                            <MenuFlyoutItem Text="打开音乐" Click="OpenMusicFile_MenuFlyoutItem_Click"/>
+                            <MenuFlyoutItem Text="打开歌词" Click="OpenLyricsFile_MenuFlyoutItem_Click"/>
+                        </MenuFlyout>
+                    </AppBarButton.Flyout>
+                </AppBarButton>
             </CommandBar.PrimaryCommands>
+            
+            <CommandBar.SecondaryCommands>
+                <AppBarButton x:Name="Settings_AppBarButton" Label="设置" Click="Settings_AppBarButton_Click"/>
+            </CommandBar.SecondaryCommands>
         </CommandBar>
     </Page.BottomAppBar>
 </Page>
