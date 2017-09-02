@@ -4,8 +4,11 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
 using GalaSoft.MvvmLight;
+using SimpleLyricsEditor.BLL;
 using SimpleLyricsEditor.BLL.LyricsOperations;
 using SimpleLyricsEditor.DAL;
+using SimpleLyricsEditor.DAL.Factory;
+using SimpleLyricsEditor.Events;
 using SimpleLyricsEditor.IBLL;
 
 namespace SimpleLyricsEditor.ViewModels
@@ -16,11 +19,23 @@ namespace SimpleLyricsEditor.ViewModels
 
         public MainViewModel()
         {
+            _lyricsTags = LyricsTagFactory.CreateTags();
             LyricItems = new ObservableCollection<Lyric>();
             UndoOperations = new ObservableCollection<LyricsOperationBase>();
             RedoOperations = new ObservableCollection<LyricsOperationBase>();
             UndoOperations.CollectionChanged += UndoOperations_CollectionChanged;
             RedoOperations.CollectionChanged += RedoOperations_CollectionChanged;
+
+            LyricsFileChangeNotification.FileChanged += LyricsFileChanged;
+            LyricsFileSaveNotification.RunSaved += LyricsFileRunSaved;
+        }
+
+        private List<LyricsTag> _lyricsTags;
+
+        public List<LyricsTag> LyricsTags
+        {
+            get => _lyricsTags;
+            set => Set(ref _lyricsTags, value);
         }
 
         public ObservableCollection<Lyric> LyricItems { get; }
@@ -98,6 +113,25 @@ namespace SimpleLyricsEditor.ViewModels
         private void RedoOperations_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             RaisePropertyChanged(nameof(CanRedo));
+        }
+
+        private async void LyricsFileChanged(object sender, FileChangeEventArgs e)
+        {
+            string fileContent = await LyricsFileIO.ReadText(e.File);
+            List<string> lines = fileContent.Split('\n').Select(l => l.Trim()).ToList();
+            var tuple = LyricsSerializer.Deserialization(lines);
+
+            LyricItems.Clear();
+            foreach (Lyric lyric in tuple.lyrics)
+                LyricItems.Add(lyric);
+
+            LyricsTags = tuple.tags;
+        }
+
+        private async void LyricsFileRunSaved(object sender, FileChangeEventArgs e)
+        {
+            string content = LyricsSerializer.Serialization(LyricItems, LyricsTags.SkipWhile(t => String.IsNullOrWhiteSpace(t.TagValue)).ToList());
+            await LyricsFileIO.WriteText(e.File, content);
         }
     }
 }
