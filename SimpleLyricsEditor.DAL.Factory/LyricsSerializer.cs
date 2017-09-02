@@ -12,7 +12,7 @@ namespace SimpleLyricsEditor.DAL.Factory
         private static readonly Regex LyricRegex =
             new Regex(@"\[(?<min>\d{2}):(?<sec>\d{2})\.(?<ms>\d{2,3})\]\s?(?<content>.*)");
 
-        public static string Serialization(IList<Lyric> lyrics, IList<LyricsTag> tags)
+        public static string Serialization(IEnumerable<Lyric> lyrics, IEnumerable<LyricsTag> tags)
         {
             var builder = new StringBuilder();
 
@@ -27,7 +27,7 @@ namespace SimpleLyricsEditor.DAL.Factory
             return builder.AppendLine().ToString();
         }
 
-        public static (List<Lyric> lyrics, List<LyricsTag> tags) Deserialization(IList<string> lines)
+        public static (IEnumerable<Lyric> lyrics, IEnumerable<LyricsTag> tags) Deserialization(IEnumerable<string> lines)
         {
             var items = new List<Lyric>();
             var tags = LyricsTagFactory.CreateTags();
@@ -39,16 +39,19 @@ namespace SimpleLyricsEditor.DAL.Factory
             foreach (var line in strs)
             {
                 if (isMatchTag)
-                    foreach (var tag in tags.TakeWhile(t => string.IsNullOrEmpty(t.TagValue)))
-                        tag.GeiTag(line.ToLower().Trim());
-                
-                var match = LyricRegex.Match(line.Trim());
+                {
+                    var spaceTags = tags.Where(t => String.IsNullOrEmpty(t.TagValue));
+                    foreach (var tag in spaceTags)
+                        tag.GeiTag(line.ToLower());
+                }
+
+                var match = LyricRegex.Match(line);
 
                 if (match.Success)
                 {
                     if (item != null)
                     {
-                        item.Content = builder.ToString().Trim();
+                        item.Content = builder.ToString();
                         items.Add(item);
                     }
 
@@ -60,12 +63,12 @@ namespace SimpleLyricsEditor.DAL.Factory
 
                     builder.Clear();
                     item = new Lyric(new TimeSpan(0, 0, min, sec, groups["ms"].Value.Length == 2 ? ms * 10 : ms));
-                    builder.AppendLine(groups["content"].Value.Trim());
+                    builder.AppendLine(groups["content"].Value);
                     isMatchTag = false;
                 }
                 else if (item != null)
                 {
-                    builder.AppendLine(line.Trim());
+                    builder.AppendLine(line);
                 }
                 else if (TagRegex.IsMatch(line))
                 {
@@ -73,7 +76,7 @@ namespace SimpleLyricsEditor.DAL.Factory
                 }
                 else
                 {
-                    items.Add(new Lyric(TimeSpan.Zero, line.Trim()));
+                    items.Add(new Lyric(TimeSpan.Zero, line));
                     isMatchTag = false;
                 }
             }

@@ -118,19 +118,19 @@ namespace SimpleLyricsEditor.ViewModels
         private async void LyricsFileChanged(object sender, FileChangeEventArgs e)
         {
             string fileContent = await LyricsFileIO.ReadText(e.File);
-            List<string> lines = fileContent.Split('\n').Select(l => l.Trim()).ToList();
+            var lines = fileContent.Split('\n').Select(l => l.Trim());
             var tuple = LyricsSerializer.Deserialization(lines);
 
             LyricItems.Clear();
             foreach (Lyric lyric in tuple.lyrics)
                 LyricItems.Add(lyric);
 
-            LyricsTags = tuple.tags;
+            LyricsTags = tuple.tags.ToList();
         }
 
         private async void LyricsFileRunSaved(object sender, FileChangeEventArgs e)
         {
-            string content = LyricsSerializer.Serialization(LyricItems, LyricsTags.SkipWhile(t => String.IsNullOrWhiteSpace(t.TagValue)).ToList());
+            string content = LyricsSerializer.Serialization(LyricItems, LyricsTags.Where(t => !String.IsNullOrWhiteSpace(t.TagValue)).ToList());
             await LyricsFileIO.WriteText(e.File, content);
         }
     }
