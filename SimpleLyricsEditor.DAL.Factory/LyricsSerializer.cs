@@ -33,9 +33,9 @@ namespace SimpleLyricsEditor.DAL.Factory
             var tags = new List<LyricsTag>
             {
                 new LyricsTag("ti"),
-                new LyricsTag("tr"),
+                new LyricsTag("ar"),
                 new LyricsTag("al"),
-                new LyricsTag("by"),
+                new LyricsTag("by")
             };
 
             var builder = new StringBuilder();
@@ -46,7 +46,7 @@ namespace SimpleLyricsEditor.DAL.Factory
             {
                 if (isMatchTag)
                     foreach (var tag in tags.TakeWhile(t => string.IsNullOrEmpty(t.TagValue)))
-                        tag.GeiTag(line);
+                        tag.GeiTag(line.ToLower());
                 
                 var match = LyricRegex.Match(line);
 
