@@ -13,7 +13,12 @@ namespace SimpleLyricsEditor.DAL
             TagName = tagName;
             _regex = new Regex($@"\[{tagName}:(.*)\]");
         }
-        
+
+        public LyricsTag(string tagName, string tagValue) : this(tagName)
+        {
+            _tagValue = tagValue;
+        }
+
         public string TagName { get; }
 
         public string TagValue
