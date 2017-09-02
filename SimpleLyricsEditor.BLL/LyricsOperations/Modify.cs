@@ -8,14 +8,14 @@ namespace SimpleLyricsEditor.BLL.LyricsOperations
     {
         private readonly List<string> _oldContents;
 
-        public Modify(IList<Lyric> items, string newContent)
+        public Modify(IEnumerable<Lyric> items, string newContent)
         {
             Items = items;
             _oldContents = new List<string>();
             NewContent = newContent;
         }
 
-        public IList<Lyric> Items { get; set; }
+        public IEnumerable<Lyric> Items { get; set; }
         public string NewContent { get; }
 
         public override void Do()
@@ -30,8 +30,12 @@ namespace SimpleLyricsEditor.BLL.LyricsOperations
 
         public override void Undo()
         {
-            for (var i = 0; i < Items.Count; i++)
-                Items[i].Content = _oldContents[i];
+            var crt = Items.GetEnumerator();
+            var old = _oldContents.GetEnumerator();
+
+            if (crt is IEnumerator<Lyric> && old is IEnumerator<string>)
+                while (crt.MoveNext() && old.MoveNext())
+                    crt.Current.Content = old.Current;
         }
     }
 }

@@ -9,7 +9,7 @@ namespace SimpleLyricsEditor.BLL.LyricsOperations
     {
         private readonly Dictionary<int, Lyric> _positions;
 
-        public Remove(IList<Lyric> items, IList<Lyric> targetList)
+        public Remove(IEnumerable<Lyric> items, IList<Lyric> targetList)
         {
             Items = items;
             TargetList = targetList;
@@ -21,7 +21,7 @@ namespace SimpleLyricsEditor.BLL.LyricsOperations
                         _positions.Add(i, lyric);
         }
 
-        public IList<Lyric> Items { get; set; }
+        public IEnumerable<Lyric> Items { get; set; }
         public IList<Lyric> TargetList { get; set; }
 
         public override void Do()

@@ -11,7 +11,7 @@ namespace SimpleLyricsEditor.BLL.LyricsOperations
         private readonly TimeSpan _interpolation;
         private readonly bool _isBig;
 
-        public Copy(IList<Lyric> items, TimeSpan targetTime, IList<Lyric> targetList)
+        public Copy(IEnumerable<Lyric> items, TimeSpan targetTime, IList<Lyric> targetList)
         {
             Items = items;
             TargetTime = targetTime;
@@ -22,7 +22,7 @@ namespace SimpleLyricsEditor.BLL.LyricsOperations
             _interpolation = _isBig ? oldTime - targetTime : targetTime - oldTime;
         }
 
-        public IList<Lyric> Items { get; set; }
+        public IEnumerable<Lyric> Items { get; set; }
         public IList<Lyric> TargetList { get; set; }
         public TimeSpan TargetTime { get; set; }
 

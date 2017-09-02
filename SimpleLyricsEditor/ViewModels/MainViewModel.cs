@@ -89,19 +89,19 @@ namespace SimpleLyricsEditor.ViewModels
 
         public void Remove()
         {
-            var opt = CreateOperation(new Remove(SelectedItems.Cast<Lyric>().ToList(), LyricItems));
+            var opt = CreateOperation(new Remove(SelectedItems.Cast<Lyric>(), LyricItems));
             opt.Do();
         }
 
         public void Move(TimeSpan time)
         {
-            var opt = CreateOperation(new Move(time, SelectedItems.Cast<Lyric>().ToList()));
+            var opt = CreateOperation(new Move(time, SelectedItems.Cast<Lyric>()));
             opt.Do();
         }
 
         public void Modify()
         {
-            var opt = CreateOperation(new Modify(SelectedItems.Cast<Lyric>().ToList(), _lyricContent));
+            var opt = CreateOperation(new Modify(SelectedItems.Cast<Lyric>(), _lyricContent));
             opt.Do();
         }
         

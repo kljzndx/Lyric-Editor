@@ -11,7 +11,7 @@ namespace SimpleLyricsEditor.BLL.LyricsOperations
         private readonly TimeSpan _interpolation;
         private readonly bool _isBig;
 
-        public Move(TimeSpan targetTime, IList<Lyric> items)
+        public Move(TimeSpan targetTime, IEnumerable<Lyric> items)
         {
             TargetTime = targetTime;
             Items = items;
@@ -21,7 +21,7 @@ namespace SimpleLyricsEditor.BLL.LyricsOperations
             _interpolation = _isBig ? oldTime - TargetTime : TargetTime - oldTime;
         }
 
-        public IList<Lyric> Items { get; set; }
+        public IEnumerable<Lyric> Items { get; set; }
         public TimeSpan TargetTime { get; set; }
 
         public override void Do()
