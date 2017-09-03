@@ -51,7 +51,7 @@ namespace SimpleLyricsEditor.DAL.Factory
                 {
                     if (item != null)
                     {
-                        item.Content = builder.ToString();
+                        item.Content = builder.ToString().Trim();
                         items.Add(item);
                     }
 
