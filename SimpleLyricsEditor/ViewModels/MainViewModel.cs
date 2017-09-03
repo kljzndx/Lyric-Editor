@@ -26,8 +26,8 @@ namespace SimpleLyricsEditor.ViewModels
             UndoOperations.CollectionChanged += UndoOperations_CollectionChanged;
             RedoOperations.CollectionChanged += RedoOperations_CollectionChanged;
 
-            LyricsFileChangeNotification.FileChanged += LyricsFileChanged;
-            LyricsFileSaveNotification.RunSaved += LyricsFileRunSaved;
+            LyricsFileChangeNotifier.FileChanged += LyricsFileChanged;
+            LyricsFileSaveNotifier.RunSaved += LyricsFileRunSaved;
         }
 
         private List<LyricsTag> _lyricsTags;

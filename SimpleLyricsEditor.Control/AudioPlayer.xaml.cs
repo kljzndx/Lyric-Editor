@@ -44,7 +44,7 @@ namespace SimpleLyricsEditor.Control
             Position_Slider.AddHandler(PointerPressedEvent, new PointerEventHandler(Position_Slider_PointerPressed), true);
             Position_Slider.AddHandler(PointerReleasedEvent, new PointerEventHandler(Position_Slider_PointerReleased), true);
 
-            MusicFileNotification.FileChanged += MusicFileChanged;
+            MusicFileNotifier.FileChanged += MusicFileChanged;
         }
 
         public Music Source
@@ -94,7 +94,7 @@ namespace SimpleLyricsEditor.Control
             var file = await MusicFileOpenPicker.PickFile();
 
             if (file != null)
-                MusicFileNotification.ChangeFile(file);
+                MusicFileNotifier.ChangeFile(file);
         }
 
         private void RefreshTime()

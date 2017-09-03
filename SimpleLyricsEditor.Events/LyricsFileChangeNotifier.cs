@@ -3,7 +3,7 @@ using Windows.Storage;
 
 namespace SimpleLyricsEditor.Events
 {
-    public static class LyricsFileChangeNotification
+    public static class LyricsFileChangeNotifier
     {
         public static event EventHandler<FileChangeEventArgs> FileChanged;
         

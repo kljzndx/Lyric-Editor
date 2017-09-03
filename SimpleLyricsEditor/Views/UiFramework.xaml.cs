@@ -42,7 +42,7 @@ namespace SimpleLyricsEditor.Views
         {
             _musicFile = await MusicFileOpenPicker.PickFile();
             if (_musicFile != null)
-                MusicFileNotification.ChangeFile(_musicFile);
+                MusicFileNotifier.ChangeFile(_musicFile);
         }
 
         private async void OpenLyricsFile_MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
@@ -52,7 +52,7 @@ namespace SimpleLyricsEditor.Views
                 return;
 
             _lyricsFile = file;
-            LyricsFileChangeNotification.ChangeFile(_lyricsFile);
+            LyricsFileChangeNotifier.ChangeFile(_lyricsFile);
         }
     }
 }
