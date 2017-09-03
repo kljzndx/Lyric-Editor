@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Windows.Foundation;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 using Windows.System.Threading;
@@ -66,6 +67,11 @@ namespace SimpleLyricsEditor.Control
 
         public TimeSpan Position => Player.Position;
 
+        public event TypedEventHandler<AudioPlayer, MusicChangeEventArgs> SourceChanged;
+        public event TypedEventHandler<AudioPlayer, PositionChangeEventArgs> PositionChanged;
+        public event TypedEventHandler<AudioPlayer, EventArgs> Playing;
+        public event TypedEventHandler<AudioPlayer, EventArgs> Paused;
+
         public async Task SetSource(Music source)
         {
             if (source.Equals(Music.Empty))
@@ -80,6 +86,7 @@ namespace SimpleLyricsEditor.Control
         {
             Time = newPosition;
             Player.Position = Time;
+            PositionChanged?.Invoke(this, new PositionChangeEventArgs(true, Time));
         }
 
         public async Task PickMusicFile()
@@ -93,6 +100,7 @@ namespace SimpleLyricsEditor.Control
         private void RefreshTime()
         {
             Time = Player.Position;
+            PositionChanged?.Invoke(this, new PositionChangeEventArgs(false, Time));
         }
 
         private void StartRefreshTimeTimer()
@@ -121,6 +129,7 @@ namespace SimpleLyricsEditor.Control
         {
             Player.Play();
             StartRefreshTimeTimer();
+            Playing?.Invoke(this, EventArgs.Empty);
         }
 
         public void Pause()
@@ -128,6 +137,7 @@ namespace SimpleLyricsEditor.Control
             Player.Pause();
             _refreshTimeTimer.Cancel();
             RefreshTime();
+            Playing?.Invoke(this, EventArgs.Empty);
         }
 
         public void Rewind()
@@ -182,6 +192,7 @@ namespace SimpleLyricsEditor.Control
         private void Player_MediaOpened(object sender, RoutedEventArgs e)
         {
             Source = _musicTemp;
+            SourceChanged?.Invoke(this, new MusicChangeEventArgs(Source));
             DisplayPositionControlButtons();
             Play();
         }
