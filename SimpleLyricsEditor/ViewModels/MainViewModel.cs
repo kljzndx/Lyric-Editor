@@ -9,7 +9,6 @@ using SimpleLyricsEditor.BLL.LyricsOperations;
 using SimpleLyricsEditor.DAL;
 using SimpleLyricsEditor.DAL.Factory;
 using SimpleLyricsEditor.Events;
-using SimpleLyricsEditor.IBLL;
 
 namespace SimpleLyricsEditor.ViewModels
 {

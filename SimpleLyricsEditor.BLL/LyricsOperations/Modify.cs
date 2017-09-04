@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using SimpleLyricsEditor.DAL;
-using SimpleLyricsEditor.IBLL;
 
 namespace SimpleLyricsEditor.BLL.LyricsOperations
 {
