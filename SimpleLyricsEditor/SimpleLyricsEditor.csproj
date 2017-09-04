@@ -171,10 +171,6 @@
       <Project>{ba65588f-2ff9-4595-9c01-5faa0559240a}</Project>
       <Name>SimpleLyricsEditor.Events</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SimpleLyricsEditor.IBLL\SimpleLyricsEditor.IBLL.csproj">
-      <Project>{ec1e7e47-5e84-41eb-b54b-aa35d705eb53}</Project>
-      <Name>SimpleLyricsEditor.IBLL</Name>
-    </ProjectReference>
     <ProjectReference Include="..\SimpleLyricsEditor.ValueConvert\SimpleLyricsEditor.ValueConvert.csproj">
       <Project>{7d550156-c386-4928-a077-b048ead45dbd}</Project>
       <Name>SimpleLyricsEditor.ValueConvert</Name>

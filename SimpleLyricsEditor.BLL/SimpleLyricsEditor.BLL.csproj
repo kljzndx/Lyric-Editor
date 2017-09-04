@@ -111,6 +111,7 @@
     <Compile Include="LyricsFileSavePicker.cs" />
     <Compile Include="LyricsOperations\Add.cs" />
     <Compile Include="LyricsOperations\Copy.cs" />
+    <Compile Include="LyricsOperations\LyricsOperationBase.cs" />
     <Compile Include="LyricsOperations\Modify.cs" />
     <Compile Include="LyricsOperations\Move.cs" />
     <Compile Include="LyricsOperations\Remove.cs" />
@@ -128,10 +129,6 @@
     <ProjectReference Include="..\SimpleLyricsEditor.DAL\SimpleLyricsEditor.DAL.csproj">
       <Project>{30bda5b5-8533-4c63-8878-e5fb60ecf23e}</Project>
       <Name>SimpleLyricsEditor.DAL</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SimpleLyricsEditor.IBLL\SimpleLyricsEditor.IBLL.csproj">
-      <Project>{ec1e7e47-5e84-41eb-b54b-aa35d705eb53}</Project>
-      <Name>SimpleLyricsEditor.IBLL</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />
