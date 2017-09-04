@@ -20,7 +20,9 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         
-        <ctol:AudioPlayer x:Name="Player"/>
+        <ctol:AudioPlayer x:Name="Player" SourceChanged="Player_SourceChanged"/>
+        
+        <ctol:BlurBackgroundImage x:Name="BlurBackground" Grid.Row="1"/>
         
         <Grid Grid.Row="1">
             <Grid.RowDefinitions>

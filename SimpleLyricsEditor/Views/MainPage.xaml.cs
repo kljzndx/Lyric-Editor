@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using SimpleLyricsEditor.Control;
 using SimpleLyricsEditor.DAL;
+using SimpleLyricsEditor.Events;
 using SimpleLyricsEditor.ViewModels;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
@@ -39,6 +41,11 @@ namespace SimpleLyricsEditor.Views
         private void Modify_Button_Click(object sender, RoutedEventArgs e)
         {
             _viewModel.Modify();
+        }
+
+        private void Player_SourceChanged(AudioPlayer sender, MusicChangeEventArgs args)
+        {
+            BlurBackground.SetSource(args.Source.AlbumImage);
         }
     }
 }
