@@ -138,7 +138,7 @@ namespace SimpleLyricsEditor.Control
             Player.Pause();
             _refreshTimeTimer.Cancel();
             RefreshTime();
-            Playing?.Invoke(this, EventArgs.Empty);
+            Paused?.Invoke(this, EventArgs.Empty);
         }
 
         public void Rewind()
