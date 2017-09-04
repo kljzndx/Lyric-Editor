@@ -107,6 +107,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="FileChangeEventArgs.cs" />
+    <Compile Include="ImageFileNotifier.cs" />
     <Compile Include="LyricsFileChangeNotifier.cs" />
     <Compile Include="LyricsFileSaveNotifier.cs" />
     <Compile Include="MusicFileNotifier.cs" />
