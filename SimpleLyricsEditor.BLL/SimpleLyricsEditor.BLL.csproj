@@ -106,9 +106,10 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Pickers\ImageFileOpenPicker.cs" />
     <Compile Include="LyricsFileIO.cs" />
-    <Compile Include="LyricsFileOpenPicker.cs" />
-    <Compile Include="LyricsFileSavePicker.cs" />
+    <Compile Include="Pickers\LyricsFileOpenPicker.cs" />
+    <Compile Include="Pickers\LyricsFileSavePicker.cs" />
     <Compile Include="LyricsOperations\Add.cs" />
     <Compile Include="LyricsOperations\Copy.cs" />
     <Compile Include="LyricsOperations\LyricsOperationBase.cs" />
@@ -116,7 +117,7 @@
     <Compile Include="LyricsOperations\Move.cs" />
     <Compile Include="LyricsOperations\Remove.cs" />
     <Compile Include="LyricsOperations\Sort.cs" />
-    <Compile Include="MusicFileOpenPicker.cs" />
+    <Compile Include="Pickers\MusicFileOpenPicker.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\SimpleLyricsEditor.BLL.rd.xml" />
   </ItemGroup>

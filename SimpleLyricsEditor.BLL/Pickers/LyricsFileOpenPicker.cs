@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 
-namespace SimpleLyricsEditor.BLL
+namespace SimpleLyricsEditor.BLL.Pickers
 {
     public static class LyricsFileOpenPicker
     {
