@@ -10,7 +10,17 @@
     d:DesignHeight="300"
     d:DesignWidth="400">
 
-    <Image Source="{x:Bind Source, Mode=OneWay}">
+    <UserControl.Resources>
+        <Storyboard x:Name="FadeIn">
+            <FadeInThemeAnimation TargetName="Image"/>
+        </Storyboard>
+
+        <Storyboard x:Name="FadeOut" Completed="FadeOut_Completed">
+            <FadeOutThemeAnimation TargetName="Image"/>
+        </Storyboard>
+    </UserControl.Resources>
+
+    <Image x:Name="Image" Stretch="UniformToFill">
         <interactivity:Interaction.Behaviors>
             <bhv:Blur Value="{x:Bind BlurDegree, Mode=OneWay}"/>
         </interactivity:Interaction.Behaviors>
