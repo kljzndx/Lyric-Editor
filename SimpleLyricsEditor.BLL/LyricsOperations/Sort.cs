@@ -7,7 +7,7 @@ namespace SimpleLyricsEditor.BLL.LyricsOperations
 {
     public class Sort : LyricsOperationBase
     {
-        private IEnumerable<Lyric> _oldList;
+        private readonly IEnumerable<Lyric> _oldList;
 
         public Sort(IList<Lyric> items)
         {
