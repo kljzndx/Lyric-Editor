@@ -5,24 +5,20 @@ using SimpleLyricsEditor.DAL;
 
 namespace SimpleLyricsEditor.BLL.LyricsOperations
 {
-    public class Copy : LyricsOperationBase
+    public class Copy : LyricsChangeOperationBase
     {
         private readonly TimeSpan _interpolation;
         private readonly bool _isBig;
 
-        public Copy(IEnumerable<Lyric> items, TimeSpan targetTime, IList<Lyric> targetList)
+        public Copy(IEnumerable<Lyric> items, TimeSpan targetTime, IList<Lyric> targetList) : base(items, targetList)
         {
-            Items = items;
             TargetTime = targetTime;
-            TargetList = targetList;
 
-            var oldTime = items.First().Time;
+            var oldTime = Items.First().Time;
             _isBig = oldTime > targetTime;
             _interpolation = _isBig ? oldTime - targetTime : targetTime - oldTime;
         }
-
-        public IEnumerable<Lyric> Items { get; set; }
-        public IList<Lyric> TargetList { get; set; }
+        
         public TimeSpan TargetTime { get; set; }
 
         public override void Do()

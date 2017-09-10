@@ -4,34 +4,21 @@ using SimpleLyricsEditor.DAL;
 
 namespace SimpleLyricsEditor.BLL.LyricsOperations
 {
-    public class Remove : LyricsOperationBase
+    public class Remove : LyricsChangeOperationBase
     {
-        private readonly Dictionary<int, Lyric> _positions;
-
-        public Remove(IEnumerable<Lyric> items, IList<Lyric> targetList)
+        public Remove(IEnumerable<Lyric> items, IList<Lyric> targetList) : base(items, targetList)
         {
-            Items = items;
-            TargetList = targetList;
-            _positions = new Dictionary<int, Lyric>();
-
-            for (int i = 0; i < targetList.Count; i++)
-                foreach (Lyric lyric in items.SkipWhile(_positions.Values.Contains))
-                    if (lyric.Equals(targetList[i]))
-                        _positions.Add(i, lyric);
         }
-
-        public IEnumerable<Lyric> Items { get; set; }
-        public IList<Lyric> TargetList { get; set; }
-
+        
         public override void Do()
         {
-            foreach (Lyric lyric in Items)
-                TargetList.Remove(lyric);
+            foreach (var item in Positions)
+                TargetList.RemoveAt(item.Key);
         }
 
         public override void Undo()
         {
-            foreach (var item in _positions)
+            foreach (var item in Positions)
                 TargetList.Insert(item.Key, item.Value);
         }
     }

@@ -11,12 +11,11 @@ namespace SimpleLyricsEditor.BLL.LyricsOperations
         /// <param name="insertIndex">为 -1 则添加到最后</param>
         /// <param name="isReverseAdd"></param>
         /// <param name="targetList"></param>
-        public Add(TimeSpan time, string content, int insertIndex, bool isReverseAdd, IList<Lyric> targetList)
+        public Add(TimeSpan time, string content, int insertIndex, bool isReverseAdd, IList<Lyric> targetList) : base(targetList)
         {
             Items = new List<Lyric>();
             InsertIndex = insertIndex;
             IsReverseAdd = isReverseAdd;
-            TargetList = targetList;
 
             foreach (var str in content.Split('\r'))
                 Items.Add(new Lyric(time, str.Trim()));
@@ -25,7 +24,6 @@ namespace SimpleLyricsEditor.BLL.LyricsOperations
         public IList<Lyric> Items { get; set; }
         public int InsertIndex { get; set; }
         public bool IsReverseAdd { get; set; }
-        public IList<Lyric> TargetList { get; set; }
 
         public override void Do()
         {
@@ -42,10 +40,10 @@ namespace SimpleLyricsEditor.BLL.LyricsOperations
             }
 
             foreach (var lyric in Items)
-                if(!IsReverseAdd)
-                    TargetList.Insert(++InsertIndex, lyric);
+                if (!IsReverseAdd)
+                    TargetList.Insert(InsertIndex + 1, lyric);
                 else
-                    TargetList.Insert(--InsertIndex, lyric);
+                    TargetList.Insert(InsertIndex - 1, lyric);
         }
 
         public override void Undo()

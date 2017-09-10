@@ -1,39 +1,32 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using SimpleLyricsEditor.DAL;
 
 namespace SimpleLyricsEditor.BLL.LyricsOperations
 {
-    public class Modify : LyricsOperationBase
+    public class Modify : LyricsChangeOperationBase
     {
         private readonly List<string> _oldContents;
 
-        public Modify(IEnumerable<Lyric> items, string newContent)
+        public Modify(IEnumerable<Lyric> items, string newContent, IList<Lyric> targetList) : base(items, targetList)
         {
-            Items = items;
-            _oldContents = new List<string>();
+            _oldContents = Items.Select(l => l.Content).ToList();
             NewContent = newContent;
-
-            foreach (var lyric in items)
-                _oldContents.Add(lyric.Content);
         }
-
-        public IEnumerable<Lyric> Items { get; set; }
+        
         public string NewContent { get; }
 
         public override void Do()
         {
-            foreach (var lyric in Items)
-                lyric.Content = NewContent;
+            foreach (var item in Positions)
+                TargetList[item.Key].Content = NewContent;
         }
 
         public override void Undo()
         {
-            var crt = Items.GetEnumerator();
-            var old = _oldContents.GetEnumerator();
-
-            if (crt is IEnumerator<Lyric> && old is IEnumerator<string>)
-                while (crt.MoveNext() && old.MoveNext())
-                    crt.Current.Content = old.Current;
+            int i = 0;
+            foreach (var id in Positions.Keys)
+                TargetList[id].Content = _oldContents[i];
         }
     }
 }
