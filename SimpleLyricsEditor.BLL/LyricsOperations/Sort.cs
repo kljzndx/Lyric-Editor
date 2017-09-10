@@ -9,30 +9,27 @@ namespace SimpleLyricsEditor.BLL.LyricsOperations
     {
         private readonly IEnumerable<Lyric> _oldList;
 
-        public Sort(IList<Lyric> items) : base(null)
+        public Sort(IList<Lyric> targetList) : base(targetList)
         {
-            Items = items;
-            _oldList = items.ToList();
+            _oldList = targetList.ToList();
         }
-
-        public IList<Lyric> Items { get; set; }
 
         public override void Do()
         {
-            for (var i = Items.Count; i > 0; i--)
+            for (var i = TargetList.Count; i > 0; i--)
                 for (var j = 0; j < i - 1; j++)
-                    if (Items[j].CompareTo(Items[j + 1]) > 0)
+                    if (TargetList[j].CompareTo(TargetList[j + 1]) > 0)
                     {
-                        Items.Insert(j + 2, Items[j]);
-                        Items.RemoveAt(j);
+                        TargetList.Insert(j + 2, TargetList[j]);
+                        TargetList.RemoveAt(j);
                     }
         }
 
         public override void Undo()
         {
-            Items.Clear();
+            TargetList.Clear();
             foreach (Lyric lyric in _oldList)
-                Items.Add(lyric);
+                TargetList.Add(lyric);
         }
     }
 }
