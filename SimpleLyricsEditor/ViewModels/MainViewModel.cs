@@ -14,7 +14,9 @@ namespace SimpleLyricsEditor.ViewModels
 {
     public class MainViewModel : ViewModelBase
     {
-        private string _lyricContent;
+        private string _lyricContent = string.Empty;
+
+        private List<LyricsTag> _lyricsTags;
 
         public MainViewModel()
         {
@@ -28,8 +30,6 @@ namespace SimpleLyricsEditor.ViewModels
             LyricsFileChangeNotifier.FileChanged += LyricsFileChanged;
             LyricsFileSaveNotifier.RunSaved += LyricsFileRunSaved;
         }
-
-        private List<LyricsTag> _lyricsTags;
 
         public List<LyricsTag> LyricsTags
         {
@@ -62,7 +62,7 @@ namespace SimpleLyricsEditor.ViewModels
 
         public void Undo(int count)
         {
-            for (int i = 0; i < count; i++)
+            for (var i = 0; i < count; i++)
             {
                 UndoOperations.First().Undo();
                 RedoOperations.Insert(0, UndoOperations.First());
@@ -72,7 +72,7 @@ namespace SimpleLyricsEditor.ViewModels
 
         public void Redo(int count)
         {
-            for (int i = 0; i < count; i++)
+            for (var i = 0; i < count; i++)
             {
                 RedoOperations.First().Do();
                 UndoOperations.Insert(0, RedoOperations.First());
@@ -86,24 +86,51 @@ namespace SimpleLyricsEditor.ViewModels
             opt.Do();
         }
 
+        public void Copy(TimeSpan newTime)
+        {
+            if (!SelectedItems.Any())
+                return;
+
+            var opt = CreateOperation(new Copy(SelectedItems.Cast<Lyric>(), newTime, LyricItems));
+            opt.Do();
+        }
+
         public void Remove()
         {
+            if (!SelectedItems.Any())
+                return;
+
             var opt = CreateOperation(new Remove(SelectedItems.Cast<Lyric>(), LyricItems));
             opt.Do();
         }
 
         public void Move(TimeSpan time)
         {
-            var opt = CreateOperation(new Move(time, SelectedItems.Cast<Lyric>()));
+            if (!SelectedItems.Any())
+                return;
+
+            var opt = CreateOperation(new Move(time, SelectedItems.Cast<Lyric>(), LyricItems));
             opt.Do();
         }
 
         public void Modify()
         {
-            var opt = CreateOperation(new Modify(SelectedItems.Cast<Lyric>(), _lyricContent));
+            if (!SelectedItems.Any())
+                return;
+
+            var opt = CreateOperation(new Modify(SelectedItems.Cast<Lyric>(), _lyricContent, LyricItems));
             opt.Do();
         }
-        
+
+        public void Sort()
+        {
+            if (!SelectedItems.Any())
+                return;
+
+            var opt = CreateOperation(new Sort(LyricItems));
+            opt.Do();
+        }
+
         private void UndoOperations_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             RaisePropertyChanged(nameof(CanUndo));
@@ -116,12 +143,12 @@ namespace SimpleLyricsEditor.ViewModels
 
         private async void LyricsFileChanged(object sender, FileChangeEventArgs e)
         {
-            string fileContent = await LyricsFileIO.ReadText(e.File);
+            var fileContent = await LyricsFileIO.ReadText(e.File);
             var lines = fileContent.Replace('\r', '\n').Split('\n').Select(l => l.Trim());
             var tuple = LyricsSerializer.Deserialization(lines);
 
             LyricItems.Clear();
-            foreach (Lyric lyric in tuple.lyrics)
+            foreach (var lyric in tuple.lyrics)
                 LyricItems.Add(lyric);
 
             LyricsTags = tuple.tags.ToList();
@@ -129,7 +156,8 @@ namespace SimpleLyricsEditor.ViewModels
 
         private async void LyricsFileRunSaved(object sender, FileChangeEventArgs e)
         {
-            string content = LyricsSerializer.Serialization(LyricItems, LyricsTags.Where(t => !String.IsNullOrWhiteSpace(t.TagValue)));
+            var content = LyricsSerializer.Serialization(LyricItems,
+                LyricsTags.Where(t => !string.IsNullOrWhiteSpace(t.TagValue)));
             await LyricsFileIO.WriteText(e.File, content);
         }
     }
