@@ -2,6 +2,7 @@
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using SimpleLyricsEditor.Control;
+using SimpleLyricsEditor.Core;
 using SimpleLyricsEditor.DAL;
 using SimpleLyricsEditor.Events;
 using SimpleLyricsEditor.ViewModels;
@@ -16,6 +17,8 @@ namespace SimpleLyricsEditor.Views
     public sealed partial class MainPage : Page
     {
         private MainViewModel _viewModel;
+        private readonly Settings _settings = Settings.Current;
+
         public MainPage()
         {
             this.InitializeComponent();
@@ -23,9 +26,20 @@ namespace SimpleLyricsEditor.Views
             _viewModel.SelectedItems = Lyrics_ListView.SelectedItems;
         }
 
+        private void Player_SourceChanged(AudioPlayer sender, MusicChangeEventArgs args)
+        {
+            if (_settings.BackgroundSourceType == BackgroundSourceTypeEnum.AlbumImage)
+                BlurBackground.SetSource(args.Source.AlbumImage);
+        }
+
         private void Add_Button_Click(object sender, RoutedEventArgs e)
         {
             _viewModel.Add(Lyrics_ListView.SelectedIndex, Player.Position, false);
+        }
+
+        private void Copy_Button_Click(object sender, RoutedEventArgs e)
+        {
+            _viewModel.Copy(Player.Position);
         }
 
         private void Remove_Button_Click(object sender, RoutedEventArgs e)
@@ -41,11 +55,6 @@ namespace SimpleLyricsEditor.Views
         private void Modify_Button_Click(object sender, RoutedEventArgs e)
         {
             _viewModel.Modify();
-        }
-
-        private void Player_SourceChanged(AudioPlayer sender, MusicChangeEventArgs args)
-        {
-            BlurBackground.SetSource(args.Source.AlbumImage);
         }
     }
 }

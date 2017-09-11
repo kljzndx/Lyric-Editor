@@ -22,7 +22,7 @@
         
         <ctol:AudioPlayer x:Name="Player" SourceChanged="Player_SourceChanged"/>
         
-        <ctol:BlurBackgroundImage x:Name="BlurBackground" Grid.Row="1"/>
+        <ctol:BlurBackgroundImage x:Name="BlurBackground" Grid.Row="1" BlurDegree="{x:Bind _settings.BackgroundBlurDegree, Mode=OneWay}" Opacity="{x:Bind _settings.BackgroundOpacity, Mode=OneWay}"/>
         
         <Grid Grid.Row="1">
             <Grid.RowDefinitions>
@@ -40,6 +40,7 @@
 
                 <StackPanel Grid.Column="1" Orientation="Horizontal">
                     <Button x:Name="Add_Button" Content="&#xE109;" Style="{StaticResource ControllerButtonStyle}" Click="Add_Button_Click"/>
+                    <Button x:Name="Copy_Button" Content="&#xE16F;" Style="{StaticResource ControllerButtonStyle}" Click="Copy_Button_Click"/>
                     <Button x:Name="Remove_Button" Content="&#xE10A;" Style="{StaticResource ControllerButtonStyle}" Click="Remove_Button_Click"/>
                     <Button x:Name="Move_Button" Content="&#xE759;" Style="{StaticResource ControllerButtonStyle}" Click="Move_Button_Click"/>
                     <Button x:Name="Modify_Button" Content="&#xE104;" Style="{StaticResource ControllerButtonStyle}" Click="Modify_Button_Click"/>
