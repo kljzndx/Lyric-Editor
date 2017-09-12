@@ -70,11 +70,7 @@ namespace SimpleLyricsEditor.DAL.Factory
                 {
                     builder.AppendLine(line);
                 }
-                else if (TagRegex.IsMatch(line))
-                {
-                    continue;
-                }
-                else
+                else if (!TagRegex.IsMatch(line))
                 {
                     items.Add(new Lyric(TimeSpan.Zero, line));
                     isMatchTag = false;
@@ -82,7 +78,10 @@ namespace SimpleLyricsEditor.DAL.Factory
             }
 
             if (item != null)
+            {
+                item.Content = builder.ToString().Trim();
                 items.Add(item);
+            }
 
             return (items, tags);
         }
