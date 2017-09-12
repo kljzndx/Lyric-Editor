@@ -155,6 +155,9 @@ namespace SimpleLyricsEditor.ViewModels
                 LyricItems.Add(lyric);
 
             LyricsTags = tuple.tags.ToList();
+
+            UndoOperations.Clear();
+            RedoOperations.Clear();
         }
 
         private async void LyricsFileRunSaved(object sender, FileChangeEventArgs e)
