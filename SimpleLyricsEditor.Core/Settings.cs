@@ -5,11 +5,10 @@ namespace SimpleLyricsEditor.Core
 {
     public sealed class Settings : SettingsBase
     {
-        [SettingFieldByNormal(nameof(BackgroundBlurDegree), 5D)] private double _backgroundBlurDegree;
-        [SettingFieldByNormal(nameof(BackgroundOpacity), 0.3D)] private double _backgroundOpacity;
-
         [SettingFieldByEnum(nameof(BackgroundSourceType), typeof(BackgroundSourceTypeEnum),
             nameof(BackgroundSourceTypeEnum.AlbumImage))] private BackgroundSourceTypeEnum _backgroundSourceType;
+        [SettingFieldByNormal(nameof(BackgroundBlurDegree), 5D)] private double _backgroundBlurDegree;
+        [SettingFieldByNormal(nameof(BackgroundOpacity), 0.3D)] private double _backgroundOpacity;
 
         [SettingFieldByNormal(nameof(PlaybackRate), 1D)] private double _playbackRate;
         [SettingFieldByNormal(nameof(Volume), 1D)] private double _volume;
