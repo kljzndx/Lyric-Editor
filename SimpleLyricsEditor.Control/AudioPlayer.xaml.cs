@@ -2,14 +2,12 @@
 using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Storage;
-using Windows.Storage.Pickers;
 using Windows.System.Threading;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
-using SimpleLyricsEditor.BLL;
 using SimpleLyricsEditor.BLL.Pickers;
 using SimpleLyricsEditor.Core;
 using SimpleLyricsEditor.DAL;
@@ -42,8 +40,10 @@ namespace SimpleLyricsEditor.Control
             RewindButton_Transform.TranslateX = 44;
             FastForwardButton_Transform.TranslateX = -44;
 
-            Position_Slider.AddHandler(PointerPressedEvent, new PointerEventHandler(Position_Slider_PointerPressed), true);
-            Position_Slider.AddHandler(PointerReleasedEvent, new PointerEventHandler(Position_Slider_PointerReleased), true);
+            Position_Slider.AddHandler(PointerPressedEvent, new PointerEventHandler(Position_Slider_PointerPressed),
+                true);
+            Position_Slider.AddHandler(PointerReleasedEvent, new PointerEventHandler(Position_Slider_PointerReleased),
+                true);
 
             MusicFileNotifier.FileChanged += MusicFileChanged;
         }
@@ -110,8 +110,11 @@ namespace SimpleLyricsEditor.Control
             {
                 await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, RefreshTime);
             }
-
+#if DEBUG
+            _refreshTimeTimer = ThreadPoolTimer.CreatePeriodicTimer(refreshTime, TimeSpan.FromSeconds(1));
+#else
             _refreshTimeTimer = ThreadPoolTimer.CreatePeriodicTimer(refreshTime, TimeSpan.FromMilliseconds(50));
+#endif
         }
 
         public void DisplayPositionControlButtons()
@@ -144,7 +147,9 @@ namespace SimpleLyricsEditor.Control
         public void Rewind()
         {
             var ms = 500;
-            var newPosition = Position - TimeSpan.FromMilliseconds(ms) >= TimeSpan.Zero ? Position - TimeSpan.FromMilliseconds(ms) : TimeSpan.Zero;
+            var newPosition = Position - TimeSpan.FromMilliseconds(ms) >= TimeSpan.Zero
+                ? Position - TimeSpan.FromMilliseconds(ms)
+                : TimeSpan.Zero;
 
             SetPosition(newPosition);
         }
@@ -152,7 +157,9 @@ namespace SimpleLyricsEditor.Control
         public void FastForward()
         {
             var ms = 500;
-            var newPosition = Position + TimeSpan.FromMilliseconds(ms) <= Player.NaturalDuration.TimeSpan ? Position + TimeSpan.FromMilliseconds(ms) : Player.NaturalDuration.TimeSpan;
+            var newPosition = Position + TimeSpan.FromMilliseconds(ms) <= Player.NaturalDuration.TimeSpan
+                ? Position + TimeSpan.FromMilliseconds(ms)
+                : Player.NaturalDuration.TimeSpan;
 
             SetPosition(newPosition);
         }
