@@ -55,10 +55,18 @@ namespace SimpleLyricsEditor.Control
             if (!Lyrics.Any())
                 return;
 
+            var currentTime = position + TimeSpan.FromMilliseconds(200);
             var nextLyric = Lyrics[_nextIndex];
             var nextTime = nextLyric.Time;
+
+            bool b1 = currentTime.ToString(@"hh\:mm\:ss") == nextTime.ToString(@"hh\:mm\:ss") &&
+                      currentTime.Milliseconds >= nextTime.Milliseconds;
+
+            bool b2 = currentTime.ToString(@"hh\:mm") == nextTime.ToString(@"hh\:mm") &&
+                      currentTime.Seconds > nextTime.Seconds &&
+                      currentTime.Seconds <= nextTime.Seconds + 2;
             
-            if (position >= nextTime)
+            if (b1 || b2)
             {
                 CurrentLyric = nextLyric;
                 _nextIndex = _nextIndex < Lyrics.Count - 1 ? _nextIndex + 1 : 0;
