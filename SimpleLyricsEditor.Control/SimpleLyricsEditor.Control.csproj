@@ -112,6 +112,9 @@
     <Compile Include="BlurBackgroundImage.xaml.cs">
       <DependentUpon>BlurBackgroundImage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="LyrricsSinglePreview.xaml.cs">
+      <DependentUpon>LyrricsSinglePreview.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\SimpleLyricsEditor.Control.rd.xml" />
   </ItemGroup>
@@ -129,6 +132,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="BlurBackgroundImage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="LyrricsSinglePreview.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
