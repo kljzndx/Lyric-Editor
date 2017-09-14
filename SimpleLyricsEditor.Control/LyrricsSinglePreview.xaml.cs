@@ -11,6 +11,10 @@ namespace SimpleLyricsEditor.Control
 {
     public sealed partial class LyrricsSinglePreview : UserControl
     {
+        private const long TicksPerThreeSecond = TimeSpan.TicksPerSecond * 3;
+
+        private static readonly TimeSpan AnimationDuration = TimeSpan.FromMilliseconds(200);
+        
         public static readonly DependencyProperty LyricsProperty = DependencyProperty.Register(
             nameof(Lyrics), typeof(IList<Lyric>), typeof(LyrricsSinglePreview), new PropertyMetadata(null));
 
@@ -20,8 +24,9 @@ namespace SimpleLyricsEditor.Control
         public static readonly DependencyProperty BackgroundOpacityProperty = DependencyProperty.Register(
             nameof(BackgroundOpacity), typeof(double), typeof(LyrricsSinglePreview), new PropertyMetadata(1));
 
-        private int _nextIndex;
         private readonly Lyric _space = new Lyric(TimeSpan.Zero, string.Empty);
+
+        private int _nextIndex;
 
         public LyrricsSinglePreview()
         {
@@ -55,18 +60,11 @@ namespace SimpleLyricsEditor.Control
             if (!Lyrics.Any())
                 return;
 
-            var currentTime = position + TimeSpan.FromMilliseconds(200);
+            var currentTime = (position + AnimationDuration).Ticks;
             var nextLyric = Lyrics[_nextIndex];
-            var nextTime = nextLyric.Time;
+            var nextTime = nextLyric.Time.Ticks;
 
-            bool b1 = currentTime.ToString(@"hh\:mm\:ss") == nextTime.ToString(@"hh\:mm\:ss") &&
-                      currentTime.Milliseconds >= nextTime.Milliseconds;
-
-            bool b2 = currentTime.ToString(@"hh\:mm") == nextTime.ToString(@"hh\:mm") &&
-                      currentTime.Seconds > nextTime.Seconds &&
-                      currentTime.Seconds <= nextTime.Seconds + 2;
-            
-            if (b1 || b2)
+            if (currentTime >= nextTime && currentTime <= nextTime + TicksPerThreeSecond)
             {
                 CurrentLyric = nextLyric;
                 _nextIndex = _nextIndex < Lyrics.Count - 1 ? _nextIndex + 1 : 0;
@@ -78,14 +76,16 @@ namespace SimpleLyricsEditor.Control
             if (!Lyrics.Any())
                 return;
 
-            if (position.CompareTo(Lyrics.First().Time) <= 0)
+            var currentTime = position + AnimationDuration;
+
+            if (currentTime.CompareTo(Lyrics.First().Time) <= 0)
             {
                 CurrentLyric = _space;
                 _nextIndex = 0;
                 return;
             }
 
-            if (position.CompareTo(Lyrics.Last().Time) >= 0)
+            if (currentTime.CompareTo(Lyrics.Last().Time) >= 0)
             {
                 CurrentLyric = Lyrics.Last();
                 _nextIndex = 0;
@@ -93,14 +93,12 @@ namespace SimpleLyricsEditor.Control
             }
 
             for (var i = 0; i < Lyrics.Count; i++)
-            {
-                if (position.CompareTo(Lyrics[i].Time) < 0)
+                if (currentTime.CompareTo(Lyrics[i].Time) < 0)
                 {
                     CurrentLyric = Lyrics[i - 1];
                     _nextIndex = i;
                     break;
                 }
-            }
         }
 
         private void FadeOut_Completed(object sender, object e)
