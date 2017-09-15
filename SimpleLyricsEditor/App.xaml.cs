@@ -7,6 +7,9 @@ using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Storage;
+using Windows.System;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -14,6 +17,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using SimpleLyricsEditor.Events;
 
 namespace SimpleLyricsEditor
 {
@@ -22,6 +26,11 @@ namespace SimpleLyricsEditor
     /// </summary>
     sealed partial class App : Application
     {
+        private CoreWindow _coreWindow;
+
+        private bool _isPressCtrl;
+        private bool _isPressShift;
+
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
@@ -32,6 +41,21 @@ namespace SimpleLyricsEditor
             this.Suspending += OnSuspending;
         }
 
+        private void GetWindow()
+        {
+            if (_coreWindow != null)
+                return;
+
+            _coreWindow = CoreWindow.GetForCurrentThread();
+            _coreWindow.KeyDown += Window_KeyDown;
+            _coreWindow.KeyUp += Window_KeyUp;
+        }
+
+        protected override void OnActivated(IActivatedEventArgs args)
+        {
+            GetWindow();
+        }
+
         /// <summary>
         /// Invoked when the application is launched normally by the end user.  Other entry points
         /// will be used such as when the application is launched to open a specific file.
@@ -40,7 +64,7 @@ namespace SimpleLyricsEditor
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
             Frame rootFrame = Window.Current.Content as Frame;
-
+            
             // Do not repeat app initialization when the Window already has content,
             // just ensure that the window is active
             if (rootFrame == null)
@@ -67,10 +91,40 @@ namespace SimpleLyricsEditor
                     // configuring the new page by passing required information as a navigation
                     // parameter
                     rootFrame.Navigate(typeof(Views.UiFramework), e.Arguments);
+                    GetWindow();
                 }
                 // Ensure the current window is active
                 Window.Current.Activate();
             }
+        }
+
+        protected override void OnFileActivated(FileActivatedEventArgs args)
+        {
+            Frame rootFrame = Window.Current.Content as Frame;
+
+            // Do not repeat app initialization when the Window already has content,
+            // just ensure that the window is active
+            if (rootFrame == null)
+            {
+                // Create a Frame to act as the navigation context and navigate to the first page
+                rootFrame = new Frame();
+
+                rootFrame.NavigationFailed += OnNavigationFailed;
+                
+                // Place the frame in the current Window
+                Window.Current.Content = rootFrame;
+            }
+            if (rootFrame.Content == null)
+            {
+                // When the navigation stack isn't restored navigate to the first page,
+                // configuring the new page by passing required information as a navigation
+                // parameter
+                rootFrame.Navigate(typeof(Views.UiFramework));
+                GetWindow();
+            }
+            Window.Current.Activate();
+
+            LyricsFileChangeNotifier.ChangeFile(args.Files.Last() as StorageFile);
         }
 
         /// <summary>
@@ -95,6 +149,22 @@ namespace SimpleLyricsEditor
             var deferral = e.SuspendingOperation.GetDeferral();
             //TODO: Save application state and stop any background activity
             deferral.Complete();
+        }
+
+        private void Window_KeyDown(CoreWindow sender, KeyEventArgs args)
+        {
+            _isPressCtrl = !_isPressCtrl && args.VirtualKey == VirtualKey.Control;
+            _isPressShift = !_isPressShift && args.VirtualKey == VirtualKey.Shift;
+
+            GlobalKeyNotifier.PressKey(args.VirtualKey, _isPressCtrl, _isPressShift);
+        }
+
+        private void Window_KeyUp(CoreWindow sender, KeyEventArgs args)
+        {
+            _isPressCtrl = _isPressCtrl && args.VirtualKey != VirtualKey.Control;
+            _isPressShift = _isPressShift && args.VirtualKey != VirtualKey.Shift;
+
+            GlobalKeyNotifier.ReleaseKey(args.VirtualKey, _isPressCtrl, _isPressShift);
         }
     }
 }
