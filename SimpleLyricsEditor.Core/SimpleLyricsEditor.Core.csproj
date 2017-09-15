@@ -129,6 +129,13 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Page>
   </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <PRIResource Include="Strings\zh-CN\App.resw" />
+  </ItemGroup>
+  <ItemGroup>
+    <PRIResource Include="Strings\en-US\App.resw" />
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
