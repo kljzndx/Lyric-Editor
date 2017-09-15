@@ -5,8 +5,7 @@
     xmlns:local="using:SimpleLyricsEditor"
     xmlns:vm="using:SimpleLyricsEditor.ViewModels"
     xmlns:core="using:SimpleLyricsEditor.Core"
-    xmlns:cvt="using:SimpleLyricsEditor.ValueConvert"
-    RequestedTheme="Light">
+    xmlns:cvt="using:SimpleLyricsEditor.ValueConvert">
     
     <Application.Resources>
         <ResourceDictionary>
