@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>SimpleLyricsEditor</RootNamespace>
     <AssemblyName>SimpleLyricsEditor</AssemblyName>
-    <DefaultLanguage>zh-CN</DefaultLanguage>
+    <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.15063.0</TargetPlatformVersion>
     <TargetPlatformMinVersion>10.0.10586.0</TargetPlatformMinVersion>
@@ -112,6 +112,10 @@
     </AppxManifest>
     <None Include="SimpleLyricsEditor_StoreKey.pfx" />
     <None Include="SimpleLyricsEditor_TemporaryKey.pfx" />
+    <PRIResource Include="Strings\zh-CN\AudioPlayer.resw" />
+    <PRIResource Include="Strings\zh-CN\App.resw" />
+    <PRIResource Include="Strings\en-US\AudioPlayer.resw" />
+    <PRIResource Include="Strings\en-US\App.resw" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\LockScreenLogo.scale-100.png" />
