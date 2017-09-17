@@ -26,10 +26,13 @@ namespace SimpleLyricsEditor
     /// </summary>
     sealed partial class App : Application
     {
+        public static bool IsInputing;
+
         private CoreWindow _coreWindow;
 
         private bool _isPressCtrl;
         private bool _isPressShift;
+
 
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
@@ -41,7 +44,7 @@ namespace SimpleLyricsEditor
             this.Suspending += OnSuspending;
         }
 
-        private void GetWindow()
+        private void InitializeKeyEvent()
         {
             if (_coreWindow != null)
                 return;
@@ -53,7 +56,7 @@ namespace SimpleLyricsEditor
 
         protected override void OnActivated(IActivatedEventArgs args)
         {
-            GetWindow();
+            InitializeKeyEvent();
         }
 
         /// <summary>
@@ -91,7 +94,7 @@ namespace SimpleLyricsEditor
                     // configuring the new page by passing required information as a navigation
                     // parameter
                     rootFrame.Navigate(typeof(Views.UiFramework), e.Arguments);
-                    GetWindow();
+                    InitializeKeyEvent();
                 }
                 // Ensure the current window is active
                 Window.Current.Activate();
@@ -120,7 +123,7 @@ namespace SimpleLyricsEditor
                 // configuring the new page by passing required information as a navigation
                 // parameter
                 rootFrame.Navigate(typeof(Views.UiFramework));
-                GetWindow();
+                InitializeKeyEvent();
             }
             Window.Current.Activate();
 
@@ -153,18 +156,34 @@ namespace SimpleLyricsEditor
 
         private void Window_KeyDown(CoreWindow sender, KeyEventArgs args)
         {
-            _isPressCtrl = !_isPressCtrl && args.VirtualKey == VirtualKey.Control;
-            _isPressShift = !_isPressShift && args.VirtualKey == VirtualKey.Shift;
+            switch (args.VirtualKey)
+            {
+                case VirtualKey.Control:
+                    _isPressCtrl = true;
+                    break;
+                case VirtualKey.Shift:
+                    _isPressShift = true;
+                    break;
+            }
 
-            GlobalKeyNotifier.PressKey(args.VirtualKey, _isPressCtrl, _isPressShift);
+            if (!IsInputing)
+                GlobalKeyNotifier.PressKey(args.VirtualKey, _isPressCtrl, _isPressShift);
         }
 
         private void Window_KeyUp(CoreWindow sender, KeyEventArgs args)
         {
-            _isPressCtrl = _isPressCtrl && args.VirtualKey != VirtualKey.Control;
-            _isPressShift = _isPressShift && args.VirtualKey != VirtualKey.Shift;
+            switch (args.VirtualKey)
+            {
+                case VirtualKey.Control:
+                    _isPressCtrl = false;
+                    break;
+                case VirtualKey.Shift:
+                    _isPressShift = false;
+                    break;
+            }
 
-            GlobalKeyNotifier.ReleaseKey(args.VirtualKey, _isPressCtrl, _isPressShift);
+            if (!IsInputing)
+                GlobalKeyNotifier.ReleaseKey(args.VirtualKey, _isPressCtrl, _isPressShift);
         }
     }
 }
