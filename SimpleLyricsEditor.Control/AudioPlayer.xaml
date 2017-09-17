@@ -297,7 +297,7 @@
     </UserControl.Resources>
 
     <StackPanel Padding="{x:Bind Padding, Mode=OneWay}" Background="{x:Bind Background, Mode=OneWay}">
-        <MediaElement x:Name="Player" AutoPlay="False" Volume="{x:Bind _settings.Volume, Mode=OneWay}" DefaultPlaybackRate="{x:Bind _settings.PlaybackRate, Mode=OneWay}" PlaybackRate="{x:Bind _settings.PlaybackRate, Mode=OneWay}" CurrentStateChanged="Player_CurrentStateChanged" MediaOpened="Player_MediaOpened" MediaEnded="Player_MediaEnded" MediaFailed="Player_MediaFailed"/>
+        <MediaElement x:Name="Player" AutoPlay="False" Volume="{x:Bind _settings.Volume, Mode=OneWay}" Balance="{x:Bind _settings.Balance, Mode=OneWay}" DefaultPlaybackRate="{x:Bind _settings.PlaybackRate, Mode=OneWay}" PlaybackRate="{x:Bind _settings.PlaybackRate, Mode=OneWay}" CurrentStateChanged="Player_CurrentStateChanged" MediaOpened="Player_MediaOpened" MediaEnded="Player_MediaEnded" MediaFailed="Player_MediaFailed"/>
         <TextBlock Text="{x:Bind Source.File.Path, Mode=OneWay}" TextAlignment="Center"/>
         <Grid x:Name="Progress_Grid">
             <Grid.ColumnDefinitions>
@@ -316,24 +316,24 @@
             <Button Content="&#xEC4A;" Style="{StaticResource ControllerButtonStyle}" RelativePanel.AlignLeftWithPanel="True">
                 <Button.Flyout>
                     <Flyout Placement="Bottom">
-                        <Slider Width="200" Value="{x:Bind _settings.PlaybackRate, Mode=TwoWay, Converter={StaticResource PercentageToDouble}}" Maximum="200"/>
+                        <Slider x:Uid="/AudioPlayer/PlaybackRate_Slider" Width="200" Value="{x:Bind _settings.PlaybackRate, Mode=TwoWay, Converter={StaticResource PercentageToDouble}}" Maximum="200"/>
                     </Flyout>
                 </Button.Flyout>
             </Button>
             
             <StackPanel Orientation="Horizontal" RelativePanel.AlignHorizontalCenterWithPanel="True">
-                <Button x:Name="Rewind_Button" Content="&#xE100;" Style="{StaticResource ControllerButtonStyle}" RenderTransformOrigin="0.5,0.5" Click="{x:Bind Rewind}">
+                <Button x:Name="Rewind_Button" x:Uid="/AudioPlayer/Rewind_Button" Content="&#xE100;" Style="{StaticResource ControllerButtonStyle}" RenderTransformOrigin="0.5,0.5" Click="Rewind_Button_Click">
                     <Button.RenderTransform>
                         <CompositeTransform x:Name="RewindButton_Transform"/>
                     </Button.RenderTransform>
                 </Button>
-                
-                <StackPanel Orientation="Horizontal" Canvas.ZIndex="1">
+
+                <StackPanel x:Uid="/AudioPlayer/PlayOrPause_StackPanel" Orientation="Horizontal" Canvas.ZIndex="1">
                     <Button x:Name="Play_Button" Content="&#xE102;" Visibility="{x:Bind IsPlay, Mode=OneWay, Converter={StaticResource BoolToVisibility_Reverse}}" Style="{StaticResource ControllerButtonStyle}" Click="Play_Button_Click"/>
-                    <Button x:Name="Pause_Button" Content="&#xE103;" Visibility="{x:Bind IsPlay, Mode=OneWay, Converter={StaticResource BoolToVisibility}}" Style="{StaticResource ControllerButtonStyle}" Click="{x:Bind Pause}"/>
+                    <Button x:Name="Pause_Button" Content="&#xE103;" Visibility="{x:Bind IsPlay, Mode=OneWay, Converter={StaticResource BoolToVisibility}}" Style="{StaticResource ControllerButtonStyle}" Click="Pause_Button_Click"/>
                 </StackPanel>
-                
-                <Button x:Name="FastForward_Button" Content="&#xE101;" Style="{StaticResource ControllerButtonStyle}" RenderTransformOrigin="0.5,0.5" Click="{x:Bind FastForward}">
+
+                <Button x:Name="FastForward_Button" x:Uid="/AudioPlayer/FastForward_Button" Content="&#xE101;" Style="{StaticResource ControllerButtonStyle}" RenderTransformOrigin="0.5,0.5" Click="FastForward_Button_Click">
                     <Button.RenderTransform>
                         <CompositeTransform x:Name="FastForwardButton_Transform"/>
                     </Button.RenderTransform>
@@ -343,7 +343,10 @@
             <Button Content="&#xE767;" Style="{StaticResource ControllerButtonStyle}" RelativePanel.AlignRightWithPanel="True">
                 <Button.Flyout>
                     <Flyout Placement="Bottom">
-                        <Slider Width="200" Value="{x:Bind _settings.Volume, Mode=TwoWay, Converter={StaticResource PercentageToDouble}}"/>
+                        <StackPanel>
+                            <Slider x:Uid="/AudioPlayer/Volume_Slider" Width="200" Value="{x:Bind _settings.Volume, Mode=TwoWay, Converter={StaticResource PercentageToDouble}}"/>
+                            <Slider x:Uid="/AudioPlayer/Balance_Slider" Width="200" Minimum="-100" Value="{x:Bind _settings.Balance, Mode=TwoWay, Converter={StaticResource PercentageToDouble}}" Maximum="100"/>
+                        </StackPanel>
                     </Flyout>
                 </Button.Flyout>
             </Button>
