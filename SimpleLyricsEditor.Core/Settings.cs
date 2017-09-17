@@ -12,6 +12,7 @@ namespace SimpleLyricsEditor.Core
 
         [SettingFieldByNormal(nameof(PlaybackRate), 1D)] private double _playbackRate;
         [SettingFieldByNormal(nameof(Volume), 1D)] private double _volume;
+        [SettingFieldByNormal(nameof(Balance), 0D)] private double _balance;
 
         private Settings()
         {
@@ -30,6 +31,12 @@ namespace SimpleLyricsEditor.Core
         {
             get => _volume;
             set => SetSetting(ref _volume, value);
+        }
+
+        public double Balance
+        {
+            get => _balance;
+            set => SetSetting(ref _balance, value);
         }
 
         public BackgroundSourceTypeEnum BackgroundSourceType
