@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Storage;
+using Windows.System;
 using Windows.System.Threading;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
@@ -22,11 +23,30 @@ namespace SimpleLyricsEditor.Control
         public static readonly DependencyProperty SourceProperty = DependencyProperty.Register(
             nameof(Source), typeof(Music), typeof(AudioPlayer), new PropertyMetadata(Music.Empty));
 
+        public static readonly DependencyProperty IsPlayProperty = DependencyProperty.Register(
+            nameof(IsPlay), typeof(bool), typeof(AudioPlayer), new PropertyMetadata(false));
+
         public static readonly DependencyProperty TimeProperty = DependencyProperty.Register(
             nameof(Time), typeof(TimeSpan), typeof(AudioPlayer), new PropertyMetadata(TimeSpan.Zero));
 
-        public static readonly DependencyProperty IsPlayProperty = DependencyProperty.Register(
-            nameof(IsPlay), typeof(bool), typeof(AudioPlayer), new PropertyMetadata(false));
+        public static readonly DependencyProperty RewindTimeProperty = DependencyProperty.Register(
+            nameof(RewindTime), typeof(TimeSpan), typeof(AudioPlayer),
+            new PropertyMetadata(TimeSpan.FromMilliseconds(500)));
+
+        public static readonly DependencyProperty FastForwardTimeProperty = DependencyProperty.Register(
+            nameof(FastForwardTime), typeof(TimeSpan), typeof(AudioPlayer),
+            new PropertyMetadata(TimeSpan.FromMilliseconds(500)));
+
+        public static readonly DependencyProperty RewindTimeOnPressedShiftProperty = DependencyProperty.Register(
+            nameof(RewindTimeOnPressedShift), typeof(TimeSpan), typeof(AudioPlayer),
+            new PropertyMetadata(TimeSpan.FromSeconds(5)));
+
+        public static readonly DependencyProperty FastForwardTimeOnPressedShiftProperty = DependencyProperty.Register(
+            nameof(FastForwardTimeOnPressedShift), typeof(TimeSpan), typeof(AudioPlayer),
+            new PropertyMetadata(TimeSpan.FromSeconds(5)));
+
+        private bool _isPressShift;
+        private bool _isClickedPlayOrPauseButton;
 
         private Music _musicTemp;
         private ThreadPoolTimer _refreshTimeTimer;
@@ -46,6 +66,8 @@ namespace SimpleLyricsEditor.Control
                 true);
 
             MusicFileNotifier.FileChanged += MusicFileChanged;
+            GlobalKeyNotifier.KeyDown += OnKeyDown;
+            GlobalKeyNotifier.KeyUp += OnKeyUp;
         }
 
         public Music Source
@@ -64,6 +86,30 @@ namespace SimpleLyricsEditor.Control
         {
             get => (TimeSpan) GetValue(TimeProperty);
             set => SetValue(TimeProperty, value);
+        }
+
+        public TimeSpan RewindTime
+        {
+            get => (TimeSpan) GetValue(RewindTimeProperty);
+            set => SetValue(RewindTimeProperty, value);
+        }
+
+        public TimeSpan FastForwardTime
+        {
+            get => (TimeSpan) GetValue(FastForwardTimeProperty);
+            set => SetValue(FastForwardTimeProperty, value);
+        }
+
+        public TimeSpan RewindTimeOnPressedShift
+        {
+            get => (TimeSpan) GetValue(RewindTimeOnPressedShiftProperty);
+            set => SetValue(RewindTimeOnPressedShiftProperty, value);
+        }
+
+        public TimeSpan FastForwardTimeOnPressedShift
+        {
+            get => (TimeSpan) GetValue(FastForwardTimeOnPressedShiftProperty);
+            set => SetValue(FastForwardTimeOnPressedShiftProperty, value);
         }
 
         public TimeSpan Position => Player.Position;
@@ -144,37 +190,94 @@ namespace SimpleLyricsEditor.Control
             Paused?.Invoke(this, EventArgs.Empty);
         }
 
-        public void Rewind()
+        public void Rewind(TimeSpan time)
         {
-            var ms = 500;
-            var newPosition = Position - TimeSpan.FromMilliseconds(ms) >= TimeSpan.Zero
-                ? Position - TimeSpan.FromMilliseconds(ms)
+            var newPosition = Position - time >= TimeSpan.Zero
+                ? Position - time
                 : TimeSpan.Zero;
 
             SetPosition(newPosition);
         }
 
-        public void FastForward()
+        public void FastForward(TimeSpan time)
         {
-            var ms = 500;
-            var newPosition = Position + TimeSpan.FromMilliseconds(ms) <= Player.NaturalDuration.TimeSpan
-                ? Position + TimeSpan.FromMilliseconds(ms)
+            var newPosition = Position + time <= Player.NaturalDuration.TimeSpan
+                ? Position + time
                 : Player.NaturalDuration.TimeSpan;
 
             SetPosition(newPosition);
         }
 
+        #region PlayerControlButton
+
         private async void Play_Button_Click(object sender, RoutedEventArgs e)
         {
+                _isClickedPlayOrPauseButton = true;
             if (Source.Equals(Music.Empty))
                 await PickMusicFile();
             else
                 Play();
         }
 
+        private void Pause_Button_Click(object sender, RoutedEventArgs e)
+        {
+            Pause();
+            _isClickedPlayOrPauseButton = true;
+        }
+
+        private void Rewind_Button_Click(object sender, RoutedEventArgs e)
+        {
+            Rewind(_isPressShift ? RewindTimeOnPressedShift : RewindTime);
+        }
+
+        private void FastForward_Button_Click(object sender, RoutedEventArgs e)
+        {
+            FastForward(_isPressShift ? FastForwardTimeOnPressedShift : FastForwardTime);
+        }
+
+        #endregion
+        
         private async void MusicFileChanged(object sender, FileChangeEventArgs e)
         {
             await SetSource(await Music.Parse(e.File));
+        }
+
+        private void OnKeyDown(object sender, GlobalKeyEventArgs e)
+        {
+            _isPressShift = e.IsPressShift;
+
+            if (_isPressShift)
+            {
+                Rewind_Button.Content = "\uE0A6";
+                FastForward_Button.Content = "\uE0AB";
+            }
+
+            switch (e.Key)
+            {
+                case VirtualKey.P:
+                    if (IsPlay)
+                        Pause();
+                    else
+                        Play();
+                    break;
+                case VirtualKey.Left:
+                    Rewind(_isPressShift ? RewindTimeOnPressedShift : RewindTime);
+                    break;
+                case VirtualKey.Right:
+                    FastForward(_isPressShift ? FastForwardTimeOnPressedShift : FastForwardTime);
+                    break;
+            }
+        }
+
+        private void OnKeyUp(object sender, GlobalKeyEventArgs e)
+        {
+            _isPressShift = e.IsPressShift;
+
+            if (!_isPressShift)
+            {
+                Rewind_Button.Content = "\uE100";
+                FastForward_Button.Content = "\uE101";
+            }
         }
 
         private void Player_CurrentStateChanged(object sender, RoutedEventArgs e)
@@ -189,10 +292,20 @@ namespace SimpleLyricsEditor.Control
                     break;
                 case MediaElementState.Playing:
                     IsPlay = true;
+                    if (_isClickedPlayOrPauseButton)
+                    {
+                        Pause_Button.Focus(FocusState.Pointer);
+                        _isClickedPlayOrPauseButton = false;
+                    }
                     break;
                 case MediaElementState.Paused:
                 case MediaElementState.Stopped:
                     IsPlay = false;
+                    if (_isClickedPlayOrPauseButton)
+                    {
+                        Play_Button.Focus(FocusState.Pointer);
+                        _isClickedPlayOrPauseButton = false;
+                    }
                     break;
             }
         }
