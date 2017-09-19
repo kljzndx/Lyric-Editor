@@ -1,19 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
+﻿using System.Threading.Tasks;
 using Windows.Storage;
+using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
-using SimpleLyricsEditor.BLL;
 using SimpleLyricsEditor.BLL.Pickers;
 using SimpleLyricsEditor.Events;
 
@@ -22,16 +11,78 @@ using SimpleLyricsEditor.Events;
 namespace SimpleLyricsEditor.Views
 {
     /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
+    ///     An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
     public sealed partial class UiFramework : Page
     {
-        private StorageFile _musicFile;
         private StorageFile _lyricsFile;
+        private StorageFile _musicFile;
 
         public UiFramework()
         {
-            this.InitializeComponent();
+            InitializeComponent();
+            GlobalKeyNotifier.KeyDown += WindowKeyDown;
+        }
+
+        private async Task OpenMusicFile()
+        {
+            _musicFile = await MusicFileOpenPicker.PickFile();
+            if (_musicFile != null)
+                MusicFileNotifier.ChangeFile(_musicFile);
+        }
+
+        private async Task OpenLyricsFile()
+        {
+            var file = await LyricsFileOpenPicker.PickFile();
+            if (file == null)
+                return;
+
+            _lyricsFile = file;
+            LyricsFileChangeNotifier.ChangeFile(_lyricsFile);
+        }
+
+        private async Task SaveLyricsFile()
+        {
+            if (_lyricsFile == null)
+            {
+                var file = await LyricsFileSavePicker.PickFile();
+                if (file != null)
+                    _lyricsFile = file;
+                else
+                    return;
+            }
+
+            LyricsFileSaveNotifier.SaveFile(_lyricsFile);
+        }
+
+        private async Task SaveAs()
+        {
+            var file = await LyricsFileSavePicker.PickFile();
+            if (file == null)
+                return;
+
+            _lyricsFile = file;
+            LyricsFileSaveNotifier.SaveFile(_lyricsFile);
+        }
+
+        private async void WindowKeyDown(object sender, GlobalKeyEventArgs e)
+        {
+            if (e.IsPressCtrl)
+                switch (e.Key)
+                {
+                    case VirtualKey.M:
+                        await OpenMusicFile();
+                        break;
+                    case VirtualKey.L:
+                        await OpenLyricsFile();
+                        break;
+                    case VirtualKey.S:
+                        if (e.IsPressShift)
+                            await SaveAs();
+                        else
+                            await SaveLyricsFile();
+                        break;
+                }
         }
 
         private void Settings_AppBarButton_Click(object sender, RoutedEventArgs e)
@@ -41,19 +92,22 @@ namespace SimpleLyricsEditor.Views
 
         private async void OpenMusicFile_MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
         {
-            _musicFile = await MusicFileOpenPicker.PickFile();
-            if (_musicFile != null)
-                MusicFileNotifier.ChangeFile(_musicFile);
+            await OpenMusicFile();
         }
 
         private async void OpenLyricsFile_MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
         {
-            StorageFile file = await LyricsFileOpenPicker.PickFile();
-            if (file == null)
-                return;
+            await OpenLyricsFile();
+        }
 
-            _lyricsFile = file;
-            LyricsFileChangeNotifier.ChangeFile(_lyricsFile);
+        private async void SaveLyricsFile_Button_Click(object sender, RoutedEventArgs e)
+        {
+            await SaveLyricsFile();
+        }
+
+        private async void SaveAs_Button_Click(object sender, RoutedEventArgs e)
+        {
+            await SaveAs();
         }
     }
 }

@@ -20,13 +20,19 @@
     <Page.BottomAppBar>
         <CommandBar>
             <CommandBar.PrimaryCommands>
-                <AppBarButton Icon="OpenFile" Label="设置">
+                <AppBarButton x:Name="OpenFile_Button" Icon="OpenFile" Label="打开">
                     <AppBarButton.Flyout>
                         <MenuFlyout>
                             <MenuFlyoutItem Text="打开音乐" Click="OpenMusicFile_MenuFlyoutItem_Click"/>
                             <MenuFlyoutItem Text="打开歌词" Click="OpenLyricsFile_MenuFlyoutItem_Click"/>
                         </MenuFlyout>
                     </AppBarButton.Flyout>
+                </AppBarButton>
+                <AppBarButton x:Name="SaveLyricsFile_Button" Icon="Save" Label="保存歌词" Click="SaveLyricsFile_Button_Click"/>
+                <AppBarButton x:Name="SaveAs_Button" Label="另存为" Click="SaveAs_Button_Click">
+                    <AppBarButton.Icon>
+                        <FontIcon Glyph="&#xE28F;"/>
+                    </AppBarButton.Icon>
                 </AppBarButton>
             </CommandBar.PrimaryCommands>
             
