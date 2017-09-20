@@ -156,6 +156,10 @@ namespace SimpleLyricsEditor.Views
                 {
                     _viewModel.LyricContent = tb.Text;
                     _viewModel.Modify();
+                    Lyrics_ListView.SelectedIndex =
+                        Lyrics_ListView.SelectedIndex < Lyrics_ListView.Items.Count - 1
+                        ? Lyrics_ListView.SelectedIndex + 1
+                        : -1;
                 }
             }
         }
