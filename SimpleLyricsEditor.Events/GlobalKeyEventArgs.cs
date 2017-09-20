@@ -5,15 +5,17 @@ namespace SimpleLyricsEditor.Events
 {
     public class GlobalKeyEventArgs : EventArgs
     {
-        public GlobalKeyEventArgs(VirtualKey key, bool isPressCtrl, bool isPressShift)
+        public GlobalKeyEventArgs(VirtualKey key, bool isPressCtrl, bool isPressShift, bool isInputing)
         {
             Key = key;
             IsPressCtrl = isPressCtrl;
             IsPressShift = isPressShift;
+            IsInputing = isInputing;
         }
 
-        public VirtualKey Key { get; set; }
-        public bool IsPressCtrl { get; set; }
-        public bool IsPressShift { get; set; }
+        public VirtualKey Key { get; }
+        public bool IsPressCtrl { get; }
+        public bool IsPressShift { get; }
+        public bool IsInputing { get; }
     }
 }
