@@ -166,8 +166,7 @@ namespace SimpleLyricsEditor
                     break;
             }
 
-            if (!IsInputing)
-                GlobalKeyNotifier.PressKey(args.VirtualKey, _isPressCtrl, _isPressShift);
+            GlobalKeyNotifier.PressKey(args.VirtualKey, _isPressCtrl, _isPressShift, IsInputing);
         }
 
         private void Window_KeyUp(CoreWindow sender, KeyEventArgs args)
@@ -182,8 +181,7 @@ namespace SimpleLyricsEditor
                     break;
             }
 
-            if (!IsInputing)
-                GlobalKeyNotifier.ReleaseKey(args.VirtualKey, _isPressCtrl, _isPressShift);
+            GlobalKeyNotifier.ReleaseKey(args.VirtualKey, _isPressCtrl, _isPressShift, IsInputing);
         }
     }
 }
