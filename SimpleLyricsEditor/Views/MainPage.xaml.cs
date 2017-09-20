@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
 using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Input;
 using SimpleLyricsEditor.Control;
 using SimpleLyricsEditor.Core;
 using SimpleLyricsEditor.DAL;
@@ -21,6 +23,7 @@ namespace SimpleLyricsEditor.Views
     {
         private MainViewModel _viewModel;
         private readonly Settings _settings = Settings.Current;
+        private bool _isPressCtrl;
         private bool _isPressShift;
         private bool _lyricsListGotFocus;
 
@@ -37,52 +40,67 @@ namespace SimpleLyricsEditor.Views
 
         private void WindowKeyDown(object sender, GlobalKeyEventArgs e)
         {
+            _isPressCtrl = e.IsPressCtrl;
             _isPressShift = e.IsPressShift;
 
-            switch (e.Key)
+            if (e.IsPressShift)
             {
-                case VirtualKey.Space:
-                    this.Focus(FocusState.Pointer);
+                AddButton_Transform.Rotation = 0;
+            }
 
-                    if (Lyrics_ListView.SelectedItems.Any())
-                        _viewModel.Move(Player.Position);
-                    else
-                        _viewModel.Add(-1, Player.Position, _isPressShift);
-                    break;
-                case VirtualKey.C:
-                    _viewModel.Copy(Player.Position);
-                    break;
-                case VirtualKey.Delete:
-                    _viewModel.Remove();
-                    break;
-                case VirtualKey.M:
-                    _viewModel.Modify();
-                    break;
-                case VirtualKey.S:
-                    _viewModel.Sort();
-                    break;
-                case VirtualKey.Up:
-                    this.Focus(FocusState.Pointer);
-                    if (!_lyricsListGotFocus)
-                        Lyrics_ListView.SelectedIndex =
-                            Lyrics_ListView.SelectedIndex > -1
-                            ? Lyrics_ListView.SelectedIndex - 1
-                            : Lyrics_ListView.Items.Count - 1;
-                    break;
-                case VirtualKey.Down:
-                    this.Focus(FocusState.Pointer);
-                    if (!_lyricsListGotFocus)
-                        Lyrics_ListView.SelectedIndex =
-                            Lyrics_ListView.SelectedIndex < Lyrics_ListView.Items.Count - 1
-                            ? Lyrics_ListView.SelectedIndex + 1
-                            : -1;
-                    break;
+            if (!e.IsInputing)
+            {
+                switch (e.Key)
+                {
+                    case VirtualKey.Space:
+                        this.Focus(FocusState.Pointer);
+
+                        if (Lyrics_ListView.SelectedItems.Any())
+                            _viewModel.Move(Player.Position);
+                        else
+                            _viewModel.Add(-1, Player.Position, _isPressShift);
+                        break;
+                    case VirtualKey.C:
+                        _viewModel.Copy(Player.Position);
+                        break;
+                    case VirtualKey.Delete:
+                        _viewModel.Remove();
+                        break;
+                    case VirtualKey.M:
+                        _viewModel.Modify();
+                        break;
+                    case VirtualKey.S:
+                        _viewModel.Sort();
+                        break;
+                    case VirtualKey.Up:
+                        this.Focus(FocusState.Pointer);
+                        if (!_lyricsListGotFocus)
+                            Lyrics_ListView.SelectedIndex =
+                                Lyrics_ListView.SelectedIndex > -1
+                                ? Lyrics_ListView.SelectedIndex - 1
+                                : Lyrics_ListView.Items.Count - 1;
+                        break;
+                    case VirtualKey.Down:
+                        this.Focus(FocusState.Pointer);
+                        if (!_lyricsListGotFocus)
+                            Lyrics_ListView.SelectedIndex =
+                                Lyrics_ListView.SelectedIndex < Lyrics_ListView.Items.Count - 1
+                                ? Lyrics_ListView.SelectedIndex + 1
+                                : -1;
+                        break;
+                }
             }
         }
 
         private void WindowKeyUp(object sender, GlobalKeyEventArgs e)
         {
+            _isPressCtrl = e.IsPressCtrl;
             _isPressShift = e.IsPressShift;
+
+            if (!e.IsPressShift)
+            {
+                AddButton_Transform.Rotation = 180;
+            }
         }
 
         private void UndoOperations_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
@@ -114,6 +132,29 @@ namespace SimpleLyricsEditor.Views
         private void LyricsContent_TextBox_LostFocus(object sender, RoutedEventArgs e)
         {
             App.IsInputing = false;
+        }
+
+        private void LyricsContent_TextBox_KeyUp(object sender, KeyRoutedEventArgs e)
+        {
+            if(e.Key == VirtualKey.Enter && sender is TextBox tb)
+            {
+                if (_isPressCtrl)
+                {
+                    _viewModel.LyricContent = tb.Text;
+                    _viewModel.Add(Lyrics_ListView.SelectedIndex, Player.Position, _isPressShift);
+                }
+                else if (_isPressShift || !Lyrics_ListView.SelectedItems.Any())
+                {
+                    int selectId = tb.SelectionStart;
+                    tb.Text = tb.Text.Remove(selectId, tb.SelectionLength).Insert(selectId, " " + Environment.NewLine);
+                    tb.SelectionStart = selectId + 2;
+                }
+                else if (Lyrics_ListView.SelectedItems.Any())
+                {
+                    _viewModel.LyricContent = tb.Text;
+                    _viewModel.Modify();
+                }
+            }
         }
 
         private void Add_Button_Click(object sender, RoutedEventArgs e)
@@ -149,6 +190,13 @@ namespace SimpleLyricsEditor.Views
         private void Lyrics_ListView_LostFocus(object sender, RoutedEventArgs e)
         {
             _lyricsListGotFocus = false;
+        }
+
+        private void Lyrics_ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            LyricsContent_TextBox.Text = Lyrics_ListView.SelectedIndex > -1
+                ? (Lyrics_ListView.Items[Lyrics_ListView.SelectedIndex] as Lyric).Content
+                : String.Empty;
         }
     }
 }

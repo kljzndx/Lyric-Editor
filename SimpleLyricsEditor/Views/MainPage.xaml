@@ -35,10 +35,14 @@
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
 
-                <TextBox x:Name="LyricsContent_TextBox" Text="{x:Bind _viewModel.LyricContent, Mode=TwoWay}" VerticalAlignment="Center" GotFocus="LyricsContent_TextBox_GotFocus" LostFocus="LyricsContent_TextBox_LostFocus"/>
+                <TextBox x:Name="LyricsContent_TextBox" Text="{x:Bind _viewModel.LyricContent, Mode=TwoWay}" TextWrapping="Wrap" VerticalAlignment="Center" GotFocus="LyricsContent_TextBox_GotFocus" LostFocus="LyricsContent_TextBox_LostFocus" KeyUp="LyricsContent_TextBox_KeyUp"/>
 
                 <StackPanel Grid.Column="1" Orientation="Horizontal">
-                    <Button x:Name="Add_Button" Content="&#xE109;" Style="{StaticResource ControllerButtonStyle}" Click="Add_Button_Click"/>
+                    <Button x:Name="Add_Button" Content="&#xE94D;" Style="{StaticResource ControllerButtonStyle}" Click="Add_Button_Click" RenderTransformOrigin="0.5,0.5">
+                        <Button.RenderTransform>
+                            <CompositeTransform x:Name="AddButton_Transform" Rotation="180"/>
+                        </Button.RenderTransform>
+                    </Button>
                     <Button x:Name="Copy_Button" Content="&#xE16F;" Style="{StaticResource ControllerButtonStyle}" Click="Copy_Button_Click"/>
                     <Button x:Name="Remove_Button" Content="&#xE10A;" Style="{StaticResource ControllerButtonStyle}" Click="Remove_Button_Click"/>
                     <Button x:Name="Move_Button" Content="&#xE759;" Style="{StaticResource ControllerButtonStyle}" Click="Move_Button_Click"/>
@@ -46,7 +50,7 @@
                 </StackPanel>
             </Grid>
             
-            <ListView x:Name="Lyrics_ListView" Grid.Row="1" ItemsSource="{x:Bind _viewModel.LyricItems}" GotFocus="Lyrics_ListView_GotFocus" LostFocus="Lyrics_ListView_LostFocus">
+            <ListView x:Name="Lyrics_ListView" Grid.Row="1" ItemsSource="{x:Bind _viewModel.LyricItems}" GotFocus="Lyrics_ListView_GotFocus" LostFocus="Lyrics_ListView_LostFocus" SelectionChanged="Lyrics_ListView_SelectionChanged">
                 <ListView.ItemContainerStyle>
                     <Style TargetType="ListViewItem">
                         <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
