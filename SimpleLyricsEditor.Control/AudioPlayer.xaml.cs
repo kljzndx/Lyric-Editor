@@ -159,7 +159,7 @@ namespace SimpleLyricsEditor.Control
 #if DEBUG
             _refreshTimeTimer = ThreadPoolTimer.CreatePeriodicTimer(refreshTime, TimeSpan.FromSeconds(1));
 #else
-            _refreshTimeTimer = ThreadPoolTimer.CreatePeriodicTimer(refreshTime, TimeSpan.FromMilliseconds(50));
+            _refreshTimeTimer = ThreadPoolTimer.CreatePeriodicTimer(refreshTime, TimeSpan.FromMilliseconds(100));
 #endif
         }
 
@@ -252,20 +252,23 @@ namespace SimpleLyricsEditor.Control
                 FastForward_Button.Content = "\uE0AB";
             }
 
-            switch (e.Key)
+            if (!e.IsInputing)
             {
-                case VirtualKey.P:
-                    if (IsPlay)
-                        Pause();
-                    else
-                        Play();
-                    break;
-                case VirtualKey.Left:
-                    Rewind(_isPressShift ? RewindTimeOnPressedShift : RewindTime);
-                    break;
-                case VirtualKey.Right:
-                    FastForward(_isPressShift ? FastForwardTimeOnPressedShift : FastForwardTime);
-                    break;
+                switch (e.Key)
+                {
+                    case VirtualKey.P:
+                        if (IsPlay)
+                            Pause();
+                        else
+                            Play();
+                        break;
+                    case VirtualKey.Left:
+                        Rewind(_isPressShift ? RewindTimeOnPressedShift : RewindTime);
+                        break;
+                    case VirtualKey.Right:
+                        FastForward(_isPressShift ? FastForwardTimeOnPressedShift : FastForwardTime);
+                        break;
+                }
             }
         }
 
