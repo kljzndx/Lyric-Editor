@@ -48,6 +48,9 @@ namespace SimpleLyricsEditor.Views
                 AddButton_Transform.Rotation = 0;
             }
 
+            if (!e.IsInputing && e.Key == VirtualKey.I)
+                LyricsContent_TextBox.Focus(FocusState.Pointer);
+
             if (!e.IsInputing)
             {
                 switch (e.Key)
