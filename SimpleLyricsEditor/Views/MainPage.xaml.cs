@@ -45,7 +45,7 @@ namespace SimpleLyricsEditor.Views
 
             if (e.IsPressShift)
             {
-                AddButton_Transform.Rotation = 0;
+                AddLyrics_Button_Transform.Rotation = 0;
             }
 
             if (!e.IsInputing && e.Key == VirtualKey.I)
@@ -102,7 +102,7 @@ namespace SimpleLyricsEditor.Views
 
             if (!e.IsPressShift)
             {
-                AddButton_Transform.Rotation = 180;
+                AddLyrics_Button_Transform.Rotation = 180;
             }
         }
 
@@ -164,27 +164,27 @@ namespace SimpleLyricsEditor.Views
             }
         }
 
-        private void Add_Button_Click(object sender, RoutedEventArgs e)
+        private void AddLyrics_Button_Click(object sender, RoutedEventArgs e)
         {
             _viewModel.Add(Lyrics_ListView.SelectedIndex, Player.Position, _isPressShift);
         }
 
-        private void Copy_Button_Click(object sender, RoutedEventArgs e)
+        private void CopyLyrics_Button_Click(object sender, RoutedEventArgs e)
         {
             _viewModel.Copy(Player.Position);
         }
 
-        private void Remove_Button_Click(object sender, RoutedEventArgs e)
+        private void RemoveLyrics_Button_Click(object sender, RoutedEventArgs e)
         {
             _viewModel.Remove();
         }
 
-        private void Move_Button_Click(object sender, RoutedEventArgs e)
+        private void MoveTime_Button_Click(object sender, RoutedEventArgs e)
         {
             _viewModel.Move(Player.Position);
         }
         
-        private void Modify_Button_Click(object sender, RoutedEventArgs e)
+        private void ModifyContent_Button_Click(object sender, RoutedEventArgs e)
         {
             _viewModel.Modify();
         }

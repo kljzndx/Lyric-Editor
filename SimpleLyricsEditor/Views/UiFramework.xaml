@@ -20,16 +20,16 @@
     <Page.BottomAppBar>
         <CommandBar>
             <CommandBar.PrimaryCommands>
-                <AppBarButton x:Name="OpenFile_Button" Icon="OpenFile" Label="打开">
+                <AppBarButton x:Name="OpenFile_AppBarButton" x:Uid="/BottomBar/OpenFile_AppBarButton" Icon="OpenFile">
                     <AppBarButton.Flyout>
                         <MenuFlyout>
-                            <MenuFlyoutItem Text="打开音乐" Click="OpenMusicFile_MenuFlyoutItem_Click"/>
-                            <MenuFlyoutItem Text="打开歌词" Click="OpenLyricsFile_MenuFlyoutItem_Click"/>
+                            <MenuFlyoutItem x:Uid="/BottomBar/OpenMusicFile_MenuFlyoutItem" Click="OpenMusicFile_MenuFlyoutItem_Click"/>
+                            <MenuFlyoutItem x:Uid="/BottomBar/OpenLyricsFile_MenuFlyoutItem" Click="OpenLyricsFile_MenuFlyoutItem_Click"/>
                         </MenuFlyout>
                     </AppBarButton.Flyout>
                 </AppBarButton>
-                <AppBarButton x:Name="SaveLyricsFile_Button" Icon="Save" Label="保存歌词" Click="SaveLyricsFile_Button_Click"/>
-                <AppBarButton x:Name="SaveAs_Button" Label="另存为" Click="SaveAs_Button_Click">
+                <AppBarButton x:Name="Save_AppBarButton" x:Uid="/BottomBar/Save_AppBarButton" Icon="Save" Click="Save_AppBarButton_Click"/>
+                <AppBarButton x:Name="SaveAs_AppBarButton" x:Uid="/BottomBar/SaveAs_AppBarButton" Click="SaveAs_AppBarButton_Click">
                     <AppBarButton.Icon>
                         <FontIcon Glyph="&#xE28F;"/>
                     </AppBarButton.Icon>
@@ -37,7 +37,7 @@
             </CommandBar.PrimaryCommands>
             
             <CommandBar.SecondaryCommands>
-                <AppBarButton x:Name="Settings_AppBarButton" Label="设置" Click="Settings_AppBarButton_Click"/>
+                <AppBarButton x:Name="Settings_AppBarButton" x:Uid="/BottomBar/Settings_AppBarButton" Click="Settings_AppBarButton_Click"/>
             </CommandBar.SecondaryCommands>
         </CommandBar>
     </Page.BottomAppBar>

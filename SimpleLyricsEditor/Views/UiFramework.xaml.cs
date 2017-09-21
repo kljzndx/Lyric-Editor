@@ -41,7 +41,7 @@ namespace SimpleLyricsEditor.Views
             LyricsFileChangeNotifier.ChangeFile(_lyricsFile);
         }
 
-        private async Task SaveLyricsFile()
+        private async Task SaveFile()
         {
             if (_lyricsFile == null)
             {
@@ -80,7 +80,7 @@ namespace SimpleLyricsEditor.Views
                         if (e.IsPressShift)
                             await SaveAs();
                         else
-                            await SaveLyricsFile();
+                            await SaveFile();
                         break;
                 }
         }
@@ -100,12 +100,12 @@ namespace SimpleLyricsEditor.Views
             await OpenLyricsFile();
         }
 
-        private async void SaveLyricsFile_Button_Click(object sender, RoutedEventArgs e)
+        private async void Save_AppBarButton_Click(object sender, RoutedEventArgs e)
         {
-            await SaveLyricsFile();
+            await SaveFile();
         }
 
-        private async void SaveAs_Button_Click(object sender, RoutedEventArgs e)
+        private async void SaveAs_AppBarButton_Click(object sender, RoutedEventArgs e)
         {
             await SaveAs();
         }
