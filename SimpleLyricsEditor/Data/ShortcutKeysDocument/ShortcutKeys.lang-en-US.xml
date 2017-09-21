@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ShortcutKeys>
+  <ShortcutKey Name="输入框内加歌词" Class="Lyrics operations">
+    <Condition> press Ctrl + Enter In Lyric input box </Condition>
+    <Function> Add Lyric </Function>
+  </ShortcutKey>
+  <ShortcutKey Name="空格加歌词" Class="Lyrics operations">
+    <Condition> Press spacebar when there are no selected items </Condition>
+    <Function> Add Lyric </Function>
+  </ShortcutKey>
+  <ShortcutKey Name="往上添加歌词" Class="Lyrics operations">
+    <Condition> Press SHIFT while executing add lyrics command </Condition>
+    <Function> Add Lyrics to Above </Function>
+  </ShortcutKey>
+  <ShortcutKey Name="复制歌词" Class="Lyrics operations">
+    <Condition> Press C Key </Condition>
+    <Function> Copy Lyric </Function>
+  </ShortcutKey>
+  <ShortcutKey Name="修改时间" Class="Lyrics operations">
+    <Condition> Press spacebar when there are selected items </Condition>
+    <Function> Move time of lyrics </Function>
+  </ShortcutKey>
+  <ShortcutKey Name="修改歌词内容" Class="Lyrics operations">
+    <Condition> press Enter In Lyric input box </Condition>
+    <Function> Modify content of Lyrics </Function>
+  </ShortcutKey>
+  <ShortcutKey Name="修改歌词内容" Class="Lyrics operations">
+    <Condition> Press M Key </Condition>
+    <Function> Modify content of Lyrics </Function>
+  </ShortcutKey>
+  <ShortcutKey Name="删除歌词" Class="Lyrics operations">
+    <Condition> Press delete key </Condition>
+    <Function> Delete lyric items </Function>
+  </ShortcutKey>
+  <ShortcutKey Name="切换歌词" Class="Lyrics operations">
+    <Condition> Press Up / Down Arrow Key </Condition>
+    <Function> Switch Lyric Item Select </Function>
+  </ShortcutKey>
+  <ShortcutKey Name="歌词排序" Class="Lyrics operations">
+    <Condition> Press S Key </Condition>
+    <Function> Lyrics List Sort </Function>
+  </ShortcutKey>
+  <ShortcutKey Name="播放控制" Class="Player operations">
+    <Condition> Press P Key </Condition>
+    <Function> Play / Pause </Function>
+  </ShortcutKey>
+  <ShortcutKey Name="快进快退半秒" Class="Player operations">
+    <Condition> Left / Right Arrow Key </Condition>
+    <Function> Rewind / Fast Forward 500ms </Function>
+  </ShortcutKey>
+  <ShortcutKey Name="快进快退5秒" Class="Player operations">
+    <Condition> Shift + Left / Right Arrow Key </Condition>
+    <Function> Rewind / Fast Forward 5s </Function>
+  </ShortcutKey>
+  <ShortcutKey Name="新建文件" Class="File operations">
+    <Condition> Ctrl + N </Condition>
+    <Function> New lyrics file </Function>
+  </ShortcutKey>
+  <ShortcutKey Name="打开音乐" Class="File operations">
+    <Condition> Ctrl + M </Condition>
+    <Function> Open music file </Function>
+  </ShortcutKey>
+  <ShortcutKey Name="打开歌词" Class="File operations">
+    <Condition> Ctrl + L </Condition>
+    <Function> Open lyrics file </Function>
+  </ShortcutKey>
+  <ShortcutKey Name="保存歌词" Class="File operations">
+    <Condition> Ctrl + S </Condition>
+    <Function> Save lyrics file </Function>
+  </ShortcutKey>
+  <ShortcutKey Name="另存为歌词" Class="File operations">
+    <Condition> Ctrl + Shift + S </Condition>
+    <Function> Save as </Function>
+  </ShortcutKey>
+</ShortcutKeys>

@@ -112,6 +112,10 @@
     </AppxManifest>
     <None Include="SimpleLyricsEditor_StoreKey.pfx" />
     <None Include="SimpleLyricsEditor_TemporaryKey.pfx" />
+    <PRIResource Include="Strings\zh-CN\BottomBar.resw" />
+    <PRIResource Include="Strings\en-US\BottomBar.resw" />
+    <PRIResource Include="Strings\en-US\LyricsEdit.resw" />
+    <PRIResource Include="Strings\zh-CN\LyricsEdit.resw" />
     <PRIResource Include="Strings\zh-CN\AudioPlayer.resw" />
     <PRIResource Include="Strings\zh-CN\App.resw" />
     <PRIResource Include="Strings\en-US\AudioPlayer.resw" />
@@ -188,6 +192,8 @@
     <Content Include="Assets\Wide310x150Logo.scale-400.png" />
     <Content Include="Assets\毛玻璃.png" />
     <None Include="Package.StoreAssociation.xml" />
+    <Content Include="Data\ShortcutKeysDocument\ShortcutKeys.lang-en-US.xml" />
+    <Content Include="Data\ShortcutKeysDocument\ShortcutKeys.lang-zh-CN.xml" />
     <Content Include="Properties\Default.rd.xml" />
   </ItemGroup>
   <ItemGroup>
