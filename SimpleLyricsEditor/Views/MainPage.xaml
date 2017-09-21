@@ -102,7 +102,7 @@
                             <Ellipse x:Name="Black_Ellipse" Fill="Black" Opacity="0"/>
                             <Ellipse x:Name="White_Ellipse" Fill="White" Opacity="0"/>
                             
-                            <SymbolIcon Symbol="Sort"/>
+                            <SymbolIcon Symbol="Sort" Foreground="White"/>
                         </Grid>
                     </ControlTemplate>
                 </Button.Template>
