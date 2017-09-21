@@ -205,5 +205,10 @@ namespace SimpleLyricsEditor.Views
                 ? (Lyrics_ListView.Items[Lyrics_ListView.SelectedIndex] as Lyric).Content
                 : String.Empty;
         }
+
+        private void LyricsSort_Button_Click(object sender, RoutedEventArgs e)
+        {
+            _viewModel.Sort();
+        }
     }
 }

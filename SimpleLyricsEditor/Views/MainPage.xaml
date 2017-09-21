@@ -71,6 +71,42 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
+
+            <Button x:Name="LyricsSort_Button" x:Uid="/LyricsEdit/LyricsSort_Button" Grid.Row="1" Width="50" Height="50" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="50" Click="LyricsSort_Button_Click">
+                <Button.Template>
+                    <ControlTemplate>
+                        <Grid x:Name="Root_Grid">
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup>
+                                    <VisualState x:Name="Normal">
+                                        <Storyboard>
+                                            <PointerUpThemeAnimation Storyboard.TargetName="Root_Grid"/>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="PointerOver">
+                                        <Storyboard>
+                                            <DoubleAnimation From="0" To="0.3" Duration="0" Storyboard.TargetName="White_Ellipse" Storyboard.TargetProperty="Opacity"/>
+                                            <PointerUpThemeAnimation Storyboard.TargetName="Root_Grid"/>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Pressed">
+                                        <Storyboard>
+                                            <DoubleAnimation From="0" To="0.3" Duration="0" Storyboard.TargetName="Black_Ellipse" Storyboard.TargetProperty="Opacity"/>
+                                            <PointerDownThemeAnimation Storyboard.TargetName="Root_Grid"/>
+                                        </Storyboard>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                            
+                            <Ellipse Width="{TemplateBinding Width}" Height="{TemplateBinding Height}" Fill="{ThemeResource SystemControlBackgroundAccentBrush}"/>
+                            <Ellipse x:Name="Black_Ellipse" Fill="Black" Opacity="0"/>
+                            <Ellipse x:Name="White_Ellipse" Fill="White" Opacity="0"/>
+                            
+                            <SymbolIcon Symbol="Sort"/>
+                        </Grid>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
         </Grid>
         
         <ctol:LyrricsSinglePreview x:Name="SinglePreview" Grid.Row="2" BackgroundOpacity="0.4" Lyrics="{x:Bind _viewModel.LyricItems}" FontSize="24" Background="{ThemeResource SystemControlBackgroundAccentBrush}"/>
