@@ -3,6 +3,7 @@ using Windows.Storage;
 using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Controls.Primitives;
 using SimpleLyricsEditor.BLL.Pickers;
 using SimpleLyricsEditor.Events;
 
@@ -85,9 +86,20 @@ namespace SimpleLyricsEditor.Views
                 }
         }
 
-        private void Settings_AppBarButton_Click(object sender, RoutedEventArgs e)
+        private void NewFile_AppBarButton_Click(object sender, RoutedEventArgs e)
         {
-            Root_SplitView.IsPaneOpen = !Root_SplitView.IsPaneOpen;
+            _lyricsFile = null;
+            LyricsFileChangeNotifier.ChangeFile(_lyricsFile);
+        }
+
+        private void OpenFile_AppBarToggleButton_Checked(object sender, RoutedEventArgs e)
+        {
+            OpenFile_MenuFlyout.ShowAt(sender as FrameworkElement);
+        }
+
+        private void OpenFile_MenuFlyout_Closing(FlyoutBase sender, FlyoutBaseClosingEventArgs args)
+        {
+            OpenFile_AppBarToggleButton.IsChecked = false;
         }
 
         private async void OpenMusicFile_MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
@@ -108,6 +120,11 @@ namespace SimpleLyricsEditor.Views
         private async void SaveAs_AppBarButton_Click(object sender, RoutedEventArgs e)
         {
             await SaveAs();
+        }
+
+        private void Settings_AppBarButton_Click(object sender, RoutedEventArgs e)
+        {
+            Root_SplitView.IsPaneOpen = !Root_SplitView.IsPaneOpen;
         }
     }
 }

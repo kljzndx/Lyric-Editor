@@ -146,6 +146,16 @@ namespace SimpleLyricsEditor.ViewModels
 
         private async void LyricsFileChanged(object sender, FileChangeEventArgs e)
         {
+            if (e.File == null)
+            {
+                LyricItems.Clear();
+                LyricsTags.Clear();
+                LyricContent = String.Empty;
+                UndoOperations.Clear();
+                RedoOperations.Clear();
+                return;
+            }
+
             var fileContent = await LyricsFileIO.ReadText(e.File);
             var lines = fileContent.Replace('\r', '\n').Split('\n').Select(l => l.Trim());
             var tuple = LyricsSerializer.Deserialization(lines);

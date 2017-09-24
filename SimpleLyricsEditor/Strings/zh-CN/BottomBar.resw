@@ -133,14 +133,20 @@
     <value>歌词文件
 信息</value>
   </data>
-  <data name="OpenFile_AppBarButton.Label" xml:space="preserve">
+  <data name="NewFile_AppBarButton.Label" xml:space="preserve">
+    <value>新建</value>
+  </data>
+  <data name="NewFile_AppBarButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Ctrl + N</value>
+  </data>
+  <data name="OpenFile_AppBarToggleButton.Label" xml:space="preserve">
     <value>打开</value>
   </data>
   <data name="OpenLyricsFile_MenuFlyoutItem.Text" xml:space="preserve">
-    <value>打开歌词文件   Ctrl + L</value>
+    <value>打开歌词文件    Ctrl + L</value>
   </data>
   <data name="OpenMusicFile_MenuFlyoutItem.Text" xml:space="preserve">
-    <value>打开音乐文件   Ctrl + M</value>
+    <value>打开音乐文件    Ctrl + M</value>
   </data>
   <data name="SaveAs_AppBarButton.Label" xml:space="preserve">
     <value>另存为</value>

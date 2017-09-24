@@ -133,7 +133,13 @@
     <value>Lyrics File
 Info</value>
   </data>
-  <data name="OpenFile_AppBarButton.Label" xml:space="preserve">
+  <data name="NewFile_AppBarButton.Label" xml:space="preserve">
+    <value>New</value>
+  </data>
+  <data name="NewFile_AppBarButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Ctrl + N</value>
+  </data>
+  <data name="OpenFile_AppBarToggleButton.Label" xml:space="preserve">
     <value>Open</value>
   </data>
   <data name="OpenLyricsFile_MenuFlyoutItem.Text" xml:space="preserve">
