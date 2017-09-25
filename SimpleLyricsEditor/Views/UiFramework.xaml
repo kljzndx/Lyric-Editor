@@ -23,7 +23,7 @@
                 <AppBarButton x:Name="NewFile_AppBarButton" x:Uid="/BottomBar/NewFile_AppBarButton" Icon="Add" Click="NewFile_AppBarButton_Click"/>
                 <AppBarToggleButton x:Name="OpenFile_AppBarToggleButton" x:Uid="/BottomBar/OpenFile_AppBarToggleButton" Icon="OpenFile" Checked="OpenFile_AppBarToggleButton_Checked">
                     <FlyoutBase.AttachedFlyout>
-                        <MenuFlyout x:Name="OpenFile_MenuFlyout" Closing="OpenFile_MenuFlyout_Closing">
+                        <MenuFlyout x:Name="OpenFile_MenuFlyout" Closed="OpenFile_MenuFlyout_Closed">
                             <MenuFlyoutItem x:Uid="/BottomBar/OpenMusicFile_MenuFlyoutItem" Click="OpenMusicFile_MenuFlyoutItem_Click"/>
                             <MenuFlyoutItem x:Uid="/BottomBar/OpenLyricsFile_MenuFlyoutItem" Click="OpenLyricsFile_MenuFlyoutItem_Click"/>
                         </MenuFlyout>

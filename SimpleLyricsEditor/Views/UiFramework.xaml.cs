@@ -97,7 +97,7 @@ namespace SimpleLyricsEditor.Views
             OpenFile_MenuFlyout.ShowAt(sender as FrameworkElement);
         }
 
-        private void OpenFile_MenuFlyout_Closing(FlyoutBase sender, FlyoutBaseClosingEventArgs args)
+        private void OpenFile_MenuFlyout_Closed(object sender, object e)
         {
             OpenFile_AppBarToggleButton.IsChecked = false;
         }
