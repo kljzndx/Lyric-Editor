@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using Windows.Foundation.Metadata;
 using Windows.Storage;
 using Windows.System;
 using Windows.UI.Xaml;
@@ -23,6 +24,11 @@ namespace SimpleLyricsEditor.Views
         {
             InitializeComponent();
             GlobalKeyNotifier.KeyDown += WindowKeyDown;
+
+            if (ApiInformation.IsEventPresent(typeof(FlyoutBase).FullName, "Closing"))
+                OpenFile_MenuFlyout.Closing += (s, e) => OpenFile_AppBarToggleButton.IsChecked = false;
+            else
+                OpenFile_MenuFlyout.Closed += (s, e) => OpenFile_AppBarToggleButton.IsChecked = false;
         }
 
         private async Task OpenMusicFile()
@@ -96,12 +102,7 @@ namespace SimpleLyricsEditor.Views
         {
             OpenFile_MenuFlyout.ShowAt(sender as FrameworkElement);
         }
-
-        private void OpenFile_MenuFlyout_Closed(object sender, object e)
-        {
-            OpenFile_AppBarToggleButton.IsChecked = false;
-        }
-
+        
         private async void OpenMusicFile_MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
         {
             await OpenMusicFile();
