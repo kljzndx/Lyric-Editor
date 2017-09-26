@@ -2,10 +2,13 @@
 using Windows.Foundation.Metadata;
 using Windows.Storage;
 using Windows.System;
+using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
+using Windows.UI.Xaml.Media;
 using SimpleLyricsEditor.BLL.Pickers;
+using SimpleLyricsEditor.Core;
 using SimpleLyricsEditor.Events;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
@@ -19,6 +22,10 @@ namespace SimpleLyricsEditor.Views
     {
         private StorageFile _lyricsFile;
         private StorageFile _musicFile;
+        private readonly Settings _settings = Settings.Current;
+
+        private bool IsDark => _settings.Theme == ElementTheme.Dark || _settings.Theme == ElementTheme.Default &&
+                               Application.Current.RequestedTheme == ApplicationTheme.Dark;
 
         public UiFramework()
         {
@@ -101,8 +108,22 @@ namespace SimpleLyricsEditor.Views
         private void OpenFile_AppBarToggleButton_Checked(object sender, RoutedEventArgs e)
         {
             OpenFile_MenuFlyout.ShowAt(sender as FrameworkElement);
+
+            OpenFile_AppBarToggleButton.Foreground = new SolidColorBrush(Colors.White);
         }
-        
+
+        private void OpenFile_AppBarToggleButton_Unchecked(object sender, RoutedEventArgs e)
+        {
+            if (!IsDark)
+                OpenFile_AppBarToggleButton.Foreground = new SolidColorBrush(Colors.Black);
+        }
+
+        private void OpenFile_MenuFlyout_Opening(object sender, object e)
+        {
+            OpenFile_MenuFlyout.MenuFlyoutPresenterStyle =
+                IsDark ? Dark_MenuFlyoutPresenter : Light_MenuFlyoutPresenter;
+        }
+
         private async void OpenMusicFile_MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
         {
             await OpenMusicFile();

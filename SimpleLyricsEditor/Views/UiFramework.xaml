@@ -5,7 +5,17 @@
     xmlns:local="using:SimpleLyricsEditor.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d">
+    mc:Ignorable="d"
+    RequestedTheme="{x:Bind _settings.Theme, Mode=OneWay}">
+
+    <Page.Resources>
+        <Style x:Name="Light_MenuFlyoutPresenter" x:Key="Light_MenuFlyoutPresenter" TargetType="MenuFlyoutPresenter">
+            <Setter Property="RequestedTheme" Value="Light"/>
+        </Style>
+        <Style x:Name="Dark_MenuFlyoutPresenter" x:Key="Dark_MenuFlyoutPresenter" TargetType="MenuFlyoutPresenter">
+            <Setter Property="RequestedTheme" Value="Dark"/>
+        </Style>
+    </Page.Resources>
 
     <SplitView x:Name="Root_SplitView" DisplayMode="Overlay" PanePlacement="Right">
         <SplitView.Pane>
@@ -21,9 +31,9 @@
         <CommandBar>
             <CommandBar.PrimaryCommands>
                 <AppBarButton x:Name="NewFile_AppBarButton" x:Uid="/BottomBar/NewFile_AppBarButton" Icon="Add" Click="NewFile_AppBarButton_Click"/>
-                <AppBarToggleButton x:Name="OpenFile_AppBarToggleButton" x:Uid="/BottomBar/OpenFile_AppBarToggleButton" Icon="OpenFile" Checked="OpenFile_AppBarToggleButton_Checked">
+                <AppBarToggleButton x:Name="OpenFile_AppBarToggleButton" x:Uid="/BottomBar/OpenFile_AppBarToggleButton" Icon="OpenFile" Checked="OpenFile_AppBarToggleButton_Checked" Unchecked="OpenFile_AppBarToggleButton_Unchecked">
                     <FlyoutBase.AttachedFlyout>
-                        <MenuFlyout x:Name="OpenFile_MenuFlyout">
+                        <MenuFlyout x:Name="OpenFile_MenuFlyout" Opening="OpenFile_MenuFlyout_Opening">
                             <MenuFlyoutItem x:Uid="/BottomBar/OpenMusicFile_MenuFlyoutItem" Click="OpenMusicFile_MenuFlyoutItem_Click"/>
                             <MenuFlyoutItem x:Uid="/BottomBar/OpenLyricsFile_MenuFlyoutItem" Click="OpenLyricsFile_MenuFlyoutItem_Click"/>
                         </MenuFlyout>
