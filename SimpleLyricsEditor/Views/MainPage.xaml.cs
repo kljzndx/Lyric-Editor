@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Linq;
 using Windows.Storage;
 using Windows.System;
@@ -37,11 +38,26 @@ namespace SimpleLyricsEditor.Views
             _viewModel = this.DataContext as MainViewModel;
             _viewModel.SelectedItems = Lyrics_ListView.SelectedItems;
             _viewModel.UndoOperations.CollectionChanged += UndoOperations_CollectionChanged;
+            _settings.PropertyChanged += Settings_PropertyChanged;
 
             GlobalKeyNotifier.KeyDown += WindowKeyDown;
             GlobalKeyNotifier.KeyUp += WindowKeyUp;
 
             ImageFileNotifier.FileChanged += ImageFileChanged;
+        }
+
+        private void Settings_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "BackgroundSourceType")
+            {
+                if (_settings.BackgroundSourceType == BackgroundSourceTypeEnum.AlbumImage)
+                {
+                    if (!Player.Source.Equals(Music.Empty))
+                        BlurBackground.Source = Player.Source.AlbumImage;
+                }
+                else
+                    BlurBackground.Source = _backgroundImageSource;
+            }
         }
 
         private async void MainPage_Loaded(object sender, RoutedEventArgs e)
