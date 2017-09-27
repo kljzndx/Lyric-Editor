@@ -20,7 +20,6 @@ namespace SimpleLyricsEditor.Control
         public BlurBackgroundImage()
         {
             InitializeComponent();
-            ImageFileNotifier.FileChanged += ImageFileChanged;
         }
 
         public BitmapSource Source
@@ -38,18 +37,6 @@ namespace SimpleLyricsEditor.Control
         {
             get => (double) GetValue(BlurDegreeProperty);
             set => SetValue(BlurDegreeProperty, value);
-        }
-
-        public void SetSource(BitmapSource source)
-        {
-            Source = source;
-        }
-
-        private async void ImageFileChanged(object sender, FileChangeEventArgs e)
-        {
-            BitmapImage source=new BitmapImage();
-            await source.SetSourceAsync(await e.File.OpenAsync(FileAccessMode.Read));
-            Source = source;
         }
         
         private void FadeOut_Completed(object sender, object e)

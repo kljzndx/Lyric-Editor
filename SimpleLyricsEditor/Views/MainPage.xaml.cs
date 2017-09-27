@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
+using Windows.Storage;
 using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
+using Windows.UI.Xaml.Media.Imaging;
 using SimpleLyricsEditor.Control;
 using SimpleLyricsEditor.Core;
 using SimpleLyricsEditor.DAL;
@@ -27,6 +29,8 @@ namespace SimpleLyricsEditor.Views
         private bool _isPressShift;
         private bool _lyricsListGotFocus;
 
+        private BitmapSource _backgroundImageSource;
+
         public MainPage()
         {
             this.InitializeComponent();
@@ -36,6 +40,25 @@ namespace SimpleLyricsEditor.Views
 
             GlobalKeyNotifier.KeyDown += WindowKeyDown;
             GlobalKeyNotifier.KeyUp += WindowKeyUp;
+
+            ImageFileNotifier.FileChanged += ImageFileChanged;
+        }
+
+        private async void MainPage_Loaded(object sender, RoutedEventArgs e)
+        {
+            StorageFile file = await ApplicationData.Current.LocalFolder.TryGetItemAsync("Background.img") as StorageFile;
+            if (file != null)
+            {
+                BitmapImage image = new BitmapImage();
+                image.SetSource(await file.OpenAsync(FileAccessMode.Read));
+                _backgroundImageSource = image;
+                BlurBackground.Source = image;
+            }
+            else if (_settings.BackgroundSourceType == BackgroundSourceTypeEnum.LocalImage || !String.IsNullOrEmpty(_settings.LocalBackgroundImagePath))
+            {
+                _settings.BackgroundSourceType = BackgroundSourceTypeEnum.AlbumImage;
+                _settings.LocalBackgroundImagePath = String.Empty;
+            }
         }
 
         private void WindowKeyDown(object sender, GlobalKeyEventArgs e)
@@ -114,7 +137,7 @@ namespace SimpleLyricsEditor.Views
         private void Player_SourceChanged(AudioPlayer sender, MusicChangeEventArgs args)
         {
             if (_settings.BackgroundSourceType == BackgroundSourceTypeEnum.AlbumImage)
-                BlurBackground.SetSource(args.Source.AlbumImage);
+                BlurBackground.Source = args.Source.AlbumImage;
 
             SinglePreview.Reposition(Player.Position);
         }
@@ -125,6 +148,14 @@ namespace SimpleLyricsEditor.Views
                 SinglePreview.Reposition(args.Position);
             else
                 SinglePreview.RefreshLyric(args.Position);
+        }
+
+        private void ImageFileChanged(object sender, ImageFileChangeEventArgs e)
+        {
+            _backgroundImageSource = e.Source;
+
+            if (_settings.BackgroundSourceType == BackgroundSourceTypeEnum.LocalImage)
+                BlurBackground.Source = e.Source;
         }
 
         private void LyricsContent_TextBox_GotFocus(object sender, RoutedEventArgs e)
