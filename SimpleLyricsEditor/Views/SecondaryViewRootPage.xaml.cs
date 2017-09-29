@@ -1,6 +1,7 @@
 ﻿using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
+using SimpleLyricsEditor.Models;
 using SimpleLyricsEditor.ViewModels;
 
 // https://go.microsoft.com/fwlink/?LinkId=234238 上介绍了“空白页”项模板
@@ -20,10 +21,7 @@ namespace SimpleLyricsEditor.Views
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             if (e.Parameter is PageModel pm)
-            {
-                Title_TextBlock.Text = pm.Title;
-                Main_Frame.Navigate(pm.PageType);
-            }
+                Main_Frame.Navigate(pm.PageType, pm.Title);
 
             Main_Frame.BackStack.Clear();
             Main_Frame.ForwardStack.Clear();
@@ -37,8 +35,8 @@ namespace SimpleLyricsEditor.Views
 
         private void Main_Frame_Navigated(object sender, NavigationEventArgs e)
         {
-            if (e.Parameter is PageModel pm)
-                Title_TextBlock.Text = pm.Title;
+            if (e.Parameter is string title)
+                Title_TextBlock.Text = title;
 
             if (Main_Frame.CanGoBack && Back_Button.Visibility == Visibility.Collapsed)
             {

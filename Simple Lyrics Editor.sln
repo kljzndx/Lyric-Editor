@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26730.12
+VisualStudioVersion = 15.0.26730.16
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleLyricsEditor", "SimpleLyricsEditor\SimpleLyricsEditor.csproj", "{62AA91D2-DED2-4FD1-A177-A50BDC2D398D}"
 EndProject
@@ -18,6 +18,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleLyricsEditor.DAL.Factory", "SimpleLyricsEditor.DAL.Factory\SimpleLyricsEditor.DAL.Factory.csproj", "{E4496560-8B76-43E4-AC13-9DCAA5053D43}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleLyricsEditor.Events", "SimpleLyricsEditor.Events\SimpleLyricsEditor.Events.csproj", "{BA65588F-2FF9-4595-9C01-5FAA0559240A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTest", "UnitTest\UnitTest.csproj", "{EE19BD3D-42D5-406B-B4F0-F2FAE3781F19}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -163,6 +165,26 @@ Global
 		{BA65588F-2FF9-4595-9C01-5FAA0559240A}.Release|x64.Build.0 = Release|x64
 		{BA65588F-2FF9-4595-9C01-5FAA0559240A}.Release|x86.ActiveCfg = Release|x86
 		{BA65588F-2FF9-4595-9C01-5FAA0559240A}.Release|x86.Build.0 = Release|x86
+		{EE19BD3D-42D5-406B-B4F0-F2FAE3781F19}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{EE19BD3D-42D5-406B-B4F0-F2FAE3781F19}.Debug|ARM.ActiveCfg = Debug|ARM
+		{EE19BD3D-42D5-406B-B4F0-F2FAE3781F19}.Debug|ARM.Build.0 = Debug|ARM
+		{EE19BD3D-42D5-406B-B4F0-F2FAE3781F19}.Debug|ARM.Deploy.0 = Debug|ARM
+		{EE19BD3D-42D5-406B-B4F0-F2FAE3781F19}.Debug|x64.ActiveCfg = Debug|x64
+		{EE19BD3D-42D5-406B-B4F0-F2FAE3781F19}.Debug|x64.Build.0 = Debug|x64
+		{EE19BD3D-42D5-406B-B4F0-F2FAE3781F19}.Debug|x64.Deploy.0 = Debug|x64
+		{EE19BD3D-42D5-406B-B4F0-F2FAE3781F19}.Debug|x86.ActiveCfg = Debug|x86
+		{EE19BD3D-42D5-406B-B4F0-F2FAE3781F19}.Debug|x86.Build.0 = Debug|x86
+		{EE19BD3D-42D5-406B-B4F0-F2FAE3781F19}.Debug|x86.Deploy.0 = Debug|x86
+		{EE19BD3D-42D5-406B-B4F0-F2FAE3781F19}.Release|Any CPU.ActiveCfg = Release|x86
+		{EE19BD3D-42D5-406B-B4F0-F2FAE3781F19}.Release|ARM.ActiveCfg = Release|ARM
+		{EE19BD3D-42D5-406B-B4F0-F2FAE3781F19}.Release|ARM.Build.0 = Release|ARM
+		{EE19BD3D-42D5-406B-B4F0-F2FAE3781F19}.Release|ARM.Deploy.0 = Release|ARM
+		{EE19BD3D-42D5-406B-B4F0-F2FAE3781F19}.Release|x64.ActiveCfg = Release|x64
+		{EE19BD3D-42D5-406B-B4F0-F2FAE3781F19}.Release|x64.Build.0 = Release|x64
+		{EE19BD3D-42D5-406B-B4F0-F2FAE3781F19}.Release|x64.Deploy.0 = Release|x64
+		{EE19BD3D-42D5-406B-B4F0-F2FAE3781F19}.Release|x86.ActiveCfg = Release|x86
+		{EE19BD3D-42D5-406B-B4F0-F2FAE3781F19}.Release|x86.Build.0 = Release|x86
+		{EE19BD3D-42D5-406B-B4F0-F2FAE3781F19}.Release|x86.Deploy.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

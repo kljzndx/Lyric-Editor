@@ -30,6 +30,7 @@
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <ErrorReport>prompt</ErrorReport>
     <Prefer32Bit>true</Prefer32Bit>
+    <Optimize>false</Optimize>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
     <OutputPath>bin\x86\Release\</OutputPath>
@@ -96,7 +97,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewModels\PageModel.cs" />
+    <Compile Include="Models\PageModel.cs" />
     <Compile Include="Views\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -105,6 +106,12 @@
     <Compile Include="ViewModels\ViewModelLocator.cs" />
     <Compile Include="Views\SecondaryViewRootPage.xaml.cs">
       <DependentUpon>SecondaryViewRootPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SettingsPages\BackgroundSettingsPage.xaml.cs">
+      <DependentUpon>BackgroundSettingsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SettingsPages\SettingsRootPage.xaml.cs">
+      <DependentUpon>SettingsRootPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\UiFramework.xaml.cs">
       <DependentUpon>UiFramework.xaml</DependentUpon>
@@ -116,6 +123,10 @@
     </AppxManifest>
     <None Include="SimpleLyricsEditor_StoreKey.pfx" />
     <None Include="SimpleLyricsEditor_TemporaryKey.pfx" />
+    <PRIResource Include="Strings\en-US\Settings\BackgroundSettings.resw" />
+    <PRIResource Include="Strings\zh-CN\Settings\BackgroundSettings.resw" />
+    <PRIResource Include="Strings\zh-CN\Settings\SettingsRoot.resw" />
+    <PRIResource Include="Strings\en-US\Settings\SettingsRoot.resw" />
     <PRIResource Include="Strings\zh-CN\BottomBar.resw" />
     <PRIResource Include="Strings\en-US\BottomBar.resw" />
     <PRIResource Include="Strings\en-US\LyricsEdit.resw" />
@@ -213,6 +224,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\SettingsPages\BackgroundSettingsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SettingsPages\SettingsRootPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\UiFramework.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -263,7 +282,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Views\SettingsPages\" />
+    <Folder Include="ViewModels\SettingsPages\" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

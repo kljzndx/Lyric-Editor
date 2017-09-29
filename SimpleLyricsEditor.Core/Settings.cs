@@ -6,9 +6,9 @@ namespace SimpleLyricsEditor.Core
 {
     public sealed class Settings : SettingsBase
     {
-        [SettingFieldByEnum(nameof(Theme), typeof(ElementTheme), nameof(ElementTheme.Dark))] private ElementTheme _theme;
+        [SettingFieldByEnum(nameof(PageTheme), typeof(ElementTheme), nameof(ElementTheme.Dark))] private ElementTheme _pageTheme;
         [SettingFieldByNormal(nameof(BackgroundVisibility), true)] private bool _backgroundVisibility;
-        [SettingFieldByEnum(nameof(BackgroundSourceType), typeof(BackgroundSourceTypeEnum), nameof(BackgroundSourceTypeEnum.AlbumImage))] private BackgroundSourceTypeEnum _backgroundSourceType;
+        [SettingFieldByNormal(nameof(IsFollowSongAlbumCover),  true)] private bool _isFollowSongAlbumCover;
         [SettingFieldByNormal(nameof(LocalBackgroundImagePath), "")] private string _localBackgroundImagePath;
         [SettingFieldByNormal(nameof(BackgroundBlurDegree), 5D)] private double _backgroundBlurDegree;
         [SettingFieldByNormal(nameof(BackgroundOpacity), 0.3D)] private double _backgroundOpacity;
@@ -20,6 +20,8 @@ namespace SimpleLyricsEditor.Core
 
         private Settings()
         {
+            base.RenameSettingKey("IsDisplayBackground", nameof(BackgroundVisibility));
+            
             InitializeSettingFields();
         }
 
@@ -43,10 +45,10 @@ namespace SimpleLyricsEditor.Core
             set => SetSetting(ref _balance, value);
         }
 
-        public ElementTheme Theme
+        public ElementTheme PageTheme
         {
-            get => _theme;
-            set => SetSetting(ref _theme, value, settingValue: value.ToString());
+            get => _pageTheme;
+            set => SetSetting(ref _pageTheme, value, settingValue: value.ToString());
         }
         
         public bool BackgroundVisibility
@@ -54,10 +56,10 @@ namespace SimpleLyricsEditor.Core
             get => _backgroundVisibility;
             set => SetSetting(ref _backgroundVisibility, value);
         }
-        public BackgroundSourceTypeEnum BackgroundSourceType
+        public bool IsFollowSongAlbumCover
         {
-            get => _backgroundSourceType;
-            set => SetSetting(ref _backgroundSourceType, value, settingValue: value.ToString());
+            get => _isFollowSongAlbumCover;
+            set => SetSetting(ref _isFollowSongAlbumCover, value);
         }
         
         public string LocalBackgroundImagePath

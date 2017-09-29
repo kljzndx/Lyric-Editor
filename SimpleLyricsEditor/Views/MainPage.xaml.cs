@@ -48,14 +48,15 @@ namespace SimpleLyricsEditor.Views
 
         private void Settings_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == "BackgroundSourceType")
+            if (e.PropertyName == "IsFollowSongAlbumCover")
             {
-                if (_settings.BackgroundSourceType == BackgroundSourceTypeEnum.AlbumImage)
+                if (_settings.IsFollowSongAlbumCover == true)
                 {
                     if (!Player.Source.Equals(Music.Empty))
                         BlurBackground.Source = Player.Source.AlbumImage;
+
                 }
-                else
+                else if (BlurBackground.Source == Player.Source.AlbumImage)
                     BlurBackground.Source = _backgroundImageSource;
             }
         }
@@ -70,11 +71,8 @@ namespace SimpleLyricsEditor.Views
                 _backgroundImageSource = image;
                 BlurBackground.Source = image;
             }
-            else if (_settings.BackgroundSourceType == BackgroundSourceTypeEnum.LocalImage || !String.IsNullOrEmpty(_settings.LocalBackgroundImagePath))
-            {
-                _settings.BackgroundSourceType = BackgroundSourceTypeEnum.AlbumImage;
+            else if (!String.IsNullOrEmpty(_settings.LocalBackgroundImagePath))
                 _settings.LocalBackgroundImagePath = String.Empty;
-            }
         }
 
         private void WindowKeyDown(object sender, GlobalKeyEventArgs e)
@@ -152,7 +150,7 @@ namespace SimpleLyricsEditor.Views
 
         private void Player_SourceChanged(AudioPlayer sender, MusicChangeEventArgs args)
         {
-            if (_settings.BackgroundSourceType == BackgroundSourceTypeEnum.AlbumImage)
+            if (_settings.IsFollowSongAlbumCover == true)
                 BlurBackground.Source = args.Source.AlbumImage;
 
             SinglePreview.Reposition(Player.Position);
@@ -169,9 +167,7 @@ namespace SimpleLyricsEditor.Views
         private void ImageFileChanged(object sender, ImageFileChangeEventArgs e)
         {
             _backgroundImageSource = e.Source;
-
-            if (_settings.BackgroundSourceType == BackgroundSourceTypeEnum.LocalImage)
-                BlurBackground.Source = e.Source;
+            BlurBackground.Source = _backgroundImageSource;
         }
 
         private void LyricsContent_TextBox_GotFocus(object sender, RoutedEventArgs e)

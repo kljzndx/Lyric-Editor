@@ -22,7 +22,7 @@
         
         <ctol:AudioPlayer x:Name="Player" SourceChanged="Player_SourceChanged" PositionChanged="Player_PositionChanged"/>
         
-        <ctol:BlurBackgroundImage x:Name="BlurBackground" Grid.Row="1" Grid.RowSpan="2" BlurDegree="{x:Bind _settings.BackgroundBlurDegree, Mode=OneWay}" Opacity="{x:Bind _settings.BackgroundOpacity, Mode=OneWay}"/>
+        <ctol:BlurBackgroundImage x:Name="BlurBackground" Grid.Row="1" Grid.RowSpan="2" BlurDegree="{x:Bind _settings.BackgroundBlurDegree, Mode=OneWay}" Opacity="{x:Bind _settings.BackgroundOpacity, Mode=OneWay}" Visibility="{x:Bind _settings.BackgroundVisibility, Mode=OneWay, Converter={StaticResource BoolToVisibility}}"/>
         
         <Grid Grid.Row="1">
             <Grid.RowDefinitions>

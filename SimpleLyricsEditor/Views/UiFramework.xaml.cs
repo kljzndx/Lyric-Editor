@@ -10,6 +10,8 @@ using Windows.UI.Xaml.Media;
 using SimpleLyricsEditor.BLL.Pickers;
 using SimpleLyricsEditor.Core;
 using SimpleLyricsEditor.Events;
+using SimpleLyricsEditor.Models;
+using SimpleLyricsEditor.Views.SettingsPages;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -20,12 +22,12 @@ namespace SimpleLyricsEditor.Views
     /// </summary>
     public sealed partial class UiFramework : Page
     {
+        private static readonly PageModel SettingsPageModel =
+            new PageModel(CharacterLibrary.SettingsRoot.GetString("Title"), typeof(SettingsRootPage));
+
+        private readonly Settings _settings = Settings.Current;
         private StorageFile _lyricsFile;
         private StorageFile _musicFile;
-        private readonly Settings _settings = Settings.Current;
-
-        private bool IsDark => _settings.Theme == ElementTheme.Dark || _settings.Theme == ElementTheme.Default &&
-                               Application.Current.RequestedTheme == ApplicationTheme.Dark;
 
         public UiFramework()
         {
@@ -37,6 +39,9 @@ namespace SimpleLyricsEditor.Views
             else
                 OpenFile_MenuFlyout.Closed += (s, e) => OpenFile_AppBarToggleButton.IsChecked = false;
         }
+
+        private bool IsDark => _settings.PageTheme == ElementTheme.Dark || _settings.PageTheme == ElementTheme.Default &&
+                               Application.Current.RequestedTheme == ApplicationTheme.Dark;
 
         private async Task OpenMusicFile()
         {
@@ -147,6 +152,8 @@ namespace SimpleLyricsEditor.Views
         private void Settings_AppBarButton_Click(object sender, RoutedEventArgs e)
         {
             Root_SplitView.IsPaneOpen = !Root_SplitView.IsPaneOpen;
+
+            SecondaryView_Frame.Navigate(typeof(SecondaryViewRootPage), SettingsPageModel);
         }
     }
 }

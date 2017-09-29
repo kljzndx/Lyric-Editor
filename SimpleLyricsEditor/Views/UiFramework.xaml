@@ -6,7 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    RequestedTheme="{x:Bind _settings.Theme, Mode=OneWay}">
+    RequestedTheme="{x:Bind _settings.PageTheme, Mode=OneWay}">
 
     <Page.Resources>
         <Style x:Name="Light_MenuFlyoutPresenter" x:Key="Light_MenuFlyoutPresenter" TargetType="MenuFlyoutPresenter">
@@ -19,7 +19,7 @@
 
     <SplitView x:Name="Root_SplitView" DisplayMode="Overlay" PanePlacement="Right">
         <SplitView.Pane>
-            <Frame x:Name="SecondaryView_Frame"/>
+            <Frame x:Name="SecondaryView_Frame" Margin="5"/>
         </SplitView.Pane>
         
         <SplitView.Content>

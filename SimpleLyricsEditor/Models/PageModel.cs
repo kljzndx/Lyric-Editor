@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SimpleLyricsEditor.ViewModels
+namespace SimpleLyricsEditor.Models
 {
     public class PageModel
     {
