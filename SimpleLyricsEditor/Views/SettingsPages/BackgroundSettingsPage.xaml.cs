@@ -30,7 +30,7 @@ namespace SimpleLyricsEditor.Views.SettingsPages
             if (file is null)
                 return;
 
-            _settings.LocalBackgroundImagePath = file.Path;
+            _settings.BackgroundImagePath = file.Path;
             StorageFile localFile = await file.CopyAsync(ApplicationData.Current.LocalFolder, "Background.img", NameCollisionOption.ReplaceExisting);
             await ImageFileNotifier.ChangeFile(localFile);
         }

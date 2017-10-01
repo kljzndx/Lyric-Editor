@@ -1,9 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
 using Windows.Storage;
+using Windows.Storage.AccessCache;
 using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -20,22 +20,22 @@ using SimpleLyricsEditor.ViewModels;
 namespace SimpleLyricsEditor.Views
 {
     /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
+    ///     An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        private MainViewModel _viewModel;
         private readonly Settings _settings = Settings.Current;
+
+        private BitmapSource _backgroundImageSource;
         private bool _isPressCtrl;
         private bool _isPressShift;
         private bool _lyricsListGotFocus;
-
-        private BitmapSource _backgroundImageSource;
+        private MainViewModel _viewModel;
 
         public MainPage()
         {
-            this.InitializeComponent();
-            _viewModel = this.DataContext as MainViewModel;
+            InitializeComponent();
+            _viewModel = DataContext as MainViewModel;
             _viewModel.SelectedItems = Lyrics_ListView.SelectedItems;
             _viewModel.UndoOperations.CollectionChanged += UndoOperations_CollectionChanged;
             _settings.PropertyChanged += Settings_PropertyChanged;
@@ -49,21 +49,34 @@ namespace SimpleLyricsEditor.Views
         private void Settings_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == "IsFollowSongAlbumCover")
-            {
-                if (_settings.IsFollowSongAlbumCover == true)
+                if (_settings.IsFollowSongAlbumCover)
                 {
                     if (!Player.Source.Equals(Music.Empty))
                         BlurBackground.Source = Player.Source.AlbumImage;
-
                 }
                 else if (BlurBackground.Source == Player.Source.AlbumImage)
+                {
                     BlurBackground.Source = _backgroundImageSource;
-            }
+                }
         }
 
         private async void MainPage_Loaded(object sender, RoutedEventArgs e)
         {
-            StorageFile file = await ApplicationData.Current.LocalFolder.TryGetItemAsync("Background.img") as StorageFile;
+            // 提取V2系列版本的背景图
+            if (_settings.SettingObject.Values.ContainsKey("LocalBackgroundImagePath") &&
+                !String.IsNullOrEmpty(_settings.SettingObject.Values["LocalBackgroundImagePath"].ToString()))
+            {
+                StorageFile oldfile = await StorageApplicationPermissions.FutureAccessList.GetFileAsync("BackgroundImage");
+                StorageApplicationPermissions.FutureAccessList.Remove("BackgroundImage");
+
+                await oldfile.CopyAsync(ApplicationData.Current.LocalFolder, "Background.img",
+                    NameCollisionOption.ReplaceExisting);
+
+                _settings.RenameSettingKey("LocalBackgroundImagePath", nameof(_settings.BackgroundImagePath));
+            }
+
+            StorageFile file =
+                await ApplicationData.Current.LocalFolder.TryGetItemAsync("Background.img") as StorageFile;
             if (file != null)
             {
                 BitmapImage image = new BitmapImage();
@@ -71,8 +84,10 @@ namespace SimpleLyricsEditor.Views
                 _backgroundImageSource = image;
                 BlurBackground.Source = image;
             }
-            else if (!String.IsNullOrEmpty(_settings.LocalBackgroundImagePath))
-                _settings.LocalBackgroundImagePath = String.Empty;
+            else if (!String.IsNullOrEmpty(_settings.BackgroundImagePath))
+            {
+                _settings.BackgroundImagePath = String.Empty;
+            }
         }
 
         private void WindowKeyDown(object sender, GlobalKeyEventArgs e)
@@ -81,19 +96,16 @@ namespace SimpleLyricsEditor.Views
             _isPressShift = e.IsPressShift;
 
             if (e.IsPressShift)
-            {
                 AddLyrics_Button_Transform.Rotation = 0;
-            }
 
             if (!e.IsInputing && e.Key == VirtualKey.I)
                 LyricsContent_TextBox.Focus(FocusState.Pointer);
 
             if (!e.IsInputing)
-            {
                 switch (e.Key)
                 {
                     case VirtualKey.Space:
-                        this.Focus(FocusState.Pointer);
+                        Focus(FocusState.Pointer);
 
                         if (Lyrics_ListView.SelectedItems.Any())
                             _viewModel.Move(Player.Position);
@@ -113,23 +125,22 @@ namespace SimpleLyricsEditor.Views
                         _viewModel.Sort();
                         break;
                     case VirtualKey.Up:
-                        this.Focus(FocusState.Pointer);
+                        Focus(FocusState.Pointer);
                         if (!_lyricsListGotFocus)
                             Lyrics_ListView.SelectedIndex =
                                 Lyrics_ListView.SelectedIndex > -1
-                                ? Lyrics_ListView.SelectedIndex - 1
-                                : Lyrics_ListView.Items.Count - 1;
+                                    ? Lyrics_ListView.SelectedIndex - 1
+                                    : Lyrics_ListView.Items.Count - 1;
                         break;
                     case VirtualKey.Down:
-                        this.Focus(FocusState.Pointer);
+                        Focus(FocusState.Pointer);
                         if (!_lyricsListGotFocus)
                             Lyrics_ListView.SelectedIndex =
                                 Lyrics_ListView.SelectedIndex < Lyrics_ListView.Items.Count - 1
-                                ? Lyrics_ListView.SelectedIndex + 1
-                                : -1;
+                                    ? Lyrics_ListView.SelectedIndex + 1
+                                    : -1;
                         break;
                 }
-            }
         }
 
         private void WindowKeyUp(object sender, GlobalKeyEventArgs e)
@@ -138,9 +149,7 @@ namespace SimpleLyricsEditor.Views
             _isPressShift = e.IsPressShift;
 
             if (!e.IsPressShift)
-            {
                 AddLyrics_Button_Transform.Rotation = 180;
-            }
         }
 
         private void UndoOperations_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
@@ -150,7 +159,7 @@ namespace SimpleLyricsEditor.Views
 
         private void Player_SourceChanged(AudioPlayer sender, MusicChangeEventArgs args)
         {
-            if (_settings.IsFollowSongAlbumCover == true)
+            if (_settings.IsFollowSongAlbumCover)
                 BlurBackground.Source = args.Source.AlbumImage;
 
             SinglePreview.Reposition(Player.Position);
@@ -182,8 +191,7 @@ namespace SimpleLyricsEditor.Views
 
         private void LyricsContent_TextBox_KeyUp(object sender, KeyRoutedEventArgs e)
         {
-            if(e.Key == VirtualKey.Enter && sender is TextBox tb)
-            {
+            if (e.Key == VirtualKey.Enter && sender is TextBox tb)
                 if (_isPressCtrl)
                 {
                     _viewModel.LyricContent = tb.Text;
@@ -201,10 +209,9 @@ namespace SimpleLyricsEditor.Views
                     _viewModel.Modify();
                     Lyrics_ListView.SelectedIndex =
                         Lyrics_ListView.SelectedIndex < Lyrics_ListView.Items.Count - 1
-                        ? Lyrics_ListView.SelectedIndex + 1
-                        : -1;
+                            ? Lyrics_ListView.SelectedIndex + 1
+                            : -1;
                 }
-            }
         }
 
         private void AddLyrics_Button_Click(object sender, RoutedEventArgs e)
@@ -226,7 +233,7 @@ namespace SimpleLyricsEditor.Views
         {
             _viewModel.Move(Player.Position);
         }
-        
+
         private void ModifyContent_Button_Click(object sender, RoutedEventArgs e)
         {
             _viewModel.Modify();

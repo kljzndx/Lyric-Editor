@@ -1,4 +1,5 @@
-﻿using Windows.UI.Xaml;
+﻿using System;
+using Windows.UI.Xaml;
 using HappyStudio.UwpToolsLibrary.Auxiliarys;
 using HappyStudio.UwpToolsLibrary.Auxiliarys.Attributes;
 
@@ -9,7 +10,7 @@ namespace SimpleLyricsEditor.Core
         [SettingFieldByEnum(nameof(PageTheme), typeof(ElementTheme), nameof(ElementTheme.Dark))] private ElementTheme _pageTheme;
         [SettingFieldByNormal(nameof(BackgroundVisibility), true)] private bool _backgroundVisibility;
         [SettingFieldByNormal(nameof(IsFollowSongAlbumCover),  true)] private bool _isFollowSongAlbumCover;
-        [SettingFieldByNormal(nameof(LocalBackgroundImagePath), "")] private string _localBackgroundImagePath;
+        [SettingFieldByNormal(nameof(BackgroundImagePath), "")] private string _backgroundImagePath;
         [SettingFieldByNormal(nameof(BackgroundBlurDegree), 5D)] private double _backgroundBlurDegree;
         [SettingFieldByNormal(nameof(BackgroundOpacity), 0.3D)] private double _backgroundOpacity;
         
@@ -21,6 +22,7 @@ namespace SimpleLyricsEditor.Core
         private Settings()
         {
             base.RenameSettingKey("IsDisplayBackground", nameof(BackgroundVisibility));
+            base.SettingObject.Values.Remove("BackgroundSourceType");
             
             InitializeSettingFields();
         }
@@ -62,10 +64,10 @@ namespace SimpleLyricsEditor.Core
             set => SetSetting(ref _isFollowSongAlbumCover, value);
         }
         
-        public string LocalBackgroundImagePath
+        public string BackgroundImagePath
         {
-            get => _localBackgroundImagePath;
-            set => SetSetting(ref _localBackgroundImagePath, value);
+            get => _backgroundImagePath;
+            set => SetSetting(ref _backgroundImagePath, value);
         }
 
         public double BackgroundOpacity
