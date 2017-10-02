@@ -1,5 +1,6 @@
 ﻿using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
 using SimpleLyricsEditor.Models;
 using SimpleLyricsEditor.ViewModels;
@@ -27,12 +28,11 @@ namespace SimpleLyricsEditor.Views
             Main_Frame.ForwardStack.Clear();
         }
 
-        private void Back_Button_Click(object sender, RoutedEventArgs e)
+        private void Back_Button_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            Title_TextBlock.Margin = new Thickness();
             Main_Frame.GoBack();
         }
-
+        
         private void Main_Frame_Navigated(object sender, NavigationEventArgs e)
         {
             if (e.Parameter is string title)
@@ -40,6 +40,7 @@ namespace SimpleLyricsEditor.Views
 
             if (Main_Frame.CanGoBack && Back_Button.Visibility == Visibility.Collapsed)
             {
+                Back_Button.Visibility = Visibility.Visible;
                 Title_TextBlock.Margin = new Thickness(45, 0, 0, 0);
                 Enter_Storyboard.Begin();
             }
@@ -48,6 +49,11 @@ namespace SimpleLyricsEditor.Views
                 Title_TextBlock.Margin = new Thickness();
                 Back_Storyboard.Begin();
             }
+        }
+
+        private void Back_Storyboard_Completed(object sender, object e)
+        {
+            Back_Button.Visibility = Visibility.Collapsed;
         }
     }
 }

@@ -14,7 +14,7 @@
             <RepositionThemeAnimation Storyboard.TargetName="Title_TextBlock" FromHorizontalOffset="-45"/>
         </Storyboard>
         
-        <Storyboard x:Name="Back_Storyboard">
+        <Storyboard x:Name="Back_Storyboard" Completed="Back_Storyboard_Completed">
             <FadeOutThemeAnimation Storyboard.TargetName="Back_Button"/>
             <RepositionThemeAnimation Storyboard.TargetName="Title_TextBlock" FromHorizontalOffset="45"/>
         </Storyboard>
@@ -26,22 +26,12 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         
-        <pctrl:ButtonEx x:Name="Back_Button" Background="#00000000" BorderBrush="#00000000" PointerOverBackground="#4CFFFFFF" PointerOverBorderBrush="#00000000" PressedBackground="#4C000000" PressedBorderBrush="#00000000" HorizontalAlignment="Left" VerticalAlignment="Top" Click="Back_Button_Click">
+        <pctrl:ButtonEx x:Name="Back_Button" Background="#00000000" BorderBrush="#00000000" PointerOverBackground="#4CFFFFFF" PointerOverBorderBrush="#00000000" PressedBackground="#4C000000" PressedBorderBrush="#00000000" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed" Tapped="Back_Button_Tapped">
             <SymbolIcon Symbol="Back"/>
         </pctrl:ButtonEx>
 
         <TextBlock x:Name="Title_TextBlock" Grid.Row="0" FontSize="24" VerticalAlignment="Center"/>
 
-        <Frame x:Name="Main_Frame" Grid.Row="1" Navigated="Main_Frame_Navigated">
-            <Frame.Transitions>
-                <TransitionCollection>
-                    <NavigationThemeTransition>
-                        <NavigationThemeTransition.DefaultNavigationTransitionInfo>
-                            <DrillInNavigationTransitionInfo/>
-                        </NavigationThemeTransition.DefaultNavigationTransitionInfo>
-                    </NavigationThemeTransition>
-                </TransitionCollection>
-            </Frame.Transitions>
-        </Frame>
+        <Frame x:Name="Main_Frame" Grid.Row="1" Navigated="Main_Frame_Navigated"/>
     </Grid>
 </Page>
