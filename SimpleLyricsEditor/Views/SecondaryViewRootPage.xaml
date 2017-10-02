@@ -32,6 +32,6 @@
 
         <TextBlock x:Name="Title_TextBlock" Grid.Row="0" FontSize="24" VerticalAlignment="Center"/>
 
-        <Frame x:Name="Main_Frame" Grid.Row="1" Navigated="Main_Frame_Navigated"/>
+        <Frame x:Name="Main_Frame" Grid.Row="1" Margin="0,10,0,0" Navigated="Main_Frame_Navigated"/>
     </Grid>
 </Page>
