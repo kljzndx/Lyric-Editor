@@ -117,28 +117,13 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="BackgroundBlurDegree_Slider.Header" xml:space="preserve">
-    <value>背景模糊度</value>
-  </data>
-  <data name="BackgroundImageFilePath_TextBox.Header" xml:space="preserve">
-    <value>背景图片路径</value>
-  </data>
-  <data name="BackgroundOpacity_Slider.Header" xml:space="preserve">
+  <data name="PreviewBackgroundOpacity_Slider.Header" xml:space="preserve">
     <value>背景透明度</value>
   </data>
-  <data name="BackgroundVisibility_ToggleSwitch.Header" xml:space="preserve">
-    <value>背景可见性</value>
-  </data>
-  <data name="BackgroundVisibility_ToggleSwitch.OffContent" xml:space="preserve">
-    <value>隐藏</value>
-  </data>
-  <data name="BackgroundVisibility_ToggleSwitch.OnContent" xml:space="preserve">
-    <value>显示</value>
-  </data>
-  <data name="FollowSongAlbumCover_ToggleSwitch.Header" xml:space="preserve">
-    <value>跟随歌曲专辑封面</value>
+  <data name="SinglePreviewFontSize_Slider.Header" xml:space="preserve">
+    <value>单行预览的字体大小</value>
   </data>
   <data name="Title" xml:space="preserve">
-    <value>背景</value>
+    <value>歌词预览区域</value>
   </data>
 </root>

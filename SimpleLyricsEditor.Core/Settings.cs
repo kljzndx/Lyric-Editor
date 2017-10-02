@@ -7,22 +7,25 @@ namespace SimpleLyricsEditor.Core
 {
     public sealed class Settings : SettingsBase
     {
+        [SettingFieldByNormal(nameof(PlaybackRate), 1D)] private double _playbackRate;
+        [SettingFieldByNormal(nameof(Balance), 0D)] private double _balance;
+        [SettingFieldByNormal(nameof(Volume), 1D)] private double _volume;
+
         [SettingFieldByEnum(nameof(PageTheme), typeof(ElementTheme), nameof(ElementTheme.Dark))] private ElementTheme _pageTheme;
         [SettingFieldByNormal(nameof(BackgroundVisibility), true)] private bool _backgroundVisibility;
         [SettingFieldByNormal(nameof(IsFollowSongAlbumCover),  true)] private bool _isFollowSongAlbumCover;
         [SettingFieldByNormal(nameof(BackgroundImagePath), "")] private string _backgroundImagePath;
         [SettingFieldByNormal(nameof(BackgroundBlurDegree), 5D)] private double _backgroundBlurDegree;
         [SettingFieldByNormal(nameof(BackgroundOpacity), 0.3D)] private double _backgroundOpacity;
-        
-        [SettingFieldByNormal(nameof(Balance), 0D)] private double _balance;
-        [SettingFieldByNormal(nameof(PlaybackRate), 1D)] private double _playbackRate;
 
-        [SettingFieldByNormal(nameof(Volume), 1D)] private double _volume;
+        [SettingFieldByNormal(nameof(PreviewBackgroundOpacity), 0.3)] private double _previewBackgroundOpacity;
+        [SettingFieldByNormal(nameof(SinglePreviewFontSize), 20D)] private double _singlePreviewFontSize;
 
         private Settings()
         {
             base.RenameSettingKey("IsDisplayBackground", nameof(BackgroundVisibility));
-            base.SettingObject.Values.Remove("BackgroundSourceType");
+            if (base.SettingObject.Values.ContainsKey("BackgroundSourceType"))
+                base.SettingObject.Values.Remove("BackgroundSourceType");
             
             InitializeSettingFields();
         }
@@ -35,16 +38,16 @@ namespace SimpleLyricsEditor.Core
             set => SetSetting(ref _playbackRate, value);
         }
 
-        public double Volume
-        {
-            get => _volume;
-            set => SetSetting(ref _volume, value);
-        }
-
         public double Balance
         {
             get => _balance;
             set => SetSetting(ref _balance, value);
+        }
+
+        public double Volume
+        {
+            get => _volume;
+            set => SetSetting(ref _volume, value);
         }
 
         public ElementTheme PageTheme
@@ -80,6 +83,18 @@ namespace SimpleLyricsEditor.Core
         {
             get => _backgroundBlurDegree;
             set => SetSetting(ref _backgroundBlurDegree, value);
+        }
+        
+        public double PreviewBackgroundOpacity
+        {
+            get => _previewBackgroundOpacity;
+            set => SetSetting(ref _previewBackgroundOpacity, value);
+        }
+
+        public double SinglePreviewFontSize
+        {
+            get => _singlePreviewFontSize;
+            set => SetSetting(ref _singlePreviewFontSize, value);
         }
     }
 }

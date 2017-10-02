@@ -20,10 +20,7 @@ namespace SimpleLyricsEditor.Control
 
         public static readonly DependencyProperty CurrentLyricProperty = DependencyProperty.Register(
             nameof(CurrentLyric), typeof(Lyric), typeof(LyrricsSinglePreview), new PropertyMetadata(null));
-
-        public static readonly DependencyProperty BackgroundOpacityProperty = DependencyProperty.Register(
-            nameof(BackgroundOpacity), typeof(double), typeof(LyrricsSinglePreview), new PropertyMetadata(1));
-
+        
         private readonly Lyric _space = new Lyric(TimeSpan.Zero, string.Empty);
 
         private int _nextIndex;
@@ -48,13 +45,7 @@ namespace SimpleLyricsEditor.Control
                 FadeOut.Begin();
             }
         }
-
-        public double BackgroundOpacity
-        {
-            get => (double) GetValue(BackgroundOpacityProperty);
-            set => SetValue(BackgroundOpacityProperty, value);
-        }
-
+        
         public void RefreshLyric(TimeSpan position)
         {
             if (!Lyrics.Any())

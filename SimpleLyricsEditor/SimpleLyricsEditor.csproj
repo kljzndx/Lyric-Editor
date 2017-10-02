@@ -110,6 +110,9 @@
     <Compile Include="Views\SettingsPages\BackgroundSettingsPage.xaml.cs">
       <DependentUpon>BackgroundSettingsPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\SettingsPages\LyricsPreviewSettingsPage.xaml.cs">
+      <DependentUpon>LyricsPreviewSettingsPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\SettingsPages\SettingsRootPage.xaml.cs">
       <DependentUpon>SettingsRootPage.xaml</DependentUpon>
     </Compile>
@@ -123,6 +126,8 @@
     </AppxManifest>
     <None Include="SimpleLyricsEditor_StoreKey.pfx" />
     <None Include="SimpleLyricsEditor_TemporaryKey.pfx" />
+    <PRIResource Include="Strings\en-US\Settings\LyricsPreviewSettings.resw" />
+    <PRIResource Include="Strings\zh-CN\Settings\LyricsPreviewSettings.resw" />
     <PRIResource Include="Strings\en-US\Settings\BackgroundSettings.resw" />
     <PRIResource Include="Strings\zh-CN\Settings\BackgroundSettings.resw" />
     <PRIResource Include="Strings\zh-CN\Settings\SettingsRoot.resw" />
@@ -225,6 +230,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\SettingsPages\BackgroundSettingsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SettingsPages\LyricsPreviewSettingsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

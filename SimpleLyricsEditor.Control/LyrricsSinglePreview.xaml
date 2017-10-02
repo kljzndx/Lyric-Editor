@@ -18,8 +18,5 @@
         </Storyboard>
     </UserControl.Resources>
 
-    <Grid>
-        <Rectangle Fill="{x:Bind Background, Mode=OneWay}" Opacity="{x:Bind BackgroundOpacity, Mode=OneWay}"/>
-        <TextBlock x:Name="TextBlock" HorizontalAlignment="Center" FontSize="{x:Bind FontSize, Mode=OneWay}" Margin="0,5"/>
-    </Grid>
+        <TextBlock x:Name="TextBlock" TextAlignment="Center" FontSize="{x:Bind FontSize, Mode=OneWay}" Margin="0,5"/>
 </UserControl>

@@ -109,7 +109,10 @@
                 </Button.Template>
             </Button>
         </Grid>
+        <Grid Grid.Row="2">
+            <Rectangle Fill="{ThemeResource SystemControlBackgroundAccentBrush}" Opacity="{x:Bind _settings.PreviewBackgroundOpacity, Mode=OneWay}"/>
+            <ctol:LyrricsSinglePreview x:Name="SinglePreview" Lyrics="{x:Bind _viewModel.LyricItems}" FontSize="{x:Bind _settings.SinglePreviewFontSize, Mode=OneWay}"/>
+        </Grid>
         
-        <ctol:LyrricsSinglePreview x:Name="SinglePreview" Grid.Row="2" BackgroundOpacity="0.4" Lyrics="{x:Bind _viewModel.LyricItems}" FontSize="24" Background="{ThemeResource SystemControlBackgroundAccentBrush}"/>
     </Grid>
 </Page>
