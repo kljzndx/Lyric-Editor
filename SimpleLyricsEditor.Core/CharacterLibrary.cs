@@ -4,11 +4,8 @@ namespace SimpleLyricsEditor.Core
 {
     public static class CharacterLibrary
     {
-        static CharacterLibrary()
-        {
-            SettingsRoot = ResourceLoader.GetForCurrentView("SettingsRoot");
-        }
-
-        public static ResourceLoader SettingsRoot { get; }
+        public static ResourceLoader SettingsRoot { get; } = ResourceLoader.GetForCurrentView("SettingsRoot");
+        public static ResourceLoader BackgroundSettings { get; } = ResourceLoader.GetForCurrentView("BackgroundSettings");
+        public static ResourceLoader LyricsPreviewSettings { get; } = ResourceLoader.GetForCurrentView("LyricsPreviewSettings");
     }
 }

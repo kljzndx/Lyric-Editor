@@ -11,7 +11,9 @@ using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
+using SimpleLyricsEditor.Core;
 using SimpleLyricsEditor.Models;
 
 // https://go.microsoft.com/fwlink/?LinkId=234238 上介绍了“空白页”项模板
@@ -27,18 +29,17 @@ namespace SimpleLyricsEditor.Views.SettingsPages
         public SettingsRootPage()
         {
             this.InitializeComponent();
-            pms = new List<PageModel>();
-            pms.Add(new PageModel("背景设置", typeof(BackgroundSettingsPage)));
+            pms = new List<PageModel>
+            {
+                new PageModel(CharacterLibrary.BackgroundSettings.GetString("Title"), typeof(BackgroundSettingsPage)),
+                new PageModel(CharacterLibrary.LyricsPreviewSettings.GetString("Title"), typeof(LyricsPreviewSettingsPage))
+            };
         }
 
-        private void SettingsRootPage_Loaded(object sender, RoutedEventArgs e)
+        private void ChildrenPage_ListView_ItemClick(object sender, ItemClickEventArgs e)
         {
-            foreach (PageModel model in pms)
-            {
-                Frame frame = new Frame();
-                frame.Navigate(model.PageType, model.Title);
-                Root_StackPanel.Children.Add(frame);
-            }
+            if (e.ClickedItem is PageModel pm)
+                Frame.Navigate(pm.PageType, pm.Title);
         }
     }
 }
