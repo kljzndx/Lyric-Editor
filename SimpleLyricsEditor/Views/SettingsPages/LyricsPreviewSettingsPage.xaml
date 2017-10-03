@@ -7,7 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <StackPanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <StackPanel>
         <Slider x:Uid="/LyricsPreviewSettings/PreviewBackgroundOpacity_Slider" Value="{x:Bind _settings.PreviewBackgroundOpacity, Mode=TwoWay, Converter={StaticResource PercentageToDouble}}"/>
         <Slider x:Uid="/LyricsPreviewSettings/SinglePreviewFontSize_Slider" Minimum="16" Maximum="32" Value="{x:Bind _settings.SinglePreviewFontSize, Mode=TwoWay}"/>
     </StackPanel>
