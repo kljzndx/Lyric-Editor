@@ -53,8 +53,15 @@ namespace SimpleLyricsEditor.Core
         public ElementTheme PageTheme
         {
             get => _pageTheme;
-            set => SetSetting(ref _pageTheme, value, settingValue: value.ToString());
+            set
+            {
+                SetSetting(ref _pageTheme, value, settingValue: value.ToString()); 
+                OnPropertyChanged(nameof(IsLightTheme));
+            }
         }
+
+        public bool IsLightTheme => PageTheme == ElementTheme.Light || 
+                                    PageTheme == ElementTheme.Default && Application.Current.RequestedTheme == ApplicationTheme.Light;
         
         public bool BackgroundVisibility
         {

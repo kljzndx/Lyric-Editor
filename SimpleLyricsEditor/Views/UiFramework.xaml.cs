@@ -39,10 +39,7 @@ namespace SimpleLyricsEditor.Views
             else
                 OpenFile_MenuFlyout.Closed += (s, e) => OpenFile_AppBarToggleButton.IsChecked = false;
         }
-
-        private bool IsDark => _settings.PageTheme == ElementTheme.Dark || _settings.PageTheme == ElementTheme.Default &&
-                               Application.Current.RequestedTheme == ApplicationTheme.Dark;
-
+        
         private async Task OpenMusicFile()
         {
             _musicFile = await MusicFileOpenPicker.PickFile();
@@ -119,14 +116,14 @@ namespace SimpleLyricsEditor.Views
 
         private void OpenFile_AppBarToggleButton_Unchecked(object sender, RoutedEventArgs e)
         {
-            if (!IsDark)
+            if (_settings.IsLightTheme)
                 OpenFile_AppBarToggleButton.Foreground = new SolidColorBrush(Colors.Black);
         }
 
         private void OpenFile_MenuFlyout_Opening(object sender, object e)
         {
             OpenFile_MenuFlyout.MenuFlyoutPresenterStyle =
-                IsDark ? Dark_MenuFlyoutPresenter : Light_MenuFlyoutPresenter;
+                _settings.IsLightTheme ? Light_MenuFlyoutPresenter : Dark_MenuFlyoutPresenter;
         }
 
         private async void OpenMusicFile_MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
