@@ -2,6 +2,7 @@
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
+using SimpleLyricsEditor.Core;
 using SimpleLyricsEditor.Models;
 using SimpleLyricsEditor.ViewModels;
 
@@ -14,6 +15,8 @@ namespace SimpleLyricsEditor.Views
     /// </summary>
     public sealed partial class SecondaryViewRootPage : Page
     {
+        private readonly Settings _settings = Settings.Current;
+
         public SecondaryViewRootPage()
         {
             InitializeComponent();
@@ -28,7 +31,7 @@ namespace SimpleLyricsEditor.Views
             Main_Frame.ForwardStack.Clear();
         }
 
-        private void Back_Button_Tapped(object sender, TappedRoutedEventArgs e)
+        private void Back_Button_Click(object sender, RoutedEventArgs e)
         {
             Main_Frame.GoBack();
         }
@@ -49,6 +52,16 @@ namespace SimpleLyricsEditor.Views
                 Title_TextBlock.Margin = new Thickness();
                 Back_Storyboard.Begin();
             }
+        }
+        
+        private void Light_Button_Click(object sender, RoutedEventArgs e)
+        {
+            _settings.PageTheme = ElementTheme.Light;
+        }
+
+        private void Dark_Button_Click(object sender, RoutedEventArgs e)
+        {
+            _settings.PageTheme = ElementTheme.Dark;
         }
 
         private void Back_Storyboard_Completed(object sender, object e)
