@@ -13,7 +13,7 @@ namespace SimpleLyricsEditor.ValueConvert
             builder.AppendLine($"{CharacterLibrary.Error.GetString("Code")} 0x{ex.HResult:X}");
             builder.AppendLine($"{CharacterLibrary.Error.GetString("Information")} {ex.Message}");
 
-            return builder.ToString();
+            return builder.ToString().Trim();
         }
 
         public static string ToLongString(this Exception ex)
@@ -28,7 +28,7 @@ namespace SimpleLyricsEditor.ValueConvert
             builder.AppendLine(CharacterLibrary.Error.GetString("StackTrace"));
             builder.AppendLine(ex.StackTraceEx());
 
-            return builder.ToString();
+            return builder.ToString().Trim();
         }
     }
 }
