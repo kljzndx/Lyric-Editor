@@ -127,6 +127,8 @@
     </AppxManifest>
     <None Include="SimpleLyricsEditor_StoreKey.pfx" />
     <None Include="SimpleLyricsEditor_TemporaryKey.pfx" />
+    <PRIResource Include="Strings\zh-CN\Error.resw" />
+    <PRIResource Include="Strings\en-US\Error.resw" />
     <PRIResource Include="Strings\en-US\Settings\LyricsPreviewSettings.resw" />
     <PRIResource Include="Strings\zh-CN\Settings\LyricsPreviewSettings.resw" />
     <PRIResource Include="Strings\en-US\Settings\BackgroundSettings.resw" />
