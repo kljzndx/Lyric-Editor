@@ -32,19 +32,22 @@ namespace SimpleLyricsEditor.Views
         public UiFramework()
         {
             InitializeComponent();
-            GlobalKeyNotifier.KeyDown += WindowKeyDown;
+
+            GlobalKeyNotifier.KeyDown += OnWindowKeyDown;
+            MusicFileNotifier.FileChanged += OnMusicFileFileChanged;
+            LyricsFileChangeNotifier.FileChanged += OnLyricsFileChanged;
 
             if (ApiInformation.IsEventPresent(typeof(FlyoutBase).FullName, "Closing"))
                 OpenFile_MenuFlyout.Closing += (s, e) => OpenFile_AppBarToggleButton.IsChecked = false;
             else
                 OpenFile_MenuFlyout.Closed += (s, e) => OpenFile_AppBarToggleButton.IsChecked = false;
         }
-        
+
         private async Task OpenMusicFile()
         {
-            _musicFile = await MusicFileOpenPicker.PickFile();
-            if (_musicFile != null)
-                MusicFileNotifier.ChangeFile(_musicFile);
+            var file = await MusicFileOpenPicker.PickFile();
+            if (file != null)
+                MusicFileNotifier.ChangeFile(file);
         }
 
         private async Task OpenLyricsFile()
@@ -52,8 +55,7 @@ namespace SimpleLyricsEditor.Views
             var file = await LyricsFileOpenPicker.PickFile();
             if (file == null)
                 return;
-
-            _lyricsFile = file;
+            
             LyricsFileChangeNotifier.ChangeFile(_lyricsFile);
         }
 
@@ -62,9 +64,7 @@ namespace SimpleLyricsEditor.Views
             if (_lyricsFile == null)
             {
                 var file = await LyricsFileSavePicker.PickFile();
-                if (file != null)
-                    _lyricsFile = file;
-                else
+                if (file == null)
                     return;
             }
 
@@ -76,12 +76,11 @@ namespace SimpleLyricsEditor.Views
             var file = await LyricsFileSavePicker.PickFile();
             if (file == null)
                 return;
-
-            _lyricsFile = file;
+            
             LyricsFileSaveNotifier.SaveFile(_lyricsFile);
         }
 
-        private async void WindowKeyDown(object sender, GlobalKeyEventArgs e)
+        private async void OnWindowKeyDown(object sender, GlobalKeyEventArgs e)
         {
             if (e.IsPressCtrl)
                 switch (e.Key)
@@ -101,10 +100,19 @@ namespace SimpleLyricsEditor.Views
                 }
         }
 
+        private void OnMusicFileFileChanged(object sender, FileChangeEventArgs e)
+        {
+            _musicFile = e.File;
+        }
+
+        private void OnLyricsFileChanged(object sender, FileChangeEventArgs e)
+        {
+            _lyricsFile = e.File;
+        }
+
         private void NewFile_AppBarButton_Click(object sender, RoutedEventArgs e)
         {
-            _lyricsFile = null;
-            LyricsFileChangeNotifier.ChangeFile(_lyricsFile);
+            LyricsFileChangeNotifier.ChangeFile(null);
         }
 
         private void OpenFile_AppBarToggleButton_Checked(object sender, RoutedEventArgs e)
