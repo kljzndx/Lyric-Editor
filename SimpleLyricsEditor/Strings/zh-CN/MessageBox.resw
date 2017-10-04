@@ -117,25 +117,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Code" xml:space="preserve">
-    <value>错误码：</value>
+  <data name="Close" xml:space="preserve">
+    <value>关闭</value>
   </data>
-  <data name="HelpLink" xml:space="preserve">
-    <value>帮助链接：</value>
+  <data name="ErrorReportDialogTitle" xml:space="preserve">
+    <value>出错啦！</value>
   </data>
-  <data name="Information" xml:space="preserve">
-    <value>错误信息：</value>
+  <data name="ErrorReportEmillTitle" xml:space="preserve">
+    <value>错误报告</value>
   </data>
-  <data name="Ohter" xml:space="preserve">
-    <value>其他信息：</value>
-  </data>
-  <data name="Source" xml:space="preserve">
-    <value>错误源：</value>
-  </data>
-  <data name="StackTrace" xml:space="preserve">
-    <value>堆栈信息：</value>
-  </data>
-  <data name="SystemVersion" xml:space="preserve">
-    <value>系统版本：</value>
+  <data name="SendErrorReport" xml:space="preserve">
+    <value>发送错误报告</value>
   </data>
 </root>

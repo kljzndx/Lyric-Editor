@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Text;
+using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
@@ -10,6 +12,7 @@ using Windows.Foundation.Collections;
 using Windows.Storage;
 using Windows.System;
 using Windows.UI.Core;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -17,7 +20,14 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using HappyStudio.UwpToolsLibrary.Auxiliarys;
+using HappyStudio.UwpToolsLibrary.Information;
+using SimpleLyricsEditor.Core;
 using SimpleLyricsEditor.Events;
+using SimpleLyricsEditor.ValueConvert;
+using WinRTExceptions;
+using AppInfo = HappyStudio.UwpToolsLibrary.Information.AppInfo;
+using UnhandledExceptionEventArgs = Windows.UI.Xaml.UnhandledExceptionEventArgs;
 
 namespace SimpleLyricsEditor
 {
@@ -26,6 +36,7 @@ namespace SimpleLyricsEditor
     /// </summary>
     sealed partial class App : Application
     {
+        private const string Emill = "kljzndx@outlook.com";
         public static bool IsInputing;
 
         private CoreWindow _coreWindow;
@@ -42,6 +53,31 @@ namespace SimpleLyricsEditor
         {
             this.InitializeComponent();
             this.Suspending += OnSuspending;
+            this.UnhandledException += OnUnhandledException;
+        }
+
+        private void EnsureSyncContext()
+        {
+            var exceptionHandlingSynchronizationContext = ExceptionHandlingSynchronizationContext.Register();
+            exceptionHandlingSynchronizationContext.UnhandledException += OnSynchronizationContextUnhandledException;
+        }
+
+        private async Task ShowErrorDialog(Exception ex)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine($"{CharacterLibrary.Error.GetString("SystemVersion")} {SystemInfo.BuildVersion}");
+            builder.AppendLine(ex.ToLongString());
+
+            string errorReportEmillTitle =
+                $"{AppInfo.Name} {AppInfo.Version} {CharacterLibrary.MessageBox.GetString("ErrorReportEmillTitle")}";
+
+            var buttons = new Dictionary<string, UICommandInvokedHandler>();
+            buttons.Add(CharacterLibrary.MessageBox.GetString("SendErrorReport"),
+                async (c) => await EmailEx.SendAsync(Emill, errorReportEmillTitle, builder.ToString()));
+            buttons.Add(CharacterLibrary.MessageBox.GetString("Close"), null);
+
+            await MessageBox.ShowAsync(CharacterLibrary.MessageBox.GetString("ErrorReportDialogTitle"),
+                ex.ToShortString(), buttons);
         }
 
         private void InitializeKeyEvent()
@@ -57,6 +93,7 @@ namespace SimpleLyricsEditor
         protected override void OnActivated(IActivatedEventArgs args)
         {
             InitializeKeyEvent();
+            EnsureSyncContext();
         }
 
         /// <summary>
@@ -95,6 +132,7 @@ namespace SimpleLyricsEditor
                     // parameter
                     rootFrame.Navigate(typeof(Views.UiFramework), e.Arguments);
                     InitializeKeyEvent();
+                    EnsureSyncContext();
                 }
                 // Ensure the current window is active
                 Window.Current.Activate();
@@ -124,6 +162,7 @@ namespace SimpleLyricsEditor
                 // parameter
                 rootFrame.Navigate(typeof(Views.UiFramework));
                 InitializeKeyEvent();
+                EnsureSyncContext();
             }
             Window.Current.Activate();
 
@@ -182,6 +221,20 @@ namespace SimpleLyricsEditor
             }
 
             GlobalKeyNotifier.ReleaseKey(args.VirtualKey, _isPressCtrl, _isPressShift, IsInputing);
+        }
+
+        private async void OnUnhandledException(object sender, UnhandledExceptionEventArgs e)
+        {
+            e.Handled = true;
+
+            await ShowErrorDialog(e.Exception);
+        }
+
+        private async void OnSynchronizationContextUnhandledException(object sender, WinRTExceptions.UnhandledExceptionEventArgs e)
+        {
+            e.Handled = true;
+
+            await ShowErrorDialog(e.Exception);
         }
     }
 }

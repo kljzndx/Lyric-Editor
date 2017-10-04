@@ -135,4 +135,7 @@
   <data name="StackTrace" xml:space="preserve">
     <value>Stack trare info:</value>
   </data>
+  <data name="SystemVersion" xml:space="preserve">
+    <value>System Version:</value>
+  </data>
 </root>

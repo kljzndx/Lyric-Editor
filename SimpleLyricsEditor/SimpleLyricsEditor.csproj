@@ -127,6 +127,8 @@
     </AppxManifest>
     <None Include="SimpleLyricsEditor_StoreKey.pfx" />
     <None Include="SimpleLyricsEditor_TemporaryKey.pfx" />
+    <PRIResource Include="Strings\en-US\MessageBox.resw" />
+    <PRIResource Include="Strings\zh-CN\MessageBox.resw" />
     <PRIResource Include="Strings\zh-CN\Error.resw" />
     <PRIResource Include="Strings\en-US\Error.resw" />
     <PRIResource Include="Strings\en-US\Settings\LyricsPreviewSettings.resw" />
@@ -250,8 +252,11 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="HappyStudio.UwpToolsLibrary.Control">
-      <Version>1.3.1</Version>
+    <PackageReference Include="HappyStudio.UwpToolsLibrary.Auxiliarys">
+      <Version>1.1.5</Version>
+    </PackageReference>
+    <PackageReference Include="HappyStudio.UwpToolsLibrary.Information">
+      <Version>1.0.2</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>5.4.0</Version>
