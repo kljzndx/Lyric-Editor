@@ -125,8 +125,8 @@
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
-    <None Include="Data\UpdateLog\AllLogsPath.json" />
-    <None Include="Data\UpdateLog\v3.0.md" />
+    <None Include="Data\UpdateLogs\AllLogsPath.json" />
+    <None Include="Data\UpdateLogs\v3.0.md" />
     <None Include="SimpleLyricsEditor_StoreKey.pfx" />
     <None Include="SimpleLyricsEditor_TemporaryKey.pfx" />
     <PRIResource Include="Strings\en-US\MessageBox.resw" />
