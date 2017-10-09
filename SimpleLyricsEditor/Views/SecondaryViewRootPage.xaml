@@ -42,7 +42,7 @@
                 <SymbolIcon Symbol="Back"/>
             </Button>
 
-            <TextBlock x:Name="Title_TextBlock" Grid.Column="0" FontSize="20" VerticalAlignment="Center"/>
+            <TextBlock x:Name="Title_TextBlock" Grid.Column="0" VerticalAlignment="Center" Style="{StaticResource TitleTextBlockStyle}"/>
 
             <Button x:Name="Light_Button" Grid.Column="1" Visibility="{x:Bind _settings.IsLightTheme, Mode=OneWay, Converter={StaticResource BoolToVisibility_Reverse}}" Style="{StaticResource TitleButton_Style}" HorizontalAlignment="Right" VerticalAlignment="Top" Click="Light_Button_Click">
                 <FontIcon Glyph="&#xE706;"/>
