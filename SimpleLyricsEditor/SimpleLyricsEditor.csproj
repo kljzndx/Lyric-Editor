@@ -125,10 +125,12 @@
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
-    <None Include="Data\UpdateLogs\AllLogsPath.json" />
-    <None Include="Data\UpdateLogs\v3.0.lang-zh-CN.md" />
+    <Content Include="Data\UpdateLogs\AllLogsPath.json" />
+    <Content Include="Data\UpdateLogs\v3.0.lang-zh-CN.md" />
     <None Include="SimpleLyricsEditor_StoreKey.pfx" />
     <None Include="SimpleLyricsEditor_TemporaryKey.pfx" />
+    <PRIResource Include="Strings\zh-CN\UpdateLogDialog.resw" />
+    <PRIResource Include="Strings\en-US\UpdateLogDialog.resw" />
     <PRIResource Include="Strings\en-US\MessageBox.resw" />
     <PRIResource Include="Strings\zh-CN\MessageBox.resw" />
     <PRIResource Include="Strings\zh-CN\Error.resw" />
