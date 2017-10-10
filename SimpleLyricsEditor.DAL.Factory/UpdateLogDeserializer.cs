@@ -3,7 +3,7 @@ using Windows.Data.Json;
 
 namespace SimpleLyricsEditor.DAL.Factory
 {
-    public class UpdateLogDeserializer
+    public static class UpdateLogDeserializer
     {
         public static IEnumerable<UpdateLog> Deserialization(string json)
         {
