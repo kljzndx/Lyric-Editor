@@ -6,21 +6,18 @@ namespace SimpleLyricsEditor.DAL
 {
     public class UpdateLog : INotifyPropertyChanged
     {
-        private static readonly Uri AllLogsFolderUri = new Uri("ms-appx:///Data/UpdateLogs/");
-        public static readonly Uri AllLogsFileUri = new Uri(AllLogsFolderUri, "AllLogsPath.json");
-        
         private string _content;
 
-        public UpdateLog(string version, string date, string file)
+        public UpdateLog(string version, string date, string fileName)
         {
             Version = version;
             Date = date;
-            Path = new Uri(AllLogsFolderUri, file);
+            FileName = fileName;
         }
 
         public string Version { get; }
         public string Date { get; }
-        public Uri Path { get; }
+        public string FileName { get; }
 
         public string Content
         {
@@ -34,7 +31,7 @@ namespace SimpleLyricsEditor.DAL
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
