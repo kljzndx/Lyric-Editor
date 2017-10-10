@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Storage;
@@ -156,11 +157,10 @@ namespace SimpleLyricsEditor.Control
             {
                 await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, RefreshTime);
             }
-#if DEBUG
-            _refreshTimeTimer = ThreadPoolTimer.CreatePeriodicTimer(refreshTime, TimeSpan.FromSeconds(1));
-#else
-            _refreshTimeTimer = ThreadPoolTimer.CreatePeriodicTimer(refreshTime, TimeSpan.FromMilliseconds(100));
-#endif
+
+            TimeSpan frequency = Debugger.IsAttached ? TimeSpan.FromSeconds(1) : TimeSpan.FromMilliseconds(100);
+            
+            _refreshTimeTimer = ThreadPoolTimer.CreatePeriodicTimer(refreshTime, frequency);
         }
 
         public void DisplayPositionControlButtons()
