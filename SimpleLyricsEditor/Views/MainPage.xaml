@@ -14,23 +14,47 @@
     </Page.DataContext>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="ToolsBar">
+                <VisualState x:Name="PC">
+                    <VisualState.Setters>
+                        <Setter Target="stackPanel.(Grid.Column)" Value="1"/>
+                    </VisualState.Setters>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="641"/>
+                    </VisualState.StateTriggers>
+                </VisualState>
+                <VisualState x:Name="Mobile">
+                    <VisualState.Setters>
+                        <Setter Target="stackPanel.(Grid.Row)" Value="1"/>
+                    </VisualState.Setters>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0"/>
+                    </VisualState.StateTriggers>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        
+
         <ctol:AudioPlayer x:Name="Player" SourceChanged="Player_SourceChanged" PositionChanged="Player_PositionChanged"/>
-        
+
         <ctol:BlurBackgroundImage x:Name="BlurBackground" Grid.Row="1" Grid.RowSpan="2" BlurDegree="{x:Bind _settings.BackgroundBlurDegree, Mode=OneWay}" Opacity="{x:Bind _settings.BackgroundOpacity, Mode=OneWay}" Visibility="{x:Bind _settings.BackgroundVisibility, Mode=OneWay, Converter={StaticResource BoolToVisibility}}"/>
-        
+
         <Grid Grid.Row="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-            
+
             <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
                     <ColumnDefinition Width="Auto"/>
@@ -38,7 +62,7 @@
 
                 <TextBox x:Name="LyricsContent_TextBox" x:Uid="/LyricsEdit/LyricsContent_TextBox" Text="{x:Bind _viewModel.LyricContent, Mode=TwoWay}" TextWrapping="Wrap" VerticalAlignment="Center" GotFocus="LyricsContent_TextBox_GotFocus" LostFocus="LyricsContent_TextBox_LostFocus" KeyUp="LyricsContent_TextBox_KeyUp"/>
 
-                <StackPanel Grid.Column="1" Orientation="Horizontal">
+                <StackPanel x:Name="stackPanel" Orientation="Horizontal" HorizontalAlignment="Center">
                     <Button x:Name="AddLyrics_Button" x:Uid="/LyricsEdit/AddLyrics_Button" Content="&#xE94D;" Style="{StaticResource ControllerButtonStyle}" Click="AddLyrics_Button_Click" RenderTransformOrigin="0.5,0.5">
                         <Button.RenderTransform>
                             <CompositeTransform x:Name="AddLyrics_Button_Transform" Rotation="180"/>
@@ -50,14 +74,14 @@
                     <Button x:Name="ModifyContent_Button" x:Uid="/LyricsEdit/ModifyContent_Button" Content="&#xE104;" Style="{StaticResource ControllerButtonStyle}" Click="ModifyContent_Button_Click"/>
                 </StackPanel>
             </Grid>
-            
+
             <ListView x:Name="Lyrics_ListView" Grid.Row="1" ItemsSource="{x:Bind _viewModel.LyricItems}" GotFocus="Lyrics_ListView_GotFocus" LostFocus="Lyrics_ListView_LostFocus" SelectionChanged="Lyrics_ListView_SelectionChanged">
                 <ListView.ItemContainerStyle>
                     <Style TargetType="ListViewItem">
                         <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
                     </Style>
                 </ListView.ItemContainerStyle>
-                
+
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="model:Lyric">
                         <Grid>
@@ -65,7 +89,7 @@
                                 <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
-                            
+
                             <TextBlock Text="{x:Bind Time, Mode=OneWay, Converter={StaticResource TimeSpanToLyricTimeString}}" Margin="0, 0, 5, 0"/>
                             <TextBlock Grid.Column="1" Text="{x:Bind Content, Mode=OneWay}" TextWrapping="Wrap" Margin="5, 0, 0, 0"/>
                         </Grid>
@@ -98,11 +122,11 @@
                                     </VisualState>
                                 </VisualStateGroup>
                             </VisualStateManager.VisualStateGroups>
-                            
+
                             <Ellipse Width="{TemplateBinding Width}" Height="{TemplateBinding Height}" Fill="{ThemeResource SystemControlBackgroundAccentBrush}"/>
                             <Ellipse x:Name="Black_Ellipse" Fill="Black" Opacity="0"/>
                             <Ellipse x:Name="White_Ellipse" Fill="White" Opacity="0"/>
-                            
+
                             <SymbolIcon Symbol="Sort" Foreground="White"/>
                         </Grid>
                     </ControlTemplate>
@@ -113,6 +137,6 @@
             <Rectangle Fill="{ThemeResource SystemControlBackgroundAccentBrush}" Opacity="{x:Bind _settings.PreviewBackgroundOpacity, Mode=OneWay}"/>
             <ctol:LyrricsSinglePreview x:Name="SinglePreview" Lyrics="{x:Bind _viewModel.LyricItems}" FontSize="{x:Bind _settings.SinglePreviewFontSize, Mode=OneWay}"/>
         </Grid>
-        
+
     </Grid>
 </Page>
