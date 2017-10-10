@@ -120,6 +120,7 @@
     <Compile Include="LyricsOperations\Sort.cs" />
     <Compile Include="Pickers\MusicFileOpenPicker.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UpdateLogFilesIO.cs" />
     <EmbeddedResource Include="Properties\SimpleLyricsEditor.BLL.rd.xml" />
   </ItemGroup>
   <ItemGroup>
