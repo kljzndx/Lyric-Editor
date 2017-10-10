@@ -56,7 +56,7 @@ namespace SimpleLyricsEditor.Views
             if (file == null)
                 return;
             
-            LyricsFileChangeNotifier.ChangeFile(_lyricsFile);
+            LyricsFileChangeNotifier.ChangeFile(file);
         }
 
         private async Task SaveFile()
@@ -64,7 +64,9 @@ namespace SimpleLyricsEditor.Views
             if (_lyricsFile == null)
             {
                 var file = await LyricsFileSavePicker.PickFile();
-                if (file == null)
+                if (file != null)
+                    _lyricsFile = file;
+                else
                     return;
             }
 
@@ -76,8 +78,8 @@ namespace SimpleLyricsEditor.Views
             var file = await LyricsFileSavePicker.PickFile();
             if (file == null)
                 return;
-            
-            LyricsFileSaveNotifier.SaveFile(_lyricsFile);
+
+            LyricsFileSaveNotifier.SaveFile(file);
         }
 
         private async void OnWindowKeyDown(object sender, GlobalKeyEventArgs e)
