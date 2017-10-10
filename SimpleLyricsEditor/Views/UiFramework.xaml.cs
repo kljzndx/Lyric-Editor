@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Windows.Foundation.Metadata;
 using Windows.Storage;
 using Windows.System;
@@ -7,6 +8,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Media;
+using HappyStudio.UwpToolsLibrary.Information;
 using SimpleLyricsEditor.BLL.Pickers;
 using SimpleLyricsEditor.Core;
 using SimpleLyricsEditor.Events;
@@ -100,6 +102,17 @@ namespace SimpleLyricsEditor.Views
                             await SaveFile();
                         break;
                 }
+        }
+
+        private void UiFramework_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (_settings.GetSetting("UpdateLogVersion", String.Empty) != AppInfo.Version)
+                UpdateLogDialog.Show();
+        }
+
+        private void UpdateLogDialog_Hided(object sender, EventArgs e)
+        {
+            _settings.SettingObject.Values["UpdateLogVersion"] = AppInfo.Version;
         }
 
         private void OnMusicFileFileChanged(object sender, FileChangeEventArgs e)
