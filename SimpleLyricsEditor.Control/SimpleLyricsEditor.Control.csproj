@@ -131,9 +131,6 @@
     <PackageReference Include="Microsoft.Toolkit.Uwp.UI.Controls">
       <Version>1.5.1</Version>
     </PackageReference>
-    <PackageReference Include="Newtonsoft.Json">
-      <Version>10.0.3</Version>
-    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <Page Include="AudioPlayer.xaml">
