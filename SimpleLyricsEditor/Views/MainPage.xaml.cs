@@ -95,6 +95,19 @@ namespace SimpleLyricsEditor.Views
             _isPressCtrl = e.IsPressCtrl;
             _isPressShift = e.IsPressShift;
 
+            if (e.IsPressCtrl)
+                switch (e.Key)
+                {
+                    case VirtualKey.Z:
+                        if (_viewModel.CanUndo)
+                            _viewModel.Undo(1);
+                        break;
+                    case VirtualKey.Y:
+                        if (_viewModel.CanRedo)
+                            _viewModel.Redo(1);
+                        break;
+                }
+
             if (e.IsPressShift)
                 AddLyrics_Button_Transform.Rotation = 0;
 
