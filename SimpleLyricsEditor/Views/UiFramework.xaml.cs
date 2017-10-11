@@ -169,6 +169,11 @@ namespace SimpleLyricsEditor.Views
             await SaveAs();
         }
 
+        private void UpdateLog_AppBarButton_Click(object sender, RoutedEventArgs e)
+        {
+            UpdateLogDialog.Show();
+        }
+
         private void Settings_AppBarButton_Click(object sender, RoutedEventArgs e)
         {
             Root_SplitView.IsPaneOpen = !Root_SplitView.IsPaneOpen;
