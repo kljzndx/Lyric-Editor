@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Windows.Data.Json;
 
 namespace SimpleLyricsEditor.DAL.Factory
@@ -14,10 +15,11 @@ namespace SimpleLyricsEditor.DAL.Factory
             {
                 JsonObject data = items.GetObject();
                 string version = data["Version"].GetString();
-                string date = data["Date"].GetString();
+                string dateStr = data["Date"].GetString();
+                DateTime date = DateTime.Parse(dateStr);
                 string file = data["File"].GetString();
 
-                logs.Add(new UpdateLog(version, date, file));
+                logs.Add(new UpdateLog(version, date.ToString("D"), file));
             }
 
             return logs;
