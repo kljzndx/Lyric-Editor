@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using Windows.ApplicationModel;
-using Windows.Data.Json;
-using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using SimpleLyricsEditor.BLL;
@@ -28,13 +24,13 @@ namespace SimpleLyricsEditor.Control
             InitializeComponent();
         }
 
-        public event EventHandler Hided;
-
-        private UpdateLog SelectedLog
+        public UpdateLog SelectedLog
         {
             get => (UpdateLog) GetValue(SelectedLogProperty);
-            set => SetValue(SelectedLogProperty, value);
+            private set => SetValue(SelectedLogProperty, value);
         }
+
+        public event EventHandler Hided;
 
         private async Task ReadLogContent(UpdateLog log)
         {
@@ -44,7 +40,7 @@ namespace SimpleLyricsEditor.Control
 
         public void Show()
         {
-            this.Visibility = Visibility.Visible;
+            Visibility = Visibility.Visible;
             Show_Storyboard.Begin();
         }
 
@@ -76,7 +72,7 @@ namespace SimpleLyricsEditor.Control
 
         private void Hide_Storyboard_Completed(object sender, object e)
         {
-            this.Visibility = Visibility.Collapsed;
+            Visibility = Visibility.Collapsed;
             Hided?.Invoke(this, EventArgs.Empty);
         }
     }
