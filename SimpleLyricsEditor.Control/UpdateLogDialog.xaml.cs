@@ -14,7 +14,7 @@ namespace SimpleLyricsEditor.Control
 {
     public sealed partial class UpdateLogDialog : UserControl
     {
-        private static readonly DependencyProperty SelectedLogProperty = DependencyProperty.Register(
+        public static readonly DependencyProperty SelectedLogProperty = DependencyProperty.Register(
             nameof(SelectedLog), typeof(UpdateLog), typeof(UpdateLogDialog), new PropertyMetadata(null));
 
         private readonly ObservableCollection<UpdateLog> _allLogs = new ObservableCollection<UpdateLog>();
