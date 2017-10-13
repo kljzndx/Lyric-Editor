@@ -1,33 +1,53 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using SimpleLyricsEditor.DAL;
 
 namespace SimpleLyricsEditor.BLL.LyricsOperations
 {
     public class Sort : LyricsChangeOperationBase
     {
+        private readonly List<Lyric> _changedList = new List<Lyric>();
+        private bool _isInvoked;
+
         public Sort(IEnumerable<Lyric> items, IList<Lyric> targetList) : base(items, targetList)
         {
         }
 
-        private void ItemSort(int itemPosition)
+        private void ItemSort(Lyric sourceLyric)
         {
-            for (int i = itemPosition; i > 0; i--)
-                if (TargetList[i].CompareTo(TargetList[i - 1]) < 0)
+            int id = TargetList.IndexOf(sourceLyric);
+            bool isMove = false;
+
+            for (int i = id; i > 0; i--)
+            {
+                Lyric beforeLyric = TargetList[i - 1];
+                Lyric currentLyric = TargetList[i];
+
+                if (currentLyric != sourceLyric)
+                    break;
+
+                if (currentLyric.CompareTo(beforeLyric) < 0)
                 {
-                    TargetList.Insert(i + 1, TargetList[i - 1]);
-                    TargetList.RemoveAt(i - 1);
+                    TargetList.Insert(i + 1, beforeLyric);
+                    TargetList.Remove(beforeLyric);
+
+                    isMove = true;
                 }
+            }
+
+            if (!_isInvoked && isMove && _changedList.Contains(sourceLyric))
+                _changedList.Add(sourceLyric);
         }
 
         public override void Do()
         {
-            foreach (int position in Positions.Keys)
-                ItemSort(position);
+            Items.ForEach(ItemSort);
+            _isInvoked = true;
         }
 
         public override void Undo()
         {
-            foreach (var item in Positions)
+            foreach (var item in Positions.Where(d => _changedList.Contains(d.Value)))
             {
                 TargetList.Remove(item.Value);
                 TargetList.Insert(item.Key, item.Value);
