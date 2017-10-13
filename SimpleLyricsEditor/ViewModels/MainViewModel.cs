@@ -124,10 +124,7 @@ namespace SimpleLyricsEditor.ViewModels
 
         public void Sort()
         {
-            if (!SelectedItems.Any())
-                return;
-
-            var opt = CreateOperation(new Sort(LyricItems));
+            var opt = CreateOperation(new Sort(SelectedItems.Any() ? SelectedItems.Cast<Lyric>() : LyricItems, LyricItems));
             opt.Do();
         }
 
