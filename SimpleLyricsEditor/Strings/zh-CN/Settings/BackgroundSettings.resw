@@ -124,7 +124,7 @@
     <value>背景图片路径</value>
   </data>
   <data name="BackgroundOpacity_Slider.Header" xml:space="preserve">
-    <value>背景透明度</value>
+    <value>背景不透明度</value>
   </data>
   <data name="BackgroundVisibility_ToggleSwitch.Header" xml:space="preserve">
     <value>背景可见性</value>
