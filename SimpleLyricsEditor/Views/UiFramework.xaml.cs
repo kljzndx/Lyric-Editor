@@ -174,6 +174,11 @@ namespace SimpleLyricsEditor.Views
             UpdateLogDialog.Show();
         }
 
+        private async void GitHub_AppBarButton_Click(object sender, RoutedEventArgs e)
+        {
+            await Launcher.LaunchUriAsync(new Uri("https://github.com/kljzndx/Lyric-Editor"));
+        }
+
         private void Settings_AppBarButton_Click(object sender, RoutedEventArgs e)
         {
             Root_SplitView.IsPaneOpen = !Root_SplitView.IsPaneOpen;
