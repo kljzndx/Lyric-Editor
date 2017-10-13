@@ -1,74 +1,74 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ShortcutKeys>
-  <ShortcutKey Name="输入框内加歌词" Class="Lyrics operations">
+  <ShortcutKey Name="输入框内加歌词" Class="歌词操作">
     <Condition> 在输入框内按 Ctrl + Enter </Condition>
     <Function> 添加歌词 </Function>
   </ShortcutKey>
-  <ShortcutKey Name="空格加歌词" Class="Lyrics operations">
+  <ShortcutKey Name="空格加歌词" Class="歌词操作">
     <Condition> 无选中项时按空格键 </Condition>
     <Function> 添加歌词 </Function>
   </ShortcutKey>
-  <ShortcutKey Name="往上添加歌词" Class="Lyrics operations">
+  <ShortcutKey Name="往上添加歌词" Class="歌词操作">
     <Condition> 按住 Shift 执行添加歌词命令 </Condition>
     <Function> 向上添加歌词 </Function>
   </ShortcutKey>
-  <ShortcutKey Name="复制歌词" Class="Lyrics operations">
+  <ShortcutKey Name="复制歌词" Class="歌词操作">
     <Condition> 按 C 键 </Condition>
     <Function> 复制歌词 </Function>
   </ShortcutKey>
-  <ShortcutKey Name="修改时间" Class="Lyrics operations">
+  <ShortcutKey Name="修改时间" Class="歌词操作">
     <Condition> 有选中项时按空格键 </Condition>
     <Function> 移动歌词的时间 </Function>
   </ShortcutKey>
-  <ShortcutKey Name="修改歌词内容" Class="Lyrics operations">
+  <ShortcutKey Name="修改歌词内容" Class="歌词操作">
     <Condition> 在歌词输入框内按回车键 </Condition>
     <Function> 修改歌词的内容 </Function>
   </ShortcutKey>
-  <ShortcutKey Name="修改歌词内容" Class="Lyrics operations">
+  <ShortcutKey Name="修改歌词内容" Class="歌词操作">
     <Condition> 按 M 键 </Condition>
     <Function> 修改歌词的内容 </Function>
   </ShortcutKey>
-  <ShortcutKey Name="删除歌词" Class="Lyrics operations">
+  <ShortcutKey Name="删除歌词" Class="歌词操作">
     <Condition> 按删除键 </Condition>
     <Function> 删除歌词项 </Function>
   </ShortcutKey>
-  <ShortcutKey Name="切换歌词" Class="Lyrics operations">
+  <ShortcutKey Name="切换歌词" Class="歌词操作">
     <Condition> 按 上/下 方向键 </Condition>
     <Function> 切换选择 </Function>
   </ShortcutKey>
-  <ShortcutKey Name="歌词排序" Class="Lyrics operations">
+  <ShortcutKey Name="歌词排序" Class="歌词操作">
     <Condition> 按 S 键 </Condition>
     <Function> 歌词列表排序 </Function>
   </ShortcutKey>
-  <ShortcutKey Name="播放控制" Class="Player operations">
+  <ShortcutKey Name="播放控制" Class="播放器操作">
     <Condition> 按 P 键 </Condition>
     <Function> 播放 / 暂停 </Function>
   </ShortcutKey>
-  <ShortcutKey Name="快进快退半秒" Class="Player operations">
+  <ShortcutKey Name="快进快退半秒" Class="播放器操作">
     <Condition> 左 / 右 方向键 </Condition>
     <Function> 快进 / 快退 500毫秒 </Function>
   </ShortcutKey>
-  <ShortcutKey Name="快进快退5秒" Class="Player operations">
+  <ShortcutKey Name="快进快退5秒" Class="播放器操作">
     <Condition> Shift + 左 / 右 方向键 </Condition>
     <Function> 快进 / 快退 5秒 </Function>
   </ShortcutKey>
-  <ShortcutKey Name="新建文件" Class="File operations">
+  <ShortcutKey Name="新建文件" Class="文件操作">
     <Condition> Ctrl + N </Condition>
     <Function> 新建歌词文件 </Function>
   </ShortcutKey>
-  <ShortcutKey Name="打开音乐" Class="File operations">
+  <ShortcutKey Name="打开音乐" Class="文件操作">
     <Condition> Ctrl + M </Condition>
     <Function> 打开音乐文件 </Function>
   </ShortcutKey>
-  <ShortcutKey Name="打开歌词" Class="File operations">
+  <ShortcutKey Name="打开歌词" Class="文件操作">
     <Condition> Ctrl + L </Condition>
     <Function> 打开歌词文件 </Function>
   </ShortcutKey>
-  <ShortcutKey Name="保存歌词" Class="File operations">
+  <ShortcutKey Name="保存歌词" Class="文件操作">
     <Condition> Ctrl + S </Condition>
     <Function> 保存歌词文件 </Function>
   </ShortcutKey>
-  <ShortcutKey Name="另存为歌词" Class="File operations">
+  <ShortcutKey Name="另存为歌词" Class="文件操作">
     <Condition> Ctrl + Shift + S </Condition>
     <Function> 另存为 </Function>
   </ShortcutKey>
