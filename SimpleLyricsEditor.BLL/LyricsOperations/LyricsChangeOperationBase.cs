@@ -13,13 +13,8 @@ namespace SimpleLyricsEditor.BLL.LyricsOperations
             Items = items.ToList();
             Positions = new Dictionary<int, Lyric>();
 
-            for (var i = 0; i < TargetList.Count; i++)
-                foreach (var lyric in Items.Where(l => !Positions.Values.Contains(l)))
-                    if (TargetList[i].Equals(lyric))
-                    {
-                        Positions.Add(i, lyric);
-                        break;
-                    }
+            foreach (Lyric lyric in Items.Where(l => !Positions.ContainsValue(l)))
+                Positions.Add(TargetList.IndexOf(lyric), lyric);
         }
 
         public List<Lyric> Items { get; }
