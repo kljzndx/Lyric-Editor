@@ -12,7 +12,7 @@ namespace SimpleLyricsEditor.BLL.LyricsOperations
         private void ItemSort(int itemPosition)
         {
             for (int i = itemPosition; i > 0; i--)
-                if (TargetList[i].CompareTo(TargetList[i - 1]) > 0)
+                if (TargetList[i].CompareTo(TargetList[i - 1]) < 0)
                 {
                     TargetList.Insert(i + 1, TargetList[i - 1]);
                     TargetList.RemoveAt(i - 1);
