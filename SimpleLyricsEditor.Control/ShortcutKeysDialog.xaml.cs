@@ -4,6 +4,7 @@ using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Microsoft.Toolkit.Uwp.UI.Controls;
+using SimpleLyricsEditor.BLL;
 using SimpleLyricsEditor.DAL.Factory;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
@@ -25,8 +26,7 @@ namespace SimpleLyricsEditor.Control
 
         private async void ShortcutKeysDialog_Loaded(object sender, RoutedEventArgs e)
         {
-            StorageFile keysFile = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Data/ShortcutKeysDocument/ShortcutKeys.xml"));
-            string keysFileContent = await FileIO.ReadTextAsync(keysFile);
+            string keysFileContent = await new ShortcutKeysDocumentFileReader().GetFileContent();
             var keysClass = ShortcutKeysDeserializer.Deserialization(keysFileContent);
 
             foreach (var item in keysClass)
