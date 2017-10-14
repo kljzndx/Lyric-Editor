@@ -159,6 +159,11 @@ namespace SimpleLyricsEditor.Views
             await OpenLyricsFile();
         }
 
+        private void ShortcutKeysList_AppBarButton_Click(object sender, RoutedEventArgs e)
+        {
+            ShortcutKeysDialog.Show();
+        }
+
         private async void Save_AppBarButton_Click(object sender, RoutedEventArgs e)
         {
             await SaveFile();

@@ -27,7 +27,8 @@
         <SplitView.Content>
             <Grid>
                 <Frame x:Name="MainView_Frame" SourcePageType="local:MainPage"/>
-                <ctol:UpdateLogDialog x:Name="UpdateLogDialog" Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}" Margin="50" Visibility="Collapsed" Hided="UpdateLogDialog_Hided"/>
+                <ctol:UpdateLogDialog x:Name="UpdateLogDialog" Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}" Margin="30" Visibility="Collapsed" Hided="UpdateLogDialog_Hided"/>
+                <ctol:ShortcutKeysDialog x:Name="ShortcutKeysDialog" Margin="30" Visibility="Visible"/>
             </Grid>
         </SplitView.Content>
     </SplitView>
@@ -53,6 +54,7 @@
             </CommandBar.PrimaryCommands>
             
             <CommandBar.SecondaryCommands>
+                <AppBarButton x:Name="ShortcutKeysList_AppBarButton" x:Uid="/BottomBar/ShortcutKeysList_AppBarButton" Click="ShortcutKeysList_AppBarButton_Click"/>
                 <AppBarButton x:Name="UpdateLog_AppBarButton" x:Uid="/BottomBar/UpdateLog_AppBarButton" Click="UpdateLog_AppBarButton_Click"/>
                 <AppBarButton x:Name="GitHub_AppBarButton" Label="GitHub" Click="GitHub_AppBarButton_Click"/>
                 <AppBarButton x:Name="Settings_AppBarButton" x:Uid="/BottomBar/Settings_AppBarButton" Click="Settings_AppBarButton_Click"/>
