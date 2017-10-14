@@ -4,7 +4,7 @@ using Windows.Storage;
 
 namespace SimpleLyricsEditor.BLL
 {
-    public static class UpdateLogFilesIO
+    public static class UpdateLogFilesReader
     {
         private static readonly Uri AllLogsFolderUri = new Uri("ms-appx:///Data/UpdateLogs/");
         

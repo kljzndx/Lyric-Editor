@@ -35,7 +35,7 @@ namespace SimpleLyricsEditor.Control
         private async Task ReadLogContent(UpdateLog log)
         {
             if (String.IsNullOrEmpty(log.Content))
-                log.Content = await UpdateLogFilesIO.GetLogContent(log.FileName);
+                log.Content = await UpdateLogFilesReader.GetLogContent(log.FileName);
         }
 
         public void Show()
@@ -46,7 +46,7 @@ namespace SimpleLyricsEditor.Control
 
         private async void OnLoaded(object sender, RoutedEventArgs e)
         {
-            string json = await UpdateLogFilesIO.GetAllLogsJson();
+            string json = await UpdateLogFilesReader.GetAllLogsJson();
             var logs = UpdateLogDeserializer.Deserialization(json);
 
             foreach (UpdateLog log in logs)
