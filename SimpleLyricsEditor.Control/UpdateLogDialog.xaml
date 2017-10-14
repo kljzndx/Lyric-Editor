@@ -86,7 +86,7 @@
 
                     <TextBlock Grid.Row="2" Margin="0,10" TextAlignment="Right">
                         <Run>---</Run>
-                        <Run Text="{x:Bind SelectedLog.Date}"/>
+                        <Run Text="{x:Bind SelectedLog.Date, Mode=OneWay}"/>
                     </TextBlock>
                 </Grid>
             </PivotItem>
