@@ -4,19 +4,19 @@ using Windows.Storage;
 
 namespace SimpleLyricsEditor.BLL
 {
-    public static class UpdateLogFilesReader
+    public class UpdateLogFilesReader
     {
-        private static readonly Uri AllLogsFolderUri = new Uri("ms-appx:///Data/UpdateLogs/");
+        private readonly Uri _allLogsFolderUri = new Uri("ms-appx:///Data/UpdateLogs/");
         
-        public static async Task<string> GetAllLogsJson()
+        public async Task<string> GetAllLogsJson()
         {
-            StorageFile file = await StorageFile.GetFileFromApplicationUriAsync(new Uri(AllLogsFolderUri, "AllLogsPath.json"));
+            StorageFile file = await StorageFile.GetFileFromApplicationUriAsync(new Uri(_allLogsFolderUri, "AllLogsPath.json"));
             return await FileIO.ReadTextAsync(file);
         }
 
-        public static async Task<string> GetLogContent(string fileName)
+        public async Task<string> GetLogContent(string fileName)
         {
-            StorageFile file = await StorageFile.GetFileFromApplicationUriAsync(new Uri(AllLogsFolderUri, fileName));
+            StorageFile file = await StorageFile.GetFileFromApplicationUriAsync(new Uri(_allLogsFolderUri, fileName));
             return await FileIO.ReadTextAsync(file);
         }
     }
