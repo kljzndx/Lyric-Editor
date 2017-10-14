@@ -4,9 +4,9 @@ using Windows.Data.Json;
 
 namespace SimpleLyricsEditor.DAL.Factory
 {
-    public static class UpdateLogDeserializer
+    public class UpdateLogDeserializer
     {
-        public static IEnumerable<UpdateLog> Deserialization(string json)
+        public IEnumerable<UpdateLog> Deserialization(string json)
         {
             List<UpdateLog> logs = new List<UpdateLog>();
             JsonArray datas = JsonArray.Parse(json);

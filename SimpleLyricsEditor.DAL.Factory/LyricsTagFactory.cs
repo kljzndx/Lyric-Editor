@@ -3,9 +3,9 @@ using HappyStudio.UwpToolsLibrary.Information;
 
 namespace SimpleLyricsEditor.DAL.Factory
 {
-    public static class LyricsTagFactory
+    public class LyricsTagFactory
     {
-        public static List<LyricsTag> CreateTags()
+        public List<LyricsTag> CreateTags()
         {
             var list = new List<LyricsTag>
             {

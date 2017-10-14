@@ -5,9 +5,9 @@ using Windows.Data.Xml.Dom;
 
 namespace SimpleLyricsEditor.DAL.Factory
 {
-    public static class ShortcutKeysDeserializer
+    public class ShortcutKeysDeserializer
     {
-        public static IDictionary<string, IEnumerable<ShortcutKey>> Deserialization(string xml)
+        public IDictionary<string, IEnumerable<ShortcutKey>> Deserialization(string xml)
         {
             var result = new Dictionary<string, IEnumerable<ShortcutKey>>();
             List<ShortcutKey> currentClassList = new List<ShortcutKey>();
