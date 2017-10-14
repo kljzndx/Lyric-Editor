@@ -21,18 +21,21 @@ namespace SimpleLyricsEditor.DAL.Factory
                 string className = key.Attribute("Class").Value.Trim();
                 string condition = key.Element("Condition").Value.Trim();
                 string function = key.Element("Function").Value.Trim();
-
+                
                 if (!className.Equals(currentClassName))
                 {
-                    result.Add(currentClassName, currentClassList);
+                    if (!String.IsNullOrEmpty(currentClassName))
+                        result[currentClassName] = currentClassList;
                     currentClassName = className;
-                    currentClassList.Clear();
-                }
+                    currentClassList = new List<ShortcutKey>();
 
+                    result.Add(currentClassName, null);
+                }
+                
                 currentClassList.Add(new ShortcutKey(condition, function));
             }
 
-            result.Add(currentClassName, currentClassList);
+            result[currentClassName] = currentClassList;
             return result;
         }
     }
