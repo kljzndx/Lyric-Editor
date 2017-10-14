@@ -32,7 +32,7 @@ namespace SimpleLyricsEditor.DAL.Factory
             IEnumerable<string> lines)
         {
             List<Lyric> items = new List<Lyric>();
-            List<LyricsTag> tags = LyricsTagFactory.CreateTags();
+            List<LyricsTag> tags = new LyricsTagFactory().CreateTags();
             StringBuilder builder = new StringBuilder();
             Lyric item = null;
             bool isMatchTag = true;

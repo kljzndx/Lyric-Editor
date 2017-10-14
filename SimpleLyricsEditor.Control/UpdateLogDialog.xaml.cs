@@ -48,7 +48,7 @@ namespace SimpleLyricsEditor.Control
         private async void OnLoaded(object sender, RoutedEventArgs e)
         {
             string json = await _filesReader.GetAllLogsJson();
-            var logs = UpdateLogDeserializer.Deserialization(json);
+            var logs = new UpdateLogDeserializer().Deserialization(json);
 
             foreach (UpdateLog log in logs)
                 _allLogs.Add(log);

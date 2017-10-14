@@ -20,7 +20,7 @@ namespace SimpleLyricsEditor.ViewModels
 
         public MainViewModel()
         {
-            _lyricsTags = LyricsTagFactory.CreateTags();
+            _lyricsTags = new LyricsTagFactory().CreateTags();
             LyricItems = new ObservableCollection<Lyric>();
             UndoOperations = new ObservableCollection<LyricsOperationBase>();
             RedoOperations = new ObservableCollection<LyricsOperationBase>();

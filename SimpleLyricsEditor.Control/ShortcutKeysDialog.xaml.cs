@@ -27,7 +27,7 @@ namespace SimpleLyricsEditor.Control
         private async void ShortcutKeysDialog_Loaded(object sender, RoutedEventArgs e)
         {
             string keysFileContent = await new ShortcutKeysDocumentFileReader().GetFileContent();
-            var keysClass = ShortcutKeysDeserializer.Deserialization(keysFileContent);
+            var keysClass = new ShortcutKeysDeserializer().Deserialization(keysFileContent);
 
             foreach (var item in keysClass)
             {
