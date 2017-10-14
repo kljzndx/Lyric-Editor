@@ -28,7 +28,7 @@
             <Grid>
                 <Frame x:Name="MainView_Frame" SourcePageType="local:MainPage"/>
                 <ctol:UpdateLogDialog x:Name="UpdateLogDialog" Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}" Margin="30" Visibility="Collapsed" Hided="UpdateLogDialog_Hided"/>
-                <ctol:ShortcutKeysDialog x:Name="ShortcutKeysDialog" Margin="30" Visibility="Visible"/>
+                <ctol:ShortcutKeysDialog x:Name="ShortcutKeysDialog" Margin="30" Visibility="Collapsed"/>
             </Grid>
         </SplitView.Content>
     </SplitView>

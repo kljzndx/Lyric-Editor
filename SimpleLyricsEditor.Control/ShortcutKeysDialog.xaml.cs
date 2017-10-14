@@ -1,19 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
-using HappyStudio.UwpToolsLibrary.Control;
+using Microsoft.Toolkit.Uwp.UI.Controls;
 using SimpleLyricsEditor.DAL.Factory;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
@@ -24,12 +14,12 @@ namespace SimpleLyricsEditor.Control
     {
         public ShortcutKeysDialog()
         {
-            this.InitializeComponent();
+            InitializeComponent();
         }
 
         public void Show()
         {
-            this.Visibility = Visibility.Visible;
+            Visibility = Visibility.Visible;
             Show_Storyboard.Begin();
         }
 
@@ -50,7 +40,8 @@ namespace SimpleLyricsEditor.Control
                 Expander expander = new Expander
                 {
                     Header = item.Key,
-                    ExpandContent = listView
+                    Content = listView,
+                    Style = KeysClass_ExpanderStyle
                 };
 
                 KeysClass_StackPanel.Children.Add(expander);
@@ -64,7 +55,7 @@ namespace SimpleLyricsEditor.Control
 
         private void Hide_Storyboard_Completed(object sender, object e)
         {
-            this.Visibility = Visibility.Collapsed;
+            Visibility = Visibility.Collapsed;
         }
     }
 }

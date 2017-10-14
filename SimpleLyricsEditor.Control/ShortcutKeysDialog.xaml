@@ -3,6 +3,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:model="using:SimpleLyricsEditor.DAL"
+    xmlns:msctol="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
@@ -11,6 +12,11 @@
     Loaded="ShortcutKeysDialog_Loaded">
 
     <UserControl.Resources>
+        <Style x:Name="KeysClass_ExpanderStyle" x:Key="KeysClass_ExpanderStyle" TargetType="msctol:Expander">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+        </Style>
+        
         <Style x:Name="Keys_ListViewStyle" x:Key="Keys_ListViewStyle" TargetType="ListView">
             <Setter Property="ItemContainerStyle">
                 <Setter.Value>
