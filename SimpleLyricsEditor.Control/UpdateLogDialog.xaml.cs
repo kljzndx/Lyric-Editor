@@ -18,6 +18,7 @@ namespace SimpleLyricsEditor.Control
             nameof(SelectedLog), typeof(UpdateLog), typeof(UpdateLogDialog), new PropertyMetadata(null));
 
         private readonly ObservableCollection<UpdateLog> _allLogs = new ObservableCollection<UpdateLog>();
+        private readonly UpdateLogFilesReader _filesReader = new UpdateLogFilesReader();
 
         public UpdateLogDialog()
         {
@@ -35,7 +36,7 @@ namespace SimpleLyricsEditor.Control
         private async Task ReadLogContent(UpdateLog log)
         {
             if (String.IsNullOrEmpty(log.Content))
-                log.Content = await UpdateLogFilesReader.GetLogContent(log.FileName);
+                log.Content = await _filesReader.GetLogContent(log.FileName);
         }
 
         public void Show()
@@ -46,7 +47,7 @@ namespace SimpleLyricsEditor.Control
 
         private async void OnLoaded(object sender, RoutedEventArgs e)
         {
-            string json = await UpdateLogFilesReader.GetAllLogsJson();
+            string json = await _filesReader.GetAllLogsJson();
             var logs = UpdateLogDeserializer.Deserialization(json);
 
             foreach (UpdateLog log in logs)
