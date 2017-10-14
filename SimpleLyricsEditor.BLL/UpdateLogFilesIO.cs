@@ -7,11 +7,10 @@ namespace SimpleLyricsEditor.BLL
     public static class UpdateLogFilesIO
     {
         private static readonly Uri AllLogsFolderUri = new Uri("ms-appx:///Data/UpdateLogs/");
-        private static readonly Uri AllLogsFileUri = new Uri(AllLogsFolderUri, "AllLogsPath.json");
         
         public static async Task<string> GetAllLogsJson()
         {
-            StorageFile file = await StorageFile.GetFileFromApplicationUriAsync(AllLogsFileUri);
+            StorageFile file = await StorageFile.GetFileFromApplicationUriAsync(new Uri(AllLogsFolderUri, "AllLogsPath.json"));
             return await FileIO.ReadTextAsync(file);
         }
 
