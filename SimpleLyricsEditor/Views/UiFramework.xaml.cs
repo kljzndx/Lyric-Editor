@@ -9,6 +9,8 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Media;
 using HappyStudio.UwpToolsLibrary.Information;
+using JiuYouAdUniversal.Models;
+using Microsoft.Advertising.WinRT.UI;
 using SimpleLyricsEditor.BLL.Pickers;
 using SimpleLyricsEditor.Core;
 using SimpleLyricsEditor.Events;
@@ -30,7 +32,7 @@ namespace SimpleLyricsEditor.Views
         private readonly Settings _settings = Settings.Current;
         private StorageFile _lyricsFile;
         private StorageFile _musicFile;
-
+        
         public UiFramework()
         {
             InitializeComponent();
@@ -84,6 +86,13 @@ namespace SimpleLyricsEditor.Views
             LyricsFileSaveNotifier.SaveFile(file);
         }
 
+        private void HideAllAd()
+        {
+            _settings.SettingObject.Values["AdClickDate"] = DateTime.Today.ToString("yyyy MM dd");
+            AdArea_Grid.Visibility = Visibility.Collapsed;
+            MsAdControl.Suspend();
+        }
+
         private async void OnWindowKeyDown(object sender, GlobalKeyEventArgs e)
         {
             if (e.IsPressCtrl)
@@ -108,6 +117,9 @@ namespace SimpleLyricsEditor.Views
         {
             if (_settings.GetSetting("UpdateLogVersion", String.Empty) != AppInfo.Version)
                 UpdateLogDialog.Show();
+
+            if (_settings.GetSetting("AdClickDate", String.Empty) == DateTime.Today.ToString("yyyy MM dd"))
+                HideAllAd();
         }
 
         private void UpdateLogDialog_Hided(object sender, EventArgs e)
@@ -123,6 +135,37 @@ namespace SimpleLyricsEditor.Views
         private void OnLyricsFileChanged(object sender, FileChangeEventArgs e)
         {
             _lyricsFile = e.File;
+        }
+
+        private void MsAdControl_IsEngagedChanged(object sender, RoutedEventArgs e)
+        {
+            HideAllAd();
+        }
+
+        private void MsAdControl_ErrorOccurred(object sender, AdErrorEventArgs e)
+        {
+            MsAdControl.Visibility = Visibility.Collapsed;
+        }
+
+        private void MsAdControl_OnAdRefreshed(object sender, RoutedEventArgs e)
+        {
+            MsAdControl.Visibility = Visibility.Visible;
+            JyAdControl.Visibility = Visibility.Collapsed;
+        }
+
+        private void MsAdControl_PointerUp(object sender, RoutedEventArgs e)
+        {
+            HideAllAd();
+        }
+
+        private void JyAdControl_AdClick(object sender, AdClickEventArgs e)
+        {
+            HideAllAd();
+        }
+
+        private void JyAdControl_AdLoadingError(object sender, AdLoadingErrorEventArgs e)
+        {
+            JyAdControl.Visibility = Visibility.Collapsed;
         }
 
         private void NewFile_AppBarButton_Click(object sender, RoutedEventArgs e)

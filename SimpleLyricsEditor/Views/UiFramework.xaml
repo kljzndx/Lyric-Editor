@@ -4,6 +4,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:SimpleLyricsEditor.Views"
     xmlns:ctol="using:SimpleLyricsEditor.Control"
+    xmlns:msad="using:Microsoft.Advertising.WinRT.UI"
+    xmlns:jyad="using:JiuYouAdUniversal"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
@@ -27,6 +29,12 @@
         <SplitView.Content>
             <Grid>
                 <Frame x:Name="MainView_Frame" SourcePageType="local:MainPage"/>
+
+                <Grid x:Name="AdArea_Grid" HorizontalAlignment="Center" VerticalAlignment="Bottom">
+                    <msad:AdControl x:Name="MsAdControl" Width="300" Height="50" ApplicationId="9mx4frgq4rqs" AdUnitId="348294" AdRefreshed="MsAdControl_OnAdRefreshed" IsEngagedChanged="MsAdControl_IsEngagedChanged" OnPointerUp="MsAdControl_PointerUp" ErrorOccurred="MsAdControl_ErrorOccurred"/>
+                    <jyad:AdControl x:Name="JyAdControl" ApplicationKey="c6cef00ec55ffc57340a7507d1473f5f" AdClick="JyAdControl_AdClick" AdLoadingError="JyAdControl_AdLoadingError"/>
+                </Grid>
+                
                 <ctol:UpdateLogDialog x:Name="UpdateLogDialog" Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}" Margin="30" Visibility="Collapsed" Hided="UpdateLogDialog_Hided"/>
                 <ctol:ShortcutKeysDialog x:Name="ShortcutKeysDialog" Margin="30" Visibility="Collapsed"/>
             </Grid>

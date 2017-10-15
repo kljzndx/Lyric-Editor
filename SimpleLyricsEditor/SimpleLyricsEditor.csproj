@@ -264,8 +264,14 @@
     <PackageReference Include="HappyStudio.UwpToolsLibrary.Information">
       <Version>1.0.2</Version>
     </PackageReference>
+    <PackageReference Include="JYAdControl">
+      <Version>2.3.6</Version>
+    </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.0.1</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Services.Store.SDK">
+      <Version>10.1705.16001</Version>
     </PackageReference>
     <PackageReference Include="MvvmLight">
       <Version>5.3.0</Version>
@@ -301,7 +307,17 @@
       <Name>SimpleLyricsEditor.ValueConvert</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <SDKReference Include="Microsoft.Advertising.Xaml, Version=10.0">
+      <Name>Microsoft Advertising SDK for XAML</Name>
+    </SDKReference>
+    <SDKReference Include="Microsoft.Services.Store.Engagement, Version=10.0">
+      <Name>Microsoft Engagement Framework</Name>
+    </SDKReference>
+    <SDKReference Include="Microsoft.VCLibs, Version=14.0">
+      <Name>Visual C++ 2015 Runtime for Universal Windows Platform Apps</Name>
+    </SDKReference>
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
