@@ -54,6 +54,9 @@ namespace SimpleLyricsEditor.ViewModels
 
         public LyricsOperationBase CreateOperation(LyricsOperationBase operation)
         {
+            if (UndoOperations.Count >= 20)
+                UndoOperations.RemoveAt(19);
+
             UndoOperations.Insert(0, operation);
             RedoOperations.Clear();
 
@@ -131,9 +134,6 @@ namespace SimpleLyricsEditor.ViewModels
         private void UndoOperations_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             RaisePropertyChanged(nameof(CanUndo));
-
-            if (sender is ObservableCollection<LyricsOperationBase> list && list.Count > 20)
-                list.RemoveAt(20);
         }
 
         private void RedoOperations_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
