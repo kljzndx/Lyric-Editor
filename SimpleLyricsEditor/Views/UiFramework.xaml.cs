@@ -142,20 +142,21 @@ namespace SimpleLyricsEditor.Views
             HideAllAd();
         }
 
+        private void MsAdControl_PointerUp(object sender, RoutedEventArgs e)
+        {
+            HideAllAd();
+        }
+
         private void MsAdControl_ErrorOccurred(object sender, AdErrorEventArgs e)
         {
             MsAdControl.Visibility = Visibility.Collapsed;
+            JyAdControl.Visibility = Visibility.Visible;
         }
 
         private void MsAdControl_OnAdRefreshed(object sender, RoutedEventArgs e)
         {
             MsAdControl.Visibility = Visibility.Visible;
             JyAdControl.Visibility = Visibility.Collapsed;
-        }
-
-        private void MsAdControl_PointerUp(object sender, RoutedEventArgs e)
-        {
-            HideAllAd();
         }
 
         private void JyAdControl_AdClick(object sender, AdClickEventArgs e)
