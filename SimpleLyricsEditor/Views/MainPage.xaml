@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:model="using:SimpleLyricsEditor.DAL"
     xmlns:ctol="using:SimpleLyricsEditor.Control"
+    xmlns:pctol="using:HappyStudio.UwpToolsLibrary.Control"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
@@ -40,10 +41,15 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <ctol:AudioPlayer x:Name="Player" Playing="Player_Playing" Paused="Player_Paused" SourceChanged="Player_SourceChanged" PositionChanged="Player_PositionChanged"/>
-
-        <ctol:BlurBackgroundImage x:Name="BlurBackground" Grid.Row="1" Grid.RowSpan="2" BlurDegree="{x:Bind _settings.BackgroundBlurDegree, Mode=OneWay}" Opacity="{x:Bind _settings.BackgroundOpacity, Mode=OneWay}" Visibility="{x:Bind _settings.BackgroundVisibility, Mode=OneWay, Converter={StaticResource BoolToVisibility}}"/>
-
+        <Grid Background="{ThemeResource AppBarBackgroundThemeBrush}">
+            <pctol:FrostedGlassBackground GlassBackgroundBrush="{ThemeResource AppBarBackgroundThemeBrush}" GlassOpacity="{x:Bind _settings.FrostedGlassOpacity, Mode=OneWay}" Visibility="{x:Bind _settings.FrostedGlassVisibility, Mode=OneWay, Converter={StaticResource BoolToVisibility}}"/>
+            <ctol:AudioPlayer x:Name="Player" Playing="Player_Playing" Paused="Player_Paused" SourceChanged="Player_SourceChanged" PositionChanged="Player_PositionChanged"/>
+        </Grid>
+        <Grid Grid.Row="1" Grid.RowSpan="2">
+            <pctol:FrostedGlassBackground GlassBackgroundBrush="{ThemeResource ApplicationPageBackgroundThemeBrush}" GlassOpacity="{x:Bind _settings.FrostedGlassOpacity, Mode=OneWay}" Visibility="{x:Bind _settings.FrostedGlassVisibility, Mode=OneWay, Converter={StaticResource BoolToVisibility}}"/>
+            <ctol:BlurBackgroundImage x:Name="BlurBackground" BlurDegree="{x:Bind _settings.BackgroundBlurDegree, Mode=OneWay}" Opacity="{x:Bind _settings.BackgroundOpacity, Mode=OneWay}" Visibility="{x:Bind _settings.BackgroundVisibility, Mode=OneWay, Converter={StaticResource BoolToVisibility}}"/>
+        </Grid>
+        
         <Grid Grid.Row="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
