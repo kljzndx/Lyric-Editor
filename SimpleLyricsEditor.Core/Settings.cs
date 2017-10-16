@@ -12,7 +12,7 @@ namespace SimpleLyricsEditor.Core
         [SettingFieldByNormal(nameof(Volume), 1D)] private double _volume;
 
         [SettingFieldByNormal(nameof(FrostedGlassVisibility), true)] private bool _frostedGlassVisibility;
-        [SettingFieldByNormal(nameof(FrostedGlassOpacity), 0.4D)] private double _frostedGlassOpacity;
+        [SettingFieldByNormal(nameof(FrostedGlassOpacity), 0.65D)] private double _frostedGlassOpacity;
 
         [SettingFieldByEnum(nameof(PageTheme), typeof(ElementTheme), nameof(ElementTheme.Dark))] private ElementTheme _pageTheme;
         [SettingFieldByNormal(nameof(BackgroundVisibility), true)] private bool _backgroundVisibility;
