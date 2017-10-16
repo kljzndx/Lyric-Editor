@@ -32,6 +32,7 @@ namespace SimpleLyricsEditor.Views
         private readonly Settings _settings = Settings.Current;
         private StorageFile _lyricsFile;
         private StorageFile _musicFile;
+        private bool _isClickAd;
         
         public UiFramework()
         {
@@ -40,12 +41,16 @@ namespace SimpleLyricsEditor.Views
             GlobalKeyNotifier.KeyDown += OnWindowKeyDown;
             MusicFileNotifier.FileChanged += OnMusicFileFileChanged;
             LyricsFileChangeNotifier.FileChanged += OnLyricsFileChanged;
+            AdsVisibilityNotifier.Displayed += AdsVisibilityNotifier_Displayed;
+            AdsVisibilityNotifier.Hided += AdsVisibilityNotifier_Hided;
 
             if (ApiInformation.IsEventPresent(typeof(FlyoutBase).FullName, "Closing"))
                 OpenFile_MenuFlyout.Closing += (s, e) => OpenFile_AppBarToggleButton.IsChecked = false;
             else
                 OpenFile_MenuFlyout.Closed += (s, e) => OpenFile_AppBarToggleButton.IsChecked = false;
         }
+
+        #region Lyrics file operations
 
         private async Task OpenMusicFile()
         {
@@ -86,11 +91,13 @@ namespace SimpleLyricsEditor.Views
             LyricsFileSaveNotifier.SaveFile(file);
         }
 
-        private void HideAllAd()
+        #endregion
+
+        private void HideAllAds()
         {
             _settings.SettingObject.Values["AdClickDate"] = DateTime.Today.ToString("yyyy MM dd");
-            AdArea_Grid.Visibility = Visibility.Collapsed;
-            MsAdControl.Suspend();
+            _isClickAd = true;
+            AdsVisibilityNotifier.HideAds();
         }
 
         private async void OnWindowKeyDown(object sender, GlobalKeyEventArgs e)
@@ -119,14 +126,11 @@ namespace SimpleLyricsEditor.Views
                 UpdateLogDialog.Show();
 
             if (_settings.GetSetting("AdClickDate", String.Empty) == DateTime.Today.ToString("yyyy MM dd"))
-                HideAllAd();
+                HideAllAds();
         }
 
-        private void UpdateLogDialog_Hided(object sender, EventArgs e)
-        {
-            _settings.SettingObject.Values["UpdateLogVersion"] = AppInfo.Version;
-        }
-
+        #region Notifiers
+        
         private void OnMusicFileFileChanged(object sender, FileChangeEventArgs e)
         {
             _musicFile = e.File;
@@ -137,14 +141,38 @@ namespace SimpleLyricsEditor.Views
             _lyricsFile = e.File;
         }
 
+        private void AdsVisibilityNotifier_Displayed(object sender, EventArgs e)
+        {
+            if (_isClickAd)
+                return;
+
+            AdArea_Grid.Visibility = Visibility.Visible;
+            MsAdControl.Resume();
+        }
+
+        private void AdsVisibilityNotifier_Hided(object sender, EventArgs e)
+        {
+            MsAdControl.Suspend();
+            AdArea_Grid.Visibility = Visibility.Collapsed;
+        }
+
+        #endregion
+
+        private void UpdateLogDialog_Hided(object sender, EventArgs e)
+        {
+            _settings.SettingObject.Values["UpdateLogVersion"] = AppInfo.Version;
+        }
+
+        #region Ads
+
         private void MsAdControl_IsEngagedChanged(object sender, RoutedEventArgs e)
         {
-            HideAllAd();
+            HideAllAds();
         }
 
         private void MsAdControl_PointerUp(object sender, RoutedEventArgs e)
         {
-            HideAllAd();
+            HideAllAds();
         }
 
         private void MsAdControl_ErrorOccurred(object sender, AdErrorEventArgs e)
@@ -161,13 +189,17 @@ namespace SimpleLyricsEditor.Views
 
         private void JyAdControl_AdClick(object sender, AdClickEventArgs e)
         {
-            HideAllAd();
+            HideAllAds();
         }
 
         private void JyAdControl_AdLoadingError(object sender, AdLoadingErrorEventArgs e)
         {
             JyAdControl.Visibility = Visibility.Collapsed;
         }
+
+        #endregion
+
+        #region Bottom Bar
 
         private void NewFile_AppBarButton_Click(object sender, RoutedEventArgs e)
         {
@@ -203,11 +235,6 @@ namespace SimpleLyricsEditor.Views
             await OpenLyricsFile();
         }
 
-        private void ShortcutKeysList_AppBarButton_Click(object sender, RoutedEventArgs e)
-        {
-            ShortcutKeysDialog.Show();
-        }
-
         private async void Save_AppBarButton_Click(object sender, RoutedEventArgs e)
         {
             await SaveFile();
@@ -216,6 +243,13 @@ namespace SimpleLyricsEditor.Views
         private async void SaveAs_AppBarButton_Click(object sender, RoutedEventArgs e)
         {
             await SaveAs();
+        }
+
+        #region More Menu
+
+        private void ShortcutKeysList_AppBarButton_Click(object sender, RoutedEventArgs e)
+        {
+            ShortcutKeysDialog.Show();
         }
 
         private void UpdateLog_AppBarButton_Click(object sender, RoutedEventArgs e)
@@ -234,5 +268,9 @@ namespace SimpleLyricsEditor.Views
 
             SecondaryView_Frame.Navigate(typeof(SecondaryViewRootPage), SettingsPageModel);
         }
+
+        #endregion
+
+        #endregion
     }
 }

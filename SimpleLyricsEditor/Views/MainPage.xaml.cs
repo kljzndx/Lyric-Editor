@@ -170,6 +170,16 @@ namespace SimpleLyricsEditor.Views
             SinglePreview.Reposition(Player.Position);
         }
 
+        private void Player_Playing(AudioPlayer sender, EventArgs args)
+        {
+            AdsVisibilityNotifier.HideAds();
+        }
+
+        private void Player_Paused(AudioPlayer sender, EventArgs args)
+        {
+            AdsVisibilityNotifier.DisplayAds();
+        }
+
         private void Player_SourceChanged(AudioPlayer sender, MusicChangeEventArgs args)
         {
             if (_settings.IsFollowSongAlbumCover)
