@@ -91,7 +91,7 @@ namespace SimpleLyricsEditor.Views
                         _viewModel.Modify();
                         break;
                     case VirtualKey.S:
-                        _viewModel.Sort();
+                        _viewModel.Sort(_viewModel.LyricItems);
                         break;
                     case VirtualKey.Up:
                         Focus(FocusState.Pointer);
@@ -285,7 +285,7 @@ namespace SimpleLyricsEditor.Views
 
         private void LyricsSort_Button_Click(object sender, RoutedEventArgs e)
         {
-            _viewModel.Sort();
+            _viewModel.Sort(_viewModel.LyricItems);
         }
 
         #endregion
