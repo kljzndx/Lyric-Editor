@@ -18,12 +18,12 @@
             </Grid>
 
             <StackPanel Margin="0,5">
+                <Slider x:Uid="/BackgroundSettings/BackgroundOpacity_Slider" Value="{x:Bind _settings.BackgroundOpacity, Mode=TwoWay, Converter={StaticResource PercentageToDouble}}"/>
+                
                 <StackPanel>
                     <Slider x:Uid="/BackgroundSettings/BackgroundBlurDegree_Slider" Minimum="0" Value="{x:Bind _settings.BackgroundBlurDegree, Mode=TwoWay}" Maximum="20" IsEnabled="{x:Bind _settings.IsBlueUsability}"/>
                     <TextBlock x:Uid="/BackgroundSettings/BackgroundBlurNotAvailable_TextBlock" Foreground="Red" Visibility="{x:Bind _settings.IsBlueUsability, Converter={StaticResource BoolToVisibility_Reverse}}"/>
                 </StackPanel>
-                
-                <Slider x:Uid="/BackgroundSettings/BackgroundOpacity_Slider" Value="{x:Bind _settings.BackgroundOpacity, Mode=TwoWay, Converter={StaticResource PercentageToDouble}}"/>
             </StackPanel>
         </StackPanel>
 
