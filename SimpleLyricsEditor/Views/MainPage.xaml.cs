@@ -283,5 +283,17 @@ namespace SimpleLyricsEditor.Views
         {
             _viewModel.Sort();
         }
+
+        private void MultilineEditMode_Button_Click(object sender, RoutedEventArgs e)
+        {
+            Lyrics_ListView.SelectionMode = ListViewSelectionMode.Multiple;
+            _settings.MultilineEditModeEnabled = true;
+        }
+
+        private void ExitMultilineEditMode_Button_Click(object sender, RoutedEventArgs e)
+        {
+            Lyrics_ListView.SelectionMode = ListViewSelectionMode.Single;
+            _settings.MultilineEditModeEnabled = false;
+        }
     }
 }

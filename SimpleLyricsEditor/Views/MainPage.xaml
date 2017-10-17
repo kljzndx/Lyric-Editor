@@ -19,7 +19,7 @@
             <VisualStateGroup x:Name="ToolsBar">
                 <VisualState x:Name="PC">
                     <VisualState.Setters>
-                        <Setter Target="stackPanel.(Grid.Column)" Value="1"/>
+                        <Setter Target="LyricsEditToolsBar_StackPanel.(Grid.Column)" Value="1"/>
                     </VisualState.Setters>
                     <VisualState.StateTriggers>
                         <AdaptiveTrigger MinWindowWidth="641"/>
@@ -27,7 +27,7 @@
                 </VisualState>
                 <VisualState x:Name="Mobile">
                     <VisualState.Setters>
-                        <Setter Target="stackPanel.(Grid.Row)" Value="1"/>
+                        <Setter Target="LyricsEditToolsBar_StackPanel.(Grid.Row)" Value="1"/>
                     </VisualState.Setters>
                     <VisualState.StateTriggers>
                         <AdaptiveTrigger MinWindowWidth="0"/>
@@ -68,7 +68,10 @@
 
                 <TextBox x:Name="LyricsContent_TextBox" x:Uid="/LyricsEdit/LyricsContent_TextBox" Text="{x:Bind _viewModel.LyricContent, Mode=TwoWay}" TextWrapping="Wrap" VerticalAlignment="Center" GotFocus="LyricsContent_TextBox_GotFocus" LostFocus="LyricsContent_TextBox_LostFocus" KeyUp="LyricsContent_TextBox_KeyUp"/>
 
-                <StackPanel x:Name="stackPanel" Orientation="Horizontal" HorizontalAlignment="Center">
+                <StackPanel x:Name="LyricsEditToolsBar_StackPanel" Orientation="Horizontal" HorizontalAlignment="Center">
+                    <Button x:Name="MultilineEditMode_Button" x:Uid="/LyricsEdit/MultilineEditMode_Button" Content="&#xE0A2;" Style="{StaticResource ControllerButtonStyle}" Visibility="{x:Bind _settings.MultilineEditModeEnabled, Mode=OneWay, Converter={StaticResource BoolToVisibility_Reverse}}" Click="MultilineEditMode_Button_Click"/>
+                    <Button x:Name="ExitMultilineEditMode_Button" x:Uid="/LyricsEdit/ExitMultilineEditMode_Button" Content="&#xE081;" Style="{StaticResource ControllerButtonStyle}" Visibility="{x:Bind _settings.MultilineEditModeEnabled, Mode=OneWay, Converter={StaticResource BoolToVisibility}}" Click="ExitMultilineEditMode_Button_Click"/>
+                    
                     <Button x:Name="AddLyrics_Button" x:Uid="/LyricsEdit/AddLyrics_Button" Content="&#xE94D;" Style="{StaticResource ControllerButtonStyle}" Click="AddLyrics_Button_Click" RenderTransformOrigin="0.5,0.5">
                         <Button.RenderTransform>
                             <CompositeTransform x:Name="AddLyrics_Button_Transform" Rotation="180"/>

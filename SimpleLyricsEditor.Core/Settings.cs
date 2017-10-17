@@ -23,6 +23,8 @@ namespace SimpleLyricsEditor.Core
         [SettingFieldByNormal(nameof(BackgroundBlurDegree), 5D)] private double _backgroundBlurDegree;
         [SettingFieldByNormal(nameof(BackgroundOpacity), 0.3D)] private double _backgroundOpacity;
 
+        [SettingFieldByNormal(nameof(MultilineEditModeEnabled), false)] private bool _multilineEditModeEnabled;
+
         [SettingFieldByNormal(nameof(PreviewBackgroundOpacity), 0.3)] private double _previewBackgroundOpacity;
         [SettingFieldByNormal(nameof(SinglePreviewFontSize), 20D)] private double _singlePreviewFontSize;
 
@@ -124,6 +126,12 @@ namespace SimpleLyricsEditor.Core
                     return 0D;
             }
             set => SetSetting(ref _backgroundBlurDegree, value);
+        }
+
+        public bool MultilineEditModeEnabled
+        {
+            get => _multilineEditModeEnabled;
+            set => SetSetting(ref _multilineEditModeEnabled, value);
         }
         
         public double PreviewBackgroundOpacity
