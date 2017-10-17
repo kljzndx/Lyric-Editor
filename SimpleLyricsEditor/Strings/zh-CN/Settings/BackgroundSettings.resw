@@ -120,20 +120,14 @@
   <data name="BackgroundBlurDegree_Slider.Header" xml:space="preserve">
     <value>背景模糊度</value>
   </data>
+  <data name="BackgroundDisplay_ToggleSwitch.Header" xml:space="preserve">
+    <value>背景显示</value>
+  </data>
   <data name="BackgroundImageFilePath_TextBox.Header" xml:space="preserve">
     <value>背景图片路径</value>
   </data>
   <data name="BackgroundOpacity_Slider.Header" xml:space="preserve">
     <value>背景不透明度</value>
-  </data>
-  <data name="BackgroundVisibility_ToggleSwitch.Header" xml:space="preserve">
-    <value>背景可见性</value>
-  </data>
-  <data name="BackgroundVisibility_ToggleSwitch.OffContent" xml:space="preserve">
-    <value>隐藏</value>
-  </data>
-  <data name="BackgroundVisibility_ToggleSwitch.OnContent" xml:space="preserve">
-    <value>显示</value>
   </data>
   <data name="FollowSongAlbumCover_ToggleSwitch.Header" xml:space="preserve">
     <value>跟随歌曲专辑封面</value>
