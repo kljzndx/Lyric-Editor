@@ -120,6 +120,9 @@
   <data name="BackgroundBlurDegree_Slider.Header" xml:space="preserve">
     <value>背景模糊度</value>
   </data>
+  <data name="BackgroundBlurNotAvailable_TextBlock.Text" xml:space="preserve">
+    <value>背景模糊效果只支持 Win10 1607 及以上版本</value>
+  </data>
   <data name="BackgroundDisplay_ToggleSwitch.Header" xml:space="preserve">
     <value>背景显示</value>
   </data>
@@ -131,6 +134,15 @@
   </data>
   <data name="FollowSongAlbumCover_ToggleSwitch.Header" xml:space="preserve">
     <value>跟随歌曲专辑封面</value>
+  </data>
+  <data name="FrostedGlassEffect_ToggleSwitch.Header" xml:space="preserve">
+    <value>毛玻璃效果</value>
+  </data>
+  <data name="FrostedGlassNotAvailable_TextBlock.Text" xml:space="preserve">
+    <value>毛玻璃效果只支持 Win10 1703 及以上版本</value>
+  </data>
+  <data name="FrostedGlassOpacity_Slider.Header" xml:space="preserve">
+    <value>毛玻璃不透明度</value>
   </data>
   <data name="Title" xml:space="preserve">
     <value>背景</value>
