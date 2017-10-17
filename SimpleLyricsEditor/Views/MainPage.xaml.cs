@@ -285,7 +285,7 @@ namespace SimpleLyricsEditor.Views
 
         private void LyricsSort_Button_Click(object sender, RoutedEventArgs e)
         {
-            _viewModel.Sort(_viewModel.LyricItems);
+            _viewModel.Sort();
         }
 
         #endregion
