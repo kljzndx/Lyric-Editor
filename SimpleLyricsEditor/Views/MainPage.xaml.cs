@@ -46,50 +46,6 @@ namespace SimpleLyricsEditor.Views
             ImageFileNotifier.FileChanged += ImageFileChanged;
         }
 
-        private void Settings_PropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName == "IsFollowSongAlbumCover")
-                if (_settings.IsFollowSongAlbumCover)
-                {
-                    if (!Player.Source.Equals(Music.Empty))
-                        BlurBackground.Source = Player.Source.AlbumImage;
-                }
-                else if (BlurBackground.Source == Player.Source.AlbumImage)
-                {
-                    BlurBackground.Source = _backgroundImageSource;
-                }
-        }
-
-        private async void MainPage_Loaded(object sender, RoutedEventArgs e)
-        {
-            // 提取V2系列版本的背景图
-            if (_settings.SettingObject.Values.ContainsKey("LocalBackgroundImagePath") &&
-                !String.IsNullOrEmpty(_settings.SettingObject.Values["LocalBackgroundImagePath"].ToString()))
-            {
-                StorageFile oldfile = await StorageApplicationPermissions.FutureAccessList.GetFileAsync("BackgroundImage");
-                StorageApplicationPermissions.FutureAccessList.Remove("BackgroundImage");
-
-                await oldfile.CopyAsync(ApplicationData.Current.LocalFolder, "Background.img",
-                    NameCollisionOption.ReplaceExisting);
-
-                _settings.RenameSettingKey("LocalBackgroundImagePath", nameof(_settings.BackgroundImagePath));
-            }
-
-            StorageFile file =
-                await ApplicationData.Current.LocalFolder.TryGetItemAsync("Background.img") as StorageFile;
-            if (file != null)
-            {
-                BitmapImage image = new BitmapImage();
-                image.SetSource(await file.OpenAsync(FileAccessMode.Read));
-                _backgroundImageSource = image;
-                BlurBackground.Source = image;
-            }
-            else if (!String.IsNullOrEmpty(_settings.BackgroundImagePath))
-            {
-                _settings.BackgroundImagePath = String.Empty;
-            }
-        }
-
         private void WindowKeyDown(object sender, GlobalKeyEventArgs e)
         {
             _isPressCtrl = e.IsPressCtrl;
@@ -165,10 +121,61 @@ namespace SimpleLyricsEditor.Views
                 AddLyrics_Button_Transform.Rotation = 180;
         }
 
+        private async void MainPage_Loaded(object sender, RoutedEventArgs e)
+        {
+            // 提取V2系列版本的背景图
+            if (_settings.SettingObject.Values.ContainsKey("LocalBackgroundImagePath") &&
+                !String.IsNullOrEmpty(_settings.SettingObject.Values["LocalBackgroundImagePath"].ToString()))
+            {
+                StorageFile oldfile = await StorageApplicationPermissions.FutureAccessList.GetFileAsync("BackgroundImage");
+                StorageApplicationPermissions.FutureAccessList.Remove("BackgroundImage");
+
+                await oldfile.CopyAsync(ApplicationData.Current.LocalFolder, "Background.img", NameCollisionOption.ReplaceExisting);
+
+                _settings.RenameSettingKey("LocalBackgroundImagePath", nameof(_settings.BackgroundImagePath));
+            }
+
+            StorageFile file =
+                await ApplicationData.Current.LocalFolder.TryGetItemAsync("Background.img") as StorageFile;
+            if (file != null)
+            {
+                BitmapImage image = new BitmapImage();
+                image.SetSource(await file.OpenAsync(FileAccessMode.Read));
+                _backgroundImageSource = image;
+                BlurBackground.Source = image;
+            }
+            else if (!String.IsNullOrEmpty(_settings.BackgroundImagePath))
+            {
+                _settings.BackgroundImagePath = String.Empty;
+            }
+        }
+
         private void UndoOperations_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             SinglePreview.Reposition(Player.Position);
         }
+
+        private void Settings_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "IsFollowSongAlbumCover")
+                if (_settings.IsFollowSongAlbumCover)
+                {
+                    if (!Player.Source.Equals(Music.Empty))
+                        BlurBackground.Source = Player.Source.AlbumImage;
+                }
+                else if (BlurBackground.Source == Player.Source.AlbumImage)
+                {
+                    BlurBackground.Source = _backgroundImageSource;
+                }
+        }
+
+        private void ImageFileChanged(object sender, ImageFileChangeEventArgs e)
+        {
+            _backgroundImageSource = e.Source;
+            BlurBackground.Source = _backgroundImageSource;
+        }
+
+        #region Player
 
         private void Player_Playing(AudioPlayer sender, EventArgs args)
         {
@@ -196,11 +203,9 @@ namespace SimpleLyricsEditor.Views
                 SinglePreview.RefreshLyric(args.Position);
         }
 
-        private void ImageFileChanged(object sender, ImageFileChangeEventArgs e)
-        {
-            _backgroundImageSource = e.Source;
-            BlurBackground.Source = _backgroundImageSource;
-        }
+        #endregion
+
+        #region Lyrics content input box
 
         private void LyricsContent_TextBox_GotFocus(object sender, RoutedEventArgs e)
         {
@@ -237,6 +242,22 @@ namespace SimpleLyricsEditor.Views
                 }
         }
 
+        #endregion
+
+        #region Lyrics edit tools
+
+        private void MultilineEditMode_Button_Click(object sender, RoutedEventArgs e)
+        {
+            Lyrics_ListView.SelectionMode = ListViewSelectionMode.Multiple;
+            _settings.MultilineEditModeEnabled = true;
+        }
+
+        private void ExitMultilineEditMode_Button_Click(object sender, RoutedEventArgs e)
+        {
+            Lyrics_ListView.SelectionMode = ListViewSelectionMode.Single;
+            _settings.MultilineEditModeEnabled = false;
+        }
+
         private void AddLyrics_Button_Click(object sender, RoutedEventArgs e)
         {
             _viewModel.Add(Lyrics_ListView.SelectedIndex, Player.Position, _isPressShift);
@@ -262,6 +283,15 @@ namespace SimpleLyricsEditor.Views
             _viewModel.Modify();
         }
 
+        private void LyricsSort_Button_Click(object sender, RoutedEventArgs e)
+        {
+            _viewModel.Sort();
+        }
+
+        #endregion
+
+        #region List view
+
         private void Lyrics_ListView_GotFocus(object sender, RoutedEventArgs e)
         {
             _lyricsListGotFocus = true;
@@ -279,21 +309,6 @@ namespace SimpleLyricsEditor.Views
                 : String.Empty;
         }
 
-        private void LyricsSort_Button_Click(object sender, RoutedEventArgs e)
-        {
-            _viewModel.Sort();
-        }
-
-        private void MultilineEditMode_Button_Click(object sender, RoutedEventArgs e)
-        {
-            Lyrics_ListView.SelectionMode = ListViewSelectionMode.Multiple;
-            _settings.MultilineEditModeEnabled = true;
-        }
-
-        private void ExitMultilineEditMode_Button_Click(object sender, RoutedEventArgs e)
-        {
-            Lyrics_ListView.SelectionMode = ListViewSelectionMode.Single;
-            _settings.MultilineEditModeEnabled = false;
-        }
+        #endregion
     }
 }
