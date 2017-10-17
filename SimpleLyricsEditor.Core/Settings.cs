@@ -2,6 +2,7 @@
 using Windows.UI.Xaml;
 using HappyStudio.UwpToolsLibrary.Auxiliarys;
 using HappyStudio.UwpToolsLibrary.Auxiliarys.Attributes;
+using HappyStudio.UwpToolsLibrary.Information;
 
 namespace SimpleLyricsEditor.Core
 {
@@ -11,11 +12,12 @@ namespace SimpleLyricsEditor.Core
         [SettingFieldByNormal(nameof(Balance), 0D)] private double _balance;
         [SettingFieldByNormal(nameof(Volume), 1D)] private double _volume;
 
-        [SettingFieldByNormal(nameof(FrostedGlassVisibility), true)] private bool _frostedGlassVisibility;
+        [SettingFieldByEnum(nameof(PageTheme), typeof(ElementTheme), nameof(ElementTheme.Dark))] private ElementTheme _pageTheme;
+
+        [SettingFieldByNormal(nameof(IsFrostedGlassEffectDisplay), true)] private bool _isFrostedGlassEffectDisplay;
         [SettingFieldByNormal(nameof(FrostedGlassOpacity), 0.65D)] private double _frostedGlassOpacity;
 
-        [SettingFieldByEnum(nameof(PageTheme), typeof(ElementTheme), nameof(ElementTheme.Dark))] private ElementTheme _pageTheme;
-        [SettingFieldByNormal(nameof(BackgroundVisibility), true)] private bool _backgroundVisibility;
+        [SettingFieldByNormal(nameof(IsDisplayBackground), true)] private bool _isDisplayBackground;
         [SettingFieldByNormal(nameof(IsFollowSongAlbumCover),  true)] private bool _isFollowSongAlbumCover;
         [SettingFieldByNormal(nameof(BackgroundImagePath), "")] private string _backgroundImagePath;
         [SettingFieldByNormal(nameof(BackgroundBlurDegree), 5D)] private double _backgroundBlurDegree;
@@ -26,7 +28,7 @@ namespace SimpleLyricsEditor.Core
 
         private Settings()
         {
-            base.RenameSettingKey("IsDisplayBackground", nameof(BackgroundVisibility));
+            base.RenameSettingKey("IsDisplayBackground", nameof(IsDisplayBackground));
             if (base.SettingObject.Values.ContainsKey("BackgroundSourceType"))
                 base.SettingObject.Values.Remove("BackgroundSourceType");
             
@@ -53,6 +55,9 @@ namespace SimpleLyricsEditor.Core
             set => SetSetting(ref _volume, value);
         }
 
+        public bool IsLightTheme => PageTheme == ElementTheme.Light || 
+                                    PageTheme == ElementTheme.Default && Application.Current.RequestedTheme == ApplicationTheme.Light;
+        
         public ElementTheme PageTheme
         {
             get => _pageTheme;
@@ -63,13 +68,18 @@ namespace SimpleLyricsEditor.Core
             }
         }
 
-        public bool IsLightTheme => PageTheme == ElementTheme.Light || 
-                                    PageTheme == ElementTheme.Default && Application.Current.RequestedTheme == ApplicationTheme.Light;
-        
-        public bool FrostedGlassVisibility
+        public bool IsFrostedGlassUsability => SystemInfo.BuildVersion >= 15063;
+
+        public bool IsFrostedGlassEffectDisplay
         {
-            get => _frostedGlassVisibility;
-            set => SetSetting(ref _frostedGlassVisibility, value);
+            get
+            {
+                if (IsFrostedGlassUsability)
+                    return _isFrostedGlassEffectDisplay;
+                else
+                    return false;
+            }
+            set => SetSetting(ref _isFrostedGlassEffectDisplay, value);
         }
 
         public double FrostedGlassOpacity
@@ -78,11 +88,12 @@ namespace SimpleLyricsEditor.Core
             set => SetSetting(ref _frostedGlassOpacity, value);
         }
 
-        public bool BackgroundVisibility
+        public bool IsDisplayBackground
         {
-            get => _backgroundVisibility;
-            set => SetSetting(ref _backgroundVisibility, value);
+            get => _isDisplayBackground;
+            set => SetSetting(ref _isDisplayBackground, value);
         }
+
         public bool IsFollowSongAlbumCover
         {
             get => _isFollowSongAlbumCover;
@@ -101,9 +112,17 @@ namespace SimpleLyricsEditor.Core
             set => SetSetting(ref _backgroundOpacity, value);
         }
 
+        public bool IsBlueUsability => SystemInfo.BuildVersion >= 14393;
+
         public double BackgroundBlurDegree
         {
-            get => _backgroundBlurDegree;
+            get
+            {
+                if (IsBlueUsability)
+                    return _backgroundBlurDegree;
+                else
+                    return 0D;
+            }
             set => SetSetting(ref _backgroundBlurDegree, value);
         }
         
