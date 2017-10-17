@@ -7,9 +7,9 @@
     mc:Ignorable="d">
 
     <StackPanel>
-        <ToggleSwitch x:Uid="/BackgroundSettings/BackgroundVisibility_ToggleSwitch" IsOn="{x:Bind _settings.BackgroundVisibility, Mode=TwoWay}"/>
+        <ToggleSwitch x:Uid="/BackgroundSettings/BackgroundDisplay_ToggleSwitch" IsOn="{x:Bind _settings.IsDisplayBackground, Mode=TwoWay}"/>
         
-        <StackPanel Margin="0,10,0,0" Visibility="{x:Bind _settings.BackgroundVisibility, Mode=OneWay, Converter={StaticResource BoolToVisibility}}">
+        <StackPanel Margin="0,10,0,0" Visibility="{x:Bind _settings.IsDisplayBackground, Mode=OneWay, Converter={StaticResource BoolToVisibility}}">
             <ToggleSwitch x:Uid="/BackgroundSettings/FollowSongAlbumCover_ToggleSwitch" IsOn="{x:Bind _settings.IsFollowSongAlbumCover, Mode=TwoWay}"/>
             
             <Grid Margin="0,10,0,0">
