@@ -121,7 +121,7 @@
     <value>背景模糊度</value>
   </data>
   <data name="BackgroundBlurNotAvailable_TextBlock.Text" xml:space="preserve">
-    <value>背景模糊效果只支持 Win10 1607 及以上版本</value>
+    <value>仅支持 Win10 1607 及以上版本</value>
   </data>
   <data name="BackgroundDisplay_ToggleSwitch.Header" xml:space="preserve">
     <value>背景显示</value>
@@ -139,7 +139,7 @@
     <value>毛玻璃效果</value>
   </data>
   <data name="FrostedGlassNotAvailable_TextBlock.Text" xml:space="preserve">
-    <value>毛玻璃效果只支持 Win10 1703 及以上版本</value>
+    <value>仅支持 Win10 1703 及以上版本</value>
   </data>
   <data name="FrostedGlassOpacity_Slider.Header" xml:space="preserve">
     <value>毛玻璃不透明度</value>
