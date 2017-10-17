@@ -55,7 +55,7 @@ namespace SimpleLyricsEditor.ViewModels
         public LyricsOperationBase CreateOperation(LyricsOperationBase operation)
         {
             if (UndoOperations.Count >= 20)
-                UndoOperations.RemoveAt(19);
+                UndoOperations.Remove(UndoOperations.Last());
 
             UndoOperations.Insert(0, operation);
             RedoOperations.Clear();
@@ -125,9 +125,9 @@ namespace SimpleLyricsEditor.ViewModels
             opt.Do();
         }
 
-        public void Sort()
+        public void Sort(IEnumerable<Lyric> items)
         {
-            var opt = CreateOperation(new Sort(SelectedItems.Any() ? SelectedItems.Cast<Lyric>() : LyricItems, LyricItems));
+            var opt = CreateOperation(new Sort(items, LyricItems));
             opt.Do();
         }
 
