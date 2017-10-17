@@ -9,18 +9,29 @@
     <StackPanel>
         <ToggleSwitch x:Uid="/BackgroundSettings/BackgroundDisplay_ToggleSwitch" IsOn="{x:Bind _settings.IsDisplayBackground, Mode=TwoWay}"/>
         
-        <StackPanel Margin="0,10,0,0" Visibility="{x:Bind _settings.IsDisplayBackground, Mode=OneWay, Converter={StaticResource BoolToVisibility}}">
+        <StackPanel Margin="0,5" Visibility="{x:Bind _settings.IsDisplayBackground, Mode=OneWay, Converter={StaticResource BoolToVisibility}}">
             <ToggleSwitch x:Uid="/BackgroundSettings/FollowSongAlbumCover_ToggleSwitch" IsOn="{x:Bind _settings.IsFollowSongAlbumCover, Mode=TwoWay}"/>
             
-            <Grid Margin="0,10,0,0">
+            <Grid Margin="0,5">
                 <TextBox x:Uid="/BackgroundSettings/BackgroundImageFilePath_TextBox" Text="{x:Bind _settings.BackgroundImagePath, Mode=OneWay}"/>
-                <Rectangle x:Name="LocalImagePath_Rectangle" Fill="#33FFFFFF" Tapped="LocalImagePath_Rectangle_Tapped"/>
+                <Rectangle x:Name="LocalImagePath_Rectangle" Fill="Transparent" Tapped="LocalImagePath_Rectangle_Tapped"/>
             </Grid>
 
-            <StackPanel Margin="0,10,0,0">
-                <Slider x:Uid="/BackgroundSettings/BackgroundBlurDegree_Slider" Minimum="0" Value="{x:Bind _settings.BackgroundBlurDegree, Mode=TwoWay}" Maximum="20"/>
+            <StackPanel Margin="0,5">
+                <StackPanel>
+                    <Slider x:Uid="/BackgroundSettings/BackgroundBlurDegree_Slider" Minimum="0" Value="{x:Bind _settings.BackgroundBlurDegree, Mode=TwoWay}" Maximum="20" IsEnabled="{x:Bind _settings.IsBlueUsability}"/>
+                    <TextBlock x:Uid="/BackgroundSettings/BackgroundBlurNotAvailable_TextBlock" Foreground="Red" Visibility="{x:Bind _settings.IsBlueUsability, Converter={StaticResource BoolToVisibility_Reverse}}"/>
+                </StackPanel>
+                
                 <Slider x:Uid="/BackgroundSettings/BackgroundOpacity_Slider" Value="{x:Bind _settings.BackgroundOpacity, Mode=TwoWay, Converter={StaticResource PercentageToDouble}}"/>
             </StackPanel>
         </StackPanel>
+
+        <StackPanel Margin="0,5">
+            <ToggleSwitch x:Uid="/BackgroundSettings/FrostedGlassEffect_ToggleSwitch" IsOn="{x:Bind _settings.IsFrostedGlassEffectDisplay, Mode=TwoWay}" IsEnabled="{x:Bind _settings.IsFrostedGlassUsability}"/>
+            <TextBlock x:Uid="/BackgroundSettings/FrostedGlassNotAvailable_TextBlock" Foreground="Red" Visibility="{x:Bind _settings.IsFrostedGlassUsability, Converter={StaticResource BoolToVisibility_Reverse}}"/>
+        </StackPanel>
+        <Slider x:Uid="/BackgroundSettings/FrostedGlassOpacity_Slider" Value="{x:Bind _settings.FrostedGlassOpacity, Mode=TwoWay, Converter={StaticResource PercentageToDouble}}" Visibility="{x:Bind _settings.IsFrostedGlassEffectDisplay, Mode=OneWay, Converter={StaticResource BoolToVisibility}}"/>
+        
     </StackPanel>
 </Page>
