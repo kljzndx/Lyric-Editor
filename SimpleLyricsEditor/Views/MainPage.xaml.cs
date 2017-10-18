@@ -157,7 +157,7 @@ namespace SimpleLyricsEditor.Views
 
         private void Settings_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == "IsFollowSongAlbumCover")
+            if (e.PropertyName.Equals(nameof(_settings.IsFollowSongAlbumCover)))
                 if (_settings.IsFollowSongAlbumCover)
                 {
                     if (!Player.Source.Equals(Music.Empty))
