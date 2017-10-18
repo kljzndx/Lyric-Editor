@@ -170,6 +170,30 @@ namespace SimpleLyricsEditor.Views
             _settings.SettingObject.Values["UpdateLogVersion"] = AppInfo.Version;
         }
 
+        #region Fast menu
+
+        private async void OpenMusicFile_Button_Click(object sender, RoutedEventArgs e)
+        {
+            await OpenMusicFile();
+        }
+
+        private async void OpenLyricsFile_Button_Click(object sender, RoutedEventArgs e)
+        {
+            await OpenLyricsFile();
+        }
+
+        private void HideThisMenu_Button_Click(object sender, RoutedEventArgs e)
+        {
+            FastMenuFadeOut_Storyboard.Begin();
+        }
+
+        private void FastMenuFadeOut_Storyboard_Completed(object sender, object e)
+        {
+            FastMenu_StackPanel.Visibility = Visibility.Collapsed;
+        }
+
+        #endregion
+
         #region Ads
 
         private void MsAdControl_IsEngagedChanged(object sender, RoutedEventArgs e)
