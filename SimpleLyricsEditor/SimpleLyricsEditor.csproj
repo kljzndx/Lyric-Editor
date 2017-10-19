@@ -129,8 +129,8 @@
       <SubType>Designer</SubType>
     </AppxManifest>
     <Content Include="Data\UpdateLogs\AllLogsPath.json" />
-    <Content Include="Data\UpdateLogs\v3.0.lang-zh-CN.md" />
-    <Content Include="Data\UpdateLogs\v3.0.3.lang-zh-CN.md" />
+    <Content Include="Data\UpdateLogs\zh-CN\v3.0.md" />
+    <Content Include="Data\UpdateLogs\zh-CN\v3.0.3.md" />
     <None Include="SimpleLyricsEditor_StoreKey.pfx" />
     <None Include="SimpleLyricsEditor_TemporaryKey.pfx" />
     <PRIResource Include="Strings\zh-CN\ErrorInfo.resw" />
