@@ -1,5 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ShortcutKeys>
+  <ShortcutKey Name="撤销" Class="歌词操作">
+    <Condition> Ctrl + Z </Condition>
+    <Function> 撤销 </Function>
+  </ShortcutKey>
+  <ShortcutKey Name="重做" Class="歌词操作">
+    <Condition> Ctrl + Y </Condition>
+    <Function> 重做 </Function>
+  </ShortcutKey>
   <ShortcutKey Name="输入框内加歌词" Class="歌词操作">
     <Condition> 在输入框内按 Ctrl + Enter </Condition>
     <Function> 添加歌词 </Function>

@@ -1,5 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ShortcutKeys>
+  <ShortcutKey Name="撤销" Class="Lyrics operations">
+    <Condition> Ctrl + Z </Condition>
+    <Function> Undo </Function>
+  </ShortcutKey>
+  <ShortcutKey Name="重做" Class="Lyrics operations">
+    <Condition> Ctrl + Y </Condition>
+    <Function> Redo </Function>
+  </ShortcutKey>
   <ShortcutKey Name="输入框内加歌词" Class="Lyrics operations">
     <Condition> press Ctrl + Enter In Lyric input box </Condition>
     <Function> Add Lyric </Function>
