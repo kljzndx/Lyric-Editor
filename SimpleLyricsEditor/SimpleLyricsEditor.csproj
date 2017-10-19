@@ -132,6 +132,8 @@
     <Content Include="Data\UpdateLogs\v3.0.lang-zh-CN.md" />
     <None Include="SimpleLyricsEditor_StoreKey.pfx" />
     <None Include="SimpleLyricsEditor_TemporaryKey.pfx" />
+    <PRIResource Include="Strings\zh-CN\ErrorInfo.resw" />
+    <PRIResource Include="Strings\en-US\ErrorInfo.resw" />
     <PRIResource Include="Strings\zh-CN\FastMenu.resw" />
     <PRIResource Include="Strings\en-US\FastMenu.resw" />
     <PRIResource Include="Strings\zh-CN\Ads.resw" />
