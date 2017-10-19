@@ -54,7 +54,6 @@ namespace SimpleLyricsEditor.Control
                 _allLogs.Add(log);
 
             SelectedLog = _allLogs.First();
-            await ReadLogContent(SelectedLog);
         }
 
         private async void AllVersions_ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)

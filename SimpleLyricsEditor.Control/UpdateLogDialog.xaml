@@ -91,7 +91,7 @@
                 </Grid>
             </PivotItem>
             <PivotItem x:Uid="/UpdateLogDialog/AllVersions_PivotItem" Header="All versions">
-                <ListView x:Name="AllVersions_ListView" ItemsSource="{x:Bind _allLogs}" SelectionChanged="AllVersions_ListView_SelectionChanged">
+                <ListView x:Name="AllVersions_ListView" ItemsSource="{x:Bind _allLogs}" SelectedItem="{x:Bind SelectedLog, Mode=OneWay}" SelectionChanged="AllVersions_ListView_SelectionChanged">
                     <ListView.ItemContainerStyle>
                         <Style TargetType="ListViewItem">
                             <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
