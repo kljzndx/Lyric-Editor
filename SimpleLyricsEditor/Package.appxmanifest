@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" IgnorableNamespaces="uap mp">
-  <Identity Name="22643.SimpleLyricEditor" Publisher="CN=7A99FA60-940D-46A9-B3FA-D93317D891AB" Version="3.0.0.0" />
+  <Identity Name="22643.SimpleLyricEditor" Publisher="CN=7A99FA60-940D-46A9-B3FA-D93317D891AB" Version="3.0.4.0" />
   <mp:PhoneIdentity PhoneProductId="96dd206e-550a-4915-ab2d-8439cd19335e" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
     <DisplayName>ms-resource:///App/Name</DisplayName>
@@ -15,7 +15,7 @@
   </Resources>
   <Applications>
     <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="SimpleLyricsEditor.App">
-      <uap:VisualElements DisplayName="ms-resource:///App/Name" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" Description="hhhhfff" BackgroundColor="transparent">
+      <uap:VisualElements DisplayName="ms-resource:///App/Name" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" Description="A Simple Lyrics Editor" BackgroundColor="transparent">
         <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png" Square310x310Logo="Assets/Square310x310Logo.png" Square71x71Logo="Assets/Square71x71Logo.png" ShortName="ms-resource:///App/ShortName">
           <uap:ShowNameOnTiles>
             <uap:ShowOn Tile="square150x150Logo" />
