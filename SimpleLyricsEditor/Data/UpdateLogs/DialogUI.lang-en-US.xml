@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<DialogUI>
+  <Title>
+    <AppName> Simple Lyrics Editor </AppName>
+    <Version> version </Version>
+    <UpdateLog> Update log </UpdateLog>
+  </Title>
+  <Table>
+    <Information> Information </Information>
+    <AllVersions> All versions </AllVersions>
+  </Table>
+  <CloseButton> Close </CloseButton>
+</DialogUI>

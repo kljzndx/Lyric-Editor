@@ -1,5 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ShortcutKeys>
+  <DialogUI>
+    <Title> Shortcut keys list </Title>
+    <ConditionText> Condition: </ConditionText>
+    <FunctionText> Function: </FunctionText>
+    <CloseButton> Close </CloseButton>
+  </DialogUI>
+  
   <ShortcutKey Name="撤销" Class="Lyrics operations">
     <Condition> Ctrl + Z </Condition>
     <Function> Undo </Function>

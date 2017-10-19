@@ -129,6 +129,8 @@
       <SubType>Designer</SubType>
     </AppxManifest>
     <Content Include="Data\UpdateLogs\AllLogsPath.json" />
+    <Content Include="Data\UpdateLogs\DialogUI.lang-en-US.xml" />
+    <Content Include="Data\UpdateLogs\DialogUI.lang-zh-CN.xml" />
     <Content Include="Data\UpdateLogs\zh-CN\v3.0.md" />
     <Content Include="Data\UpdateLogs\zh-CN\v3.0.4.md" />
     <None Include="SimpleLyricsEditor_StoreKey.pfx" />

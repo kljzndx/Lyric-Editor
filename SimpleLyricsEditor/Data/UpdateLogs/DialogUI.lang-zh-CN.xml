@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<DialogUI>
+  <Title>
+    <AppName> 简易歌词编辑器 </AppName>
+    <Version> 版本 </Version>
+    <UpdateLog> 更新日志 </UpdateLog>
+  </Title>
+  <Table>
+    <Information> 信息 </Information>
+    <AllVersions> 所有版本</AllVersions>
+  </Table>
+  <CloseButton> 关闭 </CloseButton>
+</DialogUI>
