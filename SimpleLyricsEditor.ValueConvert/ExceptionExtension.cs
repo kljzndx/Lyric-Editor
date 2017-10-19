@@ -10,8 +10,8 @@ namespace SimpleLyricsEditor.ValueConvert
         {
             StringBuilder builder = new StringBuilder();
 
-            builder.AppendLine($"{CharacterLibrary.Error.GetString("Code")} 0x{ex.HResult:X}");
-            builder.AppendLine($"{CharacterLibrary.Error.GetString("Information")} {ex.Message}");
+            builder.AppendLine($"{CharacterLibrary.ErrorTable.GetString("Code")} 0x{ex.HResult:X}");
+            builder.AppendLine($"{CharacterLibrary.ErrorTable.GetString("Information")} {ex.Message}");
 
             return builder.ToString().Trim();
         }
@@ -20,12 +20,12 @@ namespace SimpleLyricsEditor.ValueConvert
         {
             StringBuilder builder = new StringBuilder();
 
-            builder.AppendLine($"{CharacterLibrary.Error.GetString("Code")} 0x{ex.HResult:X}");
-            builder.AppendLine($"{CharacterLibrary.Error.GetString("Information")} {ex.Message}");
-            builder.AppendLine($"{CharacterLibrary.Error.GetString("Source")} {ex.Source}");
-            builder.AppendLine($"{CharacterLibrary.Error.GetString("HelpLink")}: {ex.HelpLink}");
-            builder.AppendLine($"{CharacterLibrary.Error.GetString("Ohter")} {ex.Data}");
-            builder.AppendLine(CharacterLibrary.Error.GetString("StackTrace"));
+            builder.AppendLine($"{CharacterLibrary.ErrorTable.GetString("Code")} 0x{ex.HResult:X}");
+            builder.AppendLine($"{CharacterLibrary.ErrorTable.GetString("Information")} {ex.Message}");
+            builder.AppendLine($"{CharacterLibrary.ErrorTable.GetString("Source")} {ex.Source}");
+            builder.AppendLine($"{CharacterLibrary.ErrorTable.GetString("HelpLink")}: {ex.HelpLink}");
+            builder.AppendLine($"{CharacterLibrary.ErrorTable.GetString("Ohter")} {ex.Data}");
+            builder.AppendLine(CharacterLibrary.ErrorTable.GetString("StackTrace"));
             builder.AppendLine(ex.StackTraceEx());
 
             return builder.ToString().Trim();

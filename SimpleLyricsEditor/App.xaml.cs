@@ -65,7 +65,7 @@ namespace SimpleLyricsEditor
         private async Task ShowErrorDialog(Exception ex)
         {
             StringBuilder builder = new StringBuilder();
-            builder.AppendLine($"{CharacterLibrary.Error.GetString("SystemVersion")} {SystemInfo.BuildVersion}");
+            builder.AppendLine($"{CharacterLibrary.ErrorTable.GetString("SystemVersion")} {SystemInfo.BuildVersion}");
             builder.AppendLine(ex.ToLongString());
 
             string errorReportEmillTitle =
