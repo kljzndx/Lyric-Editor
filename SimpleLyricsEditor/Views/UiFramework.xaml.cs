@@ -117,6 +117,9 @@ namespace SimpleLyricsEditor.Views
                         else
                             await SaveFile();
                         break;
+                    case VirtualKey.F1:
+                        ShortcutKeysDialog.Show();
+                        break;
                 }
         }
 
