@@ -120,9 +120,6 @@
   <data name="AllVersions_PivotItem.Header" xml:space="preserve">
     <value>All versions</value>
   </data>
-  <data name="Close_Button.Content" xml:space="preserve">
-    <value>Close</value>
-  </data>
   <data name="Information_PivotItem.Header" xml:space="preserve">
     <value>Information</value>
   </data>

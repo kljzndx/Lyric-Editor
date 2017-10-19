@@ -120,9 +120,6 @@
   <data name="AllVersions_PivotItem.Header" xml:space="preserve">
     <value>所有版本</value>
   </data>
-  <data name="Close_Button.Content" xml:space="preserve">
-    <value>关闭</value>
-  </data>
   <data name="Information_PivotItem.Header" xml:space="preserve">
     <value>信息</value>
   </data>
