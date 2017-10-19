@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Specialized;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.Storage.AccessCache;
 using Windows.System;
@@ -9,6 +11,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media.Imaging;
+using HappyStudio.UwpToolsLibrary.Auxiliarys;
 using SimpleLyricsEditor.Control;
 using SimpleLyricsEditor.Core;
 using SimpleLyricsEditor.DAL;
@@ -44,6 +47,48 @@ namespace SimpleLyricsEditor.Views
             GlobalKeyNotifier.KeyUp += WindowKeyUp;
 
             ImageFileNotifier.FileChanged += ImageFileChanged;
+        }
+
+        private async Task GetBackgroundImage()
+        {
+            StorageFile file = await ApplicationData.Current.LocalFolder.TryGetItemAsync("Background.img") as StorageFile;
+            if (file != null)
+            {
+                BitmapImage image = new BitmapImage();
+                image.SetSource(await file.OpenAsync(FileAccessMode.Read));
+                _backgroundImageSource = image;
+                BlurBackground.Source = image;
+            }
+            else if (!String.IsNullOrEmpty(_settings.BackgroundImagePath))
+            {
+                _settings.BackgroundImagePath = String.Empty;
+            }
+        }
+
+        private async Task ExtractionOldVersionBackgroundImageFile()
+        {
+            if(!_settings.SettingObject.Values.ContainsKey("LocalBackgroundImagePath"))
+                return;
+
+            try
+            {
+                StorageFile oldfile = await StorageApplicationPermissions.FutureAccessList.GetFileAsync("BackgroundImage");
+                StorageApplicationPermissions.FutureAccessList.Remove("BackgroundImage");
+
+                await oldfile.CopyAsync(ApplicationData.Current.LocalFolder, "Background.img", NameCollisionOption.ReplaceExisting);
+
+                _settings.RenameSettingKey("LocalBackgroundImagePath", nameof(_settings.BackgroundImagePath));
+            }
+            catch (FileNotFoundException)
+            {
+                _settings.SettingObject.Values.Remove("LocalBackgroundImagePath");
+                StorageApplicationPermissions.FutureAccessList.Remove("BackgroundImage");
+                await MessageBox.ShowAsync(
+                    CharacterLibrary.ErrorInfo.GetString("NotFoundFile"),
+                    CharacterLibrary.ErrorInfo.GetString("NotFoundBackgroundImageFile"),
+                    CharacterLibrary.MessageBox.GetString("Close")
+                );
+            }
         }
 
         private void WindowKeyDown(object sender, GlobalKeyEventArgs e)
@@ -124,30 +169,8 @@ namespace SimpleLyricsEditor.Views
         private async void MainPage_Loaded(object sender, RoutedEventArgs e)
         {
             // 提取V2系列版本的背景图
-            if (_settings.SettingObject.Values.ContainsKey("LocalBackgroundImagePath") &&
-                !String.IsNullOrEmpty(_settings.SettingObject.Values["LocalBackgroundImagePath"].ToString()))
-            {
-                StorageFile oldfile = await StorageApplicationPermissions.FutureAccessList.GetFileAsync("BackgroundImage");
-                StorageApplicationPermissions.FutureAccessList.Remove("BackgroundImage");
-
-                await oldfile.CopyAsync(ApplicationData.Current.LocalFolder, "Background.img", NameCollisionOption.ReplaceExisting);
-
-                _settings.RenameSettingKey("LocalBackgroundImagePath", nameof(_settings.BackgroundImagePath));
-            }
-
-            StorageFile file =
-                await ApplicationData.Current.LocalFolder.TryGetItemAsync("Background.img") as StorageFile;
-            if (file != null)
-            {
-                BitmapImage image = new BitmapImage();
-                image.SetSource(await file.OpenAsync(FileAccessMode.Read));
-                _backgroundImageSource = image;
-                BlurBackground.Source = image;
-            }
-            else if (!String.IsNullOrEmpty(_settings.BackgroundImagePath))
-            {
-                _settings.BackgroundImagePath = String.Empty;
-            }
+            await ExtractionOldVersionBackgroundImageFile();
+            await GetBackgroundImage();
         }
 
         private void UndoOperations_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
