@@ -105,6 +105,6 @@
             <StackPanel x:Name="KeysClass_StackPanel"/>
         </ScrollViewer>
 
-        <Button x:Name="Close_Button" x:Uid="/ShortcutKeysDialog/Close_Button" Grid.Row="2" HorizontalAlignment="Stretch" Click="Close_Button_Click"/>
+        <Button x:Name="Close_Button" x:Uid="/Dialog/Close_Button" Grid.Row="2" HorizontalAlignment="Stretch" Click="Close_Button_Click"/>
     </Grid>
 </UserControl>

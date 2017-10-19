@@ -121,6 +121,6 @@
                 </ListView>
             </PivotItem>
         </Pivot>
-        <Button x:Name="Close_Button" x:Uid="/UpdateLogDialog/Close_Button" Grid.Row="1" Content="Close" HorizontalAlignment="Stretch" Click="Close_Button_Click"/>
+        <Button x:Name="Close_Button" x:Uid="/Dialog/Close_Button" Grid.Row="1" Content="Close" HorizontalAlignment="Stretch" Click="Close_Button_Click"/>
     </Grid>
 </UserControl>
