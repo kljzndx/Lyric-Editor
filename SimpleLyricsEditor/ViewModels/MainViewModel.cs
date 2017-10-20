@@ -24,6 +24,8 @@ namespace SimpleLyricsEditor.ViewModels
             LyricItems = new ObservableCollection<Lyric>();
             UndoOperations = new ObservableCollection<LyricsOperationBase>();
             RedoOperations = new ObservableCollection<LyricsOperationBase>();
+
+            LyricItems.CollectionChanged += LyricItems_CollectionChanged;
             UndoOperations.CollectionChanged += UndoOperations_CollectionChanged;
             RedoOperations.CollectionChanged += RedoOperations_CollectionChanged;
 
@@ -43,6 +45,7 @@ namespace SimpleLyricsEditor.ViewModels
         public ObservableCollection<LyricsOperationBase> UndoOperations { get; }
         public ObservableCollection<LyricsOperationBase> RedoOperations { get; }
 
+        public bool IsLyricsItemAny => LyricItems.Any();
         public bool CanUndo => UndoOperations.Any();
         public bool CanRedo => RedoOperations.Any();
 
@@ -129,6 +132,11 @@ namespace SimpleLyricsEditor.ViewModels
         {
             var opt = CreateOperation(new Sort(items, LyricItems));
             opt.Do();
+        }
+
+        private void LyricItems_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            RaisePropertyChanged(nameof(IsLyricsItemAny));
         }
 
         private void UndoOperations_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
