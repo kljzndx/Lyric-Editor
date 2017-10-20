@@ -34,6 +34,7 @@ namespace SimpleLyricsEditor.BLL.LyricsOperations
                     _addItems.Add(addItem);
                 TargetList.Add(addItem);
             }
+
             _isDoed = true;
         }
 
