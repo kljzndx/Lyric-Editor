@@ -17,7 +17,7 @@ namespace SimpleLyricsEditor.DAL
         public Lyric(TimeSpan time, string content)
         {
             _time = time;
-            _content = content;
+            _content = content.Trim();
         }
 
         public TimeSpan Time
