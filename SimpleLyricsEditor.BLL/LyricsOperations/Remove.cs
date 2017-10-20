@@ -12,8 +12,8 @@ namespace SimpleLyricsEditor.BLL.LyricsOperations
         
         public override void Do()
         {
-            foreach (var item in Positions)
-                TargetList.RemoveAt(item.Key);
+            foreach (var item in Items)
+                TargetList.Remove(item);
         }
 
         public override void Undo()

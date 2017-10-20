@@ -18,15 +18,15 @@ namespace SimpleLyricsEditor.BLL.LyricsOperations
 
         public override void Do()
         {
-            foreach (var item in Positions)
-                TargetList[item.Key].Content = NewContent;
+            foreach (var item in Items)
+                item.Content = NewContent;
         }
 
         public override void Undo()
         {
             int i = 0;
-            foreach (var id in Positions.Keys)
-                TargetList[id].Content = _oldContents[i];
+            foreach (var item in Items)
+                item.Content = _oldContents[i++];
         }
     }
 }

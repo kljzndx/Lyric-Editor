@@ -23,20 +23,14 @@ namespace SimpleLyricsEditor.BLL.LyricsOperations
 
         public override void Do()
         {
-            foreach (var item in Positions.Keys)
-            {
-                Lyric lyric = TargetList[item];
-                lyric.Time = _isBig ? lyric.Time - _interpolation : lyric.Time + _interpolation;
-            }
+            foreach (var item in Items)
+                item.Time = _isBig ? item.Time - _interpolation : item.Time + _interpolation;
         }
 
         public override void Undo()
         {
-            foreach (var item in Positions.Keys)
-            {
-                Lyric lyric = TargetList[item];
-                lyric.Time = !_isBig ? lyric.Time - _interpolation : lyric.Time + _interpolation;
-            }
+            foreach (var item in Items)
+                item.Time = !_isBig ? item.Time - _interpolation : item.Time + _interpolation;
         }
         
     }
