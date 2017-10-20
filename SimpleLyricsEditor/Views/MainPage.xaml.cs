@@ -284,6 +284,47 @@ namespace SimpleLyricsEditor.Views
             _settings.MultilineEditModeEnabled = false;
         }
 
+        private void Select_Reverse_MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
+        {
+            foreach (ListViewItem item in Lyrics_ListView.ItemsPanelRoot.Children.Cast<ListViewItem>().ToList())
+                item.IsSelected = !item.IsSelected;
+        }
+
+        private void Select_BeforeItem_MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
+        {
+            var items = Lyrics_ListView.ItemsPanelRoot.Children.Cast<ListViewItem>().ToList();
+
+            for (var i = Lyrics_ListView.SelectedIndex; i >= 0; i--)
+                items[i].IsSelected = true;
+        }
+
+        private void Select_AfterItem_MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
+        {
+            var items = Lyrics_ListView.ItemsPanelRoot.Children.Cast<ListViewItem>().ToList();
+
+            for (var i = Lyrics_ListView.SelectedIndex; i < Lyrics_ListView.Items.Count; i++)
+                items[i].IsSelected = true;
+        }
+
+        private void Select_Paragraph_MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
+        {
+            int sltId = Lyrics_ListView.SelectedIndex;
+            var listItems = Lyrics_ListView.ItemsPanelRoot.Children.Cast<ListViewItem>().ToList();
+            var sourceItems = Lyrics_ListView.Items.Cast<Lyric>().ToList();
+
+            for (int i = sltId - 1; i >= 0; i--)
+                if (!String.IsNullOrEmpty(sourceItems[i].Content))
+                    listItems[i].IsSelected = true;
+                else
+                    break;
+
+            for (int i = sltId; i < sourceItems.Count; i++)
+                if (!String.IsNullOrEmpty(sourceItems[i].Content))
+                    listItems[i].IsSelected = true;
+                else
+                    break;
+        }
+
         private void AddLyrics_Button_Click(object sender, RoutedEventArgs e)
         {
             _viewModel.Add(Lyrics_ListView.SelectedIndex, Player.Position, _isPressShift);
