@@ -7,7 +7,7 @@
   </Title>
   <Table>
     <Information> 信息 </Information>
-    <AllVersions> 所有版本</AllVersions>
+    <AllVersions> 所有版本 </AllVersions>
   </Table>
   <CloseButton> 关闭 </CloseButton>
 </DialogUI>
