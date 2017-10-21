@@ -123,8 +123,8 @@
   <data name="FeedbackInFeedbackHub_MenuFlyoutItem.Text" xml:space="preserve">
     <value>Feedback In Feedback Hub</value>
   </data>
-  <data name="FeedbackInSkype_MenuFlyoutItem.Text" xml:space="preserve">
-    <value>Feedback In Skype</value>
+  <data name="FeedbackInGitHub_MenuFlyoutItem.Text" xml:space="preserve">
+    <value>Feedback In GitHub</value>
   </data>
   <data name="Feedback_AppBarButton.Label" xml:space="preserve">
     <value>Feedback</value>

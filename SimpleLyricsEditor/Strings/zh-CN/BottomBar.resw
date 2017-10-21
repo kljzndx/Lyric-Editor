@@ -118,13 +118,13 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="FeedbackInEmail_MenuFlyoutItem.Text" xml:space="preserve">
-    <value>在邮件里反馈</value>
+    <value>在 邮件 里反馈</value>
   </data>
   <data name="FeedbackInFeedbackHub_MenuFlyoutItem.Text" xml:space="preserve">
-    <value>在反馈中心里反馈</value>
+    <value>在 反馈中心 里反馈</value>
   </data>
-  <data name="FeedbackInSkype_MenuFlyoutItem.Text" xml:space="preserve">
-    <value>在 Skype 里反馈</value>
+  <data name="FeedbackInGitHub_MenuFlyoutItem.Text" xml:space="preserve">
+    <value>在 GitHub 里反馈</value>
   </data>
   <data name="Feedback_AppBarButton.Label" xml:space="preserve">
     <value>反馈</value>
