@@ -7,6 +7,7 @@ namespace SimpleLyricsEditor.Core
         public static ResourceLoader MessageBox => ResourceLoader.GetForCurrentView("MessageBox");
         public static ResourceLoader ErrorTable => ResourceLoader.GetForCurrentView("ErrorTable");
         public static ResourceLoader ErrorInfo => ResourceLoader.GetForCurrentView("ErrorInfo");
+        public static ResourceLoader Email => ResourceLoader.GetForCurrentView("Email");
         public static ResourceLoader SettingsRoot => ResourceLoader.GetForCurrentView("SettingsRoot");
         public static ResourceLoader BackgroundSettings => ResourceLoader.GetForCurrentView("BackgroundSettings");
         public static ResourceLoader LyricsPreviewSettings => ResourceLoader.GetForCurrentView("LyricsPreviewSettings");

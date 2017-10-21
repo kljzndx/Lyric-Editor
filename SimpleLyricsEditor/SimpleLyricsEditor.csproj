@@ -136,6 +136,8 @@
     <Content Include="Data\UpdateLogs\zh-CN\v3.0.6.md" />
     <None Include="SimpleLyricsEditor_StoreKey.pfx" />
     <None Include="SimpleLyricsEditor_TemporaryKey.pfx" />
+    <PRIResource Include="Strings\en-US\Email.resw" />
+    <PRIResource Include="Strings\zh-CN\Email.resw" />
     <PRIResource Include="Strings\zh-CN\Dialog.resw" />
     <PRIResource Include="Strings\en-US\Dialog.resw" />
     <PRIResource Include="Strings\zh-CN\ErrorInfo.resw" />
