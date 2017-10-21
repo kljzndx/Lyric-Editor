@@ -43,7 +43,7 @@ namespace SimpleLyricsEditor.BLL.LyricsOperations
                 if (!IsReverseAdd)
                     TargetList.Insert(InsertIndex + 1, lyric);
                 else
-                    TargetList.Insert(InsertIndex - 1, lyric);
+                    TargetList.Insert(InsertIndex, lyric);
         }
 
         public override void Undo()
