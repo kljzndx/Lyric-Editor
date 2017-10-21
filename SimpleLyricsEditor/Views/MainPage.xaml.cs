@@ -272,17 +272,7 @@ namespace SimpleLyricsEditor.Views
 
         #region Lyrics edit tools
 
-        private void MultilineEditMode_Button_Click(object sender, RoutedEventArgs e)
-        {
-            Lyrics_ListView.SelectionMode = ListViewSelectionMode.Multiple;
-            _settings.MultilineEditModeEnabled = true;
-        }
-
-        private void ExitMultilineEditMode_Button_Click(object sender, RoutedEventArgs e)
-        {
-            Lyrics_ListView.SelectionMode = ListViewSelectionMode.Single;
-            _settings.MultilineEditModeEnabled = false;
-        }
+        #region Select tools
 
         private void Select_Reverse_MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
         {
@@ -323,6 +313,20 @@ namespace SimpleLyricsEditor.Views
                     listItems[i].IsSelected = true;
                 else
                     break;
+        }
+
+        #endregion
+
+        private void MultilineEditMode_Button_Click(object sender, RoutedEventArgs e)
+        {
+            Lyrics_ListView.SelectionMode = ListViewSelectionMode.Multiple;
+            _settings.MultilineEditModeEnabled = true;
+        }
+
+        private void ExitMultilineEditMode_Button_Click(object sender, RoutedEventArgs e)
+        {
+            Lyrics_ListView.SelectionMode = ListViewSelectionMode.Single;
+            _settings.MultilineEditModeEnabled = false;
         }
 
         private void AddLyrics_Button_Click(object sender, RoutedEventArgs e)
