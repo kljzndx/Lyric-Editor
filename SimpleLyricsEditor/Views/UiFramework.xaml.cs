@@ -132,6 +132,9 @@ namespace SimpleLyricsEditor.Views
 
             if (_settings.GetSetting("AdClickDate", String.Empty) == DateTime.Today.ToString("yyyy MM dd"))
                 HideAllAds();
+
+            if (!StoreServicesFeedbackLauncher.IsSupported())
+                FeedbackInFeedbackHub_MenuFlyoutItem.Visibility = Visibility.Collapsed;
         }
 
         #region Notifiers
@@ -297,7 +300,11 @@ namespace SimpleLyricsEditor.Views
 
         private async void FeedbackInFeedbackHub_MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
         {
-            await StoreServicesFeedbackLauncher.GetDefault().LaunchAsync();
+            if (!await StoreServicesFeedbackLauncher.GetDefault().LaunchAsync())
+                await MessageBox.ShowAsync(
+                    CharacterLibrary.MessageBox.GetString("Error"),
+                    CharacterLibrary.ErrorInfo.GetString("ShowFeedbackHubError"),
+                    CharacterLibrary.MessageBox.GetString("Close"));
         }
 
         private async void FeedbackInGitHub_MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
