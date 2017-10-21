@@ -65,6 +65,10 @@ namespace SimpleLyricsEditor
         private async Task ShowErrorDialog(Exception ex)
         {
             StringBuilder builder = new StringBuilder();
+            builder.AppendLine(CharacterLibrary.ErrorTable.GetString("OperationProcess"));
+            builder.AppendLine();
+            builder.AppendLine();
+            builder.AppendLine();
             builder.AppendLine($"{CharacterLibrary.ErrorTable.GetString("SystemVersion")} {SystemInfo.BuildVersion}");
             builder.AppendLine(ex.ToLongString());
 
