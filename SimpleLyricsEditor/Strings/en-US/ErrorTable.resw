@@ -129,6 +129,9 @@
   <data name="Ohter" xml:space="preserve">
     <value>Ohter info:</value>
   </data>
+  <data name="OperationProcess" xml:space="preserve">
+    <value>Please introduce what you do</value>
+  </data>
   <data name="Source" xml:space="preserve">
     <value>Errow source:</value>
   </data>

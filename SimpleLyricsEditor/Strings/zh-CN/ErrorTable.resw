@@ -129,6 +129,9 @@
   <data name="Ohter" xml:space="preserve">
     <value>其他信息：</value>
   </data>
+  <data name="OperationProcess" xml:space="preserve">
+    <value>请说明你做了什么</value>
+  </data>
   <data name="Source" xml:space="preserve">
     <value>错误源：</value>
   </data>
