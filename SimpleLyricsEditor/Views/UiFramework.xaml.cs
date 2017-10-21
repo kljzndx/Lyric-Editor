@@ -107,6 +107,9 @@ namespace SimpleLyricsEditor.Views
             if (e.IsPressCtrl)
                 switch (e.Key)
                 {
+                    case VirtualKey.N:
+                        LyricsFileChangeNotifier.ChangeFile(null);
+                        break;
                     case VirtualKey.M:
                         await OpenMusicFile();
                         break;
@@ -119,10 +122,15 @@ namespace SimpleLyricsEditor.Views
                         else
                             await SaveFile();
                         break;
+                }
+            else
+                switch (e.Key)
+                {
                     case VirtualKey.F1:
                         ShortcutKeysDialog.Show();
                         break;
                 }
+
         }
 
         private void UiFramework_Loaded(object sender, RoutedEventArgs e)
