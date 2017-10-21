@@ -73,8 +73,21 @@
                         <Button x:Name="MultilineEditMode_Button" x:Uid="/LyricsEdit/MultilineEditMode_Button" Content="&#xE0A2;" Style="{StaticResource ControllerButtonStyle}" Visibility="{x:Bind _settings.MultilineEditModeEnabled, Mode=OneWay, Converter={StaticResource BoolToVisibility_Reverse}}" Click="MultilineEditMode_Button_Click"/>
                         <Button x:Name="ExitMultilineEditMode_Button" x:Uid="/LyricsEdit/ExitMultilineEditMode_Button" Content="&#xE081;" Style="{StaticResource ControllerButtonStyle}" Visibility="{x:Bind _settings.MultilineEditModeEnabled, Mode=OneWay, Converter={StaticResource BoolToVisibility}}" Click="ExitMultilineEditMode_Button_Click"/>
                     </StackPanel>
-                    
-                    <Button x:Name="SelectTools_Button" x:Uid="/LyricsEdit/SelectTools_Button" Content="&#xE005;" Style="{StaticResource ControllerButtonStyle}" Visibility="{x:Bind _settings.MultilineEditModeEnabled, Mode=OneWay, Converter={StaticResource BoolToVisibility}}" IsEnabled="{x:Bind _viewModel.IsLyricsItemAny, Mode=OneWay}">
+
+                    <Button x:Name="SelectTools_Button" x:Uid="/LyricsEdit/SelectTools_Button" Style="{StaticResource ControllerButtonStyle}" Visibility="{x:Bind _settings.MultilineEditModeEnabled, Mode=OneWay, Converter={StaticResource BoolToVisibility}}" IsEnabled="{x:Bind _viewModel.IsLyricsItemAny, Mode=OneWay}">
+                        <Button.Content>
+                            <Path Width="20" Height="20" Stroke="{ThemeResource SystemControlBackgroundBaseHighBrush}" StrokeThickness="1.6">
+                                <Path.Data>
+                                    <GeometryGroup>
+                                        <RectangleGeometry Rect="4,1,12,4"/>
+                                        <RectangleGeometry Rect="0,5,20,14"/>
+                                        <LineGeometry StartPoint="5,12" EndPoint="8,16"/>
+                                        <LineGeometry StartPoint="8,16" EndPoint="15,8"/>
+                                    </GeometryGroup>
+                                </Path.Data>
+                            </Path>
+                        </Button.Content>
+                        
                         <Button.Flyout>
                             <MenuFlyout>
                                 <MenuFlyoutItem x:Name="Select_Reverse_MenuFlyoutItem" x:Uid="/LyricsEdit/Select_Reverse_MenuFlyoutItem" Click="Select_Reverse_MenuFlyoutItem_Click"/>
