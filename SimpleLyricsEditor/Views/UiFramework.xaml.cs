@@ -8,9 +8,11 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Media;
+using HappyStudio.UwpToolsLibrary.Auxiliarys;
 using HappyStudio.UwpToolsLibrary.Information;
 using JiuYouAdUniversal.Models;
 using Microsoft.Advertising.WinRT.UI;
+using Microsoft.Services.Store.Engagement;
 using SimpleLyricsEditor.BLL.Pickers;
 using SimpleLyricsEditor.Core;
 using SimpleLyricsEditor.Events;
@@ -290,6 +292,27 @@ namespace SimpleLyricsEditor.Views
         {
             UpdateLogDialog.Show();
         }
+
+        #region Feedback
+
+        private async void FeedbackInFeedbackHub_MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
+        {
+            await StoreServicesFeedbackLauncher.GetDefault().LaunchAsync();
+        }
+
+        private async void FeedbackInGitHub_MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
+        {
+            await Launcher.LaunchUriAsync(new Uri("https://github.com/kljzndx/Lyric-Editor/issues"));
+        }
+
+        private async void FeedbackInEmail_MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
+        {
+            await EmailEx.SendAsync("kljzndx@outlook.com",
+                AppInfo.Name + ' ' + AppInfo.Version + ' ' + CharacterLibrary.Email.GetString("Feedback"),
+                String.Empty);
+        }
+
+        #endregion
 
         private async void GitHub_AppBarButton_Click(object sender, RoutedEventArgs e)
         {

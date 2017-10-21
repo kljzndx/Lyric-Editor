@@ -89,6 +89,15 @@
             <CommandBar.SecondaryCommands>
                 <AppBarButton x:Name="ShortcutKeysList_AppBarButton" x:Uid="/BottomBar/ShortcutKeysList_AppBarButton" Click="ShortcutKeysList_AppBarButton_Click"/>
                 <AppBarButton x:Name="UpdateLog_AppBarButton" x:Uid="/BottomBar/UpdateLog_AppBarButton" Click="UpdateLog_AppBarButton_Click"/>
+                <AppBarButton x:Name="Feedback_AppBarButton" x:Uid="/BottomBar/Feedback_AppBarButton">
+                    <AppBarButton.Flyout>
+                        <MenuFlyout>
+                            <MenuFlyoutItem x:Name="FeedbackInFeedbackHub_MenuFlyoutItem" x:Uid="/BottomBar/FeedbackInFeedbackHub_MenuFlyoutItem" Click="FeedbackInFeedbackHub_MenuFlyoutItem_Click"/>
+                            <MenuFlyoutItem x:Name="FeedbackInGitHub_MenuFlyoutItem" x:Uid="/BottomBar/FeedbackInGitHub_MenuFlyoutItem" Click="FeedbackInGitHub_MenuFlyoutItem_Click"/>
+                            <MenuFlyoutItem x:Name="FeedbackInEmail_MenuFlyoutItem" x:Uid="/BottomBar/FeedbackInEmail_MenuFlyoutItem" Click="FeedbackInEmail_MenuFlyoutItem_Click"/>
+                        </MenuFlyout>
+                    </AppBarButton.Flyout>
+                </AppBarButton>
                 <AppBarButton x:Name="GitHub_AppBarButton" Label="GitHub" Click="GitHub_AppBarButton_Click"/>
                 <AppBarButton x:Name="Settings_AppBarButton" x:Uid="/BottomBar/Settings_AppBarButton" Click="Settings_AppBarButton_Click"/>
             </CommandBar.SecondaryCommands>
