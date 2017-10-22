@@ -50,6 +50,8 @@ namespace SimpleLyricsEditor.Control
         {
             if (!Lyrics.Any())
                 return;
+            if (_nextIndex >= Lyrics.Count)
+                _nextIndex = 0;
 
             var currentTime = (position + AnimationDuration).Ticks;
             var nextLyric = Lyrics[_nextIndex];
@@ -58,7 +60,7 @@ namespace SimpleLyricsEditor.Control
             if (currentTime >= nextTime && currentTime <= nextTime + TicksPerThreeSecond)
             {
                 CurrentLyric = nextLyric;
-                _nextIndex = _nextIndex < Lyrics.Count - 1 ? _nextIndex + 1 : 0;
+                _nextIndex++;
             }
         }
 
