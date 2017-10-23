@@ -12,17 +12,14 @@ namespace SimpleLyricsEditor.Control
     public sealed partial class LyrricsSinglePreview : UserControl
     {
         private const long TicksPerThreeSecond = TimeSpan.TicksPerSecond * 3;
-
-        private static readonly TimeSpan AnimationDuration = TimeSpan.FromMilliseconds(200);
+        private static readonly Lyric Space = new Lyric(TimeSpan.Zero, string.Empty);
         
         public static readonly DependencyProperty LyricsProperty = DependencyProperty.Register(
             nameof(Lyrics), typeof(IList<Lyric>), typeof(LyrricsSinglePreview), new PropertyMetadata(null));
 
         public static readonly DependencyProperty CurrentLyricProperty = DependencyProperty.Register(
-            nameof(CurrentLyric), typeof(Lyric), typeof(LyrricsSinglePreview), new PropertyMetadata(null));
+            nameof(CurrentLyric), typeof(Lyric), typeof(LyrricsSinglePreview), new PropertyMetadata(Space));
         
-        private readonly Lyric _space = new Lyric(TimeSpan.Zero, string.Empty);
-
         private int _nextIndex;
 
         public LyrricsSinglePreview()
@@ -41,8 +38,17 @@ namespace SimpleLyricsEditor.Control
             get => (Lyric) GetValue(CurrentLyricProperty);
             set
             {
+                Lyric backLyric = GetValue(CurrentLyricProperty) as Lyric;
+                bool isEmpty = String.IsNullOrEmpty(backLyric.Content);
+
                 SetValue(CurrentLyricProperty, value);
-                FadeOut.Begin();
+
+                if (!String.IsNullOrEmpty(value.Content))
+                    TextBlock.Text = value.Content;
+                if (isEmpty && !String.IsNullOrEmpty(value.Content))
+                    FadeIn.Begin();
+                if (!isEmpty && String.IsNullOrEmpty(value.Content))
+                    FadeOut.Begin();
             }
         }
         
@@ -53,7 +59,7 @@ namespace SimpleLyricsEditor.Control
             if (_nextIndex >= Lyrics.Count)
                 _nextIndex = 0;
 
-            var currentTime = (position + AnimationDuration).Ticks;
+            var currentTime = position.Ticks;
             var nextLyric = Lyrics[_nextIndex];
             var nextTime = nextLyric.Time.Ticks;
 
@@ -69,11 +75,11 @@ namespace SimpleLyricsEditor.Control
             if (!Lyrics.Any())
                 return;
 
-            var currentTime = position + AnimationDuration;
+            var currentTime = position;
 
             if (currentTime.CompareTo(Lyrics.First().Time) <= 0)
             {
-                CurrentLyric = _space;
+                CurrentLyric = Space;
                 _nextIndex = 0;
                 return;
             }
@@ -92,12 +98,6 @@ namespace SimpleLyricsEditor.Control
                     _nextIndex = i;
                     break;
                 }
-        }
-
-        private void FadeOut_Completed(object sender, object e)
-        {
-            TextBlock.Text = CurrentLyric.Content;
-            FadeIn.Begin();
         }
     }
 }

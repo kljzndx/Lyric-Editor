@@ -13,10 +13,10 @@
         <Storyboard x:Name="FadeIn">
             <FadeInThemeAnimation Storyboard.TargetName="TextBlock"/>
         </Storyboard>
-        <Storyboard x:Name="FadeOut" Completed="FadeOut_Completed">
+        <Storyboard x:Name="FadeOut">
             <FadeOutThemeAnimation Storyboard.TargetName="TextBlock"/>
         </Storyboard>
     </UserControl.Resources>
 
-        <TextBlock x:Name="TextBlock" TextAlignment="Center" FontSize="{x:Bind FontSize, Mode=OneWay}" Margin="0,5"/>
+    <TextBlock x:Name="TextBlock" TextAlignment="Center" FontSize="{x:Bind FontSize, Mode=OneWay}" Margin="0,5"/>
 </UserControl>
