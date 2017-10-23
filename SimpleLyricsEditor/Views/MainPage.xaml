@@ -66,9 +66,9 @@
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
 
-                <TextBox x:Name="LyricsContent_TextBox" x:Uid="/LyricsEdit/LyricsContent_TextBox" Text="{x:Bind _viewModel.LyricContent, Mode=TwoWay}" TextWrapping="Wrap" VerticalAlignment="Center" GotFocus="LyricsContent_TextBox_GotFocus" LostFocus="LyricsContent_TextBox_LostFocus" KeyUp="LyricsContent_TextBox_KeyUp"/>
+                <TextBox x:Name="LyricsContent_TextBox" x:Uid="/LyricsEdit/LyricsContent_TextBox" MaxHeight="100" Text="{x:Bind _viewModel.LyricContent, Mode=TwoWay}" TextWrapping="Wrap" GotFocus="LyricsContent_TextBox_GotFocus" LostFocus="LyricsContent_TextBox_LostFocus" KeyUp="LyricsContent_TextBox_KeyUp"/>
 
-                <StackPanel x:Name="LyricsEditTools_StackPanel" Orientation="Horizontal" HorizontalAlignment="Center">
+                <StackPanel x:Name="LyricsEditTools_StackPanel" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top">
                     <Button x:Name="SelectTools_Button" x:Uid="/LyricsEdit/SelectTools_Button" Style="{StaticResource ControllerButtonStyle}" Visibility="{x:Bind _settings.MultilineEditModeEnabled, Mode=OneWay, Converter={StaticResource BoolToVisibility}}" IsEnabled="{x:Bind _viewModel.IsLyricsItemAny, Mode=OneWay}">
                         <Button.Content>
                             <Path Width="20" Height="20" Stroke="{ThemeResource SystemControlBackgroundBaseHighBrush}" StrokeThickness="1.6">
