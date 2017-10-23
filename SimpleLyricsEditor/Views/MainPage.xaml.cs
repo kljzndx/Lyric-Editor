@@ -111,13 +111,13 @@ namespace SimpleLyricsEditor.Views
 
             if (e.IsPressShift)
                 AddLyrics_Button_Transform.Rotation = 0;
-
-            if (!e.IsInputing && e.Key == VirtualKey.I)
-                LyricsContent_TextBox.Focus(FocusState.Pointer);
-
+            
             if (!e.IsInputing)
                 switch (e.Key)
                 {
+                    case VirtualKey.I:
+                        LyricsContent_TextBox.Focus(FocusState.Pointer);
+                        break;
                     case VirtualKey.Space:
                         Focus(FocusState.Pointer);
 
@@ -155,6 +155,13 @@ namespace SimpleLyricsEditor.Views
                                     : -1;
                         break;
                 }
+
+            switch (e.Key)
+            {
+                case VirtualKey.Escape:
+                    this.Focus(FocusState.Pointer);
+                    break;
+            }
         }
 
         private void WindowKeyUp(object sender, GlobalKeyEventArgs e)
