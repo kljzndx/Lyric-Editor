@@ -94,7 +94,7 @@
                     </Button>
                     
                     <StackPanel x:Name="MultilineEditMode_StackPanel">
-                        <Button x:Name="MultilineEditMode_Button" x:Uid="/LyricsEdit/MultilineEditMode_Button" Content="&#xE0A2;" Style="{StaticResource ControllerButtonStyle}" Visibility="{x:Bind _settings.MultilineEditModeEnabled, Mode=OneWay, Converter={StaticResource BoolToVisibility_Reverse}}" Click="MultilineEditMode_Button_Click"/>
+                        <Button x:Name="MultilineEditMode_Button" x:Uid="/LyricsEdit/MultilineEditMode_Button" Content="&#xE133;" Style="{StaticResource ControllerButtonStyle}" Visibility="{x:Bind _settings.MultilineEditModeEnabled, Mode=OneWay, Converter={StaticResource BoolToVisibility_Reverse}}" Click="MultilineEditMode_Button_Click"/>
                         <Button x:Name="ExitMultilineEditMode_Button" x:Uid="/LyricsEdit/ExitMultilineEditMode_Button" Content="&#xE081;" Style="{StaticResource ControllerButtonStyle}" Visibility="{x:Bind _settings.MultilineEditModeEnabled, Mode=OneWay, Converter={StaticResource BoolToVisibility}}" Click="ExitMultilineEditMode_Button_Click"/>
                     </StackPanel>
 
