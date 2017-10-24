@@ -266,9 +266,9 @@ namespace SimpleLyricsEditor.Views
                 OpenFile_AppBarToggleButton.Foreground = new SolidColorBrush(Colors.Black);
         }
 
-        private void OpenFile_MenuFlyout_Opening(object sender, object e)
+        private void MenuFlyoutOfBottomBar_Opening(object sender, object e)
         {
-            OpenFile_MenuFlyout.MenuFlyoutPresenterStyle =
+            (sender as MenuFlyout).MenuFlyoutPresenterStyle =
                 _settings.IsLightTheme ? Light_MenuFlyoutPresenter : Dark_MenuFlyoutPresenter;
         }
 

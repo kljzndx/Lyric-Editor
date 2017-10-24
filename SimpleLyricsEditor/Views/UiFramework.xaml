@@ -72,7 +72,7 @@
                 <AppBarButton x:Name="NewFile_AppBarButton" x:Uid="/BottomBar/NewFile_AppBarButton" Icon="Add" Click="NewFile_AppBarButton_Click"/>
                 <AppBarToggleButton x:Name="OpenFile_AppBarToggleButton" x:Uid="/BottomBar/OpenFile_AppBarToggleButton" Icon="OpenFile" Checked="OpenFile_AppBarToggleButton_Checked" Unchecked="OpenFile_AppBarToggleButton_Unchecked">
                     <FlyoutBase.AttachedFlyout>
-                        <MenuFlyout x:Name="OpenFile_MenuFlyout" Opening="OpenFile_MenuFlyout_Opening">
+                        <MenuFlyout x:Name="OpenFile_MenuFlyout" Opening="MenuFlyoutOfBottomBar_Opening">
                             <MenuFlyoutItem x:Uid="/BottomBar/OpenMusicFile_MenuFlyoutItem" Click="OpenMusicFile_MenuFlyoutItem_Click"/>
                             <MenuFlyoutItem x:Uid="/BottomBar/OpenLyricsFile_MenuFlyoutItem" Click="OpenLyricsFile_MenuFlyoutItem_Click"/>
                         </MenuFlyout>
@@ -91,7 +91,7 @@
                 <AppBarButton x:Name="UpdateLog_AppBarButton" x:Uid="/BottomBar/UpdateLog_AppBarButton" Click="UpdateLog_AppBarButton_Click"/>
                 <AppBarButton x:Name="Feedback_AppBarButton" x:Uid="/BottomBar/Feedback_AppBarButton">
                     <AppBarButton.Flyout>
-                        <MenuFlyout>
+                        <MenuFlyout Opening="MenuFlyoutOfBottomBar_Opening">
                             <MenuFlyoutItem x:Name="FeedbackInFeedbackHub_MenuFlyoutItem" x:Uid="/BottomBar/FeedbackInFeedbackHub_MenuFlyoutItem" Click="FeedbackInFeedbackHub_MenuFlyoutItem_Click"/>
                             <MenuFlyoutItem x:Name="FeedbackInGitHub_MenuFlyoutItem" x:Uid="/BottomBar/FeedbackInGitHub_MenuFlyoutItem" Click="FeedbackInGitHub_MenuFlyoutItem_Click"/>
                             <MenuFlyoutItem x:Name="FeedbackInEmail_MenuFlyoutItem" x:Uid="/BottomBar/FeedbackInEmail_MenuFlyoutItem" Click="FeedbackInEmail_MenuFlyoutItem_Click"/>
