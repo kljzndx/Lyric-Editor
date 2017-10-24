@@ -15,12 +15,19 @@
     <Condition> Ctrl + Y </Condition>
     <Function> 重做 </Function>
   </ShortcutKey>
-  <ShortcutKey Name="输入框内加歌词" Class="歌词操作">
-    <Condition> 在输入框内按 Ctrl + Enter </Condition>
-    <Function> 添加歌词 </Function>
+  <ShortcutKey Name="进入输入状态" Class="歌词操作">
+    <Condition> 按 I 键 </Condition>
+    <Function> 进入输入状态 </Function>
   </ShortcutKey>
-  <ShortcutKey Name="空格加歌词" Class="歌词操作">
-    <Condition> 无选中项时按空格键 </Condition>
+  <ShortcutKey Name="退出输入状态" Class="歌词操作">
+    <Condition> 按 Esc 键 </Condition>
+    <Function> 退出输入状态 </Function>
+  </ShortcutKey>
+  <ShortcutKey Name="添加歌词" Class="歌词操作">
+    <Condition>
+1. 无选中项时按空格键
+2. 在输入框内按 Ctrl + Enter
+    </Condition>
     <Function> 添加歌词 </Function>
   </ShortcutKey>
   <ShortcutKey Name="往上添加歌词" Class="歌词操作">

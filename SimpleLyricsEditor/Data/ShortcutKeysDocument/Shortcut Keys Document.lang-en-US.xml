@@ -15,12 +15,19 @@
     <Condition> Ctrl + Y </Condition>
     <Function> Redo </Function>
   </ShortcutKey>
-  <ShortcutKey Name="输入框内加歌词" Class="Lyrics operations">
-    <Condition> press Ctrl + Enter In Lyric input box </Condition>
-    <Function> Add Lyric </Function>
+  <ShortcutKey Name="进入输入状态" Class="Lyrics operations">
+    <Condition> press I key </Condition>
+    <Function> Enter input state </Function>
   </ShortcutKey>
-  <ShortcutKey Name="空格加歌词" Class="Lyrics operations">
-    <Condition> Press spacebar when there are no selected items </Condition>
+  <ShortcutKey Name="退出输入状态" Class="Lyrics operations">
+    <Condition> press Esc key </Condition>
+    <Function> Exit input state </Function>
+  </ShortcutKey>
+  <ShortcutKey Name="添加歌词" Class="Lyrics operations">
+    <Condition>
+1. Press spacebar when there are no selected items 
+2. press Ctrl + Enter In Lyric input box
+    </Condition>
     <Function> Add Lyric </Function>
   </ShortcutKey>
   <ShortcutKey Name="往上添加歌词" Class="Lyrics operations">
