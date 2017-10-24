@@ -32,13 +32,13 @@
                     <DataTemplate x:DataType="model:ShortcutKey">
                         <StackPanel BorderBrush="White" BorderThickness="3" Padding="5">
                             <StackPanel Orientation="Horizontal" Padding="5">
-                                <Border Background="DarkRed">
+                                <Border Background="DarkRed" VerticalAlignment="Top">
                                     <TextBlock x:Uid="/ShortcutKeysDialog/Condition_TextBlock" Foreground="White" Margin="5"/>
                                 </Border>
                                 <TextBlock Text="{Binding Condition}" Foreground="White" VerticalAlignment="Center" Margin="10,0"/>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" Padding="5">
-                                <Border Background="Green">
+                                <Border Background="Green" VerticalAlignment="Top">
                                     <TextBlock x:Uid="/ShortcutKeysDialog/Function_TextBlock" Foreground="White" Margin="5"/>
                                 </Border>
                                 <TextBlock Text="{Binding Function}" Foreground="White" VerticalAlignment="Center" Margin="10,0"/>
