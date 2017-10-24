@@ -130,7 +130,7 @@
   <data name="PlaybackRate_Slider.Header" xml:space="preserve">
     <value>播放速率</value>
   </data>
-  <data name="PlayOrPause_StackPanel.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+  <data name="PlayOrPause_ToggleButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
     <value>播放/暂停
 快捷键：P</value>
   </data>

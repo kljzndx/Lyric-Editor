@@ -130,7 +130,7 @@ Hold down Shift to fast forward 5 seconds</value>
   <data name="PlaybackRate_Slider.Header" xml:space="preserve">
     <value>Playback Rate</value>
   </data>
-  <data name="PlayOrPause_StackPanel.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+  <data name="PlayOrPause_ToggleButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
     <value>Play or Pause
 Shortcut : P</value>
   </data>

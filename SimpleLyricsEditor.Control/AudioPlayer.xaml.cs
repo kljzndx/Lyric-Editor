@@ -8,6 +8,7 @@ using Windows.System.Threading;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using SimpleLyricsEditor.BLL.Pickers;
@@ -47,7 +48,6 @@ namespace SimpleLyricsEditor.Control
             new PropertyMetadata(TimeSpan.FromSeconds(5)));
 
         private bool _isPressShift;
-        private bool _isClickedPlayOrPauseButton;
 
         private Music _musicTemp;
         private ThreadPoolTimer _refreshTimeTimer;
@@ -78,7 +78,11 @@ namespace SimpleLyricsEditor.Control
         public bool IsPlay
         {
             get => (bool) GetValue(IsPlayProperty);
-            private set => SetValue(IsPlayProperty, value);
+            private set
+            {
+                SetValue(IsPlayProperty, value);
+                PlayOrPause_ToggleButton.IsChecked = value;
+            }
         }
 
         private TimeSpan Time
@@ -135,12 +139,17 @@ namespace SimpleLyricsEditor.Control
             PositionChanged?.Invoke(this, new PositionChangeEventArgs(true, Time));
         }
 
-        public async Task PickMusicFile()
+        public async Task<bool> PickMusicFile()
         {
             var file = await MusicFileOpenPicker.PickFile();
 
             if (file != null)
+            {
                 MusicFileNotifier.ChangeFile(file);
+                return true;
+            }
+            else
+                return false;
         }
 
         private void RefreshTime()
@@ -208,19 +217,26 @@ namespace SimpleLyricsEditor.Control
 
         #region PlayerControlButton
 
-        private async void Play_Button_Click(object sender, RoutedEventArgs e)
+        private async void PlayOrPause_ToggleButton_Checked(object sender, RoutedEventArgs e)
         {
-                _isClickedPlayOrPauseButton = true;
+            ToggleButton tb = sender as ToggleButton;
+            tb.Content = '\uE103';
+
             if (Source.Equals(Music.Empty))
-                await PickMusicFile();
-            else
+            {
+                if (!await PickMusicFile())
+                    tb.IsChecked = false;
+            }
+            else if (!IsPlay)
                 Play();
         }
 
-        private void Pause_Button_Click(object sender, RoutedEventArgs e)
+        private void PlayOrPause_ToggleButton_Unchecked(object sender, RoutedEventArgs e)
         {
-            Pause();
-            _isClickedPlayOrPauseButton = true;
+            (sender as ToggleButton).Content = '\uE102';
+
+            if (IsPlay)
+                Pause();
         }
 
         private void Rewind_Button_Click(object sender, RoutedEventArgs e)
@@ -240,7 +256,7 @@ namespace SimpleLyricsEditor.Control
             await SetSource(await Music.Parse(e.File));
         }
 
-        private void OnKeyDown(object sender, GlobalKeyEventArgs e)
+        private async void OnKeyDown(object sender, GlobalKeyEventArgs e)
         {
             _isPressShift = e.IsPressShift;
 
@@ -257,8 +273,10 @@ namespace SimpleLyricsEditor.Control
                     case VirtualKey.P:
                         if (IsPlay)
                             Pause();
-                        else
+                        else if (!Source.Equals(Music.Empty))
                             Play();
+                        else
+                            await PickMusicFile();
                         break;
                     case VirtualKey.Left:
                         Rewind(_isPressShift ? RewindTimeOnPressedShift : RewindTime);
@@ -293,20 +311,10 @@ namespace SimpleLyricsEditor.Control
                     break;
                 case MediaElementState.Playing:
                     IsPlay = true;
-                    if (_isClickedPlayOrPauseButton)
-                    {
-                        Pause_Button.Focus(FocusState.Pointer);
-                        _isClickedPlayOrPauseButton = false;
-                    }
                     break;
                 case MediaElementState.Paused:
                 case MediaElementState.Stopped:
                     IsPlay = false;
-                    if (_isClickedPlayOrPauseButton)
-                    {
-                        Play_Button.Focus(FocusState.Pointer);
-                        _isClickedPlayOrPauseButton = false;
-                    }
                     break;
             }
         }
