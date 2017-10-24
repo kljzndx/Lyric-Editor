@@ -61,10 +61,8 @@ namespace SimpleLyricsEditor.Control
             RewindButton_Transform.TranslateX = 44;
             FastForwardButton_Transform.TranslateX = -44;
 
-            Position_Slider.AddHandler(PointerPressedEvent, new PointerEventHandler(Position_Slider_PointerPressed),
-                true);
-            Position_Slider.AddHandler(PointerReleasedEvent, new PointerEventHandler(Position_Slider_PointerReleased),
-                true);
+            Position_Slider.AddHandler(PointerPressedEvent, new PointerEventHandler(Position_Slider_PointerPressed), true);
+            Position_Slider.AddHandler(PointerReleasedEvent, new PointerEventHandler(Position_Slider_PointerReleased), true);
 
             MusicFileNotifier.FileChanged += MusicFileChanged;
             GlobalKeyNotifier.KeyDown += OnKeyDown;
@@ -248,8 +246,8 @@ namespace SimpleLyricsEditor.Control
 
             if (_isPressShift)
             {
-                Rewind_Button.Content = "\uE0A6";
-                FastForward_Button.Content = "\uE0AB";
+                Rewind_Button.Content = '\uE0A6';
+                FastForward_Button.Content = '\uE0AB';
             }
 
             if (!e.IsInputing)
@@ -278,8 +276,8 @@ namespace SimpleLyricsEditor.Control
 
             if (!_isPressShift)
             {
-                Rewind_Button.Content = "\uE100";
-                FastForward_Button.Content = "\uE101";
+                Rewind_Button.Content = '\uE100';
+                FastForward_Button.Content = '\uE101';
             }
         }
 
