@@ -3,7 +3,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     
-    <Style x:Key="ControllerButtonStyle" TargetType="Button">
+    <Style x:Key="ControllerButtonStyle" TargetType="ButtonBase">
         <Setter Property="FontFamily" Value="Segoe MDL2 Assets"/>
         <Setter Property="FontSize" Value="20"/>
         <Setter Property="Padding" Value="5"/>
