@@ -17,20 +17,25 @@ namespace SimpleLyricsEditor.Views
     {
         private readonly Settings _settings = Settings.Current;
 
+        public static SecondaryViewRootPage Current;
+
         public SecondaryViewRootPage()
         {
             InitializeComponent();
+            Current = this;
         }
 
-        protected override void OnNavigatedTo(NavigationEventArgs e)
+        public void Navigate(PageModel pm)
         {
-            if (e.Parameter is PageModel pm)
-                Main_Frame.Navigate(pm.PageType, pm.Title);
+            if (Main_Frame.SourcePageType == pm.PageType)
+                return;
+
+            Main_Frame.Navigate(pm.PageType, pm.Title);
 
             Main_Frame.BackStack.Clear();
             Main_Frame.ForwardStack.Clear();
         }
-
+        
         private void Back_Button_Click(object sender, RoutedEventArgs e)
         {
             Main_Frame.GoBack();
