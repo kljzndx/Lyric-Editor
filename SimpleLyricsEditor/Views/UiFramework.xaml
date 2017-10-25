@@ -100,6 +100,7 @@
                 </AppBarButton>
                 <AppBarButton x:Name="GitHub_AppBarButton" Label="GitHub" Click="GitHub_AppBarButton_Click"/>
                 <AppBarButton x:Name="Settings_AppBarButton" x:Uid="/BottomBar/Settings_AppBarButton" Click="Settings_AppBarButton_Click"/>
+                <AppBarButton x:Name="About_AppBarButton" x:Uid="/BottomBar/About_AppBarButton" Click="About_AppBarButton_Click"/>
             </CommandBar.SecondaryCommands>
         </CommandBar>
     </Page.BottomAppBar>

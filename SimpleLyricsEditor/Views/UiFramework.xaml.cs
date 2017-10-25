@@ -31,6 +31,9 @@ namespace SimpleLyricsEditor.Views
         private static readonly PageModel SettingsPageModel =
             new PageModel(CharacterLibrary.SettingsRoot.GetString("Title"), typeof(SettingsRootPage));
 
+        private static readonly PageModel AboutPageModel =
+            new PageModel(CharacterLibrary.About.GetString("Title"), typeof(AboutPage));
+
         private readonly Settings _settings = Settings.Current;
         private StorageFile _lyricsFile;
         private StorageFile _musicFile;
@@ -100,6 +103,13 @@ namespace SimpleLyricsEditor.Views
             _settings.SettingObject.Values["AdClickDate"] = DateTime.Today.ToString("yyyy MM dd");
             _isClickAd = true;
             AdsVisibilityNotifier.HideAds();
+        }
+
+        private void SecondaryViewNavigate(PageModel pm)
+        {
+            Root_SplitView.IsPaneOpen = !Root_SplitView.IsPaneOpen;
+
+            SecondaryView_Frame.Navigate(typeof(SecondaryViewRootPage), pm);
         }
 
         private async void OnWindowKeyDown(object sender, GlobalKeyEventArgs e)
@@ -336,9 +346,12 @@ namespace SimpleLyricsEditor.Views
 
         private void Settings_AppBarButton_Click(object sender, RoutedEventArgs e)
         {
-            Root_SplitView.IsPaneOpen = !Root_SplitView.IsPaneOpen;
+            SecondaryViewNavigate(SettingsPageModel);
+        }
 
-            SecondaryView_Frame.Navigate(typeof(SecondaryViewRootPage), SettingsPageModel);
+        private void About_AppBarButton_Click(object sender, RoutedEventArgs e)
+        {
+            SecondaryViewNavigate(AboutPageModel);
         }
 
         #endregion
