@@ -141,6 +141,7 @@
     <Content Include="Data\UpdateLogs\zh-CN\v3.1.8.md" />
     <Content Include="Data\UpdateLogs\zh-CN\v3.1.12.md" />
     <Content Include="Data\UpdateLogs\zh-CN\v3.2.1.md" />
+    <Content Include="Data\UpdateLogs\zh-CN\v3.2.4.md" />
     <None Include="SimpleLyricsEditor_StoreKey.pfx" />
     <None Include="SimpleLyricsEditor_TemporaryKey.pfx" />
     <PRIResource Include="Strings\en-US\About.resw" />
@@ -296,9 +297,6 @@
     </PackageReference>
     <PackageReference Include="HappyStudio.UwpToolsLibrary.Information">
       <Version>1.0.2</Version>
-    </PackageReference>
-    <PackageReference Include="JYAdControl">
-      <Version>2.3.6</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.0.1</Version>
