@@ -103,7 +103,7 @@
                             <CompositeTransform x:Name="AddLyrics_Button_Transform" Rotation="180"/>
                         </Button.RenderTransform>
                     </Button>
-                    <Button x:Name="CopyLyrics_Button" x:Uid="/LyricsEdit/CopyLyrics_Button" Content="&#xE16F;" Style="{StaticResource ControllerButtonStyle}" Click="CopyLyrics_Button_Click"/>
+                    <Button x:Name="CopyLyrics_Button" x:Uid="/LyricsEdit/CopyLyrics_Button" Content="&#xE16F;" Style="{StaticResource ControllerButtonStyle}" Visibility="{x:Bind _settings.MultilineEditModeEnabled, Mode=OneWay, Converter={StaticResource BoolToVisibility}}" Click="CopyLyrics_Button_Click"/>
                     <Button x:Name="RemoveLyrics_Button" x:Uid="/LyricsEdit/RemoveLyrics_Button" Content="&#xE10A;" Style="{StaticResource ControllerButtonStyle}" Click="RemoveLyrics_Button_Click"/>
                     <Button x:Name="MoveTime_Button" x:Uid="/LyricsEdit/MoveTime_Button" Content="&#xE759;" Style="{StaticResource ControllerButtonStyle}" Click="MoveTime_Button_Click"/>
                     <Button x:Name="ModifyContent_Button" x:Uid="/LyricsEdit/ModifyContent_Button" Content="&#xE104;" Style="{StaticResource ControllerButtonStyle}" Click="ModifyContent_Button_Click"/>
