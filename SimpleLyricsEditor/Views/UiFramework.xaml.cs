@@ -169,24 +169,24 @@ namespace SimpleLyricsEditor.Views
 
         private void AdsVisibilityNotifier_Displayed(object sender, EventArgs e)
         {
-            if (_isClickAd || AdsArea_Grid.Visibility == Visibility.Visible)
+            if (_isClickAd || MsAdControl.Visibility == Visibility.Visible)
                 return;
 
-            AdsArea_Grid.Visibility = Visibility.Visible;
+            MsAdControl.Visibility = Visibility.Visible;
             MsAdControl.Resume();
             AdsFadeIn_Storyboard.Begin();
         }
 
         private void AdsVisibilityNotifier_Hided(object sender, EventArgs e)
         {
-            if (AdsArea_Grid.Visibility == Visibility.Visible)
+            if (MsAdControl.Visibility == Visibility.Visible)
                 AdsFadeOut_Storyboard.Begin();
         }
 
         private void AdsFadeOut_Storyboard_Completed(object sender, object e)
         {
             MsAdControl.Suspend();
-            AdsArea_Grid.Visibility = Visibility.Collapsed;
+            MsAdControl.Visibility = Visibility.Collapsed;
         }
 
         #endregion
@@ -235,25 +235,13 @@ namespace SimpleLyricsEditor.Views
         private void MsAdControl_ErrorOccurred(object sender, AdErrorEventArgs e)
         {
             MsAdControl.Visibility = Visibility.Collapsed;
-            JyAdControl.Visibility = Visibility.Visible;
         }
 
         private void MsAdControl_OnAdRefreshed(object sender, RoutedEventArgs e)
         {
             MsAdControl.Visibility = Visibility.Visible;
-            JyAdControl.Visibility = Visibility.Collapsed;
         }
-
-        private void JyAdControl_AdClick(object sender, AdClickEventArgs e)
-        {
-            HideAllAds();
-        }
-
-        private void JyAdControl_AdLoadingError(object sender, AdLoadingErrorEventArgs e)
-        {
-            JyAdControl.Visibility = Visibility.Collapsed;
-        }
-
+        
         #endregion
 
         #region Bottom Bar
