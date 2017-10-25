@@ -5,9 +5,25 @@
     xmlns:local="using:SimpleLyricsEditor.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d">
+    mc:Ignorable="d" FontFamily="Segoe UI">
 
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Border Background="{ThemeResource SystemControlBackgroundAccentBrush}">
+            <Image Source="../Assets/Square310x310Logo.scale-125.png" Stretch="Uniform"/>
+        </Border>
+        <StackPanel Grid.Row="1" HorizontalAlignment="Center" Margin="0,5">
+            <TextBlock x:Uid="/About/AppName_TextBlock" Text="Simple Lyrics Editor" Style="{ThemeResource TitleTextBlockStyle}" FontFamily="Segoe UI"/>
+            <TextBlock TextAlignment="Center" FontFamily="Segoe UI">
+                <Run x:Uid="/About/Version_TextBlock" Text="版本"/>
+                <Run Text=": "/>
+                <Run Text="{x:Bind version}"/>
+            </TextBlock>
+        </StackPanel>
         
     </Grid>
 </Page>
