@@ -72,11 +72,11 @@
 
                     <TextBlock TextAlignment="Center" Style="{StaticResource SubtitleTextBlockStyle}">
                         <Bold>
-                            <Run x:Uid="/UpdateLogDialog/Title_AppName_TextBlock_Run" Text="Simple Lyrics Editor"/>
+                            <Run x:Uid="/About/AppName_TextBlock" Text="Simple Lyrics Editor"/>
                             <Run Text=" "/>
                             <Run Text="{x:Bind SelectedLog.Version, Mode=OneWay}"/>
                             <Run Text=" "/>
-                            <Run x:Uid="/UpdateLogDialog/Title_Version_TextBlock_Run" Text="Version"/>
+                            <Run x:Uid="/About/Version_TextBlock" Text="Version"/>
                             <LineBreak/>
                             <Run x:Uid="/UpdateLogDialog/Title_UpdateLog_TextBlock_Run" Text="Update log"/>
                         </Bold>
@@ -107,11 +107,11 @@
                                 </Grid.ColumnDefinitions>
 
                                 <TextBlock TextWrapping="Wrap">
-                                    <Run x:Uid="/UpdateLogDialog/Title_AppName_TextBlock_Run" Text="Simple Lyrics Editor"/>
+                                    <Run x:Uid="/About/AppName_TextBlock" Text="Simple Lyrics Editor"/>
                                     <Run Text=" "/>
                                     <Run Text="{x:Bind Version}"/>
                                     <Run Text=" "/>
-                                    <Run x:Uid="/UpdateLogDialog/Title_Version_TextBlock_Run" Text="Version"/>
+                                    <Run x:Uid="/About/Version_TextBlock" Text="Version"/>
                                 </TextBlock>
 
                                 <TextBlock Grid.Column="1" Text="{x:Bind Date}" TextAlignment="Right"/>

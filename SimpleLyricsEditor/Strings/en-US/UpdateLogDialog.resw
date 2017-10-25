@@ -123,13 +123,7 @@
   <data name="Information_PivotItem.Header" xml:space="preserve">
     <value>Information</value>
   </data>
-  <data name="Title_AppName_TextBlock_Run.Text" xml:space="preserve">
-    <value>Simple Lyrics Editor</value>
-  </data>
   <data name="Title_UpdateLog_TextBlock_Run.Text" xml:space="preserve">
     <value>Update log</value>
-  </data>
-  <data name="Title_Version_TextBlock_Run.Text" xml:space="preserve">
-    <value>Version</value>
   </data>
 </root>

@@ -117,13 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AllVersions_PivotItem.Header" xml:space="preserve">
-    <value>所有版本</value>
+  <data name="AppName_TextBlock.Text" xml:space="preserve">
+    <value>Simple Lyrics Editor</value>
   </data>
-  <data name="Information_PivotItem.Header" xml:space="preserve">
-    <value>信息</value>
-  </data>
-  <data name="Title_UpdateLog_TextBlock_Run.Text" xml:space="preserve">
-    <value>更新日志</value>
+  <data name="Version_TextBlock.Text" xml:space="preserve">
+    <value>Version</value>
   </data>
 </root>
