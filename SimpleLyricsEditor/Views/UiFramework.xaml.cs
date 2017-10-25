@@ -108,7 +108,7 @@ namespace SimpleLyricsEditor.Views
         {
             Root_SplitView.IsPaneOpen = !Root_SplitView.IsPaneOpen;
 
-            SecondaryView_Frame.Navigate(typeof(SecondaryViewRootPage), pm);
+            SecondaryViewRootPage.Current.Navigate(pm);
         }
 
         private async void OnWindowKeyDown(object sender, GlobalKeyEventArgs e)
