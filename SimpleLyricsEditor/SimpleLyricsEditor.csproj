@@ -140,6 +140,7 @@
     <Content Include="Data\UpdateLogs\zh-CN\v3.1.3.md" />
     <Content Include="Data\UpdateLogs\zh-CN\v3.1.8.md" />
     <Content Include="Data\UpdateLogs\zh-CN\v3.1.12.md" />
+    <Content Include="Data\UpdateLogs\zh-CN\v3.2.1.md" />
     <None Include="SimpleLyricsEditor_StoreKey.pfx" />
     <None Include="SimpleLyricsEditor_TemporaryKey.pfx" />
     <PRIResource Include="Strings\en-US\About.resw" />
