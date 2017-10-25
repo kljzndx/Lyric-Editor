@@ -10,7 +10,6 @@ using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Media;
 using HappyStudio.UwpToolsLibrary.Auxiliarys;
 using HappyStudio.UwpToolsLibrary.Information;
-using JiuYouAdUniversal.Models;
 using Microsoft.Advertising.WinRT.UI;
 using Microsoft.Services.Store.Engagement;
 using SimpleLyricsEditor.BLL.Pickers;
