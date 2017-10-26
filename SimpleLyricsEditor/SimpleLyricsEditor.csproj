@@ -131,6 +131,8 @@
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
+    <Content Include="Assets\QQ_Icon.png" />
+    <Content Include="Assets\Skype_Icon.png" />
     <Content Include="Data\UpdateLogs\AllLogsPath.json" />
     <Content Include="Data\UpdateLogs\DialogUI.lang-en-US.xml" />
     <Content Include="Data\UpdateLogs\DialogUI.lang-zh-CN.xml" />
