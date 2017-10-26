@@ -5,25 +5,61 @@
     xmlns:local="using:SimpleLyricsEditor.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d" FontFamily="Segoe UI">
+    mc:Ignorable="d"
+    d:DesignWidth="320"
+    d:DesignHeight="600">
+    <Page.Resources>
+        <Style x:Key="JoinGroup_HyperlinkButtonStyle" TargetType="HyperlinkButton">
+            <Setter Property="Width" Value="165"/>
+            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+            <Setter Property="Padding" Value="6"/>
+            <Setter Property="Margin" Value="6"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="HyperlinkButton">
+                        <Grid x:Name="RootGrid">
+                            <ContentPresenter x:Name="ContentPresenter" AutomationProperties.AccessibilityView="Raw" Background="{TemplateBinding Background}" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" ContentTransitions="{TemplateBinding ContentTransitions}" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" Padding="{TemplateBinding Padding}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Page.Resources>
 
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
+    <StackPanel>
         <Border Background="{ThemeResource SystemControlBackgroundAccentBrush}">
             <Image Source="../Assets/Square310x310Logo.scale-125.png" Stretch="Uniform"/>
         </Border>
-        <StackPanel Grid.Row="1" HorizontalAlignment="Center" Margin="0,5">
+        <StackPanel HorizontalAlignment="Center" Margin="0,5">
             <TextBlock x:Uid="/About/AppName_TextBlock" Text="Simple Lyrics Editor" Style="{ThemeResource TitleTextBlockStyle}" FontFamily="Segoe UI"/>
-            <TextBlock TextAlignment="Center" FontFamily="Segoe UI">
+            <TextBlock TextAlignment="Center">
                 <Run x:Uid="/About/Version_TextBlock" Text="版本"/>
                 <Run Text=": "/>
                 <Run Text="{x:Bind version}"/>
             </TextBlock>
         </StackPanel>
         
-    </Grid>
+        <StackPanel HorizontalAlignment="Center">
+            <HyperlinkButton x:Name="JoinQqGroup_HyperlinkButton" x:Uid="/About/JoinQqGroup_HyperlinkButton" Background="DodgerBlue" Style="{StaticResource JoinGroup_HyperlinkButtonStyle}" NavigateUri="https://jq.qq.com/?_wv=1027&amp;k=5ZnVwKd">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Image Height="18" Source="../Assets/QQ_Icon.png" Stretch="Uniform"/>
+                    <TextBlock x:Name="JoinQqGroup_TextBlock" Grid.Column="1" Text="184437847" Foreground="White" Margin="2,0,0,0" TextAlignment="Center"/>
+                </Grid>
+            </HyperlinkButton>
+            <HyperlinkButton x:Name="JoinSkypeConversation_HyperlinkButton" Background="DeepSkyBlue" NavigateUri="https://join.skype.com/FRpiSQfRNq2u" Style="{StaticResource JoinGroup_HyperlinkButtonStyle}" HorizontalAlignment="Left">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Image Width="18" Source="../Assets/Skype_Icon.png"/>
+                    <TextBlock x:Uid="/About/JoinSkypeConversation_TextBlock" Grid.Column="1" Text="Skype Conversation" TextAlignment="Center" Foreground="White" Margin="2,0,0,0"/>
+                </Grid>
+            </HyperlinkButton>
+        </StackPanel>
+    </StackPanel>
 </Page>
