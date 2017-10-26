@@ -37,7 +37,7 @@
 
     <SplitView x:Name="Root_SplitView" DisplayMode="Overlay" PanePlacement="Right">
         <SplitView.Pane>
-            <Frame x:Name="SecondaryView_Frame" Margin="5"/>
+            <Frame x:Name="SecondaryView_Frame" SourcePageType="local:SecondaryViewRootPage" Margin="5"/>
         </SplitView.Pane>
         
         <SplitView.Content>
