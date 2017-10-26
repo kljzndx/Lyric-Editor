@@ -35,7 +35,7 @@ namespace SimpleLyricsEditor.BLL.LyricsOperations
                 }
             }
 
-            if (!_isInvoked && isMove && _changedList.Contains(sourceLyric))
+            if (!_isInvoked && isMove && !_changedList.Contains(sourceLyric))
                 _changedList.Add(sourceLyric);
         }
 
