@@ -20,10 +20,10 @@
         </Style>
 
         <Storyboard x:Name="AdsFadeIn_Storyboard">
-            <FadeInThemeAnimation Storyboard.TargetName="AdsArea_Grid"/>
+            <FadeInThemeAnimation Storyboard.TargetName="MsAdControl"/>
         </Storyboard>
         <Storyboard x:Name="AdsFadeOut_Storyboard" Completed="AdsFadeOut_Storyboard_Completed">
-            <FadeOutThemeAnimation Storyboard.TargetName="AdsArea_Grid"/>
+            <FadeOutThemeAnimation Storyboard.TargetName="MsAdControl"/>
         </Storyboard>
 
         <Style x:Key="FastMenuButtonStyle" TargetType="Button">
