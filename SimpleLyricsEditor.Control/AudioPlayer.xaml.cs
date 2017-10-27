@@ -116,6 +116,7 @@ namespace SimpleLyricsEditor.Control
         }
 
         public TimeSpan Position => Player.Position;
+        public TimeSpan Duration => Player.NaturalDuration.TimeSpan;
 
         public event TypedEventHandler<AudioPlayer, MusicChangeEventArgs> SourceChanged;
         public event TypedEventHandler<AudioPlayer, PositionChangeEventArgs> PositionChanged;
