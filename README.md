@@ -7,4 +7,7 @@ V3系列版本特点如下
 3. 性能大幅提升    
 
 **请使用 visual studio 2017 打开此项目**    
-Please open this project by **Visual Studio 2017**
+Please open this project by **Visual Studio 2017**  
+  
+[Microsoft Store](
+https://www.microsoft.com/store/apps/9mx4frgq4rqs)
