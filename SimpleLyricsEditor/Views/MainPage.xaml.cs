@@ -49,6 +49,12 @@ namespace SimpleLyricsEditor.Views
             ImageFileNotifier.FileChanged += ImageFileChanged;
         }
 
+        private void GoToLyricTime(Lyric lyric)
+        {
+            if (lyric.Time <= Player.Duration)
+                Player.SetPosition(lyric.Time);
+        }
+
         private async Task GetBackgroundImage()
         {
             StorageFile file = await ApplicationData.Current.LocalFolder.TryGetItemAsync("Background.img") as StorageFile;
@@ -137,6 +143,10 @@ namespace SimpleLyricsEditor.Views
                         break;
                     case VirtualKey.S:
                         _viewModel.Sort(_viewModel.LyricItems);
+                        break;
+                    case VirtualKey.G:
+                        if (Lyrics_ListView.SelectedItem is Lyric lyric)
+                            GoToLyricTime(lyric);
                         break;
                     case VirtualKey.Up:
                         Focus(FocusState.Pointer);
@@ -385,6 +395,14 @@ namespace SimpleLyricsEditor.Views
             LyricsContent_TextBox.Text = Lyrics_ListView.SelectedIndex > -1
                 ? (Lyrics_ListView.Items[Lyrics_ListView.SelectedIndex] as Lyric).Content
                 : String.Empty;
+        }
+
+        private void LyricTime_Button_Click(object sender, RoutedEventArgs e)
+        {
+            Lyric lyric = (sender as Button).DataContext as Lyric;
+
+            Lyrics_ListView.SelectedItem = lyric;
+            GoToLyricTime(lyric);
         }
 
         #endregion

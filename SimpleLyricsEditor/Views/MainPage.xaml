@@ -124,9 +124,12 @@
                                 <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
-
-                            <TextBlock Text="{x:Bind Time, Mode=OneWay, Converter={StaticResource TimeSpanToLyricTimeString}}" Margin="0, 0, 5, 0"/>
-                            <TextBlock Grid.Column="1" Text="{x:Bind Content, Mode=OneWay}" TextWrapping="Wrap" Margin="5, 0, 0, 0"/>
+                            
+                            <Button x:Name="LyricTime_Button" Background="Transparent" VerticalAlignment="Top" Padding="0" Margin="0, 0, 5, 0" Click="LyricTime_Button_Click">
+                                <TextBlock Text="{x:Bind Time, Mode=OneWay, Converter={StaticResource TimeSpanToLyricTimeString}}"/>
+                            </Button>
+                            
+                            <TextBlock Grid.Column="1" Text="{x:Bind Content, Mode=OneWay}" TextWrapping="Wrap" Margin="5, 2, 0, 0"/>
                         </Grid>
                     </DataTemplate>
                 </ListView.ItemTemplate>
