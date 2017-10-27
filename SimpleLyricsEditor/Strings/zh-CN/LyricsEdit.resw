@@ -129,10 +129,6 @@
   <data name="ExitMultilineEditMode_Button.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
     <value>退出多行编辑模式</value>
   </data>
-  <data name="GotoThisLyricTime_Button.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>跳转到此歌词项的时间上
-快捷键：G</value>
-  </data>
   <data name="LyricsContent_TextBox.PlaceholderText" xml:space="preserve">
     <value>请输入歌词，支持多行文本</value>
   </data>
@@ -145,6 +141,10 @@ Ctrl + Enter -&gt; 添加歌词项</value>
   <data name="LyricsSort_Button.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
     <value>排序
 快捷键：S</value>
+  </data>
+  <data name="LyricTime_Button.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>跳转到此时间
+快捷键：G</value>
   </data>
   <data name="ModifyContent_Button.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
     <value>修改歌词的内容

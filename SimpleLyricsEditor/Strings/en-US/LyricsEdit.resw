@@ -129,10 +129,6 @@ Shortcut Keys : C</value>
   <data name="ExitMultilineEditMode_Button.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
     <value>Exit Multiline Edit Mode</value>
   </data>
-  <data name="GotoThisLyricTime_Button.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Go to the time of this lyric item
-Shortcut Key : G</value>
-  </data>
   <data name="LyricsContent_TextBox.PlaceholderText" xml:space="preserve">
     <value>Please Enter Lyric , Support Multiline Text</value>
   </data>
@@ -145,6 +141,10 @@ Ctrl + Enter -&gt; Add Lyric Items</value>
   <data name="LyricsSort_Button.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
     <value>Sort
 Shortcut Keys : S</value>
+  </data>
+  <data name="LyricTime_Button.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Go to this time
+Shortcut Key : G</value>
   </data>
   <data name="ModifyContent_Button.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
     <value>Modify content of lyrics
