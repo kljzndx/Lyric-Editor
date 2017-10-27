@@ -43,11 +43,10 @@
     <Function> 移动歌词的时间 </Function>
   </ShortcutKey>
   <ShortcutKey Name="修改歌词内容" Class="歌词操作">
-    <Condition> 在歌词输入框内按回车键 </Condition>
-    <Function> 修改歌词的内容 </Function>
-  </ShortcutKey>
-  <ShortcutKey Name="修改歌词内容" Class="歌词操作">
-    <Condition> 按 M 键 </Condition>
+    <Condition>
+1. 按 M 键
+2. 在歌词输入框内按回车键
+    </Condition>
     <Function> 修改歌词的内容 </Function>
   </ShortcutKey>
   <ShortcutKey Name="删除歌词" Class="歌词操作">
@@ -61,6 +60,10 @@
   <ShortcutKey Name="歌词排序" Class="歌词操作">
     <Condition> 按 S 键 </Condition>
     <Function> 歌词列表排序 </Function>
+  </ShortcutKey>
+  <ShortcutKey Name="跳转到当前项的时间点" Class="歌词操作">
+    <Condition> 按 G 键 </Condition>
+    <Function> 跳转到当前选中项的时间点 </Function>
   </ShortcutKey>
   <ShortcutKey Name="播放控制" Class="播放器操作">
     <Condition> 按 P 键 </Condition>

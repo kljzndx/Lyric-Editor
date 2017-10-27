@@ -43,11 +43,10 @@
     <Function> Move time of lyrics </Function>
   </ShortcutKey>
   <ShortcutKey Name="修改歌词内容" Class="Lyrics operations">
-    <Condition> press Enter In Lyric input box </Condition>
-    <Function> Modify content of Lyrics </Function>
-  </ShortcutKey>
-  <ShortcutKey Name="修改歌词内容" Class="Lyrics operations">
-    <Condition> Press M Key </Condition>
+    <Condition>
+1. Press M Key
+2. press Enter In Lyric input box
+    </Condition>
     <Function> Modify content of Lyrics </Function>
   </ShortcutKey>
   <ShortcutKey Name="删除歌词" Class="Lyrics operations">
@@ -61,6 +60,10 @@
   <ShortcutKey Name="歌词排序" Class="Lyrics operations">
     <Condition> Press S Key </Condition>
     <Function> Lyrics List Sort </Function>
+  </ShortcutKey>
+  <ShortcutKey Name="跳转到当前项的时间点" Class="Lyrics operations">
+    <Condition> Press G Key </Condition>
+    <Function> Go to the time of the currently selected item </Function>
   </ShortcutKey>
   <ShortcutKey Name="播放控制" Class="Player operations">
     <Condition> Press P Key </Condition>
