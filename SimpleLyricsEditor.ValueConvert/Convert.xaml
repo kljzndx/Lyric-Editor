@@ -5,6 +5,7 @@
     xmlns:local="using:SimpleLyricsEditor.ValueConvert">
 
     <local:TimeSpanToLyricTimeString x:Key="TimeSpanToLyricTimeString"/>
+    <local:BoolNullableToBool x:Key="BoolNullableToBool"/>
     <local:BoolToVisibility x:Key="BoolToVisibility"/>
     <local:BoolToVisibility_Reverse x:Key="BoolToVisibility_Reverse"/>
     <local:PercentageToDouble x:Key="PercentageToDouble"/>

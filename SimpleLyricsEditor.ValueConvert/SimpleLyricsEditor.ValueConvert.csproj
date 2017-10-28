@@ -106,6 +106,7 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="BoolNullableToBool.cs" />
     <Compile Include="BoolToVisibility.cs" />
     <Compile Include="BoolToVisibility_Reverse.cs" />
     <Compile Include="Convert.xaml.cs">
