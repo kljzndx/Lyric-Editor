@@ -30,7 +30,7 @@ namespace SimpleLyricsEditor.ViewModels
             RedoOperations.CollectionChanged += RedoOperations_CollectionChanged;
 
             LyricsFileChangeNotifier.FileChanged += LyricsFileChanged;
-            LyricsFileSaveNotifier.RunSaved += LyricsFileRunSaved;
+            LyricsFileSaveNotifier.SaveRequested += LyricsFileSaveRequested;
         }
 
         public List<LyricsTag> LyricsTags
@@ -175,7 +175,7 @@ namespace SimpleLyricsEditor.ViewModels
             RedoOperations.Clear();
         }
 
-        private async void LyricsFileRunSaved(object sender, FileChangeEventArgs e)
+        private async void LyricsFileSaveRequested(object sender, FileChangeEventArgs e)
         {
             var content = LyricsSerializer.Serialization(LyricItems,
                 LyricsTags.Where(t => !string.IsNullOrWhiteSpace(t.TagValue)));

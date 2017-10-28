@@ -83,7 +83,7 @@ namespace SimpleLyricsEditor.Views
                     return;
             }
 
-            LyricsFileSaveNotifier.SaveFile(_lyricsFile);
+            LyricsFileSaveNotifier.SendSaveRequest(_lyricsFile);
         }
 
         private async Task SaveAs()
@@ -92,7 +92,7 @@ namespace SimpleLyricsEditor.Views
             if (file == null)
                 return;
 
-            LyricsFileSaveNotifier.SaveFile(file);
+            LyricsFileSaveNotifier.SendSaveRequest(file);
         }
 
         #endregion
