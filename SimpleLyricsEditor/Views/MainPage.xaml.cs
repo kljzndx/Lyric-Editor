@@ -395,6 +395,9 @@ namespace SimpleLyricsEditor.Views
             LyricsContent_TextBox.Text = Lyrics_ListView.SelectedIndex > -1
                 ? (Lyrics_ListView.Items[Lyrics_ListView.SelectedIndex] as Lyric).Content
                 : String.Empty;
+
+            if (e.AddedItems.FirstOrDefault() is Lyric lyric)
+                Lyrics_ListView.ScrollIntoView(lyric);
         }
 
         private void LyricTime_Button_Click(object sender, RoutedEventArgs e)
