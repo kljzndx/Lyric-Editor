@@ -309,7 +309,7 @@ namespace SimpleLyricsEditor.Views
         {
             var items = Lyrics_ListView.ItemsPanelRoot.Children.Cast<ListViewItem>().ToList();
 
-            for (var i = Lyrics_ListView.SelectedIndex; i < Lyrics_ListView.Items.Count; i++)
+            for (var i = Lyrics_ListView.SelectedIndex; i < Lyrics_ListView.Items.Count - 1; i++)
                 items[i].IsSelected = true;
         }
 
@@ -325,7 +325,7 @@ namespace SimpleLyricsEditor.Views
                 else
                     break;
 
-            for (int i = sltId; i < sourceItems.Count; i++)
+            for (int i = sltId; i < sourceItems.Count - 1; i++)
                 if (!String.IsNullOrEmpty(sourceItems[i].Content))
                     listItems[i].IsSelected = true;
                 else
