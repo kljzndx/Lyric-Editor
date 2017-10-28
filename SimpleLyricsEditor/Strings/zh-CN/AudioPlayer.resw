@@ -143,4 +143,8 @@
   <data name="Balance_Slider.Header" xml:space="preserve">
     <value>平衡</value>
   </data>
+  <data name="OpenMusicFile_Button.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>打开音乐文件
+快捷键：Ctrl + M</value>
+  </data>
 </root>

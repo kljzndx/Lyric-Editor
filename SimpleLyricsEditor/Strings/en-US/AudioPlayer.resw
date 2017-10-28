@@ -143,4 +143,8 @@ Shortcut : P</value>
   <data name="Balance_Slider.Header" xml:space="preserve">
     <value>Balance</value>
   </data>
+  <data name="OpenMusicFile_Button.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Open music file
+Shortcut Keys : Ctrl + M</value>
+  </data>
 </root>
