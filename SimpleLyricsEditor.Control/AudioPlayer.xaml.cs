@@ -266,6 +266,9 @@ namespace SimpleLyricsEditor.Control
         private async void MusicFileChanged(object sender, FileChangeEventArgs e)
         {
             await SetSource(await Music.Parse(e.File));
+
+            PlayOrPause_ToggleButton.Visibility = Visibility.Visible;
+            OpenMusicFile_Button.Visibility = Visibility.Collapsed;
         }
 
         private async void OnKeyDown(object sender, GlobalKeyEventArgs e)
