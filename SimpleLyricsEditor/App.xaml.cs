@@ -170,7 +170,7 @@ namespace SimpleLyricsEditor
             }
             Window.Current.Activate();
 
-            LyricsFileChangeNotifier.ChangeFile(args.Files.Last() as StorageFile);
+            LyricsFileNotifier.ChangeFile(args.Files.Last() as StorageFile);
         }
 
         /// <summary>

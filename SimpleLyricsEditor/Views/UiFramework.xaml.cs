@@ -44,7 +44,7 @@ namespace SimpleLyricsEditor.Views
 
             GlobalKeyNotifier.KeyDown += OnWindowKeyDown;
             MusicFileNotifier.FileChanged += OnMusicFileFileChanged;
-            LyricsFileChangeNotifier.FileChanged += OnLyricsFileChanged;
+            LyricsFileNotifier.FileChanged += OnLyricsFileChanged;
             AdsVisibilityNotifier.Displayed += AdsVisibilityNotifier_Displayed;
             AdsVisibilityNotifier.Hided += AdsVisibilityNotifier_Hided;
 
@@ -69,7 +69,7 @@ namespace SimpleLyricsEditor.Views
             if (file == null)
                 return;
             
-            LyricsFileChangeNotifier.ChangeFile(file);
+            LyricsFileNotifier.ChangeFile(file);
         }
 
         private async Task SaveFile()
@@ -83,7 +83,7 @@ namespace SimpleLyricsEditor.Views
                     return;
             }
 
-            LyricsFileSaveNotifier.SendSaveRequest(_lyricsFile);
+            LyricsFileNotifier.SendSaveRequest(_lyricsFile);
         }
 
         private async Task SaveAs()
@@ -92,7 +92,7 @@ namespace SimpleLyricsEditor.Views
             if (file == null)
                 return;
 
-            LyricsFileSaveNotifier.SendSaveRequest(file);
+            LyricsFileNotifier.SendSaveRequest(file);
         }
 
         #endregion
@@ -117,7 +117,7 @@ namespace SimpleLyricsEditor.Views
                 switch (e.Key)
                 {
                     case VirtualKey.N:
-                        LyricsFileChangeNotifier.ChangeFile(null);
+                        LyricsFileNotifier.ChangeFile(null);
                         break;
                     case VirtualKey.M:
                         await OpenMusicFile();
@@ -247,7 +247,7 @@ namespace SimpleLyricsEditor.Views
 
         private void NewFile_AppBarButton_Click(object sender, RoutedEventArgs e)
         {
-            LyricsFileChangeNotifier.ChangeFile(null);
+            LyricsFileNotifier.ChangeFile(null);
         }
 
         private void OpenFile_AppBarToggleButton_Checked(object sender, RoutedEventArgs e)
