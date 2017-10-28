@@ -188,9 +188,6 @@ namespace SimpleLyricsEditor.Views
             // 提取V2系列版本的背景图
             await ExtractionOldVersionBackgroundImageFile();
             await GetBackgroundImage();
-
-            if (_settings.MultilineEditModeEnabled)
-                Lyrics_ListView.SelectionMode = ListViewSelectionMode.Multiple;
         }
 
         private void UndoOperations_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
@@ -334,16 +331,14 @@ namespace SimpleLyricsEditor.Views
 
         #endregion
 
-        private void MultilineEditMode_Button_Click(object sender, RoutedEventArgs e)
+        private void MultilineEditMode_ToggleButton_Checked(object sender, RoutedEventArgs e)
         {
             Lyrics_ListView.SelectionMode = ListViewSelectionMode.Multiple;
-            _settings.MultilineEditModeEnabled = true;
         }
 
-        private void ExitMultilineEditMode_Button_Click(object sender, RoutedEventArgs e)
+        private void MultilineEditMode_ToggleButton_Unchecked(object sender, RoutedEventArgs e)
         {
             Lyrics_ListView.SelectionMode = ListViewSelectionMode.Single;
-            _settings.MultilineEditModeEnabled = false;
         }
 
         private void AddLyrics_Button_Click(object sender, RoutedEventArgs e)

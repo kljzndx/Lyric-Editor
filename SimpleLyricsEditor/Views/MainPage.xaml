@@ -93,10 +93,7 @@
                         </Button.Flyout>
                     </Button>
                     
-                    <StackPanel x:Name="MultilineEditMode_StackPanel">
-                        <Button x:Name="MultilineEditMode_Button" x:Uid="/LyricsEdit/MultilineEditMode_Button" Content="&#xE133;" Style="{StaticResource ControllerButtonStyle}" Visibility="{x:Bind _settings.MultilineEditModeEnabled, Mode=OneWay, Converter={StaticResource BoolToVisibility_Reverse}}" Click="MultilineEditMode_Button_Click"/>
-                        <Button x:Name="ExitMultilineEditMode_Button" x:Uid="/LyricsEdit/ExitMultilineEditMode_Button" Content="&#xE081;" Style="{StaticResource ControllerButtonStyle}" Visibility="{x:Bind _settings.MultilineEditModeEnabled, Mode=OneWay, Converter={StaticResource BoolToVisibility}}" Click="ExitMultilineEditMode_Button_Click"/>
-                    </StackPanel>
+                    <ToggleButton x:Name="MultilineEditMode_ToggleButton" x:Uid="/LyricsEdit/MultilineEditMode_ToggleButton" Content="&#xE133;" IsChecked="{x:Bind _settings.MultilineEditModeEnabled, Mode=TwoWay, Converter={StaticResource BoolNullableToBool}}" Style="{StaticResource ControllerButtonStyle}" Checked="MultilineEditMode_ToggleButton_Checked" Unchecked="MultilineEditMode_ToggleButton_Unchecked"/>
 
                     <Button x:Name="AddLyrics_Button" x:Uid="/LyricsEdit/AddLyrics_Button" Content="&#xE94D;" Style="{StaticResource ControllerButtonStyle}" Click="AddLyrics_Button_Click" RenderTransformOrigin="0.5,0.5">
                         <Button.RenderTransform>

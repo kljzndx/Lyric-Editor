@@ -126,9 +126,6 @@ Press Shift to Add Lyrics to Above</value>
     <value>Copy Lyrics ( Retention time interval )
 Shortcut Keys : C</value>
   </data>
-  <data name="ExitMultilineEditMode_Button.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Exit Multiline Edit Mode</value>
-  </data>
   <data name="LyricsContent_TextBox.PlaceholderText" xml:space="preserve">
     <value>Please Enter Lyric , Support Multiline Text</value>
   </data>
@@ -154,7 +151,7 @@ Shortcut Key : M</value>
     <value>Move time of lyrics
 Shortcut Key : Space</value>
   </data>
-  <data name="MultilineEditMode_Button.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+  <data name="MultilineEditMode_ToggleButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
     <value>Multiline Edit Mode</value>
   </data>
   <data name="RemoveLyrics_Button.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
