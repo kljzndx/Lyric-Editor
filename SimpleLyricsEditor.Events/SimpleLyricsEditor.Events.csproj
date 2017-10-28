@@ -112,8 +112,7 @@
     <Compile Include="GlobalKeyNotifier.cs" />
     <Compile Include="ImageFileChangeEventArgs.cs" />
     <Compile Include="ImageFileNotifier.cs" />
-    <Compile Include="LyricsFileChangeNotifier.cs" />
-    <Compile Include="LyricsFileSaveNotifier.cs" />
+    <Compile Include="LyricsFileNotifier.cs" />
     <Compile Include="MusicFileNotifier.cs" />
     <Compile Include="MusicChangeEventArgs.cs" />
     <Compile Include="PositionChangeEventArgs.cs" />
