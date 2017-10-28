@@ -27,8 +27,8 @@
     </Page.Resources>
 
     <StackPanel>
-        <Border Background="{ThemeResource SystemControlBackgroundAccentBrush}">
-            <Image Source="../Assets/Square310x310Logo.scale-125.png" Stretch="Uniform"/>
+        <Border Background="{ThemeResource SystemControlBackgroundAccentBrush}" HorizontalAlignment="Center">
+            <Image Source="../Assets/Square310x310Logo.png" Stretch="Uniform"/>
         </Border>
         <StackPanel HorizontalAlignment="Center" Margin="0,5">
             <TextBlock x:Uid="/About/AppName_TextBlock" Text="Simple Lyrics Editor" Style="{ThemeResource TitleTextBlockStyle}" FontFamily="Segoe UI"/>
