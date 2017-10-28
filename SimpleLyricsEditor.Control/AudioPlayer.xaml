@@ -327,12 +327,13 @@
                     </Button.RenderTransform>
                 </Button>
 
-                <ToggleButton x:Name="PlayOrPause_ToggleButton" x:Uid="/AudioPlayer/PlayOrPause_ToggleButton" Canvas.ZIndex="1" Content="&#xE102;" Style="{StaticResource ControllerButtonStyle}" Checked="PlayOrPause_ToggleButton_Checked" Unchecked="PlayOrPause_ToggleButton_Unchecked"/>
-
-                <!--<StackPanel x:Uid="/AudioPlayer/PlayOrPause_StackPanel" Orientation="Horizontal" Canvas.ZIndex="1">
-                    <Button x:Name="Play_Button" Content="&#xE102;" Visibility="{x:Bind IsPlay, Mode=OneWay, Converter={StaticResource BoolToVisibility_Reverse}}" Style="{StaticResource ControllerButtonStyle}" Click="Play_Button_Click"/>
-                    <Button x:Name="Pause_Button" Content="&#xE103;" Visibility="{x:Bind IsPlay, Mode=OneWay, Converter={StaticResource BoolToVisibility}}" Style="{StaticResource ControllerButtonStyle}" Click="Pause_Button_Click"/>
-                </StackPanel>-->
+                <Button x:Name="OpenMusicFile_Button" x:Uid="/AudioPlayer/OpenMusicFile_Button" Canvas.ZIndex="1" Style="{StaticResource ControllerButtonStyle}" Click="OpenMusicFile_Button_Click">
+                    <Grid Width="20" Height="20">
+                        <SymbolIcon x:Name="OpenMusicFile_SymbolIcon" Width="20" Height="20" Symbol="OpenFile"/>
+                        <ProgressRing x:Name="MusicFileOpening_ProgressRing"/>
+                    </Grid>
+                </Button>
+                <ToggleButton x:Name="PlayOrPause_ToggleButton" x:Uid="/AudioPlayer/PlayOrPause_ToggleButton" Canvas.ZIndex="1" Content="&#xE102;" Visibility="Collapsed" Style="{StaticResource ControllerButtonStyle}" Checked="PlayOrPause_ToggleButton_Checked" Unchecked="PlayOrPause_ToggleButton_Unchecked"/>
 
                 <Button x:Name="FastForward_Button" x:Uid="/AudioPlayer/FastForward_Button" Content="&#xE101;" Style="{StaticResource ControllerButtonStyle}" RenderTransformOrigin="0.5,0.5" Click="FastForward_Button_Click">
                     <Button.RenderTransform>

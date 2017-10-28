@@ -217,18 +217,29 @@ namespace SimpleLyricsEditor.Control
         }
 
         #region PlayerControlButton
-
-        private async void PlayOrPause_ToggleButton_Checked(object sender, RoutedEventArgs e)
+        
+        private async void OpenMusicFile_Button_Click(object sender, RoutedEventArgs e)
         {
-            ToggleButton tb = sender as ToggleButton;
-            tb.Content = '\uE103';
+            OpenMusicFile_SymbolIcon.Visibility = Visibility.Collapsed;
+            OpenMusicFile_Button.IsEnabled = false;
+            MusicFileOpening_ProgressRing.IsActive = true;
 
-            if (Source.Equals(Music.Empty))
+            if (await PickMusicFile())
             {
-                if (!await PickMusicFile())
-                    tb.IsChecked = false;
+                PlayOrPause_ToggleButton.Visibility = Visibility.Visible;
+                OpenMusicFile_Button.Visibility = Visibility.Collapsed;
             }
-            else if (!IsPlay)
+
+            MusicFileOpening_ProgressRing.IsActive = false;
+            OpenMusicFile_Button.IsEnabled = true;
+            OpenMusicFile_SymbolIcon.Visibility = Visibility.Visible;
+        }
+
+        private void PlayOrPause_ToggleButton_Checked(object sender, RoutedEventArgs e)
+        {
+            (sender as ToggleButton).Content = '\uE103';
+            
+            if (!IsPlay)
                 Play();
         }
 
@@ -336,6 +347,11 @@ namespace SimpleLyricsEditor.Control
 
         private void Player_MediaFailed(object sender, ExceptionRoutedEventArgs e)
         {
+            if (Source.Equals(Music.Empty))
+            {
+                OpenMusicFile_Button.Visibility = Visibility.Visible;
+                PlayOrPause_ToggleButton.Visibility = Visibility.Collapsed;
+            }
             throw new Exception(e.ErrorMessage);
         }
 
