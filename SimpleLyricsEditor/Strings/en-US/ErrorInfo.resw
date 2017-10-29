@@ -123,6 +123,9 @@
   <data name="NotFoundFile" xml:space="preserve">
     <value>File not found</value>
   </data>
+  <data name="RebootApp" xml:space="preserve">
+    <value>Please reboot the App for the best experience</value>
+  </data>
   <data name="ShowFeedbackHubError" xml:space="preserve">
     <value>Unable to start Feedback Hub</value>
   </data>
