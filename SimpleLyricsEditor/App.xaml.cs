@@ -54,6 +54,10 @@ namespace SimpleLyricsEditor
             this.InitializeComponent();
             this.Suspending += OnSuspending;
             this.UnhandledException += OnUnhandledException;
+
+            Settings settings = Settings.Current;
+            if (settings.PageTheme != ElementTheme.Default)
+                this.RequestedTheme = (ApplicationTheme) ((int) settings.PageTheme - 1);
         }
 
         private void EnsureSyncContext()
