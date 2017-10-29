@@ -120,4 +120,10 @@
   <data name="Close_Button.Content" xml:space="preserve">
     <value>关闭</value>
   </data>
+  <data name="Input_ContentDialog.PrimaryButtonText" xml:space="preserve">
+    <value>确定</value>
+  </data>
+  <data name="Input_ContentDialog.SecondaryButtonText" xml:space="preserve">
+    <value>取消</value>
+  </data>
 </root>

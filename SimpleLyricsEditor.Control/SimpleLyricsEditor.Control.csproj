@@ -112,6 +112,9 @@
     <Compile Include="BlurBackgroundImage.xaml.cs">
       <DependentUpon>BlurBackgroundImage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="InputContentDialog.xaml.cs">
+      <DependentUpon>InputContentDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="LyrricsSinglePreview.xaml.cs">
       <DependentUpon>LyrricsSinglePreview.xaml</DependentUpon>
     </Compile>
@@ -144,6 +147,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="BlurBackgroundImage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="InputContentDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
