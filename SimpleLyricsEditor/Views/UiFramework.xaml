@@ -46,7 +46,7 @@
 
                 <StackPanel x:Name="FastMenu_StackPanel" HorizontalAlignment="Center" VerticalAlignment="Center">
                     <StackPanel.Background>
-                        <ImageBrush ImageSource="../Assets/毛玻璃.png" Opacity="0.4"/>
+                        <ImageBrush ImageSource="../Assets/毛玻璃.png" Opacity="0.3"/>
                     </StackPanel.Background>
                         
                     <Button x:Name="OpenMusicFile_Button" x:Uid="/FastMenu/OpenMusicFile_Button" Style="{StaticResource FastMenuButtonStyle}" Click="OpenMusicFile_Button_Click"/>
@@ -65,7 +65,11 @@
     <Page.BottomAppBar>
         <CommandBar>
             <CommandBar.PrimaryCommands>
-                <AppBarButton x:Name="NewFile_AppBarButton" x:Uid="/BottomBar/NewFile_AppBarButton" Icon="Add" Click="NewFile_AppBarButton_Click"/>
+                <AppBarButton x:Name="NewFile_AppBarButton" x:Uid="/BottomBar/NewFile_AppBarButton" Click="NewFile_AppBarButton_Click">
+                    <AppBarButton.Icon>
+                        <FontIcon Glyph="&#xE160;"/>
+                    </AppBarButton.Icon>
+                </AppBarButton>
                 <AppBarToggleButton x:Name="OpenFile_AppBarToggleButton" x:Uid="/BottomBar/OpenFile_AppBarToggleButton" Icon="OpenFile" Checked="OpenFile_AppBarToggleButton_Checked" Unchecked="OpenFile_AppBarToggleButton_Unchecked">
                     <FlyoutBase.AttachedFlyout>
                         <MenuFlyout x:Name="OpenFile_MenuFlyout" Opening="MenuFlyoutOfBottomBar_Opening">
