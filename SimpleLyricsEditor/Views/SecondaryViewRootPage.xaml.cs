@@ -33,10 +33,13 @@ namespace SimpleLyricsEditor.Views
             if (Main_Frame.SourcePageType == pm.PageType)
                 return;
 
+            Main_Frame.Navigate(pm.PageType, pm.Title);
+
             Main_Frame.BackStack.Clear();
             Main_Frame.ForwardStack.Clear();
 
-            Main_Frame.Navigate(pm.PageType, pm.Title);
+            Back_Button.Visibility = Visibility.Collapsed;
+            Title_TextBlock.Margin = new Thickness();
         }
         
         private void Back_Button_Click(object sender, RoutedEventArgs e)
