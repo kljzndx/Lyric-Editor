@@ -2,6 +2,7 @@
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
+using HappyStudio.UwpToolsLibrary.Auxiliarys;
 using SimpleLyricsEditor.Core;
 using SimpleLyricsEditor.Models;
 using SimpleLyricsEditor.ViewModels;
@@ -23,6 +24,8 @@ namespace SimpleLyricsEditor.Views
         {
             InitializeComponent();
             Current = this;
+
+            _settings.PropertyChanged += Settings_PropertyChanged;
         }
 
         public void Navigate(PageModel pm)
@@ -58,7 +61,21 @@ namespace SimpleLyricsEditor.Views
                 Back_Storyboard.Begin();
             }
         }
-        
+
+        private async void Settings_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName.Equals(nameof(_settings.PageTheme)) &&
+                _settings.PageTheme != ElementTheme.Default &&
+                Application.Current.RequestedTheme != (ApplicationTheme) ((int) _settings.PageTheme - 1))
+            {
+                await MessageBox.ShowAsync
+                (
+                    CharacterLibrary.ErrorInfo.GetString("RebootApp"),
+                    CharacterLibrary.MessageBox.GetString("Close")
+                );
+            }
+        }
+
         private void Light_Button_Click(object sender, RoutedEventArgs e)
         {
             _settings.PageTheme = ElementTheme.Light;
