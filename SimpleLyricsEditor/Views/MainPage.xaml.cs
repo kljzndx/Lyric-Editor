@@ -136,7 +136,13 @@ namespace SimpleLyricsEditor.Views
                         _viewModel.Copy(Player.Position);
                         break;
                     case VirtualKey.Delete:
+                        int selectedId = Lyrics_ListView.SelectedIndex;
+
                         _viewModel.Remove();
+
+                        if (selectedId < Lyrics_ListView.Items.Count)
+                            Lyrics_ListView.SelectedIndex = selectedId;
+
                         break;
                     case VirtualKey.M:
                         _viewModel.Modify();
