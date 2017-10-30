@@ -76,6 +76,12 @@ namespace SimpleLyricsEditor.Views
             if(!_settings.SettingObject.Values.ContainsKey("LocalBackgroundImagePath"))
                 return;
 
+            if (String.IsNullOrEmpty(_settings.SettingObject.Values["LocalBackgroundImagePath"].ToString()))
+            {
+                _settings.SettingObject.Values.Remove("LocalBackgroundImagePath");
+                return;
+            }
+
             try
             {
                 StorageFile oldfile = await StorageApplicationPermissions.FutureAccessList.GetFileAsync("BackgroundImage");
