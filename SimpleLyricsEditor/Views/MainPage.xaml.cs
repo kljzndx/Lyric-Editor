@@ -134,7 +134,14 @@ namespace SimpleLyricsEditor.Views
                         Focus(FocusState.Pointer);
 
                         if (Lyrics_ListView.SelectedItems.Any())
+                        {
                             _viewModel.Move(Player.Position);
+
+                            Lyrics_ListView.SelectedIndex =
+                                Lyrics_ListView.SelectedIndex < Lyrics_ListView.Items.Count - 1
+                                    ? Lyrics_ListView.SelectedIndex + 1
+                                    : -1;
+                        }
                         else
                             _viewModel.Add(-1, Player.Position, _isPressShift);
                         break;
