@@ -148,8 +148,6 @@
                         </Button.RenderTransform>
                     </Button>
                     <Button x:Name="CopyLyrics_Button" x:Uid="/LyricsEdit/CopyLyrics_Button" Content="&#xE16F;" Style="{StaticResource ControllerButtonStyle}" Visibility="{x:Bind _settings.MultilineEditModeEnabled, Mode=OneWay, Converter={StaticResource BoolToVisibility}}" Click="CopyLyrics_Button_Click"/>
-                    <Button x:Name="RemoveLyrics_Button" x:Uid="/LyricsEdit/RemoveLyrics_Button" Content="&#xE10A;" Style="{StaticResource ControllerButtonStyle}" Click="RemoveLyrics_Button_Click"/>
-                    <Button x:Name="MoveTime_Button" x:Uid="/LyricsEdit/MoveTime_Button" Content="&#xE759;" Style="{StaticResource ControllerButtonStyle}" Click="MoveTime_Button_Click"/>
                     <Button x:Name="ModifyContent_Button" x:Uid="/LyricsEdit/ModifyContent_Button" Content="&#xE104;" Style="{StaticResource ControllerButtonStyle}" Click="ModifyContent_Button_Click"/>
                 </StackPanel>
             </Grid>
@@ -167,6 +165,7 @@
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition/>
+                                <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
                             
                             <Button x:Name="LyricTime_Button" x:Uid="/LyricsEdit/LyricTime_Button" Background="Transparent" BorderThickness="0" VerticalAlignment="Top" Padding="0" Margin="0, 0, 5, 0" Click="LyricTime_Button_Click">
@@ -174,6 +173,11 @@
                             </Button>
                             
                             <TextBlock Grid.Column="1" Text="{x:Bind Content, Mode=OneWay}" TextWrapping="Wrap" Margin="5, 0, 0, 0"/>
+
+                            <StackPanel Grid.Column="2" Orientation="Horizontal" Visibility="{x:Bind IsSelected, Mode=OneWay, Converter={StaticResource BoolToVisibility}}">
+                                <Button x:Name="MoveTime_Button" x:Uid="/LyricsEdit/MoveTime_Button" Content="&#xE759;" Style="{StaticResource ControllerButtonStyle}" Click="MoveTime_Button_Click"/>
+                                <Button x:Name="RemoveLyrics_Button" x:Uid="/LyricsEdit/RemoveLyrics_Button" Content="&#xE10A;" Style="{StaticResource ControllerButtonStyle}" Click="RemoveLyrics_Button_Click"/>
+                            </StackPanel>
                         </Grid>
                     </DataTemplate>
                 </ListView.ItemTemplate>

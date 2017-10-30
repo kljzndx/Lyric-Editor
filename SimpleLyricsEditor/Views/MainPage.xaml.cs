@@ -410,8 +410,15 @@ namespace SimpleLyricsEditor.Views
                 ? (Lyrics_ListView.Items[Lyrics_ListView.SelectedIndex] as Lyric).Content
                 : String.Empty;
 
-            if (e.AddedItems.FirstOrDefault() is Lyric lyric)
-                Lyrics_ListView.ScrollIntoView(lyric);
+            if (e.AddedItems.FirstOrDefault() is Lyric currentLyric)
+                Lyrics_ListView.ScrollIntoView(currentLyric);
+
+            if (Lyrics_ListView.SelectedItem is Lyric selectedLyric)
+                selectedLyric.IsSelected = true;
+
+            if (e.RemovedItems.Any())
+                foreach (Lyric item in e.RemovedItems)
+                    item.IsSelected = false;
         }
 
         private void LyricTime_Button_Click(object sender, RoutedEventArgs e)
