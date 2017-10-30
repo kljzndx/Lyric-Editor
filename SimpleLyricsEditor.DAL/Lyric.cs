@@ -8,15 +8,15 @@ namespace SimpleLyricsEditor.DAL
     {
         private string _content;
         private TimeSpan _time;
+        private bool _isSelected;
 
         public Lyric(TimeSpan time)
         {
             _time = time;
         }
 
-        public Lyric(TimeSpan time, string content)
+        public Lyric(TimeSpan time, string content) : this(time)
         {
-            _time = time;
             _content = content.Trim();
         }
 
@@ -29,7 +29,13 @@ namespace SimpleLyricsEditor.DAL
         public string Content
         {
             get => _content;
-            set => Set(ref _content, String.IsNullOrWhiteSpace(value) ? String.Empty : value);
+            set => Set(ref _content, String.IsNullOrWhiteSpace(value) ? String.Empty : value.Trim());
+        }
+        
+        public bool IsSelected
+        {
+            get => _isSelected;
+            set => Set(ref _isSelected, value);
         }
         
         public int CompareTo(Lyric other)
