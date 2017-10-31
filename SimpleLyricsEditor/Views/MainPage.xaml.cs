@@ -143,7 +143,7 @@ namespace SimpleLyricsEditor.Views
                                     : -1;
                         }
                         else
-                            _viewModel.Add(-1, Player.Position, _isPressShift);
+                            _viewModel.Add(-1, Player.Position, LyricsContent_TextBox.Text, _isPressShift);
                         break;
                     case VirtualKey.C:
                         _viewModel.Copy(Player.Position);
@@ -158,7 +158,7 @@ namespace SimpleLyricsEditor.Views
 
                         break;
                     case VirtualKey.M:
-                        _viewModel.Modify();
+                        _viewModel.Modify(LyricsContent_TextBox.Text);
                         break;
                     case VirtualKey.S:
                         _viewModel.Sort(_viewModel.LyricItems);
@@ -281,8 +281,7 @@ namespace SimpleLyricsEditor.Views
             if (e.Key == VirtualKey.Enter && sender is TextBox tb)
                 if (_isPressCtrl)
                 {
-                    _viewModel.LyricContent = tb.Text;
-                    _viewModel.Add(Lyrics_ListView.SelectedIndex, Player.Position, _isPressShift);
+                    _viewModel.Add(Lyrics_ListView.SelectedIndex, Player.Position, tb.Text, _isPressShift);
                 }
                 else if (_isPressShift || !Lyrics_ListView.SelectedItems.Any())
                 {
@@ -292,8 +291,8 @@ namespace SimpleLyricsEditor.Views
                 }
                 else if (Lyrics_ListView.SelectedItems.Any())
                 {
-                    _viewModel.LyricContent = tb.Text;
-                    _viewModel.Modify();
+                    _viewModel.Modify(tb.Text);
+
                     Lyrics_ListView.SelectedIndex =
                         Lyrics_ListView.SelectedIndex < Lyrics_ListView.Items.Count - 1
                             ? Lyrics_ListView.SelectedIndex + 1
@@ -362,7 +361,7 @@ namespace SimpleLyricsEditor.Views
 
         private void AddLyrics_Button_Click(object sender, RoutedEventArgs e)
         {
-            _viewModel.Add(Lyrics_ListView.SelectedIndex, Player.Position, _isPressShift);
+            _viewModel.Add(Lyrics_ListView.SelectedIndex, Player.Position, LyricsContent_TextBox.Text, _isPressShift);
         }
 
         private void CopyLyrics_Button_Click(object sender, RoutedEventArgs e)
@@ -382,7 +381,7 @@ namespace SimpleLyricsEditor.Views
 
         private void ModifyContent_Button_Click(object sender, RoutedEventArgs e)
         {
-            _viewModel.Modify();
+            _viewModel.Modify(LyricsContent_TextBox.Text);
         }
 
         private void LyricsSort_Button_Click(object sender, RoutedEventArgs e)
