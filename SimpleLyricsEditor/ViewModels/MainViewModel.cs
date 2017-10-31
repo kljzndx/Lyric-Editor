@@ -14,8 +14,6 @@ namespace SimpleLyricsEditor.ViewModels
 {
     public class MainViewModel : ViewModelBase
     {
-        private string _lyricContent = string.Empty;
-
         private List<LyricsTag> _lyricsTags;
 
         public MainViewModel()
@@ -48,13 +46,7 @@ namespace SimpleLyricsEditor.ViewModels
         public bool IsLyricsItemAny => LyricItems.Any();
         public bool CanUndo => UndoOperations.Any();
         public bool CanRedo => RedoOperations.Any();
-
-        public string LyricContent
-        {
-            get => _lyricContent;
-            set => Set(ref _lyricContent, value);
-        }
-
+        
         public LyricsOperationBase CreateOperation(LyricsOperationBase operation)
         {
             if (UndoOperations.Count >= 20)
@@ -86,9 +78,9 @@ namespace SimpleLyricsEditor.ViewModels
             }
         }
 
-        public void Add(int index, TimeSpan time, bool isReverseAdd)
+        public void Add(int index, TimeSpan time, string content, bool isReverseAdd)
         {
-            var opt = CreateOperation(new Add(time, _lyricContent, index, isReverseAdd, LyricItems));
+            var opt = CreateOperation(new Add(time, content, index, isReverseAdd, LyricItems));
             opt.Do();
         }
 
@@ -119,12 +111,12 @@ namespace SimpleLyricsEditor.ViewModels
             opt.Do();
         }
 
-        public void Modify()
+        public void Modify(string newContent)
         {
             if (!SelectedItems.Any())
                 return;
 
-            var opt = CreateOperation(new Modify(SelectedItems.Cast<Lyric>(), _lyricContent, LyricItems));
+            var opt = CreateOperation(new Modify(SelectedItems.Cast<Lyric>(), newContent, LyricItems));
             opt.Do();
         }
 
@@ -155,7 +147,6 @@ namespace SimpleLyricsEditor.ViewModels
             {
                 LyricItems.Clear();
                 LyricsTags.Clear();
-                LyricContent = String.Empty;
                 UndoOperations.Clear();
                 RedoOperations.Clear();
                 return;
