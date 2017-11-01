@@ -1,4 +1,5 @@
 ﻿using System;
+using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
@@ -16,6 +17,7 @@ namespace SimpleLyricsEditor.Control
             nameof(SubmitButtonContent), typeof(string), typeof(InputSubmitBox), new PropertyMetadata("\uE10B"));
 
         private bool _isInputBoxGotFocus;
+        private bool _isPressCtrl;
 
         public InputSubmitBox()
         {
@@ -23,6 +25,9 @@ namespace SimpleLyricsEditor.Control
             InputBox_Border.Visibility = Visibility.Collapsed;
             InputBox_Border.Opacity = 0;
             InputBox_Transform.ScaleX = 0;
+
+            TextBox.AddHandler(KeyDownEvent, new KeyEventHandler(TextBox_KeyDown), true);
+            TextBox.AddHandler(KeyUpEvent, new KeyEventHandler(TextBox_KeyUp), true);
         }
 
         public string UserInput
@@ -105,6 +110,24 @@ namespace SimpleLyricsEditor.Control
         private void Root_Grid_PointerCaptureLost(object sender, PointerRoutedEventArgs e)
         {
             FoldInputBox();
+        }
+
+        private void TextBox_KeyDown(object sender, KeyRoutedEventArgs e)
+        {
+            if (e.Key == VirtualKey.Control)
+                _isPressCtrl = true;
+        }
+
+        private void TextBox_KeyUp(object sender, KeyRoutedEventArgs e)
+        {
+            if (e.Key == VirtualKey.Control)
+                _isPressCtrl = false;
+
+            if (_isPressCtrl && e.Key == VirtualKey.Enter)
+            {
+                Submited?.Invoke(this, EventArgs.Empty);
+                Focus(FocusState.Unfocused);
+            }
         }
     }
 }
