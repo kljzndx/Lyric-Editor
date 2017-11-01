@@ -44,7 +44,7 @@ namespace SimpleLyricsEditor.Control
 
         public event EventHandler Submited;
 
-        private void ExpandInputBox()
+        public void ExpandInputBox()
         {
             InputBox_Border.Visibility = Visibility.Visible;
 
