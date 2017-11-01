@@ -57,9 +57,11 @@
         </Style>
         <Storyboard x:Name="Expand_Storyboard" Completed="Expand_Storyboard_Completed">
             <DoubleAnimation To="1" Duration="0:0:0.2" Storyboard.TargetName="InputBox_Transform" Storyboard.TargetProperty="ScaleX"/>
+            <DoubleAnimation To="1" Duration="0:0:0.2" Storyboard.TargetName="InputBox_Border" Storyboard.TargetProperty="Opacity"/>
         </Storyboard>
         <Storyboard x:Name="Fold_Storyboard" Completed="Fold_Storyboard_Completed">
             <DoubleAnimation To="0" Duration="0:0:0.2" Storyboard.TargetName="InputBox_Transform" Storyboard.TargetProperty="ScaleX"/>
+            <DoubleAnimation To="0" Duration="0:0:0.2" Storyboard.TargetName="InputBox_Border" Storyboard.TargetProperty="Opacity"/>
         </Storyboard>
     </UserControl.Resources>
 
@@ -75,11 +77,11 @@
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
 
-        <Border x:Name="InputBox_Border" Background="{ThemeResource AppBarBackgroundThemeBrush}" Padding="0,0,20,0" Margin="0,0,-10,0" RenderTransformOrigin="1,0.5" GotFocus="InputBox_Border_GotFocus" LostFocus="InputBox_Border_LostFocus">
+        <Border x:Name="InputBox_Border" Background="{ThemeResource AppBarBackgroundThemeBrush}" BorderBrush="{ThemeResource SystemControlBackgroundAccentBrush}" BorderThickness="3" Padding="0,0,25,0" Margin="0,0,-25,0" RenderTransformOrigin="1,0.5" GotFocus="InputBox_Border_GotFocus" LostFocus="InputBox_Border_LostFocus">
             <Border.RenderTransform>
                 <CompositeTransform x:Name="InputBox_Transform"/>
             </Border.RenderTransform>
-            <TextBox x:Name="TextBox" Text="{x:Bind UserInput, Mode=TwoWay}" AcceptsReturn="True"/>
+            <TextBox x:Name="TextBox" MaxHeight="50" Text="{x:Bind UserInput, Mode=TwoWay}" AcceptsReturn="True"/>
         </Border>
         <Button Grid.Column="1" Content="{x:Bind SubmitButtonContent, Mode=OneWay}" VerticalAlignment="Center" Style="{StaticResource FloatingAction_ButtonStyle}" Click="Button_Click"/>
     </Grid>
