@@ -120,15 +120,12 @@ namespace SimpleLyricsEditor.Views
                             _viewModel.Redo(1);
                         break;
                 }
-
-            if (e.IsPressShift)
-                AddLyrics_Button_Transform.Rotation = 0;
             
             if (!e.IsInputing)
                 switch (e.Key)
                 {
                     case VirtualKey.I:
-                        LyricsContent_TextBox.Focus(FocusState.Pointer);
+                        InputSubmitBox.ExpandInputBox();
                         break;
                     case VirtualKey.Space:
                         Focus(FocusState.Pointer);
@@ -143,7 +140,7 @@ namespace SimpleLyricsEditor.Views
                                     : -1;
                         }
                         else
-                            _viewModel.Add(-1, Player.Position, LyricsContent_TextBox.Text, _isPressShift);
+                            _viewModel.Add(-1, Player.Position, String.Empty, _isPressShift);
                         break;
                     case VirtualKey.C:
                         _viewModel.Copy(Player.Position);
@@ -158,7 +155,8 @@ namespace SimpleLyricsEditor.Views
 
                         break;
                     case VirtualKey.M:
-                        _viewModel.Modify(LyricsContent_TextBox.Text);
+                        if (Lyrics_ListView.SelectedItem is Lyric)
+                            InputSubmitBox.ExpandInputBox();
                         break;
                     case VirtualKey.S:
                         _viewModel.Sort(_viewModel.LyricItems);
@@ -197,9 +195,6 @@ namespace SimpleLyricsEditor.Views
         {
             _isPressCtrl = e.IsPressCtrl;
             _isPressShift = e.IsPressShift;
-
-            if (!e.IsPressShift)
-                AddLyrics_Button_Transform.Rotation = 180;
         }
 
         private async void MainPage_Loaded(object sender, RoutedEventArgs e)
@@ -358,30 +353,9 @@ namespace SimpleLyricsEditor.Views
         {
             Lyrics_ListView.SelectionMode = ListViewSelectionMode.Single;
         }
-
-        private void AddLyrics_Button_Click(object sender, RoutedEventArgs e)
-        {
-            _viewModel.Add(Lyrics_ListView.SelectedIndex, Player.Position, LyricsContent_TextBox.Text, _isPressShift);
-        }
-
         private void CopyLyrics_Button_Click(object sender, RoutedEventArgs e)
         {
             _viewModel.Copy(Player.Position);
-        }
-
-        private void RemoveLyrics_Button_Click(object sender, RoutedEventArgs e)
-        {
-            _viewModel.Remove();
-        }
-
-        private void MoveTime_Button_Click(object sender, RoutedEventArgs e)
-        {
-            _viewModel.Move(Player.Position);
-        }
-
-        private void ModifyContent_Button_Click(object sender, RoutedEventArgs e)
-        {
-            _viewModel.Modify(LyricsContent_TextBox.Text);
         }
 
         private void LyricsSort_Button_Click(object sender, RoutedEventArgs e)
@@ -405,19 +379,27 @@ namespace SimpleLyricsEditor.Views
 
         private void Lyrics_ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            LyricsContent_TextBox.Text = Lyrics_ListView.SelectedIndex > -1
-                ? (Lyrics_ListView.Items[Lyrics_ListView.SelectedIndex] as Lyric).Content
-                : String.Empty;
-
             if (e.AddedItems.FirstOrDefault() is Lyric currentLyric)
+            {
                 Lyrics_ListView.ScrollIntoView(currentLyric);
 
-            if (Lyrics_ListView.SelectedItem is Lyric selectedLyric)
-                selectedLyric.IsSelected = true;
+                InputSubmitBox.UserInput = currentLyric.Content;
+            }
 
             if (e.RemovedItems.Any())
                 foreach (Lyric item in e.RemovedItems)
                     item.IsSelected = false;
+
+            if (Lyrics_ListView.SelectedItem is Lyric selectedLyric)
+            {
+                selectedLyric.IsSelected = true;
+                InputSubmitBox.SubmitButtonContent = "\uE104";
+            }
+            else
+            {
+                InputSubmitBox.SubmitButtonContent = "\uE109";
+                InputSubmitBox.UserInput = String.Empty;
+            }
         }
 
         private void LyricTime_Button_Click(object sender, RoutedEventArgs e)
@@ -426,6 +408,24 @@ namespace SimpleLyricsEditor.Views
 
             Lyrics_ListView.SelectedItem = lyric;
             GoToLyricTime(lyric);
+        }
+
+        private void MoveTime_Button_Click(object sender, RoutedEventArgs e)
+        {
+            _viewModel.Move(Player.Position);
+        }
+
+        private void RemoveLyrics_Button_Click(object sender, RoutedEventArgs e)
+        {
+            _viewModel.Remove();
+        }
+
+        private void InputSubmitBox_Submited(object sender, EventArgs e)
+        {
+            if (Lyrics_ListView.SelectedItem is Lyric lyric)
+                _viewModel.Modify(InputSubmitBox.UserInput);
+            else
+                _viewModel.Add(-1, Player.Position, InputSubmitBox.UserInput, _isPressShift);
         }
 
         #endregion
