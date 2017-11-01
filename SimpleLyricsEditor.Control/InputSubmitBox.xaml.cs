@@ -13,14 +13,16 @@ namespace SimpleLyricsEditor.Control
             nameof(UserInput), typeof(string), typeof(InputSubmitBox), new PropertyMetadata(String.Empty));
 
         public static readonly DependencyProperty SubmitButtonContentProperty = DependencyProperty.Register(
-            nameof(SubmitButtonContent), typeof(string), typeof(InputSubmitBox), new PropertyMetadata('\uE10B'));
+            nameof(SubmitButtonContent), typeof(string), typeof(InputSubmitBox), new PropertyMetadata("\uE10B"));
 
         private bool _isInputBoxGotFocus;
 
         public InputSubmitBox()
         {
             InitializeComponent();
-            InputBox_Border.Visibility = Visibility.Visible;
+            InputBox_Border.Visibility = Visibility.Collapsed;
+            InputBox_Border.Opacity = 0;
+            InputBox_Transform.ScaleX = 0;
         }
 
         public string UserInput
@@ -39,8 +41,8 @@ namespace SimpleLyricsEditor.Control
 
         private void ExpandInputBox()
         {
-            Fold_Storyboard.Stop();
             InputBox_Border.Visibility = Visibility.Visible;
+
             Expand_Storyboard.Begin();
         }
 
