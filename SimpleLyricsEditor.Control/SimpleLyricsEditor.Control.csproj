@@ -125,6 +125,7 @@
     <Compile Include="UpdateLogDialog.xaml.cs">
       <DependentUpon>UpdateLogDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\ShortcutKeysViewModel.cs" />
     <EmbeddedResource Include="Properties\SimpleLyricsEditor.Control.rd.xml" />
   </ItemGroup>
   <ItemGroup>
@@ -139,6 +140,9 @@
     </PackageReference>
     <PackageReference Include="Microsoft.Toolkit.Uwp.UI.Controls">
       <Version>1.5.1</Version>
+    </PackageReference>
+    <PackageReference Include="MvvmLight">
+      <Version>5.3.0</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
@@ -193,6 +197,7 @@
       <Name>SimpleLyricsEditor.ValueConvert</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

@@ -3,6 +3,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:model="using:SimpleLyricsEditor.DAL"
+    xmlns:viewModel="using:SimpleLyricsEditor.Control.ViewModels"
     xmlns:msctol="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -13,6 +14,8 @@
     Loaded="ShortcutKeysDialog_Loaded">
 
     <UserControl.Resources>
+        <viewModel:ShortcutKeysViewModel x:Key="ViewModel" x:Name="ViewModel"/>
+        
         <Style x:Name="KeysClass_ExpanderStyle" x:Key="KeysClass_ExpanderStyle" TargetType="msctol:Expander">
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
@@ -33,13 +36,13 @@
                         <StackPanel BorderBrush="White" BorderThickness="3" Padding="5">
                             <StackPanel Orientation="Horizontal" Padding="5">
                                 <Border Background="DarkRed" VerticalAlignment="Top">
-                                    <TextBlock x:Uid="/ShortcutKeysDialog/Condition_TextBlock" Foreground="White" Margin="5"/>
+                                    <TextBlock Text="{Binding Source={StaticResource ViewModel}, Path=DialogUi.ConditionTag}" Foreground="White" Margin="5"/>
                                 </Border>
                                 <TextBlock Text="{Binding Condition}" Foreground="White" VerticalAlignment="Center" Margin="10,0"/>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" Padding="5">
                                 <Border Background="Green" VerticalAlignment="Top">
-                                    <TextBlock x:Uid="/ShortcutKeysDialog/Function_TextBlock" Foreground="White" Margin="5"/>
+                                    <TextBlock Text="{Binding Source={StaticResource ViewModel}, Path=DialogUi.FunctionTag}" Foreground="White" Margin="5"/>
                                 </Border>
                                 <TextBlock Text="{Binding Function}" Foreground="White" VerticalAlignment="Center" Margin="10,0"/>
                             </StackPanel>
@@ -89,6 +92,10 @@
 
     </UserControl.Resources>
 
+    <UserControl.DataContext>
+        <StaticResource ResourceKey="ViewModel"/>
+    </UserControl.DataContext>
+    
     <Grid x:Name="Root_Grid" Background="{ThemeResource SystemControlBackgroundAccentBrush}" RenderTransformOrigin="0.5,0.5">
         <Grid.RenderTransform>
             <CompositeTransform/>
@@ -99,12 +106,12 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <TextBlock x:Uid="/ShortcutKeysDialog/Title_TextBlock" Style="{ThemeResource TitleTextBlockStyle}" TextAlignment="Center"/>
+        <TextBlock Text="{Binding DialogUi.Title}" Style="{ThemeResource TitleTextBlockStyle}" TextAlignment="Center"/>
 
         <ScrollViewer Grid.Row="1">
             <StackPanel x:Name="KeysClass_StackPanel"/>
         </ScrollViewer>
 
-        <Button x:Name="Close_Button" x:Uid="/Dialog/Close_Button" Grid.Row="2" HorizontalAlignment="Stretch" Click="Close_Button_Click"/>
+        <Button x:Name="Close_Button" Grid.Row="2" Content="{Binding DialogUi.CloseText}" HorizontalAlignment="Stretch" Click="Close_Button_Click"/>
     </Grid>
 </UserControl>
