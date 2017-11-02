@@ -106,11 +106,13 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="DialogUserInterface.cs" />
     <Compile Include="Lyric.cs" />
     <Compile Include="Music.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="LyricsTag.cs" />
     <Compile Include="ShortcutKey.cs" />
+    <Compile Include="ShortcutKeysDialogUI.cs" />
     <Compile Include="UpdateLog.cs" />
     <EmbeddedResource Include="Properties\SimpleLyricsEditor.DAL.rd.xml" />
   </ItemGroup>
