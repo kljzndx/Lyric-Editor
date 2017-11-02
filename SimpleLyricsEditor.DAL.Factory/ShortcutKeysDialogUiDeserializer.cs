@@ -7,7 +7,8 @@ namespace SimpleLyricsEditor.DAL.Factory
         public ShortcutKeysDialogUI Deserialization(string xml)
         {
             XDocument doc = XDocument.Parse(xml);
-            XElement dialogUiElement = doc.Element("DialogUi");
+            XElement rootNode = doc.Element("ShortcutKeys");
+            XElement dialogUiElement = rootNode.Element("DialogUI");
             return new ShortcutKeysDialogUI
                 (
                     dialogUiElement.Element("Title").Value,
