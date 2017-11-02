@@ -123,10 +123,24 @@ namespace SimpleLyricsEditor.Control
             if (e.Key == VirtualKey.Control)
                 _isPressCtrl = false;
 
-            if (_isPressCtrl && e.Key == VirtualKey.Enter)
+            if (e.Key == VirtualKey.Enter)
             {
-                Submited?.Invoke(this, EventArgs.Empty);
-                Focus(FocusState.Unfocused);
+                if (_isPressCtrl)
+                    Submited?.Invoke(this, EventArgs.Empty);
+                // 换行
+                else if (sender is TextBox tb)
+                {
+                    // 获取光标位置
+                    int selectedId = tb.SelectionStart;
+
+                                // 首先删除选中的内容
+                    tb.Text = tb.Text.Remove(selectedId, tb.SelectionLength)
+                                // 再添加换行符。。别问我前面为啥要加空格
+                                .Insert(selectedId, ' ' + Environment.NewLine);
+
+                    // 更改光标位置
+                    tb.SelectionStart = selectedId + 2;
+                }
             }
         }
     }
