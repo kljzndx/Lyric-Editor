@@ -2,9 +2,9 @@
 <ShortcutKeys>
   <DialogUI>
     <Title> 快捷键列表 </Title>
-    <ConditionText> 条件： </ConditionText>
-    <FunctionText> 功能： </FunctionText>
-    <CloseButton> 关闭 </CloseButton>
+    <ConditionTag> 条件： </ConditionTag>
+    <FunctionTag> 功能： </FunctionTag>
+    <CloseButtonText> 关闭 </CloseButtonText>
   </DialogUI>
   
   <ShortcutKey Name="撤销" Class="歌词操作">

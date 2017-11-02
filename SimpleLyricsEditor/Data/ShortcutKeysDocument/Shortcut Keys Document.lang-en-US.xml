@@ -2,9 +2,9 @@
 <ShortcutKeys>
   <DialogUI>
     <Title> Shortcut keys list </Title>
-    <ConditionText> Condition: </ConditionText>
-    <FunctionText> Function: </FunctionText>
-    <CloseButton> Close </CloseButton>
+    <ConditionTag> Condition: </ConditionTag>
+    <FunctionTag> Function: </FunctionTag>
+    <CloseButtonText> Close </CloseButtonText>
   </DialogUI>
   
   <ShortcutKey Name="撤销" Class="Lyrics operations">
