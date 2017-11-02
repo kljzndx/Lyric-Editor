@@ -259,44 +259,6 @@ namespace SimpleLyricsEditor.Views
 
         #endregion
 
-        #region Lyrics content input box
-
-        private void LyricsContent_TextBox_GotFocus(object sender, RoutedEventArgs e)
-        {
-            App.IsInputing = true;
-        }
-
-        private void LyricsContent_TextBox_LostFocus(object sender, RoutedEventArgs e)
-        {
-            App.IsInputing = false;
-        }
-
-        private void LyricsContent_TextBox_KeyUp(object sender, KeyRoutedEventArgs e)
-        {
-            if (e.Key == VirtualKey.Enter && sender is TextBox tb)
-                if (_isPressCtrl)
-                {
-                    _viewModel.Add(Lyrics_ListView.SelectedIndex, Player.Position, tb.Text, _isPressShift);
-                }
-                else if (_isPressShift || !Lyrics_ListView.SelectedItems.Any())
-                {
-                    int selectId = tb.SelectionStart;
-                    tb.Text = tb.Text.Remove(selectId, tb.SelectionLength).Insert(selectId, " " + Environment.NewLine);
-                    tb.SelectionStart = selectId + 2;
-                }
-                else if (Lyrics_ListView.SelectedItems.Any())
-                {
-                    _viewModel.Modify(tb.Text);
-
-                    Lyrics_ListView.SelectedIndex =
-                        Lyrics_ListView.SelectedIndex < Lyrics_ListView.Items.Count - 1
-                            ? Lyrics_ListView.SelectedIndex + 1
-                            : -1;
-                }
-        }
-
-        #endregion
-
         #region Lyrics edit tools
 
         #region Select tools
@@ -420,12 +382,28 @@ namespace SimpleLyricsEditor.Views
             _viewModel.Remove();
         }
 
+        #endregion
+
+        #region Input submit box
+
+        private void InputSubmitBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            App.IsInputing = true;
+        }
+
+        private void InputSubmitBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            App.IsInputing = false;
+        }
+
         private void InputSubmitBox_Submited(object sender, EventArgs e)
         {
-            if (Lyrics_ListView.SelectedItem is Lyric lyric)
+            if (Lyrics_ListView.SelectedItem is Lyric)
                 _viewModel.Modify(InputSubmitBox.UserInput);
             else
                 _viewModel.Add(-1, Player.Position, InputSubmitBox.UserInput, _isPressShift);
+
+            Focus(FocusState.Pointer);
         }
 
         #endregion

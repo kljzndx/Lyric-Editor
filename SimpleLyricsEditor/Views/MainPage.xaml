@@ -134,7 +134,7 @@
                 </ListView.ItemTemplate>
             </ListView>
 
-            <ctol:InputSubmitBox x:Name="InputSubmitBox" Grid.Row="1" SubmitButtonContent="&#xE109;" VerticalAlignment="Bottom" Margin="50" Submited="InputSubmitBox_Submited"/>
+            <ctol:InputSubmitBox x:Name="InputSubmitBox" Grid.Row="1" SubmitButtonContent="&#xE109;" VerticalAlignment="Bottom" Margin="50" GotFocus="InputSubmitBox_GotFocus" LostFocus="InputSubmitBox_LostFocus" Submited="InputSubmitBox_Submited"/>
         </Grid>
         <Grid Grid.Row="2">
             <Rectangle Fill="{ThemeResource SystemControlBackgroundAccentBrush}" Opacity="{x:Bind _settings.PreviewBackgroundOpacity, Mode=OneWay}"/>
