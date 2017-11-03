@@ -10,10 +10,10 @@ namespace SimpleLyricsEditor.DAL.Factory
             XElement rootNode = doc.Root;
             return new UpdateLogDialogUI
             (
-                rootNode.Element("Title").Value,
-                rootNode.Element("CloseButtonText").Value,
-                rootNode.Element("InformationTag").Value,
-                rootNode.Element("AllVersionsTag").Value
+                rootNode.Element("Title").Value.Trim(),
+                rootNode.Element("CloseButtonText").Value.Trim(),
+                rootNode.Element("InformationTag").Value.Trim(),
+                rootNode.Element("AllVersionsTag").Value.Trim()
             );
         }
     }

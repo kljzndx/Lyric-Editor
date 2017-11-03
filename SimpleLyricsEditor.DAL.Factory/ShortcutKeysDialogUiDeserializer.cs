@@ -7,14 +7,14 @@ namespace SimpleLyricsEditor.DAL.Factory
         public ShortcutKeysDialogUI Deserialization(string xml)
         {
             XDocument doc = XDocument.Parse(xml);
-            XElement rootNode = doc.Element("ShortcutKeys");
+            XElement rootNode = doc.Root;
             XElement dialogUiElement = rootNode.Element("DialogUI");
             return new ShortcutKeysDialogUI
                 (
-                    dialogUiElement.Element("Title").Value,
-                    dialogUiElement.Element("CloseButtonText").Value,
-                    dialogUiElement.Element("ConditionTag").Value,
-                    dialogUiElement.Element("FunctionTag").Value
+                    dialogUiElement.Element("Title").Value.Trim(),
+                    dialogUiElement.Element("CloseButtonText").Value.Trim(),
+                    dialogUiElement.Element("ConditionTag").Value.Trim(),
+                    dialogUiElement.Element("FunctionTag").Value.Trim()
                 );
         }
     }
