@@ -112,6 +112,7 @@
     <Compile Include="ShortcutKeysDeserializer.cs" />
     <Compile Include="ShortcutKeysDialogUiDeserializer.cs" />
     <Compile Include="UpdateLogDeserializer.cs" />
+    <Compile Include="UpdateLogDialogUiDeserializer.cs" />
     <EmbeddedResource Include="Properties\SimpleLyricsEditor.DAL.Factory.rd.xml" />
   </ItemGroup>
   <ItemGroup>
