@@ -14,8 +14,6 @@
 
     <UserControl.Resources>
         
-        <viewModel:UpdateLogViewModel x:Key="ViewModel" x:Name="ViewModel"/>
-
         <Storyboard x:Name="Show_Storyboard">
             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleX)" Storyboard.TargetName="Root_Grid">
                 <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
@@ -56,10 +54,6 @@
 
     </UserControl.Resources>
 
-    <UserControl.DataContext>
-        <StaticResource ResourceKey="ViewModel"/>
-    </UserControl.DataContext>
-
     <Grid x:Name="Root_Grid" Background="{x:Bind Background, Mode=OneWay}" RenderTransformOrigin="0.5,0.5">
         <Grid.RenderTransform>
             <CompositeTransform/>
@@ -68,8 +62,8 @@
             <RowDefinition/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <Pivot x:Name="Content_Pivot" SelectedIndex="1">
-            <PivotItem Header="{Binding DialogUi.InformationTag}">
+        <Pivot x:Name="Content_Pivot">
+            <PivotItem Header="{x:Bind _viewModel.DialogUi.InformationTag, Mode=OneWay}">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
@@ -81,24 +75,24 @@
                         <Bold>
                             <Run x:Uid="/About/AppName_TextBlock" Text="Simple Lyrics Editor"/>
                             <Run Text=" "/>
-                            <Run Text="{Binding CurrentUpdateLog.Version}"/>
+                            <Run Text="{x:Bind _viewModel.CurrentUpdateLog.Version, Mode=OneWay}"/>
                             <Run Text=" "/>
                             <Run x:Uid="/About/Version_TextBlock" Text="Version"/>
                             <LineBreak/>
-                            <Run Text="{Binding DialogUi.Title}"/>
+                            <Run Text="{x:Bind _viewModel.DialogUi.Title, Mode=OneWay}"/>
                         </Bold>
                     </TextBlock>
 
-                    <mpctol:MarkdownTextBlock Grid.Row="1" Text="{Binding CurrentUpdateLog.Content}" Margin="10"/>
+                    <mpctol:MarkdownTextBlock Grid.Row="1" Text="{x:Bind _viewModel.CurrentUpdateLog.Content, Mode=OneWay}" Margin="10"/>
 
                     <TextBlock Grid.Row="2" Margin="0,10" TextAlignment="Right">
                         <Run>---</Run>
-                        <Run Text="{Binding CurrentUpdateLog.Date}"/>
+                        <Run Text="{x:Bind _viewModel.CurrentUpdateLog.Date, Mode=OneWay}"/>
                     </TextBlock>
                 </Grid>
             </PivotItem>
-            <PivotItem Header="{Binding DialogUi.AllVersionsTag}">
-                <ListView x:Name="AllVersions_ListView" ItemsSource="{Binding AllLogs}" SelectedItem="{Binding CurrentUpdateLog}" SelectionChanged="AllVersions_ListView_SelectionChanged">
+            <PivotItem Header="{x:Bind _viewModel.DialogUi.AllVersionsTag, Mode=OneWay}">
+                <ListView x:Name="AllVersions_ListView" ItemsSource="{x:Bind _viewModel.AllLogs, Mode=OneWay}" SelectedItem="{x:Bind _viewModel.CurrentUpdateLog, Mode=OneWay}" SelectionChanged="AllVersions_ListView_SelectionChanged">
                     <ListView.ItemContainerStyle>
                         <Style TargetType="ListViewItem">
                             <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
@@ -128,6 +122,6 @@
                 </ListView>
             </PivotItem>
         </Pivot>
-        <Button x:Name="Close_Button" x:Uid="/Dialog/Close_Button" Grid.Row="1" Content="Close" HorizontalAlignment="Stretch" Click="Close_Button_Click"/>
+        <Button x:Name="Close_Button" Grid.Row="1" Content="{x:Bind _viewModel.DialogUi.CloseText, Mode=OneWay}" HorizontalAlignment="Stretch" Click="Close_Button_Click"/>
     </Grid>
 </UserControl>

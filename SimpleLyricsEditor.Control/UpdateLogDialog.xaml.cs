@@ -15,6 +15,8 @@ namespace SimpleLyricsEditor.Control
 {
     public sealed partial class UpdateLogDialog : UserControl
     {
+        private readonly UpdateLogViewModel _viewModel = new UpdateLogViewModel();
+
         public UpdateLogDialog()
         {
             InitializeComponent();
@@ -30,16 +32,16 @@ namespace SimpleLyricsEditor.Control
 
         private async void OnLoaded(object sender, RoutedEventArgs e)
         {
-            await ViewModel.GetDialogUIAsync();
-            await ViewModel.GetAllLogsAsync();
-            ViewModel.CurrentUpdateLog = ViewModel.AllLogs.First();
+            await _viewModel.GetDialogUIAsync();
+            await _viewModel.GetAllLogsAsync();
+            _viewModel.CurrentUpdateLog = _viewModel.AllLogs.First();
         }
 
         private async void AllVersions_ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            ViewModel.CurrentUpdateLog = e.AddedItems.First() as UpdateLog;
+            _viewModel.CurrentUpdateLog = e.AddedItems.First() as UpdateLog;
 
-            await ViewModel.ReadLogContentAsync();
+            await _viewModel.ReadLogContentAsync();
 
             Content_Pivot.SelectedIndex = 0;
         }
