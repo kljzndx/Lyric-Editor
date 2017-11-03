@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using SimpleLyricsEditor.BLL;
+using SimpleLyricsEditor.Control.ViewModels;
 using SimpleLyricsEditor.DAL;
 using SimpleLyricsEditor.DAL.Factory;
 
@@ -14,31 +15,13 @@ namespace SimpleLyricsEditor.Control
 {
     public sealed partial class UpdateLogDialog : UserControl
     {
-        public static readonly DependencyProperty SelectedLogProperty = DependencyProperty.Register(
-            nameof(SelectedLog), typeof(UpdateLog), typeof(UpdateLogDialog), new PropertyMetadata(null));
-
-        private readonly ObservableCollection<UpdateLog> _allLogs = new ObservableCollection<UpdateLog>();
-        private readonly UpdateLogFilesReader _filesReader = new UpdateLogFilesReader();
-
         public UpdateLogDialog()
         {
             InitializeComponent();
         }
-
-        public UpdateLog SelectedLog
-        {
-            get => (UpdateLog) GetValue(SelectedLogProperty);
-            private set => SetValue(SelectedLogProperty, value);
-        }
-
+        
         public event EventHandler Hided;
-
-        private async Task ReadLogContent(UpdateLog log)
-        {
-            if (String.IsNullOrEmpty(log.Content))
-                log.Content = await _filesReader.GetLogContent(log.FileName);
-        }
-
+        
         public void Show()
         {
             Visibility = Visibility.Visible;
@@ -47,20 +30,16 @@ namespace SimpleLyricsEditor.Control
 
         private async void OnLoaded(object sender, RoutedEventArgs e)
         {
-            string json = await _filesReader.GetAllLogsJson();
-            var logs = new UpdateLogDeserializer().Deserialization(json);
-
-            foreach (UpdateLog log in logs)
-                _allLogs.Add(log);
-
-            SelectedLog = _allLogs.First();
+            await ViewModel.GetDialogUIAsync();
+            await ViewModel.GetAllLogsAsync();
+            ViewModel.CurrentUpdateLog = ViewModel.AllLogs.First();
         }
 
         private async void AllVersions_ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            SelectedLog = e.AddedItems.First() as UpdateLog;
+            ViewModel.CurrentUpdateLog = e.AddedItems.First() as UpdateLog;
 
-            await ReadLogContent(SelectedLog);
+            await ViewModel.ReadLogContentAsync();
 
             Content_Pivot.SelectedIndex = 0;
         }

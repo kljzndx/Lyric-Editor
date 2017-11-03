@@ -126,6 +126,7 @@
       <DependentUpon>UpdateLogDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\ShortcutKeysViewModel.cs" />
+    <Compile Include="ViewModels\UpdateLogViewModel.cs" />
     <EmbeddedResource Include="Properties\SimpleLyricsEditor.Control.rd.xml" />
   </ItemGroup>
   <ItemGroup>

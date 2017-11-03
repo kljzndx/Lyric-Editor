@@ -162,8 +162,6 @@
     <PRIResource Include="Strings\en-US\FastMenu.resw" />
     <PRIResource Include="Strings\zh-CN\Ads.resw" />
     <PRIResource Include="Strings\en-US\Ads.resw" />
-    <PRIResource Include="Strings\zh-CN\UpdateLogDialog.resw" />
-    <PRIResource Include="Strings\en-US\UpdateLogDialog.resw" />
     <PRIResource Include="Strings\en-US\MessageBox.resw" />
     <PRIResource Include="Strings\zh-CN\MessageBox.resw" />
     <PRIResource Include="Strings\zh-CN\ErrorTable.resw" />
