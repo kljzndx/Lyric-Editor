@@ -114,6 +114,7 @@
     <Compile Include="ShortcutKey.cs" />
     <Compile Include="ShortcutKeysDialogUI.cs" />
     <Compile Include="UpdateLog.cs" />
+    <Compile Include="UpdateLogDialogUI.cs" />
     <EmbeddedResource Include="Properties\SimpleLyricsEditor.DAL.rd.xml" />
   </ItemGroup>
   <ItemGroup>
