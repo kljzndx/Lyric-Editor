@@ -81,7 +81,7 @@
             <Border.RenderTransform>
                 <CompositeTransform x:Name="InputBox_Transform"/>
             </Border.RenderTransform>
-            <TextBox x:Name="TextBox" MaxHeight="50" Text="{x:Bind UserInput, Mode=TwoWay}" TextWrapping="Wrap"/>
+            <TextBox x:Name="TextBox" x:Uid="/LyricsEdit/LyricsContent_TextBox" MaxHeight="50" Text="{x:Bind UserInput, Mode=TwoWay}" TextWrapping="Wrap"/>
         </Border>
         <Button Grid.Column="1" Content="{x:Bind SubmitButtonContent, Mode=OneWay}" VerticalAlignment="Center" Style="{StaticResource FloatingAction_ButtonStyle}" Click="Button_Click"/>
     </Grid>
