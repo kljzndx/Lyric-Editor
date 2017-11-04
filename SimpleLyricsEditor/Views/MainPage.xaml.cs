@@ -399,7 +399,15 @@ namespace SimpleLyricsEditor.Views
         private void InputSubmitBox_Submited(object sender, EventArgs e)
         {
             if (Lyrics_ListView.SelectedItem is Lyric)
+            {
                 _viewModel.Modify(InputSubmitBox.UserInput);
+
+                Lyrics_ListView.SelectedIndex =
+                    Lyrics_ListView.SelectedIndex < Lyrics_ListView.Items.Count - 1
+                        ? Lyrics_ListView.SelectedIndex + 1
+                        : -1;
+
+            }
             else
                 _viewModel.Add(-1, Player.Position, InputSubmitBox.UserInput, _isPressShift);
         }
