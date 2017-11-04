@@ -15,26 +15,6 @@
     </Page.DataContext>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <VisualStateManager.VisualStateGroups>
-            <VisualStateGroup x:Name="ToolsBar">
-                <VisualState x:Name="PC">
-                    <VisualState.Setters>
-                        <Setter Target="LyricsEditTools_StackPanel.(Grid.Column)" Value="1"/>
-                    </VisualState.Setters>
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="641"/>
-                    </VisualState.StateTriggers>
-                </VisualState>
-                <VisualState x:Name="Mobile">
-                    <VisualState.Setters>
-                        <Setter Target="LyricsEditTools_StackPanel.(Grid.Row)" Value="1"/>
-                    </VisualState.Setters>
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="0"/>
-                    </VisualState.StateTriggers>
-                </VisualState>
-            </VisualStateGroup>
-        </VisualStateManager.VisualStateGroups>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition/>
@@ -57,16 +37,9 @@
             </Grid.RowDefinitions>
 
             <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition Width="Auto"/>
-                </Grid.ColumnDefinitions>
+                <StackPanel Orientation="Horizontal">
+                    <ToggleButton x:Name="MultilineEditMode_ToggleButton" x:Uid="/LyricsEdit/MultilineEditMode_ToggleButton" Content="&#xE133;" IsChecked="{x:Bind _settings.MultilineEditModeEnabled, Mode=TwoWay, Converter={StaticResource BoolNullableToBool}}" Style="{StaticResource ControllerButtonStyle}" Checked="MultilineEditMode_ToggleButton_Checked" Unchecked="MultilineEditMode_ToggleButton_Unchecked"/>
 
-                <StackPanel x:Name="LyricsEditTools_StackPanel" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top">
                     <Button x:Name="SelectTools_Button" x:Uid="/LyricsEdit/SelectTools_Button" Style="{StaticResource ControllerButtonStyle}" Visibility="{x:Bind _settings.MultilineEditModeEnabled, Mode=OneWay, Converter={StaticResource BoolToVisibility}}" IsEnabled="{x:Bind _viewModel.IsLyricsItemAny, Mode=OneWay}">
                         <Button.Content>
                             <Path Width="20" Height="20" Stroke="{ThemeResource SystemControlBackgroundBaseHighBrush}" StrokeThickness="1.6">
@@ -91,16 +64,15 @@
                         </Button.Flyout>
                     </Button>
                     
-                    <ToggleButton x:Name="MultilineEditMode_ToggleButton" x:Uid="/LyricsEdit/MultilineEditMode_ToggleButton" Content="&#xE133;" IsChecked="{x:Bind _settings.MultilineEditModeEnabled, Mode=TwoWay, Converter={StaticResource BoolNullableToBool}}" Style="{StaticResource ControllerButtonStyle}" Checked="MultilineEditMode_ToggleButton_Checked" Unchecked="MultilineEditMode_ToggleButton_Unchecked"/>
-
-
-                    <Button x:Name="LyricsSort_Button" x:Uid="/LyricsEdit/LyricsSort_Button" Style="{StaticResource ControllerButtonStyle}" Click="LyricsSort_Button_Click">
-                        <Button.Content>
-                            <SymbolIcon Symbol="Sort" Width="20" Height="20"/>
-                        </Button.Content>
-                    </Button>
                     <Button x:Name="CopyLyrics_Button" x:Uid="/LyricsEdit/CopyLyrics_Button" Content="&#xE16F;" Style="{StaticResource ControllerButtonStyle}" Visibility="{x:Bind _settings.MultilineEditModeEnabled, Mode=OneWay, Converter={StaticResource BoolToVisibility}}" Click="CopyLyrics_Button_Click"/>
+                    
                 </StackPanel>
+
+                <Button x:Name="LyricsSort_Button" x:Uid="/LyricsEdit/LyricsSort_Button" HorizontalAlignment="Right" Style="{StaticResource ControllerButtonStyle}" Click="LyricsSort_Button_Click">
+                    <Button.Content>
+                        <SymbolIcon Symbol="Sort" Width="20" Height="20"/>
+                    </Button.Content>
+                </Button>
             </Grid>
 
             <ListView x:Name="Lyrics_ListView" Grid.Row="1" ItemsSource="{x:Bind _viewModel.LyricItems}" GotFocus="Lyrics_ListView_GotFocus" LostFocus="Lyrics_ListView_LostFocus" SelectionChanged="Lyrics_ListView_SelectionChanged">
