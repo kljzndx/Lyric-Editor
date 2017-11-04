@@ -123,12 +123,15 @@ namespace SimpleLyricsEditor.Control
             if (e.Key == VirtualKey.Control)
                 _isPressCtrl = false;
 
-            if (e.Key == VirtualKey.Enter)
+            if (e.Key == VirtualKey.Enter && sender is TextBox tb)
             {
                 if (_isPressCtrl)
+                {
+                    UserInput = tb.Text;
                     Submited?.Invoke(this, EventArgs.Empty);
+                }
                 // 换行
-                else if (sender is TextBox tb)
+                else
                 {
                     // 获取光标位置
                     int selectedId = tb.SelectionStart;
