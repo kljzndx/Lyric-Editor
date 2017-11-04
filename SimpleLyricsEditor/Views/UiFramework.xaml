@@ -54,7 +54,7 @@
                     <Button x:Name="HideThisMenu_Button" x:Uid="/FastMenu/HideThisMenu_Button" Style="{StaticResource FastMenuButtonStyle}" Click="HideThisMenu_Button_Click"/>
                 </StackPanel>
 
-                <msad:AdControl x:Name="MsAdControl" x:Uid="/Ads/AdsArea_AdControl" Width="300" Height="50" HorizontalAlignment="Center" VerticalAlignment="Bottom" ApplicationId="9mx4frgq4rqs" AdUnitId="348294" AdRefreshed="MsAdControl_OnAdRefreshed" IsEngagedChanged="MsAdControl_IsEngagedChanged" OnPointerUp="MsAdControl_PointerUp" ErrorOccurred="MsAdControl_ErrorOccurred"/>
+                <msad:AdControl x:Name="MsAdControl" Width="300" Height="50" HorizontalAlignment="Center" VerticalAlignment="Bottom" ApplicationId="9mx4frgq4rqs" AdUnitId="348294" AdRefreshed="MsAdControl_OnAdRefreshed" ErrorOccurred="MsAdControl_ErrorOccurred"/>
                 
                 <ctol:UpdateLogDialog x:Name="UpdateLogDialog" Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}" Margin="30" Visibility="Collapsed" Hided="UpdateLogDialog_Hided"/>
                 <ctol:ShortcutKeysDialog x:Name="ShortcutKeysDialog" Margin="30" Visibility="Collapsed"/>

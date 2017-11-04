@@ -220,17 +220,7 @@ namespace SimpleLyricsEditor.Views
         #endregion
 
         #region Ads
-
-        private void MsAdControl_IsEngagedChanged(object sender, RoutedEventArgs e)
-        {
-            HideAllAds();
-        }
-
-        private void MsAdControl_PointerUp(object sender, RoutedEventArgs e)
-        {
-            HideAllAds();
-        }
-
+        
         private void MsAdControl_ErrorOccurred(object sender, AdErrorEventArgs e)
         {
             MsAdControl.Visibility = Visibility.Collapsed;
