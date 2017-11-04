@@ -402,8 +402,6 @@ namespace SimpleLyricsEditor.Views
                 _viewModel.Modify(InputSubmitBox.UserInput);
             else
                 _viewModel.Add(-1, Player.Position, InputSubmitBox.UserInput, _isPressShift);
-
-            Focus(FocusState.Pointer);
         }
 
         #endregion
