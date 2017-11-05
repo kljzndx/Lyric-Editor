@@ -36,7 +36,6 @@ namespace SimpleLyricsEditor.Views
         private readonly Settings _settings = Settings.Current;
         private StorageFile _lyricsFile;
         private StorageFile _musicFile;
-        private bool _isClickAd;
         
         public UiFramework()
         {
@@ -96,14 +95,7 @@ namespace SimpleLyricsEditor.Views
         }
 
         #endregion
-
-        private void HideAllAds()
-        {
-            _settings.SettingObject.Values["AdClickDate"] = DateTime.Today.ToString("yyyy MM dd");
-            _isClickAd = true;
-            AdsVisibilityNotifier.HideAds();
-        }
-
+        
         private void SecondaryViewNavigate(PageModel pm)
         {
             Root_SplitView.IsPaneOpen = !Root_SplitView.IsPaneOpen;
@@ -146,10 +138,7 @@ namespace SimpleLyricsEditor.Views
         {
             if (_settings.GetSetting("UpdateLogVersion", String.Empty) != AppInfo.Version)
                 UpdateLogDialog.Show();
-
-            if (_settings.GetSetting("AdClickDate", String.Empty) == DateTime.Today.ToString("yyyy MM dd"))
-                HideAllAds();
-
+            
             if (!StoreServicesFeedbackLauncher.IsSupported())
                 FeedbackInFeedbackHub_MenuFlyoutItem.Visibility = Visibility.Collapsed;
         }
@@ -168,7 +157,7 @@ namespace SimpleLyricsEditor.Views
 
         private void AdsVisibilityNotifier_Displayed(object sender, EventArgs e)
         {
-            if (_isClickAd || MsAdControl.Visibility == Visibility.Visible)
+            if (MsAdControl.Visibility == Visibility.Visible)
                 return;
 
             MsAdControl.Visibility = Visibility.Visible;

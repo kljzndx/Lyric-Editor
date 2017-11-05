@@ -33,6 +33,8 @@ namespace SimpleLyricsEditor.Core
             base.RenameSettingKey("IsDisplayBackground", nameof(IsDisplayBackground));
             if (base.SettingObject.Values.ContainsKey("BackgroundSourceType"))
                 base.SettingObject.Values.Remove("BackgroundSourceType");
+            if (base.SettingObject.Values.ContainsKey("AdClickDate"))
+                base.SettingObject.Values.Remove("AdClickDate");
             
             InitializeSettingFields();
         }
