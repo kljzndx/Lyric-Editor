@@ -34,6 +34,7 @@ namespace SimpleLyricsEditor.Views
         private bool _isPressShift;
         private bool _lyricsListGotFocus;
         private MainViewModel _viewModel;
+        private Lyric _backLyric;
 
         public MainPage()
         {
@@ -352,9 +353,13 @@ namespace SimpleLyricsEditor.Views
                 foreach (Lyric item in e.RemovedItems)
                     item.IsSelected = false;
 
-            if (Lyrics_ListView.SelectedItem is Lyric selectedLyric)
+            if (Lyrics_ListView.SelectedItems.LastOrDefault() is Lyric selectedLyric)
             {
+                if (_backLyric != null)
+                    _backLyric.IsSelected = false;
+                _backLyric = selectedLyric;
                 selectedLyric.IsSelected = true;
+
                 InputSubmitBox.SubmitButtonContent = "\uE104";
             }
             else
