@@ -127,7 +127,7 @@ Press Shift to Add Lyrics to Above</value>
 Shortcut Keys : C</value>
   </data>
   <data name="LyricsContent_TextBox.PlaceholderText" xml:space="preserve">
-    <value>Please Enter Lyric , Support Multiline Text
+    <value>Press I / Esc Key to Enter/Exit input status
 Press Ctrl + Enter to quickly submit</value>
   </data>
   <data name="LyricsSort_Button.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
@@ -167,5 +167,9 @@ Shortcut keys : Delete</value>
   </data>
   <data name="Select_Reverse_MenuFlyoutItem.Text" xml:space="preserve">
     <value>Reverse Select</value>
+  </data>
+  <data name="LyricsContent_TextBox.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Press I / Esc Key to Enter/Exit input status
+Press Ctrl + Enter to quickly submit</value>
   </data>
 </root>

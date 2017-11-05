@@ -127,7 +127,7 @@
 快捷键：C</value>
   </data>
   <data name="LyricsContent_TextBox.PlaceholderText" xml:space="preserve">
-    <value>请输入歌词，支持多行文本
+    <value>按 I / Esc 键可以 进入/退出 输入状态
 按 Ctrl + Enter 可以快速提交</value>
   </data>
   <data name="LyricsSort_Button.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
@@ -167,5 +167,9 @@
   </data>
   <data name="Select_Reverse_MenuFlyoutItem.Text" xml:space="preserve">
     <value>反向选择</value>
+  </data>
+  <data name="LyricsContent_TextBox.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>按 I / Esc 键可以 进入/退出 输入状态
+按 Ctrl + Enter 可以快速提交</value>
   </data>
 </root>
