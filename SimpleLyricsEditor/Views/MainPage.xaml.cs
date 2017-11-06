@@ -39,6 +39,9 @@ namespace SimpleLyricsEditor.Views
         public MainPage()
         {
             InitializeComponent();
+
+            ButtonsInMultilineEditMode_StackPanel.Visibility = Visibility.Collapsed;
+
             _viewModel = DataContext as MainViewModel;
             _viewModel.SelectedItems = Lyrics_ListView.SelectedItems;
             _viewModel.UndoOperations.CollectionChanged += UndoOperations_CollectionChanged;
@@ -262,6 +265,24 @@ namespace SimpleLyricsEditor.Views
 
         #region Lyrics edit tools
 
+        private void MultilineEditMode_ToggleButton_Checked(object sender, RoutedEventArgs e)
+        {
+            Lyrics_ListView.SelectionMode = ListViewSelectionMode.Multiple;
+            ButtonsInMultilineEditMode_StackPanel.Visibility = Visibility.Visible;
+            ButtonsInMultilineEditMode_Expand_Storyboard.Begin();
+        }
+
+        private void MultilineEditMode_ToggleButton_Unchecked(object sender, RoutedEventArgs e)
+        {
+            Lyrics_ListView.SelectionMode = ListViewSelectionMode.Single;
+            ButtonsInMultilineEditMode_Fold_Storyboard.Begin();
+        }
+
+        private void ButtonsInMultilineEditMode_Fold_Storyboard_Completed(object sender, object e)
+        {
+            ButtonsInMultilineEditMode_StackPanel.Visibility = Visibility.Collapsed;
+        }
+
         #region Select tools
 
         private void Select_Reverse_MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
@@ -307,15 +328,6 @@ namespace SimpleLyricsEditor.Views
 
         #endregion
 
-        private void MultilineEditMode_ToggleButton_Checked(object sender, RoutedEventArgs e)
-        {
-            Lyrics_ListView.SelectionMode = ListViewSelectionMode.Multiple;
-        }
-
-        private void MultilineEditMode_ToggleButton_Unchecked(object sender, RoutedEventArgs e)
-        {
-            Lyrics_ListView.SelectionMode = ListViewSelectionMode.Single;
-        }
         private void CopyLyrics_Button_Click(object sender, RoutedEventArgs e)
         {
             _viewModel.Copy(Player.Position);

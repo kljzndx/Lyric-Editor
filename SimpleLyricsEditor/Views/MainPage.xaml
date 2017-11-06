@@ -10,6 +10,17 @@
     mc:Ignorable="d"
     Loaded="MainPage_Loaded">
 
+    <Page.Resources>
+        <Storyboard x:Name="ButtonsInMultilineEditMode_Expand_Storyboard">
+            <DoubleAnimation From="-90" To="0" Duration="0:0:0.2" Storyboard.TargetName="ButtonsInMultilineEditMode_Projection" Storyboard.TargetProperty="RotationY"/>
+            <DoubleAnimation From="0" To="1" Duration="0:0:0.2" Storyboard.TargetName="ButtonsInMultilineEditMode_StackPanel" Storyboard.TargetProperty="Opacity"/>
+        </Storyboard>
+        <Storyboard x:Name="ButtonsInMultilineEditMode_Fold_Storyboard" Completed="ButtonsInMultilineEditMode_Fold_Storyboard_Completed">
+            <DoubleAnimation From="0" To="-90" Duration="0:0:0.2" Storyboard.TargetName="ButtonsInMultilineEditMode_Projection" Storyboard.TargetProperty="RotationY"/>
+            <DoubleAnimation From="1" To="0" Duration="0:0:0.2" Storyboard.TargetName="ButtonsInMultilineEditMode_StackPanel" Storyboard.TargetProperty="Opacity"/>
+        </Storyboard>
+    </Page.Resources>
+
     <Page.DataContext>
         <Binding Source="{StaticResource Locator}" Path="Main"/>
     </Page.DataContext>
@@ -40,32 +51,37 @@
                 <StackPanel Orientation="Horizontal">
                     <ToggleButton x:Name="MultilineEditMode_ToggleButton" x:Uid="/LyricsEdit/MultilineEditMode_ToggleButton" Content="&#xE133;" IsChecked="{x:Bind _settings.MultilineEditModeEnabled, Mode=TwoWay, Converter={StaticResource BoolNullableToBool}}" Style="{StaticResource ControllerButtonStyle}" Checked="MultilineEditMode_ToggleButton_Checked" Unchecked="MultilineEditMode_ToggleButton_Unchecked"/>
 
-                    <Button x:Name="SelectTools_Button" x:Uid="/LyricsEdit/SelectTools_Button" Style="{StaticResource ControllerButtonStyle}" Visibility="{x:Bind _settings.MultilineEditModeEnabled, Mode=OneWay, Converter={StaticResource BoolToVisibility}}" IsEnabled="{x:Bind _viewModel.IsLyricsItemAny, Mode=OneWay}">
-                        <Button.Content>
-                            <Path Width="20" Height="20" Stroke="{ThemeResource SystemControlBackgroundBaseHighBrush}" StrokeThickness="1.6">
-                                <Path.Data>
-                                    <GeometryGroup>
-                                        <RectangleGeometry Rect="4,1,12,4"/>
-                                        <RectangleGeometry Rect="0,5,20,14"/>
-                                        <LineGeometry StartPoint="5,12" EndPoint="8,16"/>
-                                        <LineGeometry StartPoint="8,16" EndPoint="15,8"/>
-                                    </GeometryGroup>
-                                </Path.Data>
-                            </Path>
-                        </Button.Content>
+                    <StackPanel x:Name="ButtonsInMultilineEditMode_StackPanel" Orientation="Horizontal" HorizontalAlignment="Left">
+                        <StackPanel.Projection>
+                            <PlaneProjection x:Name="ButtonsInMultilineEditMode_Projection" CenterOfRotationX="0"/>
+                        </StackPanel.Projection>
+
+                        <Button x:Name="SelectTools_Button" x:Uid="/LyricsEdit/SelectTools_Button" Style="{StaticResource ControllerButtonStyle}" IsEnabled="{x:Bind _viewModel.IsLyricsItemAny, Mode=OneWay}">
+                            <Button.Content>
+                                <Path Width="20" Height="20" Stroke="{ThemeResource SystemControlBackgroundBaseHighBrush}" StrokeThickness="1.6">
+                                    <Path.Data>
+                                        <GeometryGroup>
+                                            <RectangleGeometry Rect="4,1,12,4"/>
+                                            <RectangleGeometry Rect="0,5,20,14"/>
+                                            <LineGeometry StartPoint="5,12" EndPoint="8,16"/>
+                                            <LineGeometry StartPoint="8,16" EndPoint="15,8"/>
+                                        </GeometryGroup>
+                                    </Path.Data>
+                                </Path>
+                            </Button.Content>
                         
-                        <Button.Flyout>
-                            <MenuFlyout>
-                                <MenuFlyoutItem x:Name="Select_Reverse_MenuFlyoutItem" x:Uid="/LyricsEdit/Select_Reverse_MenuFlyoutItem" Click="Select_Reverse_MenuFlyoutItem_Click"/>
-                                <MenuFlyoutItem x:Name="Select_BeforeItem_MenuFlyoutItem" x:Uid="/LyricsEdit/Select_BeforeItem_MenuFlyoutItem" Click="Select_BeforeItem_MenuFlyoutItem_Click"/>
-                                <MenuFlyoutItem x:Name="Select_AfterItem_MenuFlyoutItem" x:Uid="/LyricsEdit/Select_AfterItem_MenuFlyoutItem" Click="Select_AfterItem_MenuFlyoutItem_Click"/>
-                                <MenuFlyoutItem x:Name="Select_Paragraph_MenuFlyoutItem" x:Uid="/LyricsEdit/Select_Paragraph_MenuFlyoutItem" Click="Select_Paragraph_MenuFlyoutItem_Click"/>
-                            </MenuFlyout>
-                        </Button.Flyout>
-                    </Button>
+                            <Button.Flyout>
+                                <MenuFlyout>
+                                    <MenuFlyoutItem x:Name="Select_Reverse_MenuFlyoutItem" x:Uid="/LyricsEdit/Select_Reverse_MenuFlyoutItem" Click="Select_Reverse_MenuFlyoutItem_Click"/>
+                                    <MenuFlyoutItem x:Name="Select_BeforeItem_MenuFlyoutItem" x:Uid="/LyricsEdit/Select_BeforeItem_MenuFlyoutItem" Click="Select_BeforeItem_MenuFlyoutItem_Click"/>
+                                    <MenuFlyoutItem x:Name="Select_AfterItem_MenuFlyoutItem" x:Uid="/LyricsEdit/Select_AfterItem_MenuFlyoutItem" Click="Select_AfterItem_MenuFlyoutItem_Click"/>
+                                    <MenuFlyoutItem x:Name="Select_Paragraph_MenuFlyoutItem" x:Uid="/LyricsEdit/Select_Paragraph_MenuFlyoutItem" Click="Select_Paragraph_MenuFlyoutItem_Click"/>
+                                </MenuFlyout>
+                            </Button.Flyout>
+                        </Button>
                     
-                    <Button x:Name="CopyLyrics_Button" x:Uid="/LyricsEdit/CopyLyrics_Button" Content="&#xE16F;" Style="{StaticResource ControllerButtonStyle}" Visibility="{x:Bind _settings.MultilineEditModeEnabled, Mode=OneWay, Converter={StaticResource BoolToVisibility}}" Click="CopyLyrics_Button_Click"/>
-                    
+                        <Button x:Name="CopyLyrics_Button" x:Uid="/LyricsEdit/CopyLyrics_Button" Content="&#xE16F;" Style="{StaticResource ControllerButtonStyle}" Click="CopyLyrics_Button_Click"/>
+                    </StackPanel>
                 </StackPanel>
 
                 <Button x:Name="LyricsSort_Button" x:Uid="/LyricsEdit/LyricsSort_Button" HorizontalAlignment="Right" Style="{StaticResource ControllerButtonStyle}" Click="LyricsSort_Button_Click">
