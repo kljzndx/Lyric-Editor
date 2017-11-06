@@ -13,13 +13,13 @@ namespace SimpleLyricsEditor.Control
     {
         private const long TicksPerThreeSecond = TimeSpan.TicksPerSecond * 3;
         private static readonly Lyric Space = new Lyric(TimeSpan.Zero, string.Empty);
-        
+
         public static readonly DependencyProperty LyricsProperty = DependencyProperty.Register(
             nameof(Lyrics), typeof(IList<Lyric>), typeof(LyrricsSinglePreview), new PropertyMetadata(null));
 
         public static readonly DependencyProperty CurrentLyricProperty = DependencyProperty.Register(
             nameof(CurrentLyric), typeof(Lyric), typeof(LyrricsSinglePreview), new PropertyMetadata(Space));
-        
+
         private int _nextIndex;
 
         public LyrricsSinglePreview()
@@ -38,20 +38,21 @@ namespace SimpleLyricsEditor.Control
             get => (Lyric) GetValue(CurrentLyricProperty);
             set
             {
-                Lyric backLyric = GetValue(CurrentLyricProperty) as Lyric;
-                bool isEmpty = String.IsNullOrEmpty(backLyric.Content);
+                bool isAny = GetValue(CurrentLyricProperty) is Lyric backLyric &&
+                             !String.IsNullOrEmpty(backLyric.Content);
 
                 SetValue(CurrentLyricProperty, value);
 
                 if (!String.IsNullOrEmpty(value.Content))
                     TextBlock.Text = value.Content;
-                if (isEmpty && !String.IsNullOrEmpty(value.Content))
+
+                if (!isAny && !String.IsNullOrEmpty(value.Content))
                     FadeIn.Begin();
-                if (!isEmpty && String.IsNullOrEmpty(value.Content))
+                if (isAny && String.IsNullOrEmpty(value.Content))
                     FadeOut.Begin();
             }
         }
-        
+
         public void RefreshLyric(TimeSpan position)
         {
             if (!Lyrics.Any())
