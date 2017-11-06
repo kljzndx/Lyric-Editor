@@ -84,7 +84,7 @@
                     </StackPanel>
                 </StackPanel>
 
-                <Button x:Name="LyricsSort_Button" x:Uid="/LyricsEdit/LyricsSort_Button" HorizontalAlignment="Center" Style="{StaticResource ControllerButtonStyle}" Click="LyricsSort_Button_Click">
+                <Button x:Name="LyricsSort_Button" x:Uid="/LyricsEdit/LyricsSort_Button" HorizontalAlignment="Center" IsEnabled="{x:Bind _viewModel.IsLyricsItemAny, Mode=OneWay}" Style="{StaticResource ControllerButtonStyle}" Click="LyricsSort_Button_Click">
                     <Button.Content>
                         <SymbolIcon Symbol="Sort" Width="20" Height="20"/>
                     </Button.Content>
