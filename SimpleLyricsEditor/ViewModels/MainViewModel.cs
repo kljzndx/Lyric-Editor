@@ -43,7 +43,7 @@ namespace SimpleLyricsEditor.ViewModels
         public ObservableCollection<LyricsOperationBase> UndoOperations { get; }
         public ObservableCollection<LyricsOperationBase> RedoOperations { get; }
 
-        public bool IsLyricsItemAny => LyricItems.Any();
+        public bool IsLyricsItemAny => LyricItems.Count >= 2;
         public bool CanUndo => UndoOperations.Any();
         public bool CanRedo => RedoOperations.Any();
         
