@@ -84,11 +84,24 @@
                     </StackPanel>
                 </StackPanel>
 
-                <Button x:Name="LyricsSort_Button" x:Uid="/LyricsEdit/LyricsSort_Button" HorizontalAlignment="Right" Style="{StaticResource ControllerButtonStyle}" Click="LyricsSort_Button_Click">
+                <Button x:Name="LyricsSort_Button" x:Uid="/LyricsEdit/LyricsSort_Button" HorizontalAlignment="Center" Style="{StaticResource ControllerButtonStyle}" Click="LyricsSort_Button_Click">
                     <Button.Content>
                         <SymbolIcon Symbol="Sort" Width="20" Height="20"/>
                     </Button.Content>
                 </Button>
+
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Button x:Name="Undo_Button" x:Uid="/LyricsEdit/Undo_Button" IsEnabled="{x:Bind _viewModel.CanUndo, Mode=OneWay}" Style="{StaticResource ControllerButtonStyle}" Click="Undo_Button_Click">
+                        <Button.Content>
+                            <SymbolIcon Width="20" Height="20" Symbol="Undo"/>
+                        </Button.Content>
+                    </Button>
+                    <Button x:Name="Redo_Button" x:Uid="/LyricsEdit/Redo_Button" IsEnabled="{x:Bind _viewModel.CanRedo, Mode=OneWay}" Style="{StaticResource ControllerButtonStyle}" Click="Redo_Button_Click">
+                        <Button.Content>
+                            <SymbolIcon Width="20" Height="20" Symbol="Redo"/>
+                        </Button.Content>
+                    </Button>
+                </StackPanel>
             </Grid>
 
             <ListView x:Name="Lyrics_ListView" Grid.Row="1" ItemsSource="{x:Bind _viewModel.LyricItems}" GotFocus="Lyrics_ListView_GotFocus" LostFocus="Lyrics_ListView_LostFocus" SelectionChanged="Lyrics_ListView_SelectionChanged">

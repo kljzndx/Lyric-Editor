@@ -338,6 +338,16 @@ namespace SimpleLyricsEditor.Views
             _viewModel.Sort(_viewModel.LyricItems);
         }
 
+        private void Undo_Button_Click(object sender, RoutedEventArgs e)
+        {
+            _viewModel.Undo(1);
+        }
+
+        private void Redo_Button_Click(object sender, RoutedEventArgs e)
+        {
+            _viewModel.Redo(1);
+        }
+
         #endregion
 
         #region List view

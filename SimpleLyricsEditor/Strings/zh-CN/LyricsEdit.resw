@@ -172,4 +172,12 @@
     <value>按 I / Esc 键可以 进入/退出 输入状态
 按 Ctrl + Enter 可以快速提交</value>
   </data>
+  <data name="Redo_Button.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>重做
+快捷键： Ctrl + Y</value>
+  </data>
+  <data name="Undo_Button.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>撤销
+快捷键： Ctrl + Z</value>
+  </data>
 </root>

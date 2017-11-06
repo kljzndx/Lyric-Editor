@@ -172,4 +172,12 @@ Shortcut keys : Delete</value>
     <value>Press I / Esc Key to Enter/Exit input status
 Press Ctrl + Enter to quickly submit</value>
   </data>
+  <data name="Redo_Button.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Redo
+Shortcut key: Ctrl + Y</value>
+  </data>
+  <data name="Undo_Button.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Undo
+Shortcut Key: Ctrl + Z</value>
+  </data>
 </root>
