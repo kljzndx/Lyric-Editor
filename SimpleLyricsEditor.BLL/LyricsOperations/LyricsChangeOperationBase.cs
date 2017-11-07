@@ -10,11 +10,12 @@ namespace SimpleLyricsEditor.BLL.LyricsOperations
 
         protected LyricsChangeOperationBase(IEnumerable<Lyric> items, IList<Lyric> targetList) : base(targetList)
         {
+            List<Lyric> list = TargetList.OrderBy(l => l.Time).ToList();
             Items = items.ToList();
             Positions = new Dictionary<int, Lyric>();
 
             foreach (Lyric lyric in Items.Where(l => !Positions.ContainsValue(l)))
-                Positions.Add(TargetList.IndexOf(lyric), lyric);
+                Positions.Add(list.IndexOf(lyric), lyric);
         }
 
         public List<Lyric> Items { get; }
