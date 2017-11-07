@@ -43,6 +43,7 @@ namespace SimpleLyricsEditor.Views
             ButtonsInMultilineEditMode_StackPanel.Visibility = Visibility.Collapsed;
 
             _viewModel = DataContext as MainViewModel;
+            _viewModel.LyricItems.CollectionChanged += LyricItems_CollectionChanged;
             _viewModel.SelectedItems = Lyrics_ListView.SelectedItems;
             _viewModel.UndoOperations.CollectionChanged += UndoOperations_CollectionChanged;
             _settings.PropertyChanged += Settings_PropertyChanged;
@@ -206,6 +207,11 @@ namespace SimpleLyricsEditor.Views
             // 提取V2系列版本的背景图
             await ExtractionOldVersionBackgroundImageFile();
             await GetBackgroundImage();
+        }
+
+        private void LyricItems_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            SinglePreview.Reposition(Player.Position);
         }
 
         private void UndoOperations_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
