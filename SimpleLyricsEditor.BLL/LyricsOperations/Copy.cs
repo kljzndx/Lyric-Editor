@@ -38,13 +38,18 @@ namespace SimpleLyricsEditor.BLL.LyricsOperations
         {
             int insertId = _insertId + 1;
 
-            foreach (var lyric in Positions.Values)
+            if (_isDoed)
+                foreach (var lyric in _addItems)
+                    TargetList.Insert(insertId++, lyric);
+            else
             {
-                var time = _isBig ? lyric.Time - _interpolation : lyric.Time + _interpolation;
-                var addItem = new Lyric(time, lyric.Content);
-                if (!_isDoed)
+                foreach (var lyric in Positions.Values)
+                {
+                    var time = _isBig ? lyric.Time - _interpolation : lyric.Time + _interpolation;
+                    var addItem = new Lyric(time, lyric.Content);
                     _addItems.Add(addItem);
-                TargetList.Insert(insertId++, addItem);
+                    TargetList.Insert(insertId++, addItem);
+                }
             }
 
             _isDoed = true;
