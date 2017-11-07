@@ -336,7 +336,8 @@ namespace SimpleLyricsEditor.Views
 
         private void CopyLyrics_Button_Click(object sender, RoutedEventArgs e)
         {
-            _viewModel.Copy(Player.Position);
+            if (Lyrics_ListView.SelectedItems.Any())
+                _viewModel.Copy(Player.Position);
         }
 
         private void LyricsSort_Button_Click(object sender, RoutedEventArgs e)
