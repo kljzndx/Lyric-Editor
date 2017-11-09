@@ -39,7 +39,7 @@ namespace SimpleLyricsEditor.Views.SettingsPages
         private void ChildrenPage_ListView_ItemClick(object sender, ItemClickEventArgs e)
         {
             if (e.ClickedItem is PageModel pm)
-                Frame.Navigate(pm.PageType, pm.Title);
+                Frame.Navigate(pm.PageType, pm.Title, new ContinuumNavigationTransitionInfo());
         }
     }
 }

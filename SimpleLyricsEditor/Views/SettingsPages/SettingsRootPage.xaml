@@ -7,6 +7,12 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
+    <Page.Transitions>
+        <TransitionCollection>
+            <NavigationThemeTransition/>
+        </TransitionCollection>
+    </Page.Transitions>
+
     <StackPanel x:Name="Root_StackPanel">
         <ListView ItemsSource="{x:Bind pms}" IsItemClickEnabled="True" ItemClick="ChildrenPage_ListView_ItemClick">
             <ListView.ItemTemplate>
