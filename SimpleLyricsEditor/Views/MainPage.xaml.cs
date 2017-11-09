@@ -36,6 +36,8 @@ namespace SimpleLyricsEditor.Views
         private MainViewModel _viewModel;
         private Lyric _backLyric;
 
+        private Action _inputBoxSubmitAction;
+
         public MainPage()
         {
             InitializeComponent();
@@ -52,6 +54,16 @@ namespace SimpleLyricsEditor.Views
             GlobalKeyNotifier.KeyUp += WindowKeyUp;
 
             ImageFileNotifier.FileChanged += ImageFileChanged;
+        }
+
+        private void AddLyrics()
+        {
+            _viewModel.Add(Lyrics_ListView.SelectedIndex, Player.Position, LyricsContent_TextBox.Text, _isPressShift);
+        }
+
+        private void ModifyLyrics()
+        {
+            _viewModel.Modify(LyricsContent_TextBox.Text);
         }
 
         private void GoToLyricTime(Lyric lyric)
@@ -130,7 +142,7 @@ namespace SimpleLyricsEditor.Views
                 switch (e.Key)
                 {
                     case VirtualKey.I:
-                        InputSubmitBox.ExpandInputBox();
+                        LyricsContent_TextBox.Focus(FocusState.Keyboard);
                         break;
                     case VirtualKey.Space:
                         Focus(FocusState.Pointer);
@@ -145,7 +157,7 @@ namespace SimpleLyricsEditor.Views
                                     : -1;
                         }
                         else
-                            _viewModel.Add(-1, Player.Position, String.Empty, _isPressShift);
+                            AddLyrics();
                         break;
                     case VirtualKey.C:
                         _viewModel.Copy(Player.Position);
@@ -161,7 +173,10 @@ namespace SimpleLyricsEditor.Views
                         break;
                     case VirtualKey.M:
                         if (Lyrics_ListView.SelectedItem is Lyric)
-                            InputSubmitBox.ExpandInputBox();
+                        {
+                            LyricsOperations_ComboBox.SelectedIndex = 1;
+                            LyricsContent_TextBox.Focus(FocusState.Keyboard);
+                        }
                         break;
                     case VirtualKey.S:
                         _viewModel.Sort(_viewModel.LyricItems);
@@ -375,7 +390,7 @@ namespace SimpleLyricsEditor.Views
             {
                 Lyrics_ListView.ScrollIntoView(currentLyric);
 
-                InputSubmitBox.UserInput = currentLyric.Content;
+                LyricsContent_TextBox.Text = currentLyric.Content;
             }
 
             if (e.RemovedItems.Any())
@@ -388,14 +403,9 @@ namespace SimpleLyricsEditor.Views
                     _backLyric.IsSelected = false;
                 _backLyric = selectedLyric;
                 selectedLyric.IsSelected = true;
-
-                InputSubmitBox.SubmitButtonContent = "\uE104";
             }
             else
-            {
-                InputSubmitBox.SubmitButtonContent = "\uE109";
-                InputSubmitBox.UserInput = String.Empty;
-            }
+                LyricsContent_TextBox.Text = String.Empty;
         }
 
         private void LyricTime_Button_Click(object sender, RoutedEventArgs e)
@@ -420,32 +430,48 @@ namespace SimpleLyricsEditor.Views
 
         #region Input submit box
 
-        private void InputSubmitBox_GotFocus(object sender, RoutedEventArgs e)
+        private void LyricsOperations_ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (e.AddedItems.FirstOrDefault() is ComboBoxItem cbi)
+                if (cbi.Equals(AddLyrics_ComboBoxItem))
+                    _inputBoxSubmitAction = AddLyrics;
+                else
+                    _inputBoxSubmitAction = ModifyLyrics;
+        }
+
+        private void LyricsContent_TextBox_GotFocus(object sender, RoutedEventArgs e)
         {
             App.IsInputing = true;
         }
 
-        private void InputSubmitBox_LostFocus(object sender, RoutedEventArgs e)
+        private void LyricsContent_TextBox_LostFocus(object sender, RoutedEventArgs e)
         {
             App.IsInputing = false;
         }
 
-        private void InputSubmitBox_Submited(object sender, EventArgs e)
+        private void LyricsContent_TextBox_KeyDown(object sender, KeyRoutedEventArgs e)
         {
-            if (Lyrics_ListView.SelectedItem is Lyric)
+            if (e.Key == VirtualKey.Enter && sender is TextBox tb)
             {
-                _viewModel.Modify(InputSubmitBox.UserInput);
+                if (_isPressCtrl)
+                {
+                    _inputBoxSubmitAction.Invoke();
+                }
+                else
+                {
+                    int selectIndex = tb.SelectionStart;
 
-                Lyrics_ListView.SelectedIndex =
-                    Lyrics_ListView.SelectedIndex < Lyrics_ListView.Items.Count - 1
-                        ? Lyrics_ListView.SelectedIndex + 1
-                        : -1;
-
+                    tb.Text = tb.Text.Remove(selectIndex, tb.SelectionLength).Insert(selectIndex, ' ' + Environment.NewLine);
+                    tb.SelectionStart = selectIndex + 2;
+                }
             }
-            else
-                _viewModel.Add(-1, Player.Position, InputSubmitBox.UserInput, _isPressShift);
         }
 
+        private void Submit_Button_Click(object sender, RoutedEventArgs e)
+        {
+            _inputBoxSubmitAction.Invoke();
+        }
+        
         #endregion
     }
 }

@@ -117,8 +117,8 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AddLyrics_Button.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Add Lyrics
+  <data name="AddLyrics_ComboBoxItem.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Add Lyric Items
 Shortcut keys : Space
 Press Shift to Add Lyrics to Above</value>
   </data>
@@ -127,8 +127,7 @@ Press Shift to Add Lyrics to Above</value>
 Shortcut Keys : C</value>
   </data>
   <data name="LyricsContent_TextBox.PlaceholderText" xml:space="preserve">
-    <value>Press I / Esc Key to Enter/Exit input status
-Press Ctrl + Enter to quickly submit</value>
+    <value>Please enter lyrics, Support multiline text</value>
   </data>
   <data name="LyricsSort_Button.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
     <value>Sort
@@ -138,8 +137,8 @@ Shortcut Keys : S</value>
     <value>Go to this time
 Shortcut Key : G</value>
   </data>
-  <data name="ModifyContent_Button.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Modify content of lyrics
+  <data name="ModifyLyrics_ComboBoxItem.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Modify Lyrics Content
 Shortcut Key : M</value>
   </data>
   <data name="MoveTime_Button.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
@@ -179,5 +178,15 @@ Shortcut key: Ctrl + Y</value>
   <data name="Undo_Button.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
     <value>Undo
 Shortcut Key: Ctrl + Z</value>
+  </data>
+  <data name="AddLyrics_ComboBoxItem.Content" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="ModifyLyrics_ComboBoxItem.Content" xml:space="preserve">
+    <value>Modify</value>
+  </data>
+  <data name="Submit_Button.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Submit
+Shortcut key: Press Ctrl + Enter in Input box</value>
   </data>
 </root>

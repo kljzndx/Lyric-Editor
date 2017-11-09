@@ -11,6 +11,51 @@
     Loaded="MainPage_Loaded">
 
     <Page.Resources>
+        <Style x:Key="FloatingAction_ButtonStyle" TargetType="ButtonBase">
+            <Setter Property="Width" Value="50"/>
+            <Setter Property="Height" Value="50"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="FontFamily" Value="Segoe MDL2 Assets"/>
+            <Setter Property="FontSize" Value="24"/>
+            <Setter Property="Background" Value="{ThemeResource SystemControlBackgroundAccentBrush}"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Grid x:Name="Root_Grid">
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup>
+                                    <VisualState x:Name="Normal">
+                                        <Storyboard>
+                                            <PointerUpThemeAnimation Storyboard.TargetName="Root_Grid"/>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="PointerOver">
+                                        <Storyboard>
+                                            <DoubleAnimation From="0" To="0.3" Duration="0" Storyboard.TargetName="White_Ellipse" Storyboard.TargetProperty="Opacity"/>
+                                            <PointerUpThemeAnimation Storyboard.TargetName="Root_Grid"/>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Pressed">
+                                        <Storyboard>
+                                            <DoubleAnimation From="0" To="0.3" Duration="0" Storyboard.TargetName="Black_Ellipse" Storyboard.TargetProperty="Opacity"/>
+                                            <PointerDownThemeAnimation Storyboard.TargetName="Root_Grid"/>
+                                        </Storyboard>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+
+                            <Ellipse Width="{TemplateBinding Width}" Height="{TemplateBinding Height}" Fill="{TemplateBinding Background}"/>
+                            <Ellipse x:Name="Black_Ellipse" Fill="Black" Opacity="0"/>
+                            <Ellipse x:Name="White_Ellipse" Fill="White" Opacity="0"/>
+
+                            <ContentPresenter Foreground="{TemplateBinding Foreground}" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" Padding="{TemplateBinding Padding}"/>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
         <Storyboard x:Name="ButtonsInMultilineEditMode_Expand_Storyboard">
             <DoubleAnimation From="-90" To="0" Duration="0:0:0.2" Storyboard.TargetName="ButtonsInMultilineEditMode_Projection" Storyboard.TargetProperty="RotationY"/>
             <DoubleAnimation From="0" To="1" Duration="0:0:0.2" Storyboard.TargetName="ButtonsInMultilineEditMode_StackPanel" Storyboard.TargetProperty="Opacity"/>
@@ -44,10 +89,25 @@
         <Grid Grid.Row="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
 
             <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <ComboBox x:Name="LyricsOperations_ComboBox" SelectedIndex="0" SelectionChanged="LyricsOperations_ComboBox_SelectionChanged">
+                    <ComboBoxItem x:Name="AddLyrics_ComboBoxItem" x:Uid="/LyricsEdit/AddLyrics_ComboBoxItem" Content="Add Lyrics"/>
+                    <ComboBoxItem x:Name="ModifyLyrics_ComboBoxItem" x:Uid="/LyricsEdit/ModifyLyrics_ComboBoxItem" Content="Modify Lyrics"/>
+                </ComboBox>
+                <TextBox x:Name="LyricsContent_TextBox" x:Uid="/LyricsEdit/LyricsContent_TextBox" Grid.Column="1" TextWrapping="Wrap" GotFocus="LyricsContent_TextBox_GotFocus" LostFocus="LyricsContent_TextBox_LostFocus" KeyDown="LyricsContent_TextBox_KeyDown"/>
+                <Button x:Name="Submit_Button" x:Uid="/LyricsEdit/Submit_Button" Grid.Column="2" Content="&#xE0E7;" Style="{StaticResource ControllerButtonStyle}" Click="Submit_Button_Click"/>
+            </Grid>
+
+            <Grid Grid.Row="1">
                 <StackPanel Orientation="Horizontal">
                     <ToggleButton x:Name="MultilineEditMode_ToggleButton" x:Uid="/LyricsEdit/MultilineEditMode_ToggleButton" Content="&#xE133;" IsChecked="{x:Bind _settings.MultilineEditModeEnabled, Mode=TwoWay, Converter={StaticResource BoolNullableToBool}}" Style="{StaticResource ControllerButtonStyle}" Checked="MultilineEditMode_ToggleButton_Checked" Unchecked="MultilineEditMode_ToggleButton_Unchecked"/>
 
@@ -84,12 +144,6 @@
                     </StackPanel>
                 </StackPanel>
 
-                <Button x:Name="LyricsSort_Button" x:Uid="/LyricsEdit/LyricsSort_Button" HorizontalAlignment="Center" IsEnabled="{x:Bind _viewModel.IsLyricsItemAny, Mode=OneWay}" Style="{StaticResource ControllerButtonStyle}" Click="LyricsSort_Button_Click">
-                    <Button.Content>
-                        <SymbolIcon Symbol="Sort" Width="20" Height="20"/>
-                    </Button.Content>
-                </Button>
-
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                     <Button x:Name="Undo_Button" x:Uid="/LyricsEdit/Undo_Button" IsEnabled="{x:Bind _viewModel.CanUndo, Mode=OneWay}" Style="{StaticResource ControllerButtonStyle}" Click="Undo_Button_Click">
                         <Button.Content>
@@ -104,7 +158,7 @@
                 </StackPanel>
             </Grid>
 
-            <ListView x:Name="Lyrics_ListView" Grid.Row="1" ItemsSource="{x:Bind _viewModel.LyricItems}" GotFocus="Lyrics_ListView_GotFocus" LostFocus="Lyrics_ListView_LostFocus" SelectionChanged="Lyrics_ListView_SelectionChanged">
+            <ListView x:Name="Lyrics_ListView" Grid.Row="2" ItemsSource="{x:Bind _viewModel.LyricItems}" GotFocus="Lyrics_ListView_GotFocus" LostFocus="Lyrics_ListView_LostFocus" SelectionChanged="Lyrics_ListView_SelectionChanged">
                 <ListView.ItemContainerStyle>
                     <Style TargetType="ListViewItem">
                         <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
@@ -135,7 +189,12 @@
                 </ListView.ItemTemplate>
             </ListView>
 
-            <ctol:InputSubmitBox x:Name="InputSubmitBox" Grid.Row="1" SubmitButtonContent="&#xE109;" VerticalAlignment="Bottom" Margin="50" GotFocus="InputSubmitBox_GotFocus" LostFocus="InputSubmitBox_LostFocus" Submited="InputSubmitBox_Submited"/>
+            <Button x:Name="LyricsSort_Button" x:Uid="/LyricsEdit/LyricsSort_Button" Grid.Row="2" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="50" Style="{StaticResource FloatingAction_ButtonStyle}" Click="LyricsSort_Button_Click">
+                <Button.Content>
+                    <SymbolIcon Symbol="Sort" Width="20" Height="20"/>
+                </Button.Content>
+            </Button>
+
         </Grid>
         <Grid Grid.Row="2">
             <Rectangle Fill="{ThemeResource SystemControlBackgroundAccentBrush}" Opacity="{x:Bind _settings.PreviewBackgroundOpacity, Mode=OneWay}"/>
