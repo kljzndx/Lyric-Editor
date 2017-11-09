@@ -1,8 +1,9 @@
-﻿<Page
+﻿<model:SettingsPageBase
     x:Class="SimpleLyricsEditor.Views.SettingsPages.LyricsPreviewSettingsPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:SimpleLyricsEditor.Views.SettingsPages"
+    xmlns:model="using:SimpleLyricsEditor.Models"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
@@ -11,4 +12,5 @@
         <Slider x:Uid="/LyricsPreviewSettings/PreviewBackgroundOpacity_Slider" Value="{x:Bind _settings.PreviewBackgroundOpacity, Mode=TwoWay, Converter={StaticResource PercentageToDouble}}"/>
         <Slider x:Uid="/LyricsPreviewSettings/SinglePreviewFontSize_Slider" Minimum="16" Maximum="32" Value="{x:Bind _settings.SinglePreviewFontSize, Mode=TwoWay}"/>
     </StackPanel>
-</Page>
+</model:SettingsPageBase>
+
