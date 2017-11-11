@@ -93,7 +93,7 @@
                 <RowDefinition/>
             </Grid.RowDefinitions>
 
-            <Grid>
+            <Grid Margin="0,5">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition/>
@@ -107,7 +107,7 @@
                 <Button x:Name="Submit_Button" x:Uid="/LyricsEdit/Submit_Button" Grid.Column="2" Content="&#xE0E7;" VerticalAlignment="Top" Style="{StaticResource ControllerButtonStyle}" Click="Submit_Button_Click"/>
             </Grid>
 
-            <Grid Grid.Row="1">
+            <Grid Grid.Row="1" Margin="0,5">
                 <StackPanel Orientation="Horizontal">
                     <ToggleButton x:Name="MultilineEditMode_ToggleButton" x:Uid="/LyricsEdit/MultilineEditMode_ToggleButton" Content="&#xE133;" IsChecked="{x:Bind _settings.MultilineEditModeEnabled, Mode=TwoWay, Converter={StaticResource BoolNullableToBool}}" Style="{StaticResource ControllerButtonStyle}" Checked="MultilineEditMode_ToggleButton_Checked" Unchecked="MultilineEditMode_ToggleButton_Unchecked"/>
 
