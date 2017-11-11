@@ -13,7 +13,7 @@ namespace SimpleLyricsEditor.BLL.LyricsOperations
             Items = items.ToList();
             Positions = new Dictionary<int, Lyric>();
 
-            foreach (Lyric lyric in Items.OrderBy(l => l).ToList())
+            foreach (Lyric lyric in Items.ToList())
                 Positions.Add(TargetList.IndexOf(lyric), lyric);
         }
 

@@ -43,7 +43,7 @@ namespace SimpleLyricsEditor.BLL.LyricsOperations
                     TargetList.Insert(insertId++, lyric);
             else
             {
-                foreach (var lyric in Positions.Values)
+                foreach (var lyric in Positions.Values.OrderBy(l => l).ToList())
                 {
                     var time = _isBig ? lyric.Time - _interpolation : lyric.Time + _interpolation;
                     var addItem = new Lyric(time, lyric.Content);
