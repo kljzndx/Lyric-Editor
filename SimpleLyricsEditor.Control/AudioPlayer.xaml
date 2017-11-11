@@ -296,7 +296,7 @@
     </UserControl.Resources>
 
     <StackPanel Padding="{x:Bind Padding, Mode=OneWay}" Background="{x:Bind Background, Mode=OneWay}">
-        <MediaElement x:Name="Player" AutoPlay="False" Volume="{x:Bind _settings.Volume, Mode=OneWay}" Balance="{x:Bind _settings.Balance, Mode=OneWay}" DefaultPlaybackRate="{x:Bind _settings.PlaybackRate, Mode=OneWay}" PlaybackRate="{x:Bind _settings.PlaybackRate, Mode=OneWay}" CurrentStateChanged="Player_CurrentStateChanged" MediaOpened="Player_MediaOpened" MediaEnded="Player_MediaEnded" MediaFailed="Player_MediaFailed"/>
+        <MediaElement x:Name="Player" AutoPlay="False" AudioCategory="Media" Volume="{x:Bind _settings.Volume, Mode=OneWay}" Balance="{x:Bind _settings.Balance, Mode=OneWay}" DefaultPlaybackRate="{x:Bind _settings.PlaybackRate, Mode=OneWay}" PlaybackRate="{x:Bind _settings.PlaybackRate, Mode=OneWay}" CurrentStateChanged="Player_CurrentStateChanged" MediaOpened="Player_MediaOpened" MediaEnded="Player_MediaEnded" MediaFailed="Player_MediaFailed"/>
         <TextBlock Text="{x:Bind Source.File.Path, Mode=OneWay}" TextAlignment="Center"/>
         <Grid x:Name="Progress_Grid">
             <Grid.ColumnDefinitions>
