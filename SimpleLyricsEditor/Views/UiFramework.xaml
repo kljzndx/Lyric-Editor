@@ -58,6 +58,8 @@
                 
                 <ctol:UpdateLogDialog x:Name="UpdateLogDialog" Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}" Margin="30" Visibility="Collapsed" Hided="UpdateLogDialog_Hided"/>
                 <ctol:ShortcutKeysDialog x:Name="ShortcutKeysDialog" Margin="30" Visibility="Collapsed"/>
+
+                <ContentDialog x:Name="GetReviews_ContentDialog" x:Uid="/GetReviewsDialog/GetReviews_ContentDialog" PrimaryButtonClick="GetReviews_ContentDialog_PrimaryButtonClick" SecondaryButtonClick="GetReviews_ContentDialog_SecondaryButtonClick"/>
             </Grid>
         </SplitView.Content>
     </SplitView>

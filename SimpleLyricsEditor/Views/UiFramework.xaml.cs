@@ -36,7 +36,20 @@ namespace SimpleLyricsEditor.Views
         private readonly Settings _settings = Settings.Current;
         private StorageFile _lyricsFile;
         private StorageFile _musicFile;
-        
+
+        private int BootTimes
+        {
+            get => _settings.GetSetting("BootTimes", 0);
+            set => _settings.SettingObject.Values["BootTimes"] = value;
+        }
+
+        private string UpdateLogVersion
+        {
+            get => _settings.GetSetting("UpdateLogVersion", String.Empty);
+            set => _settings.SettingObject.Values["UpdateLogVersion"] = value;
+        }
+
+
         public UiFramework()
         {
             InitializeComponent();
@@ -95,7 +108,12 @@ namespace SimpleLyricsEditor.Views
         }
 
         #endregion
-        
+
+        private static async Task WriteReview()
+        {
+            await Launcher.LaunchUriAsync(new Uri("ms-windows-store://review/?ProductId=9mx4frgq4rqs"));
+        }
+
         private void SecondaryViewNavigate(PageModel pm)
         {
             Root_SplitView.IsPaneOpen = !Root_SplitView.IsPaneOpen;
@@ -134,13 +152,23 @@ namespace SimpleLyricsEditor.Views
 
         }
 
-        private void UiFramework_Loaded(object sender, RoutedEventArgs e)
+        private async void UiFramework_Loaded(object sender, RoutedEventArgs e)
         {
-            if (_settings.GetSetting("UpdateLogVersion", String.Empty) != AppInfo.Version)
-                UpdateLogDialog.Show();
-            
             if (!StoreServicesFeedbackLauncher.IsSupported())
                 FeedbackInFeedbackHub_MenuFlyoutItem.Visibility = Visibility.Collapsed;
+
+            if (UpdateLogVersion != AppInfo.Version)
+            {
+                UpdateLogDialog.Show();
+                BootTimes = 1;
+            }
+            else
+            {
+                BootTimes = BootTimes < Int32.MaxValue ? BootTimes + 1 : 1;
+
+                if (BootTimes > 5)
+                    await GetReviews_ContentDialog.ShowAsync();
+            }
         }
 
         #region Notifiers
@@ -207,7 +235,6 @@ namespace SimpleLyricsEditor.Views
         }
 
         #endregion
-
         #region Ads
         
         private void MsAdControl_ErrorOccurred(object sender, AdErrorEventArgs e)
@@ -219,9 +246,21 @@ namespace SimpleLyricsEditor.Views
         {
             MsAdControl.Visibility = Visibility.Visible;
         }
-        
-        #endregion
 
+        #endregion
+        #region Get Reviews Content Dialog
+
+        private async void GetReviews_ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+        {
+            await WriteReview();
+        }
+
+        private async void GetReviews_ContentDialog_SecondaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+        {
+            await WriteReview();
+        }
+
+        #endregion
         #region Bottom Bar
 
         private void NewFile_AppBarButton_Click(object sender, RoutedEventArgs e)
