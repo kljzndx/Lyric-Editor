@@ -166,7 +166,7 @@ namespace SimpleLyricsEditor.Views
             {
                 BootTimes = BootTimes < Int32.MaxValue ? BootTimes + 1 : 1;
 
-                if (BootTimes > 5)
+                if (BootTimes == 10)
                     await GetReviews_ContentDialog.ShowAsync();
             }
         }
