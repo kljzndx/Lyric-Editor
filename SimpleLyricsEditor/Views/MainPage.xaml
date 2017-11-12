@@ -158,7 +158,7 @@
                 </StackPanel>
             </Grid>
 
-            <ListView x:Name="Lyrics_ListView" Grid.Row="2" ItemsSource="{x:Bind _viewModel.LyricItems}" GotFocus="Lyrics_ListView_GotFocus" LostFocus="Lyrics_ListView_LostFocus" SelectionChanged="Lyrics_ListView_SelectionChanged">
+            <ListView x:Name="Lyrics_ListView" Grid.Row="2" ItemsSource="{x:Bind _viewModel.LyricItems}" GotFocus="Lyrics_ListView_GotFocus" LostFocus="Lyrics_ListView_LostFocus" SelectionChanged="Lyrics_ListView_SelectionChanged" Tapped="Lyrics_ListView_Tapped">
                 <ListView.ItemContainerStyle>
                     <Style TargetType="ListViewItem">
                         <Setter Property="HorizontalContentAlignment" Value="Stretch"/>

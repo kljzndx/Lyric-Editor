@@ -483,5 +483,15 @@ namespace SimpleLyricsEditor.Views
         {
             Lyrics_ListView.SelectedItem = null;
         }
+
+        private void Lyrics_ListView_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            if (sender is ListView listView &&
+                e.OriginalSource is FrameworkElement element &&
+                element.DataContext is MainViewModel)
+            {
+                listView.SelectedItem = null;
+            }
+        }
     }
 }
