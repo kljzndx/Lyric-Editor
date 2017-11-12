@@ -104,7 +104,7 @@
                     <ComboBoxItem x:Name="ModifyLyrics_ComboBoxItem" x:Uid="/LyricsEdit/ModifyLyrics_ComboBoxItem" Content="Modify Lyrics"/>
                 </ComboBox>
                 <TextBox x:Name="LyricsContent_TextBox" x:Uid="/LyricsEdit/LyricsContent_TextBox" Grid.Column="1" VerticalAlignment="Top" MaxHeight="100" BorderThickness="1,2,2,2" TextWrapping="Wrap" GotFocus="LyricsContent_TextBox_GotFocus" LostFocus="LyricsContent_TextBox_LostFocus" KeyDown="LyricsContent_TextBox_KeyDown"/>
-                <Button x:Name="Submit_Button" x:Uid="/LyricsEdit/Submit_Button" Grid.Column="2" Content="&#xE0E7;" VerticalAlignment="Top" Style="{StaticResource ControllerButtonStyle}" Padding="4" Margin="0" Click="Submit_Button_Click"/>
+                <Button x:Name="Submit_Button" x:Uid="/LyricsEdit/Submit_Button" Grid.Column="2" Content="&#xE0E7;" VerticalAlignment="Top" Style="{StaticResource ControllerButtonStyle}" Padding="4" Margin="0,0,5,0" Click="Submit_Button_Click"/>
             </Grid>
 
             <Grid Grid.Row="1" Margin="0,5">
