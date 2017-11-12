@@ -284,6 +284,52 @@ namespace SimpleLyricsEditor.Views
 
         #endregion
 
+        #region Input submit box
+
+        private void LyricsOperations_ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (e.AddedItems.FirstOrDefault() is ComboBoxItem cbi)
+                if (cbi.Equals(AddLyrics_ComboBoxItem))
+                    _inputBoxSubmitAction = AddLyrics;
+                else
+                    _inputBoxSubmitAction = ModifyLyrics;
+        }
+
+        private void LyricsContent_TextBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            App.IsInputing = true;
+        }
+
+        private void LyricsContent_TextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            App.IsInputing = false;
+        }
+
+        private void LyricsContent_TextBox_KeyDown(object sender, KeyRoutedEventArgs e)
+        {
+            if (e.Key == VirtualKey.Enter && sender is TextBox tb)
+            {
+                if (_isPressCtrl)
+                {
+                    _inputBoxSubmitAction.Invoke();
+                }
+                else
+                {
+                    int selectIndex = tb.SelectionStart;
+
+                    tb.Text = tb.Text.Remove(selectIndex, tb.SelectionLength).Insert(selectIndex, ' ' + Environment.NewLine);
+                    tb.SelectionStart = selectIndex + 2;
+                }
+            }
+        }
+
+        private void Submit_Button_Click(object sender, RoutedEventArgs e)
+        {
+            _inputBoxSubmitAction.Invoke();
+        }
+        
+        #endregion
+
         #region Lyrics edit tools
 
         private void MultilineEditMode_ToggleButton_Checked(object sender, RoutedEventArgs e)
@@ -428,50 +474,9 @@ namespace SimpleLyricsEditor.Views
 
         #endregion
 
-        #region Input submit box
-
-        private void LyricsOperations_ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void LyricsPreview_Grid_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            if (e.AddedItems.FirstOrDefault() is ComboBoxItem cbi)
-                if (cbi.Equals(AddLyrics_ComboBoxItem))
-                    _inputBoxSubmitAction = AddLyrics;
-                else
-                    _inputBoxSubmitAction = ModifyLyrics;
+            Lyrics_ListView.SelectedItem = null;
         }
-
-        private void LyricsContent_TextBox_GotFocus(object sender, RoutedEventArgs e)
-        {
-            App.IsInputing = true;
-        }
-
-        private void LyricsContent_TextBox_LostFocus(object sender, RoutedEventArgs e)
-        {
-            App.IsInputing = false;
-        }
-
-        private void LyricsContent_TextBox_KeyDown(object sender, KeyRoutedEventArgs e)
-        {
-            if (e.Key == VirtualKey.Enter && sender is TextBox tb)
-            {
-                if (_isPressCtrl)
-                {
-                    _inputBoxSubmitAction.Invoke();
-                }
-                else
-                {
-                    int selectIndex = tb.SelectionStart;
-
-                    tb.Text = tb.Text.Remove(selectIndex, tb.SelectionLength).Insert(selectIndex, ' ' + Environment.NewLine);
-                    tb.SelectionStart = selectIndex + 2;
-                }
-            }
-        }
-
-        private void Submit_Button_Click(object sender, RoutedEventArgs e)
-        {
-            _inputBoxSubmitAction.Invoke();
-        }
-        
-        #endregion
     }
 }
