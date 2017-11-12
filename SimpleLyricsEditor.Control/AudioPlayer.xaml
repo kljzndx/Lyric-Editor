@@ -312,7 +312,7 @@
         </Grid>
         
         <RelativePanel>
-            <Button Content="&#xEC4A;" Style="{StaticResource ControllerButtonStyle}" RelativePanel.AlignLeftWithPanel="True">
+            <Button Content="&#xE805;" Style="{StaticResource ControllerButtonStyle}" RelativePanel.AlignLeftWithPanel="True">
                 <Button.Flyout>
                     <Flyout Placement="Bottom">
                         <Slider x:Uid="/AudioPlayer/PlaybackRate_Slider" Width="200" Value="{x:Bind _settings.PlaybackRate, Mode=TwoWay, Converter={StaticResource PercentageToDouble}}" Maximum="200"/>
