@@ -174,7 +174,7 @@ namespace SimpleLyricsEditor.Views
                     case VirtualKey.M:
                         if (Lyrics_ListView.SelectedItem is Lyric)
                         {
-                            LyricsOperations_ComboBox.SelectedIndex = 1;
+                            InputSubmitOperations_ComboBox.SelectedIndex = 1;
                             LyricsContent_TextBox.Focus(FocusState.Keyboard);
                         }
                         break;
@@ -449,9 +449,14 @@ namespace SimpleLyricsEditor.Views
                     _backLyric.IsSelected = false;
                 _backLyric = selectedLyric;
                 selectedLyric.IsSelected = true;
+
+                InputSubmitOperations_ComboBox.SelectedItem = ModifyLyrics_ComboBoxItem;
             }
             else
+            {
                 LyricsContent_TextBox.Text = String.Empty;
+                InputSubmitOperations_ComboBox.SelectedItem = AddLyrics_ComboBoxItem;
+            }
         }
 
         private void LyricTime_Button_Click(object sender, RoutedEventArgs e)

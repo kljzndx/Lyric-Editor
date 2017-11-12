@@ -99,7 +99,7 @@
                     <ColumnDefinition/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
-                <ComboBox x:Name="LyricsOperations_ComboBox" SelectedIndex="0" VerticalAlignment="Top" SelectionChanged="LyricsOperations_ComboBox_SelectionChanged">
+                <ComboBox x:Name="InputSubmitOperations_ComboBox" SelectedIndex="0" VerticalAlignment="Top" SelectionChanged="LyricsOperations_ComboBox_SelectionChanged">
                     <ComboBoxItem x:Name="AddLyrics_ComboBoxItem" x:Uid="/LyricsEdit/AddLyrics_ComboBoxItem" Content="Add Lyrics"/>
                     <ComboBoxItem x:Name="ModifyLyrics_ComboBoxItem" x:Uid="/LyricsEdit/ModifyLyrics_ComboBoxItem" Content="Modify Lyrics"/>
                 </ComboBox>
