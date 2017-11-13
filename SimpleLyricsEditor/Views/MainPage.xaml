@@ -85,8 +85,8 @@
             <pctol:FrostedGlassBackground GlassBackgroundBrush="{ThemeResource ApplicationPageBackgroundThemeBrush}" GlassOpacity="{x:Bind _settings.FrostedGlassOpacity, Mode=OneWay}" Visibility="{x:Bind _settings.IsFrostedGlassEffectDisplay, Mode=OneWay, Converter={StaticResource BoolToVisibility}}"/>
             <ctol:BlurBackgroundImage x:Name="BlurBackground" BlurDegree="{x:Bind _settings.BackgroundBlurDegree, Mode=OneWay}" Opacity="{x:Bind _settings.BackgroundOpacity, Mode=OneWay}" Visibility="{x:Bind _settings.IsDisplayBackground, Mode=OneWay, Converter={StaticResource BoolToVisibility}}"/>
         </Grid>
-        
-        <Grid Grid.Row="1">
+
+        <Grid Grid.Row="1" Background="Transparent">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
@@ -108,7 +108,7 @@
             </Grid>
 
             <Grid Grid.Row="1" Margin="0,5">
-                <StackPanel Orientation="Horizontal">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
                     <ToggleButton x:Name="MultilineEditMode_ToggleButton" x:Uid="/LyricsEdit/MultilineEditMode_ToggleButton" Content="&#xE133;" IsChecked="{x:Bind _settings.MultilineEditModeEnabled, Mode=TwoWay, Converter={StaticResource BoolNullableToBool}}" Style="{StaticResource ControllerButtonStyle}" Checked="MultilineEditMode_ToggleButton_Checked" Unchecked="MultilineEditMode_ToggleButton_Unchecked"/>
 
                     <StackPanel x:Name="ButtonsInMultilineEditMode_StackPanel" Orientation="Horizontal" HorizontalAlignment="Left">
