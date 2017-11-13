@@ -115,18 +115,10 @@ namespace SimpleLyricsEditor.Core
             get => _backgroundOpacity;
             set => SetSetting(ref _backgroundOpacity, value);
         }
-
-        public bool IsBlueUsability => SystemInfo.BuildVersion >= 14393;
-
+        
         public double BackgroundBlurDegree
         {
-            get
-            {
-                if (IsBlueUsability)
-                    return _backgroundBlurDegree;
-                else
-                    return 0D;
-            }
+            get => _backgroundBlurDegree;
             set => SetSetting(ref _backgroundBlurDegree, value);
         }
 
