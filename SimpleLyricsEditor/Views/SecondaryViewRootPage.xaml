@@ -37,9 +37,7 @@
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
             
-            <Button x:Name="Back_Button" Style="{StaticResource TitleButton_Style}" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed" Click="Back_Button_Click">
-                <SymbolIcon Symbol="Back"/>
-            </Button>
+            <Button x:Name="Back_Button" Style="{StaticResource NavigationBackButtonNormalStyle}" VerticalAlignment="Top" Visibility="Collapsed" Click="Back_Button_Click"/>
 
             <TextBlock x:Name="Title_TextBlock" Grid.Column="0" VerticalAlignment="Center" Style="{ThemeResource TitleTextBlockStyle}"/>
 
