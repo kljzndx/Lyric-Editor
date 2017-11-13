@@ -86,7 +86,7 @@
             <ctol:BlurBackgroundImage x:Name="BlurBackground" BlurDegree="{x:Bind _settings.BackgroundBlurDegree, Mode=OneWay}" Opacity="{x:Bind _settings.BackgroundOpacity, Mode=OneWay}" Visibility="{x:Bind _settings.IsDisplayBackground, Mode=OneWay, Converter={StaticResource BoolToVisibility}}"/>
         </Grid>
 
-        <Grid Grid.Row="1" Background="Transparent">
+        <Grid x:Name="LyricsOperations_Grid" Grid.Row="1" Background="Transparent" Tapped="LyricsOperations_Grid_Tapped">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>

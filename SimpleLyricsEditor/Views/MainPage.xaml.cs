@@ -284,6 +284,12 @@ namespace SimpleLyricsEditor.Views
 
         #endregion
 
+        private void LyricsOperations_Grid_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            if (e.OriginalSource.Equals(sender))
+                Lyrics_ListView.SelectedItem = null;
+        }
+
         #region Input submit box
 
         private void LyricsOperations_ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -430,6 +436,18 @@ namespace SimpleLyricsEditor.Views
             _lyricsListGotFocus = false;
         }
 
+        private void Lyrics_ListView_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            e.Handled = true;
+
+            if (sender is ListView listView &&
+                e.OriginalSource is Panel panel &&
+                panel.DataContext is MainViewModel)
+            {
+                listView.SelectedItem = null;
+            }
+        }
+
         private void Lyrics_ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (e.AddedItems.FirstOrDefault() is Lyric currentLyric)
@@ -482,16 +500,6 @@ namespace SimpleLyricsEditor.Views
         private void LyricsPreview_Grid_Tapped(object sender, TappedRoutedEventArgs e)
         {
             Lyrics_ListView.SelectedItem = null;
-        }
-
-        private void Lyrics_ListView_Tapped(object sender, TappedRoutedEventArgs e)
-        {
-            if (sender is ListView listView &&
-                e.OriginalSource is FrameworkElement element &&
-                element.DataContext is MainViewModel)
-            {
-                listView.SelectedItem = null;
-            }
         }
     }
 }
