@@ -274,13 +274,7 @@ namespace SimpleLyricsEditor.Views
         {
             OpenFile_AppBarToggleButton.IsChecked = false;
         }
-
-        private void OpenFile_AppBarToggleButton_Unchecked(object sender, RoutedEventArgs e)
-        {
-            if (_settings.IsLightTheme)
-                OpenFile_AppBarToggleButton.Foreground = new SolidColorBrush(Colors.Black);
-        }
-
+        
         private void MenuFlyoutOfBottomBar_Opening(object sender, object e)
         {
             (sender as MenuFlyout).MenuFlyoutPresenterStyle =

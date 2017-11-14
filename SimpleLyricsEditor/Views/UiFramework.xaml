@@ -72,7 +72,7 @@
                         <FontIcon Glyph="&#xE160;"/>
                     </AppBarButton.Icon>
                 </AppBarButton>
-                <AppBarToggleButton x:Name="OpenFile_AppBarToggleButton" x:Uid="/BottomBar/OpenFile_AppBarToggleButton" Icon="OpenFile" Checked="OpenFile_AppBarToggleButton_Checked" Unchecked="OpenFile_AppBarToggleButton_Unchecked">
+                <AppBarToggleButton x:Name="OpenFile_AppBarToggleButton" x:Uid="/BottomBar/OpenFile_AppBarToggleButton" Icon="OpenFile" Checked="OpenFile_AppBarToggleButton_Checked">
                     <FlyoutBase.AttachedFlyout>
                         <MenuFlyout x:Name="OpenFile_MenuFlyout" Opening="MenuFlyoutOfBottomBar_Opening" Closing="OpenFile_MenuFlyout_Closing">
                             <MenuFlyoutItem x:Uid="/BottomBar/OpenMusicFile_MenuFlyoutItem" Click="OpenMusicFile_MenuFlyoutItem_Click"/>
