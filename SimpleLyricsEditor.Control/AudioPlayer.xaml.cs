@@ -1,16 +1,14 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Threading.Tasks;
 using Windows.Foundation;
-using Windows.Storage;
+using Windows.Media.Core;
+using Windows.Media.Playback;
 using Windows.System;
-using Windows.System.Threading;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using SimpleLyricsEditor.BLL.Pickers;
 using SimpleLyricsEditor.Core;
 using SimpleLyricsEditor.DAL;
@@ -27,10 +25,7 @@ namespace SimpleLyricsEditor.Control
 
         public static readonly DependencyProperty IsPlayProperty = DependencyProperty.Register(
             nameof(IsPlay), typeof(bool), typeof(AudioPlayer), new PropertyMetadata(false));
-
-        public static readonly DependencyProperty TimeProperty = DependencyProperty.Register(
-            nameof(Time), typeof(TimeSpan), typeof(AudioPlayer), new PropertyMetadata(TimeSpan.Zero));
-
+        
         public static readonly DependencyProperty RewindTimeProperty = DependencyProperty.Register(
             nameof(RewindTime), typeof(TimeSpan), typeof(AudioPlayer),
             new PropertyMetadata(TimeSpan.FromMilliseconds(500)));
@@ -50,12 +45,27 @@ namespace SimpleLyricsEditor.Control
         private bool _isPressShift;
 
         private Music _musicTemp;
-        private ThreadPoolTimer _refreshTimeTimer;
         private Settings _settings = Settings.Current;
+        private MediaPlayer _player;
+        private bool _isPressSlider;
 
         public AudioPlayer()
         {
             InitializeComponent();
+
+            _player = new MediaPlayer
+            {
+                AudioCategory = MediaPlayerAudioCategory.Media,
+                AudioBalance = _settings.Balance,
+                Volume = _settings.Volume,
+            };
+            _player.PlaybackSession.PlaybackRate = _settings.PlaybackRate;
+            _player.MediaOpened += Player_MediaOpened;
+            _player.MediaFailed += Player_MediaFailed;
+            _player.MediaEnded += Player_MediaEnded;
+            _player.PlaybackSession.PlaybackStateChanged += Player_PlaybackSession_PlaybackStateChanged;
+            _player.PlaybackSession.PositionChanged += Player_PlaybackSession_PositionChanged;
+
             Rewind_Button.Opacity = 0;
             FastForward_Button.Opacity = 0;
             RewindButton_Transform.TranslateX = 44;
@@ -84,13 +94,7 @@ namespace SimpleLyricsEditor.Control
                 PlayOrPause_ToggleButton.IsChecked = value;
             }
         }
-
-        private TimeSpan Time
-        {
-            get => (TimeSpan) GetValue(TimeProperty);
-            set => SetValue(TimeProperty, value);
-        }
-
+        
         public TimeSpan RewindTime
         {
             get => (TimeSpan) GetValue(RewindTimeProperty);
@@ -115,29 +119,32 @@ namespace SimpleLyricsEditor.Control
             set => SetValue(FastForwardTimeOnPressedShiftProperty, value);
         }
 
-        public TimeSpan Position => Player.Position;
-        public TimeSpan Duration => Player.NaturalDuration.TimeSpan;
+        public TimeSpan Position => _player.PlaybackSession.Position;
+        public TimeSpan Duration => _player.PlaybackSession.NaturalDuration;
 
         public event TypedEventHandler<AudioPlayer, MusicChangeEventArgs> SourceChanged;
         public event TypedEventHandler<AudioPlayer, PositionChangeEventArgs> PositionChanged;
         public event TypedEventHandler<AudioPlayer, EventArgs> Playing;
         public event TypedEventHandler<AudioPlayer, EventArgs> Paused;
 
-        public async Task SetSource(Music source)
+        public void SetSource(Music source)
         {
             if (source.Equals(Music.Empty))
                 return;
 
             _musicTemp = source;
 
-            Player.SetSource(await _musicTemp.File.OpenAsync(FileAccessMode.Read), _musicTemp.File.ContentType);
+            _player.Source = MediaSource.CreateFromStorageFile(source.File);
         }
 
         public void SetPosition(TimeSpan newPosition)
         {
-            Time = newPosition;
-            Player.Position = Time;
-            PositionChanged?.Invoke(this, new PositionChangeEventArgs(true, Time));
+            _player.PlaybackSession.Position = newPosition;
+            Position_Storyboard.Stop();
+            Position_Slider.Value = newPosition.TotalMinutes;
+            if (IsPlay)
+                Position_Storyboard.Begin();
+            PositionChanged?.Invoke(this, new PositionChangeEventArgs(true, newPosition));
         }
 
         public async Task<bool> PickMusicFile()
@@ -152,25 +159,7 @@ namespace SimpleLyricsEditor.Control
             else
                 return false;
         }
-
-        private void RefreshTime()
-        {
-            Time = Player.Position;
-            PositionChanged?.Invoke(this, new PositionChangeEventArgs(false, Time));
-        }
-
-        private void StartRefreshTimeTimer()
-        {
-            async void refreshTime(ThreadPoolTimer timer)
-            {
-                await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, RefreshTime);
-            }
-
-            TimeSpan frequency = Debugger.IsAttached ? TimeSpan.FromSeconds(1) : TimeSpan.FromMilliseconds(100);
-            
-            _refreshTimeTimer = ThreadPoolTimer.CreatePeriodicTimer(refreshTime, frequency);
-        }
-
+        
         public void DisplayPositionControlButtons()
         {
             if (RewindButton_Transform.TranslateX.Equals(44))
@@ -185,16 +174,15 @@ namespace SimpleLyricsEditor.Control
 
         public void Play()
         {
-            Player.Play();
-            StartRefreshTimeTimer();
+            _player.Play();
+
             Playing?.Invoke(this, EventArgs.Empty);
         }
 
         public void Pause()
         {
-            Player.Pause();
-            _refreshTimeTimer.Cancel();
-            RefreshTime();
+            _player.Pause();
+
             Paused?.Invoke(this, EventArgs.Empty);
         }
 
@@ -209,9 +197,9 @@ namespace SimpleLyricsEditor.Control
 
         public void FastForward(TimeSpan time)
         {
-            var newPosition = Position + time <= Player.NaturalDuration.TimeSpan
+            var newPosition = Position + time <= _player.PlaybackSession.NaturalDuration
                 ? Position + time
-                : Player.NaturalDuration.TimeSpan;
+                : _player.PlaybackSession.NaturalDuration;
 
             SetPosition(newPosition);
         }
@@ -265,7 +253,7 @@ namespace SimpleLyricsEditor.Control
         
         private async void MusicFileChanged(object sender, FileChangeEventArgs e)
         {
-            await SetSource(await Music.Parse(e.File));
+            SetSource(await Music.Parse(e.File));
 
             PlayOrPause_ToggleButton.Visibility = Visibility.Visible;
             OpenMusicFile_Button.Visibility = Visibility.Collapsed;
@@ -313,62 +301,114 @@ namespace SimpleLyricsEditor.Control
                 FastForward_Button.Content = '\uE101';
             }
         }
-
-        private void Player_CurrentStateChanged(object sender, RoutedEventArgs e)
+        
+        private async void Player_MediaOpened(MediaPlayer sender, object args)
         {
-            switch (Player.CurrentState)
+            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
-                case MediaElementState.Closed:
-                    break;
-                case MediaElementState.Opening:
-                    break;
-                case MediaElementState.Buffering:
-                    break;
-                case MediaElementState.Playing:
-                    IsPlay = true;
-                    break;
-                case MediaElementState.Paused:
-                case MediaElementState.Stopped:
-                    IsPlay = false;
-                    break;
-            }
+                Source = _musicTemp;
+                SourceChanged?.Invoke(this, new MusicChangeEventArgs(Source));
+                DisplayPositionControlButtons();
+                Position_Slider.Maximum = sender.PlaybackSession.NaturalDuration.TotalMinutes;
+                Play();
+            });
         }
 
-        private void Player_MediaOpened(object sender, RoutedEventArgs e)
+        private async void Player_MediaEnded(MediaPlayer sender, object args)
         {
-            Source = _musicTemp;
-            SourceChanged?.Invoke(this, new MusicChangeEventArgs(Source));
-            DisplayPositionControlButtons();
-            Play();
-        }
-
-        private void Player_MediaEnded(object sender, RoutedEventArgs e)
-        {
-            Pause();
-            SetPosition(TimeSpan.Zero);
-        }
-
-        private void Player_MediaFailed(object sender, ExceptionRoutedEventArgs e)
-        {
-            if (Source.Equals(Music.Empty))
+            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
-                OpenMusicFile_Button.Visibility = Visibility.Visible;
-                PlayOrPause_ToggleButton.Visibility = Visibility.Collapsed;
-            }
-            throw new Exception(e.ErrorMessage);
+                Pause();
+                SetPosition(TimeSpan.Zero);
+            });
+        }
+
+        private async void Player_MediaFailed(MediaPlayer sender, MediaPlayerFailedEventArgs args)
+        {
+            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+            {
+                if (Source.Equals(Music.Empty))
+                {
+                    OpenMusicFile_Button.Visibility = Visibility.Visible;
+                    PlayOrPause_ToggleButton.Visibility = Visibility.Collapsed;
+                }
+            });
+
+            throw new Exception(args.ErrorMessage);
+        }
+
+        private async void Player_PlaybackSession_PlaybackStateChanged(MediaPlaybackSession sender, object args)
+        {
+            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+            {
+                switch (sender.PlaybackState)
+                {
+                    case MediaPlaybackState.None:
+                        break;
+                    case MediaPlaybackState.Opening:
+                        break;
+                    case MediaPlaybackState.Buffering:
+                    case MediaPlaybackState.Playing:
+                        IsPlay = true;
+                        Position_Storyboard.Begin();
+                        break;
+                    case MediaPlaybackState.Paused:
+                        IsPlay = false;
+                        Position_Storyboard.Stop();
+                        break;
+                }
+            });
+        }
+
+        private async void Player_PlaybackSession_PositionChanged(MediaPlaybackSession sender, object args)
+        {
+            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal,
+                () =>
+                {
+                    if (!_isPressSlider)
+                        PositionChanged?.Invoke(this, new PositionChangeEventArgs(false, sender.Position));
+                });
         }
 
         private void Position_Slider_PointerPressed(object sender, PointerRoutedEventArgs e)
         {
-            _refreshTimeTimer?.Cancel();
+            Position_Storyboard.Stop();
+            _isPressSlider = true;
         }
 
         private void Position_Slider_PointerReleased(object sender, PointerRoutedEventArgs e)
         {
             if (sender is Slider slider)
                 SetPosition(TimeSpan.FromMinutes(slider.Value));
+
+            Position_Storyboard.Begin();
+            _isPressSlider = false;
+        }
+
+        private void Position_Storyboard_Completed(object sender, object e)
+        {
+            Position_Slider.Value = _player.PlaybackSession.Position.TotalMinutes;
+
             if (IsPlay)
-                StartRefreshTimeTimer();
+                Position_Storyboard.Begin();
+        }
+
+        private void PlaybackRate_Slider_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
+        {
+            if (!Source.Equals(Music.Empty))
+                _player.PlaybackSession.PlaybackRate = e.NewValue / 100;
+        }
+
+        private void Volume_Slider_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
+        {
+            if (!Source.Equals(Music.Empty))
+                _player.Volume = e.NewValue / 100;
+        }
+
+        private void Balance_Slider_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
+        {
+            if (!Source.Equals(Music.Empty))
+                _player.AudioBalance = e.NewValue / 100;
         }
     }
 }

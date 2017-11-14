@@ -292,11 +292,15 @@
                 <DoubleAnimation Storyboard.TargetName="RewindButton_Transform" Storyboard.TargetProperty="TranslateX" From="0" To="44" Duration="0:0:0.3"/>
                 <DoubleAnimation Storyboard.TargetName="FastForwardButton_Transform" Storyboard.TargetProperty="TranslateX" From="0" To="-44" Duration="0:0:0.3"/>
             </Storyboard>
+
+            <Storyboard x:Name="Position_Storyboard" Completed="Position_Storyboard_Completed">
+                <DoubleAnimation By="1" Duration="0:1:0" EnableDependentAnimation="True" Storyboard.TargetProperty="Value" Storyboard.TargetName="Position_Slider"/>
+            </Storyboard>
         </ResourceDictionary>
     </UserControl.Resources>
 
     <StackPanel Padding="{x:Bind Padding, Mode=OneWay}" Background="{x:Bind Background, Mode=OneWay}">
-        <MediaElement x:Name="Player" AutoPlay="False" AudioCategory="Media" Volume="{x:Bind _settings.Volume, Mode=OneWay}" Balance="{x:Bind _settings.Balance, Mode=OneWay}" DefaultPlaybackRate="{x:Bind _settings.PlaybackRate, Mode=OneWay}" PlaybackRate="{x:Bind _settings.PlaybackRate, Mode=OneWay}" CurrentStateChanged="Player_CurrentStateChanged" MediaOpened="Player_MediaOpened" MediaEnded="Player_MediaEnded" MediaFailed="Player_MediaFailed"/>
+        
         <TextBlock Text="{x:Bind Source.File.Path, Mode=OneWay}" TextAlignment="Center"/>
         <Grid x:Name="Progress_Grid">
             <Grid.ColumnDefinitions>
@@ -305,9 +309,9 @@
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
             
-            <TextBlock Text="{x:Bind Time, Mode=OneWay, Converter={StaticResource TimeSpanToLyricTimeString}}" VerticalAlignment="Center"/>
-            <Slider x:Name="Position_Slider" Grid.Column="1" Value="{x:Bind Time, Mode=OneWay, Converter={StaticResource TimeSpanToDouble}}" Maximum="{x:Bind Player.NaturalDuration.TimeSpan, Mode=OneWay, Converter={StaticResource TimeSpanToDouble}}" Style="{StaticResource MediaSliderStyle}" Margin="5,0" ThumbToolTipValueConverter="{StaticResource DoubleToLyricTimeString}" SmallChange="0.01" LargeChange="0.1" StepFrequency="0.01"/>
-            <TextBlock Grid.Column="2" Text="{x:Bind Player.NaturalDuration.TimeSpan, Mode=OneWay, Converter={StaticResource TimeSpanToLyricTimeString}}" VerticalAlignment="Center"/>
+            <TextBlock Text="{x:Bind Position_Slider.Value, Mode=OneWay, Converter={StaticResource DoubleToLyricTimeString}}" VerticalAlignment="Center"/>
+            <Slider x:Name="Position_Slider" Grid.Column="1" Maximum="0" Style="{StaticResource MediaSliderStyle}" Margin="5,0" ThumbToolTipValueConverter="{StaticResource DoubleToLyricTimeString}" SmallChange="0.01" LargeChange="0.1" StepFrequency="0.01"/>
+            <TextBlock Grid.Column="2" Text="{x:Bind Position_Slider.Maximum, Mode=OneWay, Converter={StaticResource DoubleToLyricTimeString}}" VerticalAlignment="Center"/>
             
         </Grid>
         
@@ -315,7 +319,7 @@
             <Button Content="&#xE805;" Style="{StaticResource ControllerButtonStyle}" RelativePanel.AlignLeftWithPanel="True">
                 <Button.Flyout>
                     <Flyout Placement="Bottom">
-                        <Slider x:Uid="/AudioPlayer/PlaybackRate_Slider" Width="200" Value="{x:Bind _settings.PlaybackRate, Mode=TwoWay, Converter={StaticResource PercentageToDouble}}" Maximum="200"/>
+                        <Slider x:Name="PlaybackRate_Slider" x:Uid="/AudioPlayer/PlaybackRate_Slider" Width="200" Value="{x:Bind _settings.PlaybackRate, Mode=TwoWay, Converter={StaticResource PercentageToDouble}}" Maximum="200" ValueChanged="PlaybackRate_Slider_ValueChanged"/>
                     </Flyout>
                 </Button.Flyout>
             </Button>
@@ -346,8 +350,8 @@
                 <Button.Flyout>
                     <Flyout Placement="Bottom">
                         <StackPanel>
-                            <Slider x:Uid="/AudioPlayer/Volume_Slider" Width="200" Value="{x:Bind _settings.Volume, Mode=TwoWay, Converter={StaticResource PercentageToDouble}}"/>
-                            <Slider x:Uid="/AudioPlayer/Balance_Slider" Width="200" Minimum="-100" Value="{x:Bind _settings.Balance, Mode=TwoWay, Converter={StaticResource PercentageToDouble}}" Maximum="100"/>
+                            <Slider x:Name="Volume_Slider" x:Uid="/AudioPlayer/Volume_Slider" Width="200" Value="{x:Bind _settings.Volume, Mode=TwoWay, Converter={StaticResource PercentageToDouble}}" ValueChanged="Volume_Slider_ValueChanged"/>
+                            <Slider x:Name="Balance_Slider" x:Uid="/AudioPlayer/Balance_Slider" Width="200" Minimum="-100" Value="{x:Bind _settings.Balance, Mode=TwoWay, Converter={StaticResource PercentageToDouble}}" Maximum="100" ValueChanged="Balance_Slider_ValueChanged"/>
                         </StackPanel>
                     </Flyout>
                 </Button.Flyout>
