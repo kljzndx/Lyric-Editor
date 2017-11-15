@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Windows.Foundation;
+using Windows.Media;
 using Windows.Media.Core;
 using Windows.Media.Playback;
 using Windows.System;
@@ -46,8 +47,10 @@ namespace SimpleLyricsEditor.Control
 
         private Music _musicTemp;
         private Settings _settings = Settings.Current;
-        private MediaPlayer _player;
+        private readonly MediaPlayer _player;
+        private readonly SystemMediaTransportControls _smtc;
         private bool _isPressSlider;
+        private readonly object _positionLocker=new object();
 
         public AudioPlayer()
         {
@@ -57,15 +60,17 @@ namespace SimpleLyricsEditor.Control
             {
                 AudioCategory = MediaPlayerAudioCategory.Media,
                 AudioBalance = _settings.Balance,
-                Volume = _settings.Volume,
+                Volume = _settings.Volume
             };
-            _player.PlaybackSession.PlaybackRate = _settings.PlaybackRate;
+            _smtc = _player.SystemMediaTransportControls;
+            _smtc.ButtonPressed += SMTC_ButtonPressed;
+            _player.CommandManager.IsEnabled = false;
             _player.MediaOpened += Player_MediaOpened;
             _player.MediaFailed += Player_MediaFailed;
             _player.MediaEnded += Player_MediaEnded;
             _player.PlaybackSession.PlaybackStateChanged += Player_PlaybackSession_PlaybackStateChanged;
             _player.PlaybackSession.PositionChanged += Player_PlaybackSession_PositionChanged;
-
+            
             Rewind_Button.Opacity = 0;
             FastForward_Button.Opacity = 0;
             RewindButton_Transform.TranslateX = 44;
@@ -137,14 +142,29 @@ namespace SimpleLyricsEditor.Control
             _player.Source = MediaSource.CreateFromStorageFile(source.File);
         }
 
+        private void EnableSmtcButton()
+        {
+            _smtc.IsEnabled = true;
+            _smtc.IsPlayEnabled = true;
+            _smtc.IsPauseEnabled = true;
+            _smtc.IsStopEnabled = true;
+            _smtc.IsNextEnabled = true;
+            _smtc.IsFastForwardEnabled = true;
+            _smtc.IsPreviousEnabled = true;
+            _smtc.IsRewindEnabled = true;
+        }
+
         public void SetPosition(TimeSpan newPosition)
         {
-            _player.PlaybackSession.Position = newPosition;
-            Position_Storyboard.Stop();
-            Position_Slider.Value = newPosition.TotalMinutes;
-            if (IsPlay)
-                Position_Storyboard.Begin();
-            PositionChanged?.Invoke(this, new PositionChangeEventArgs(true, newPosition));
+            lock (_positionLocker)
+            {
+                _player.PlaybackSession.Position = newPosition;
+                Position_Storyboard.Stop();
+                Position_Slider.Value = newPosition.TotalMinutes;
+                if (IsPlay)
+                    Position_Storyboard.Begin();
+                PositionChanged?.Invoke(this, new PositionChangeEventArgs(true, newPosition));
+            }
         }
 
         public async Task<bool> PickMusicFile()
@@ -158,6 +178,13 @@ namespace SimpleLyricsEditor.Control
             }
             else
                 return false;
+        }
+
+        public void ChangeSmtcAudioTitleInfo(string title)
+        {
+            var updater = _smtc.DisplayUpdater;
+            updater.MusicProperties.Title = title;
+            updater.Update();
         }
         
         public void DisplayPositionControlButtons()
@@ -175,15 +202,11 @@ namespace SimpleLyricsEditor.Control
         public void Play()
         {
             _player.Play();
-
-            Playing?.Invoke(this, EventArgs.Empty);
         }
 
         public void Pause()
         {
             _player.Pause();
-
-            Paused?.Invoke(this, EventArgs.Empty);
         }
 
         public void Rewind(TimeSpan time)
@@ -304,14 +327,25 @@ namespace SimpleLyricsEditor.Control
         
         private async void Player_MediaOpened(MediaPlayer sender, object args)
         {
-            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-            {
-                Source = _musicTemp;
-                SourceChanged?.Invoke(this, new MusicChangeEventArgs(Source));
-                DisplayPositionControlButtons();
-                Position_Slider.Maximum = sender.PlaybackSession.NaturalDuration.TotalMinutes;
-                Play();
-            });
+            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal,
+                async () =>
+                {
+                    Source = _musicTemp;
+                    _player.PlaybackSession.PlaybackRate = _settings.PlaybackRate;
+
+                    EnableSmtcButton();
+
+                    SourceChanged?.Invoke(this, new MusicChangeEventArgs(Source));
+                    DisplayPositionControlButtons();
+                    Position_Slider.Maximum = sender.PlaybackSession.NaturalDuration.TotalMinutes;
+
+                    var updater = _smtc.DisplayUpdater;
+                    await updater.CopyFromFileAsync(MediaPlaybackType.Music, Source.File);
+                    updater.Update();
+
+                    Play();
+                }
+            );
         }
 
         private async void Player_MediaEnded(MediaPlayer sender, object args)
@@ -344,17 +378,24 @@ namespace SimpleLyricsEditor.Control
                 switch (sender.PlaybackState)
                 {
                     case MediaPlaybackState.None:
+                        _smtc.PlaybackStatus = MediaPlaybackStatus.Closed;
                         break;
                     case MediaPlaybackState.Opening:
-                        break;
                     case MediaPlaybackState.Buffering:
+                        _smtc.PlaybackStatus = MediaPlaybackStatus.Changing;
+                        break;
                     case MediaPlaybackState.Playing:
+                        _smtc.PlaybackStatus = MediaPlaybackStatus.Playing;
                         IsPlay = true;
                         Position_Storyboard.Begin();
+                        Playing?.Invoke(this, EventArgs.Empty);
                         break;
                     case MediaPlaybackState.Paused:
+                        _smtc.PlaybackStatus = MediaPlaybackStatus.Paused;
                         IsPlay = false;
                         Position_Storyboard.Stop();
+                        SetPosition(sender.Position);
+                        Paused?.Invoke(this, EventArgs.Empty);
                         break;
                 }
             });
@@ -368,6 +409,38 @@ namespace SimpleLyricsEditor.Control
                     if (!_isPressSlider)
                         PositionChanged?.Invoke(this, new PositionChangeEventArgs(false, sender.Position));
                 });
+        }
+
+        private async void SMTC_ButtonPressed(SystemMediaTransportControls sender, SystemMediaTransportControlsButtonPressedEventArgs args)
+        {
+            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+            {
+                switch (args.Button)
+                {
+                    case SystemMediaTransportControlsButton.Play:
+                        Play();
+                        break;
+                    case SystemMediaTransportControlsButton.Pause:
+                        Pause();
+                        break;
+                    case SystemMediaTransportControlsButton.Stop:
+                        Pause();
+                        SetPosition(TimeSpan.Zero);
+                        break;
+                    case SystemMediaTransportControlsButton.Next:
+                    case SystemMediaTransportControlsButton.FastForward:
+                        FastForward(FastForwardTimeOnPressedShift);
+                        break;
+                    case SystemMediaTransportControlsButton.Previous:
+                    case SystemMediaTransportControlsButton.Rewind:
+                        Rewind(RewindTimeOnPressedShift);
+                        break;
+                    case SystemMediaTransportControlsButton.ChannelUp:
+                        break;
+                    case SystemMediaTransportControlsButton.ChannelDown:
+                        break;
+                }
+            });
         }
 
         private void Position_Slider_PointerPressed(object sender, PointerRoutedEventArgs e)
@@ -387,10 +460,7 @@ namespace SimpleLyricsEditor.Control
 
         private void Position_Storyboard_Completed(object sender, object e)
         {
-            Position_Slider.Value = _player.PlaybackSession.Position.TotalMinutes;
-
-            if (IsPlay)
-                Position_Storyboard.Begin();
+            SetPosition(_player.PlaybackSession.Position);
         }
 
         private void PlaybackRate_Slider_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
