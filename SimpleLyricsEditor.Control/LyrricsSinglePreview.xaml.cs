@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Windows.Foundation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using SimpleLyricsEditor.DAL;
+using SimpleLyricsEditor.Events;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
@@ -12,7 +14,7 @@ namespace SimpleLyricsEditor.Control
     public sealed partial class LyrricsSinglePreview : UserControl
     {
         private const long TicksPerThreeSecond = TimeSpan.TicksPerSecond * 3;
-        private static readonly Lyric Space = new Lyric(TimeSpan.Zero, string.Empty);
+        private static readonly Lyric Space = new Lyric(TimeSpan.Zero, String.Empty);
 
         public static readonly DependencyProperty LyricsProperty = DependencyProperty.Register(
             nameof(Lyrics), typeof(IList<Lyric>), typeof(LyrricsSinglePreview), new PropertyMetadata(null));
@@ -50,8 +52,12 @@ namespace SimpleLyricsEditor.Control
                     FadeIn.Begin();
                 if (isAny && String.IsNullOrEmpty(value.Content))
                     FadeOut.Begin();
+
+                Refreshed?.Invoke(this, new LyricsPreviewRefreshEventArgs(value.Content));
             }
         }
+
+        public event TypedEventHandler<LyrricsSinglePreview, LyricsPreviewRefreshEventArgs> Refreshed;
 
         public void RefreshLyric(TimeSpan position)
         {
