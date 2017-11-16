@@ -4,6 +4,8 @@ using Windows.Foundation;
 using Windows.Media;
 using Windows.Media.Core;
 using Windows.Media.Playback;
+using Windows.Storage.FileProperties;
+using Windows.Storage.Streams;
 using Windows.System;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
@@ -50,7 +52,8 @@ namespace SimpleLyricsEditor.Control
         private readonly MediaPlayer _player;
         private readonly SystemMediaTransportControls _smtc;
         private bool _isPressSlider;
-        private readonly object _positionLocker=new object();
+        private readonly object _positionLocker = new object();
+        private RandomAccessStreamReference _thumbnailStream;
 
         public AudioPlayer()
         {
@@ -180,10 +183,12 @@ namespace SimpleLyricsEditor.Control
                 return false;
         }
 
-        public void ChangeSmtcAudioTitleInfo(string title)
+        public void SetSmtcAudioInfo(string title = "", string artist = "")
         {
             var updater = _smtc.DisplayUpdater;
             updater.MusicProperties.Title = title;
+            updater.MusicProperties.Artist = artist;
+            updater.Thumbnail = _thumbnailStream;
             updater.Update();
         }
         
@@ -332,6 +337,8 @@ namespace SimpleLyricsEditor.Control
                 {
                     Source = _musicTemp;
                     _player.PlaybackSession.PlaybackRate = _settings.PlaybackRate;
+                    _thumbnailStream = RandomAccessStreamReference.CreateFromStream(
+                        (await Source.File.GetScaledImageAsThumbnailAsync(ThumbnailMode.MusicView)).CloneStream());
 
                     EnableSmtcButton();
 
@@ -453,8 +460,6 @@ namespace SimpleLyricsEditor.Control
         {
             if (sender is Slider slider)
                 SetPosition(TimeSpan.FromMinutes(slider.Value));
-
-            Position_Storyboard.Begin();
             _isPressSlider = false;
         }
 
