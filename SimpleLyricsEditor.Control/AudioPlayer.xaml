@@ -294,7 +294,7 @@
             </Storyboard>
 
             <Storyboard x:Name="Position_Storyboard" Completed="Position_Storyboard_Completed">
-                <DoubleAnimation By="1" Duration="0:1:0" EnableDependentAnimation="True" Storyboard.TargetProperty="Value" Storyboard.TargetName="Position_Slider"/>
+                <DoubleAnimation By="0.1" Duration="0:0:6" EnableDependentAnimation="True" Storyboard.TargetProperty="Value" Storyboard.TargetName="Position_Slider"/>
             </Storyboard>
         </ResourceDictionary>
     </UserControl.Resources>
