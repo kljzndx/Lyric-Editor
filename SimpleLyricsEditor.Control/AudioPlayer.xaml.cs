@@ -16,6 +16,7 @@ using SimpleLyricsEditor.BLL.Pickers;
 using SimpleLyricsEditor.Core;
 using SimpleLyricsEditor.DAL;
 using SimpleLyricsEditor.Events;
+using Windows.UI.Xaml.Media.Animation;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
@@ -453,6 +454,9 @@ namespace SimpleLyricsEditor.Control
         private void Position_Storyboard_Completed(object sender, object e)
         {
             RefreshPosition();
+
+            if (IsPlay && sender is Storyboard storyboard)
+                storyboard.Begin();
         }
 
         private void PlaybackRate_Slider_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
