@@ -215,6 +215,9 @@ namespace SimpleLyricsEditor.Control
 
         public void SetSmtcAudioInfo(string title = "", string artist = "")
         {
+            if (Source.Equals(Music.Empty))
+                return;
+
             var updater = _smtc.DisplayUpdater;
             updater.MusicProperties.Title = title;
             updater.MusicProperties.Artist = artist;
