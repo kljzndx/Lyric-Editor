@@ -59,6 +59,7 @@ namespace SimpleLyricsEditor.Views
         private void AddLyrics()
         {
             _viewModel.Add(Lyrics_ListView.SelectedIndex, Player.Position, LyricsContent_TextBox.Text, _isPressShift);
+            LyricsContent_TextBox.Text = String.Empty;
         }
 
         private void ModifyLyrics()
