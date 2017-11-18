@@ -65,6 +65,11 @@ namespace SimpleLyricsEditor.Views
         private void ModifyLyrics()
         {
             _viewModel.Modify(LyricsContent_TextBox.Text);
+
+            Lyrics_ListView.SelectedIndex =
+                Lyrics_ListView.SelectedIndex < Lyrics_ListView.Items.Count - 1
+                ? Lyrics_ListView.SelectedIndex + 1
+                : -1;
         }
 
         private void GoToLyricTime(Lyric lyric)
