@@ -180,6 +180,7 @@
   </data>
   <data name="LyricsContent_TextBox.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
     <value>按 I / Esc 键可以 进入/退出 输入状态
+没有内容时按下 Enter 键可以退出输入状态
 按 Ctrl + Enter 可以快速提交</value>
   </data>
   <data name="ModifyLyrics_ComboBoxItem.Content" xml:space="preserve">
