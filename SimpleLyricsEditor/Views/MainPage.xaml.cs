@@ -319,13 +319,15 @@ namespace SimpleLyricsEditor.Views
                 {
                     _inputBoxSubmitAction.Invoke();
                 }
-                else
+                else if (!String.IsNullOrWhiteSpace(tb.Text))
                 {
                     int selectIndex = tb.SelectionStart;
 
                     tb.Text = tb.Text.Remove(selectIndex, tb.SelectionLength).Insert(selectIndex, ' ' + Environment.NewLine);
                     tb.SelectionStart = selectIndex + 2;
                 }
+                else
+                    this.Focus(FocusState.Pointer);
             }
         }
 
