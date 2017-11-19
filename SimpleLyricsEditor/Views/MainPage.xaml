@@ -108,7 +108,13 @@
             </Grid>
 
             <Grid Grid.Row="1" Margin="0,5">
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                
+                <StackPanel Orientation="Horizontal">
                     <ToggleButton x:Name="MultilineEditMode_ToggleButton" x:Uid="/LyricsEdit/MultilineEditMode_ToggleButton" Content="&#xE133;" IsChecked="{x:Bind _settings.MultilineEditModeEnabled, Mode=TwoWay, Converter={StaticResource BoolNullableToBool}}" Style="{StaticResource ControllerButtonStyle}" Checked="MultilineEditMode_ToggleButton_Checked" Unchecked="MultilineEditMode_ToggleButton_Unchecked"/>
 
                     <StackPanel x:Name="ButtonsInMultilineEditMode_StackPanel" Orientation="Horizontal" HorizontalAlignment="Left">
@@ -129,7 +135,7 @@
                                     </Path.Data>
                                 </Path>
                             </Button.Content>
-                        
+
                             <Button.Flyout>
                                 <MenuFlyout>
                                     <MenuFlyoutItem x:Name="Select_Reverse_MenuFlyoutItem" x:Uid="/LyricsEdit/Select_Reverse_MenuFlyoutItem" Click="Select_Reverse_MenuFlyoutItem_Click"/>
@@ -139,12 +145,12 @@
                                 </MenuFlyout>
                             </Button.Flyout>
                         </Button>
-                    
+
                         <Button x:Name="CopyLyrics_Button" x:Uid="/LyricsEdit/CopyLyrics_Button" Content="&#xE16F;" Style="{StaticResource ControllerButtonStyle}" Click="CopyLyrics_Button_Click"/>
                     </StackPanel>
                 </StackPanel>
 
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <StackPanel Grid.Column="2" Orientation="Horizontal">
                     <Button x:Name="Undo_Button" x:Uid="/LyricsEdit/Undo_Button" IsEnabled="{x:Bind _viewModel.CanUndo, Mode=OneWay}" Style="{StaticResource ControllerButtonStyle}" Click="Undo_Button_Click">
                         <Button.Content>
                             <SymbolIcon Width="20" Height="20" Symbol="Undo"/>
