@@ -458,10 +458,12 @@ namespace SimpleLyricsEditor.Control
 
         private void Position_Storyboard_Completed(object sender, object e)
         {
+            Position_Storyboard.Stop();
+
             RefreshPosition();
 
-            if (IsPlay && sender is Storyboard storyboard)
-                storyboard.Begin();
+            if (IsPlay)
+                Position_Storyboard.Begin();
         }
 
         private void PlaybackRate_Slider_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
