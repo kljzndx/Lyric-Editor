@@ -156,6 +156,7 @@
     <Content Include="Data\UpdateLogs\zh-CN\v3.5.16.md" />
     <Content Include="Data\UpdateLogs\zh-CN\v3.8.0.md" />
     <Content Include="Data\UpdateLogs\zh-CN\v3.8.4.md" />
+    <Content Include="Data\UpdateLogs\zh-CN\v3.8.7.md" />
     <None Include="SimpleLyricsEditor_StoreKey.pfx" />
     <None Include="SimpleLyricsEditor_TemporaryKey.pfx" />
     <PRIResource Include="Strings\en-US\GetReviewsDialog.resw" />
