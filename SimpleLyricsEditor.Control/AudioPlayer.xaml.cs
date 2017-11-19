@@ -167,6 +167,7 @@ namespace SimpleLyricsEditor.Control
         {
             var currentPositon = _player.PlaybackSession.Position;
             Position_Slider.Value = currentPositon.TotalMinutes;
+            SetSmtcPosition(currentPositon);
 
             PositionChanged?.Invoke(this, new PositionChangeEventArgs(false, currentPositon));
         }
