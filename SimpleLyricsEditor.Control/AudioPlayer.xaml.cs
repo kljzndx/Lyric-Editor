@@ -357,9 +357,11 @@ namespace SimpleLyricsEditor.Control
                     OpenMusicFile_Button.Visibility = Visibility.Visible;
                     PlayOrPause_ToggleButton.Visibility = Visibility.Collapsed;
                 }
-            });
+                else
+                    SetSource(Source);
 
-            throw new Exception(args.ErrorMessage);
+                throw new Exception(args.ErrorMessage);
+            });
         }
 
         private async void Player_PlaybackSession_PlaybackStateChanged(MediaPlaybackSession sender, object args)
