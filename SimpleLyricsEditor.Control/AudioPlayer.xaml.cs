@@ -177,12 +177,8 @@ namespace SimpleLyricsEditor.Control
             lock (_positionLocker)
             {
                 _player.PlaybackSession.Position = newPosition;
-                SetSmtcPosition(newPosition);
-
-                Position_Storyboard.Stop();
                 Position_Slider.Value = newPosition.TotalMinutes;
-                if (IsPlay)
-                    Position_Storyboard.Begin();
+                SetSmtcPosition(newPosition);
 
                 PositionChanged?.Invoke(this, new PositionChangeEventArgs(true, newPosition));
             }
@@ -381,14 +377,12 @@ namespace SimpleLyricsEditor.Control
                     case MediaPlaybackState.Playing:
                         _smtc.PlaybackStatus = MediaPlaybackStatus.Playing;
                         IsPlay = true;
-                        Position_Storyboard.Begin();
                         Playing?.Invoke(this, EventArgs.Empty);
                         break;
                     case MediaPlaybackState.Paused:
                         _smtc.PlaybackStatus = MediaPlaybackStatus.Paused;
                         IsPlay = false;
-                        Position_Storyboard.Stop();
-                        RefreshPosition();
+                        SetPosition(sender.Position);
                         Paused?.Invoke(this, EventArgs.Empty);
                         break;
                 }
@@ -401,7 +395,7 @@ namespace SimpleLyricsEditor.Control
                 () =>
                 {
                     if (!_isPressSlider)
-                        PositionChanged?.Invoke(this, new PositionChangeEventArgs(false, sender.Position));
+                        RefreshPosition();
                 });
         }
 
@@ -446,7 +440,6 @@ namespace SimpleLyricsEditor.Control
 
         private void Position_Slider_PointerPressed(object sender, PointerRoutedEventArgs e)
         {
-            Position_Storyboard.Stop();
             _isPressSlider = true;
         }
 
@@ -456,17 +449,7 @@ namespace SimpleLyricsEditor.Control
                 SetPosition(TimeSpan.FromMinutes(slider.Value));
             _isPressSlider = false;
         }
-
-        private void Position_Storyboard_Completed(object sender, object e)
-        {
-            Position_Storyboard.Stop();
-
-            RefreshPosition();
-
-            if (IsPlay)
-                Position_Storyboard.Begin();
-        }
-
+        
         private void PlaybackRate_Slider_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
         {
             if (!Source.Equals(Music.Empty))
