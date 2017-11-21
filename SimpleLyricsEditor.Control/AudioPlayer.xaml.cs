@@ -165,11 +165,14 @@ namespace SimpleLyricsEditor.Control
 
         private void RefreshPosition()
         {
-            var currentPositon = _player.PlaybackSession.Position;
-            Position_Slider.Value = currentPositon.TotalMinutes;
-            SetSmtcPosition(currentPositon);
+            lock (_positionLocker)
+            {
+                var currentPositon = _player.PlaybackSession.Position;
+                Position_Slider.Value = currentPositon.TotalMinutes;
+                SetSmtcPosition(currentPositon);
 
-            PositionChanged?.Invoke(this, new PositionChangeEventArgs(false, currentPositon));
+                PositionChanged?.Invoke(this, new PositionChangeEventArgs(false, currentPositon));
+            }
         }
 
         public void SetPosition(TimeSpan newPosition)
