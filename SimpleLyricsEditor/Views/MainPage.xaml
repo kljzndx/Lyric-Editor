@@ -206,7 +206,7 @@
         </Grid>
         <Grid Grid.Row="2" Tapped="LyricsPreview_Grid_Tapped">
             <Rectangle Fill="{ThemeResource SystemControlBackgroundAccentBrush}" Opacity="{x:Bind _settings.PreviewBackgroundOpacity, Mode=OneWay}"/>
-            <ctol:LyrricsSinglePreview x:Name="SinglePreview" Lyrics="{x:Bind _viewModel.LyricItems}" FontSize="{x:Bind _settings.SinglePreviewFontSize, Mode=OneWay}" Refreshed="SinglePreview_Refreshed"/>
+            <ctol:LyrricsSinglePreview x:Name="SinglePreview" Lyrics="{x:Bind _viewModel.LyricItems}" FontSize="{x:Bind _settings.SinglePreviewFontSize, Mode=OneWay}"/>
         </Grid>
 
     </Grid>

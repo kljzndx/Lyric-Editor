@@ -509,20 +509,5 @@ namespace SimpleLyricsEditor.Views
         {
             Lyrics_ListView.SelectedItem = null;
         }
-
-        private void SinglePreview_Refreshed(LyrricsSinglePreview sender, LyricsPreviewRefreshEventArgs args)
-        {
-            try
-            {
-                if (String.IsNullOrWhiteSpace(args.CurrentLyric))
-                    Player.SetSmtcAudioInfo(Player.Source.Name, Player.Source.Artist);
-                else
-                    Player.SetSmtcAudioInfo(artist: args.CurrentLyric);
-            }
-            catch (Exception)
-            {
-                
-            }
-        }
     }
 }
