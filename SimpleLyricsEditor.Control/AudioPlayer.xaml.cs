@@ -189,16 +189,19 @@ namespace SimpleLyricsEditor.Control
 
         private void SetSmtcPosition(TimeSpan position)
         {
-            var timeLine = new SystemMediaTransportControlsTimelineProperties
+            lock (_smtc)
             {
-                StartTime = TimeSpan.Zero,
-                MinSeekTime = TimeSpan.Zero,
-                Position = position,
-                MaxSeekTime = _player.PlaybackSession.NaturalDuration,
-                EndTime = _player.PlaybackSession.NaturalDuration
-            };
+                var timeLine = new SystemMediaTransportControlsTimelineProperties
+                {
+                    StartTime = TimeSpan.Zero,
+                    MinSeekTime = TimeSpan.Zero,
+                    Position = position,
+                    MaxSeekTime = _player.PlaybackSession.NaturalDuration,
+                    EndTime = _player.PlaybackSession.NaturalDuration
+                };
 
-            _smtc.UpdateTimelineProperties(timeLine);
+                _smtc.UpdateTimelineProperties(timeLine);
+            }
         }
 
         public async Task<bool> PickMusicFile()
