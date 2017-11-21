@@ -209,19 +209,7 @@ namespace SimpleLyricsEditor.Control
             }
             return false;
         }
-
-        public void SetSmtcAudioInfo(string title = "", string artist = "")
-        {
-            if (Source.Equals(Music.Empty))
-                return;
-
-            var updater = _smtc.DisplayUpdater;
-            updater.MusicProperties.Title = title;
-            updater.MusicProperties.Artist = artist;
-            updater.Thumbnail = _thumbnailStream;
-            updater.Update();
-        }
-
+        
         public void DisplayPositionControlButtons()
         {
             if (RewindButton_Transform.TranslateX.Equals(44))
