@@ -6,6 +6,8 @@ namespace SimpleLyricsEditor.DAL
 {
     public class Lyric : ObservableObject, IComparable<Lyric>
     {
+        public static readonly Lyric Empty = new Lyric(TimeSpan.Zero, String.Empty);
+
         private string _content;
         private TimeSpan _time;
         private bool _isSelected;
