@@ -190,4 +190,8 @@
     <value>提交
 快捷键： 在输入框中按 Ctrl + Enter</value>
   </data>
+  <data name="LyricsFileInfo_Button.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>歌词文件信息
+快捷键： Ctrl + I</value>
+  </data>
 </root>

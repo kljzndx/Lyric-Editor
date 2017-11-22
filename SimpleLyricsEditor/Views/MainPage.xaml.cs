@@ -126,7 +126,7 @@ namespace SimpleLyricsEditor.Views
             }
         }
 
-        private void WindowKeyDown(object sender, GlobalKeyEventArgs e)
+        private async void WindowKeyDown(object sender, GlobalKeyEventArgs e)
         {
             _isPressCtrl = e.IsPressCtrl;
             _isPressShift = e.IsPressShift;
@@ -213,6 +213,10 @@ namespace SimpleLyricsEditor.Views
             {
                 case VirtualKey.Escape:
                     this.Focus(FocusState.Pointer);
+                    break;
+                case VirtualKey.I:
+                    if (_isPressCtrl)
+                        await LyricsFileInfo_ContentDialog.ShowAsync();
                     break;
             }
         }
@@ -415,9 +419,9 @@ namespace SimpleLyricsEditor.Views
                 _viewModel.Copy(Player.Position);
         }
 
-        private void LyricsSort_Button_Click(object sender, RoutedEventArgs e)
+        private async void LyricsFileInfo_Button_Click(object sender, RoutedEventArgs e)
         {
-            _viewModel.Sort(_viewModel.LyricItems);
+            await LyricsFileInfo_ContentDialog.ShowAsync();
         }
 
         private void Undo_Button_Click(object sender, RoutedEventArgs e)
@@ -428,6 +432,11 @@ namespace SimpleLyricsEditor.Views
         private void Redo_Button_Click(object sender, RoutedEventArgs e)
         {
             _viewModel.Redo(1);
+        }
+
+        private void LyricsSort_Button_Click(object sender, RoutedEventArgs e)
+        {
+            _viewModel.Sort(_viewModel.LyricItems);
         }
 
         #endregion
@@ -509,5 +518,19 @@ namespace SimpleLyricsEditor.Views
         {
             Lyrics_ListView.SelectedItem = null;
         }
+
+        #region Lyrics File Info Dialog
+        
+        private void LyricsFileInfo_ContentDialog_Opened(ContentDialog sender, ContentDialogOpenedEventArgs args)
+        {
+            App.IsInputing = true;
+        }
+
+        private void LyricsFileInfo_ContentDialog_Closed(ContentDialog sender, ContentDialogClosedEventArgs args)
+        {
+            App.IsInputing = false;
+        }
+
+        #endregion
     }
 }

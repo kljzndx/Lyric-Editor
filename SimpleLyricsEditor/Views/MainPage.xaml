@@ -150,6 +150,10 @@
                     </StackPanel>
                 </StackPanel>
 
+                <StackPanel Grid.Column="1" Orientation="Horizontal" Margin="10,0">
+                    <Button x:Name="LyricsFileInfo_Button" Content="&#xE1A1;" Style="{StaticResource ControllerButtonStyle}" Click="LyricsFileInfo_Button_Click"/>
+                </StackPanel>
+
                 <StackPanel Grid.Column="2" Orientation="Horizontal">
                     <Button x:Name="Undo_Button" x:Uid="/LyricsEdit/Undo_Button" IsEnabled="{x:Bind _viewModel.CanUndo, Mode=OneWay}" Style="{StaticResource ControllerButtonStyle}" Click="Undo_Button_Click">
                         <Button.Content>
@@ -208,6 +212,15 @@
             <Rectangle Fill="{ThemeResource SystemControlBackgroundAccentBrush}" Opacity="{x:Bind _settings.PreviewBackgroundOpacity, Mode=OneWay}"/>
             <ctol:LyrricsSinglePreview x:Name="SinglePreview" Lyrics="{x:Bind _viewModel.LyricItems}" FontSize="{x:Bind _settings.SinglePreviewFontSize, Mode=OneWay}"/>
         </Grid>
+
+        <ContentDialog x:Name="LyricsFileInfo_ContentDialog" x:Uid="/LyricsFileInfo/LyricsFileInfo_ContentDialog" Grid.Row="2" Opened="LyricsFileInfo_ContentDialog_Opened" Closed="LyricsFileInfo_ContentDialog_Closed">
+            <StackPanel>
+                <TextBox x:Uid="/LyricsFileInfo/Title_TextBox" Text="{x:Bind _viewModel.LyricsTags[0].TagValue, Mode=TwoWay}"/>
+                <TextBox x:Uid="/LyricsFileInfo/Artist_TextBox" Text="{x:Bind _viewModel.LyricsTags[1].TagValue, Mode=TwoWay}"/>
+                <TextBox x:Uid="/LyricsFileInfo/Album_TextBox" Text="{x:Bind _viewModel.LyricsTags[2].TagValue, Mode=TwoWay}"/>
+                <TextBox x:Uid="/LyricsFileInfo/Author_TextBox" Text="{x:Bind _viewModel.LyricsTags[3].TagValue, Mode=TwoWay}"/>
+            </StackPanel>
+        </ContentDialog>
 
     </Grid>
 </Page>
