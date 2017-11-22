@@ -282,6 +282,12 @@ namespace SimpleLyricsEditor.Views
                 BlurBackground.Source = args.Source.AlbumImage;
 
             SinglePreview.Reposition(Player.Position);
+
+            {
+                _viewModel.LyricsTags[0].TagValue = args.Source.Name;
+                _viewModel.LyricsTags[1].TagValue = args.Source.Artist;
+                _viewModel.LyricsTags[2].TagValue = args.Source.Album;
+            }
         }
 
         private void Player_PositionChanged(AudioPlayer sender, PositionChangeEventArgs args)
