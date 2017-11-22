@@ -46,6 +46,9 @@ namespace SimpleLyricsEditor.Control.Models
 
         public void RefreshLyric(TimeSpan position)
         {
+            if (NextIndex >= Lyrics.Count)
+                NextIndex = 0;
+
             if (CanPreview)
                 RefreshLyricCore(position);
         }

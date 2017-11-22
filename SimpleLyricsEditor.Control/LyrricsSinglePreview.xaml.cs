@@ -22,9 +22,6 @@ namespace SimpleLyricsEditor.Control
 
         protected override void RefreshLyricCore(TimeSpan position)
         {
-            if (NextIndex >= Lyrics.Count)
-                NextIndex = 0;
-
             var currentTime = position.Ticks;
             var nextLyric = Lyrics[NextIndex];
             var nextTime = nextLyric.Time.Ticks;
