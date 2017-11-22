@@ -4,6 +4,7 @@ using System.Linq;
 using Windows.Foundation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using SimpleLyricsEditor.Control.Models;
 using SimpleLyricsEditor.DAL;
 using SimpleLyricsEditor.Events;
 
@@ -11,92 +12,45 @@ using SimpleLyricsEditor.Events;
 
 namespace SimpleLyricsEditor.Control
 {
-    public sealed partial class LyrricsSinglePreview : UserControl
+    public sealed partial class LyrricsSinglePreview : LyricsPreviewBase
     {
-        private const long TicksPerThreeSecond = TimeSpan.TicksPerSecond * 3;
-        private static readonly Lyric Space = new Lyric(TimeSpan.Zero, String.Empty);
-
-        public static readonly DependencyProperty LyricsProperty = DependencyProperty.Register(
-            nameof(Lyrics), typeof(IList<Lyric>), typeof(LyrricsSinglePreview), new PropertyMetadata(null));
-
-        public static readonly DependencyProperty CurrentLyricProperty = DependencyProperty.Register(
-            nameof(CurrentLyric), typeof(Lyric), typeof(LyrricsSinglePreview), new PropertyMetadata(Space));
-
-        private int _nextIndex;
-
         public LyrricsSinglePreview()
         {
             InitializeComponent();
+            base.Refreshed += LyrricsSinglePreview_Refreshed;
         }
 
-        public IList<Lyric> Lyrics
+        protected override void RefreshLyricCore(TimeSpan position)
         {
-            get => (IList<Lyric>) GetValue(LyricsProperty);
-            set => SetValue(LyricsProperty, value);
-        }
-
-        private bool CanPreview => this.IsEnabled && this.Visibility == Visibility.Visible && Lyrics.Any();
-
-        public Lyric CurrentLyric
-        {
-            get => (Lyric) GetValue(CurrentLyricProperty);
-            set
-            {
-                bool isAny = GetValue(CurrentLyricProperty) is Lyric backLyric &&
-                             !String.IsNullOrEmpty(backLyric.Content);
-
-                SetValue(CurrentLyricProperty, value);
-
-                if (!String.IsNullOrEmpty(value.Content))
-                    TextBlock.Text = value.Content;
-
-                if (!isAny && !String.IsNullOrEmpty(value.Content))
-                    FadeIn.Begin();
-                if (isAny && String.IsNullOrEmpty(value.Content))
-                    FadeOut.Begin();
-
-                Refreshed?.Invoke(this, new LyricsPreviewRefreshEventArgs(value.Content));
-            }
-        }
-
-        public event TypedEventHandler<LyrricsSinglePreview, LyricsPreviewRefreshEventArgs> Refreshed;
-        
-        public void RefreshLyric(TimeSpan position)
-        {
-            if (!CanPreview)
-                return;
-            if (_nextIndex >= Lyrics.Count)
-                _nextIndex = 0;
+            if (NextIndex >= Lyrics.Count)
+                NextIndex = 0;
 
             var currentTime = position.Ticks;
-            var nextLyric = Lyrics[_nextIndex];
+            var nextLyric = Lyrics[NextIndex];
             var nextTime = nextLyric.Time.Ticks;
 
-            if (currentTime >= nextTime && currentTime <= nextTime + TicksPerThreeSecond)
+            if (currentTime >= nextTime && currentTime <= nextTime + TimeSpan.TicksPerSecond)
             {
                 CurrentLyric = nextLyric;
-                _nextIndex++;
+                NextIndex++;
             }
         }
 
-        public void Reposition(TimeSpan position)
+        protected override void RepositionCore(TimeSpan position)
         {
-            if (!CanPreview)
-                return;
-
             var currentTime = position;
 
             if (currentTime.CompareTo(Lyrics.First().Time) <= 0)
             {
-                CurrentLyric = Space;
-                _nextIndex = 0;
+                CurrentLyric = Lyric.Empty;
+                NextIndex = 0;
                 return;
             }
 
             if (currentTime.CompareTo(Lyrics.Last().Time) >= 0)
             {
                 CurrentLyric = Lyrics.Last();
-                _nextIndex = 0;
+                NextIndex = 0;
                 return;
             }
 
@@ -104,9 +58,22 @@ namespace SimpleLyricsEditor.Control
                 if (currentTime.CompareTo(Lyrics[i].Time) < 0)
                 {
                     CurrentLyric = Lyrics[i - 1];
-                    _nextIndex = i;
+                    NextIndex = i;
                     break;
                 }
+        }
+
+        private void LyrricsSinglePreview_Refreshed(LyricsPreviewBase sender, LyricsPreviewRefreshEventArgs args)
+        {
+            bool isAny = BackLyric is Lyric && !String.IsNullOrEmpty(BackLyric.Content);
+
+            if (!String.IsNullOrEmpty(args.CurrentLyric.Content))
+                TextBlock.Text = args.CurrentLyric.Content;
+
+            if (!isAny && !String.IsNullOrEmpty(args.CurrentLyric.Content))
+                FadeIn.Begin();
+            if (isAny && String.IsNullOrEmpty(args.CurrentLyric.Content))
+                FadeOut.Begin();
         }
     }
 }
