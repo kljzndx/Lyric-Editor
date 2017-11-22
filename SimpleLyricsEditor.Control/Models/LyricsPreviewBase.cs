@@ -12,10 +12,10 @@ namespace SimpleLyricsEditor.Control.Models
     public abstract class LyricsPreviewBase : UserControl
     {
         public static readonly DependencyProperty LyricsProperty = DependencyProperty.Register(
-            nameof(Lyrics), typeof(IList<Lyric>), typeof(LyricsPreviewBase), new PropertyMetadata(Lyric.Empty));
+            nameof(Lyrics), typeof(IList<Lyric>), typeof(LyricsPreviewBase), new PropertyMetadata(null));
 
         public static readonly DependencyProperty CurrentLyricProperty = DependencyProperty.Register(
-            nameof(CurrentLyric), typeof(Lyric), typeof(LyricsPreviewBase), new PropertyMetadata(null));
+            nameof(CurrentLyric), typeof(Lyric), typeof(LyricsPreviewBase), new PropertyMetadata(Lyric.Empty));
         
         protected Lyric BackLyric;
         protected int NextIndex;
