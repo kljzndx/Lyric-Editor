@@ -283,11 +283,13 @@ namespace SimpleLyricsEditor.Views
 
             SinglePreview.Reposition(Player.Position);
 
-            {
-                _viewModel.LyricsTags[0].TagValue = args.Source.Name;
-                _viewModel.LyricsTags[1].TagValue = args.Source.Artist;
-                _viewModel.LyricsTags[2].TagValue = args.Source.Album;
-            }
+            #region Replace Lyrics Tags
+
+            _viewModel.LyricsTags[0].TagValue = args.Source.Name;
+            _viewModel.LyricsTags[1].TagValue = args.Source.Artist;
+            _viewModel.LyricsTags[2].TagValue = args.Source.Album;
+
+            #endregion
         }
 
         private void Player_PositionChanged(AudioPlayer sender, PositionChangeEventArgs args)
@@ -525,7 +527,7 @@ namespace SimpleLyricsEditor.Views
             Lyrics_ListView.SelectedItem = null;
         }
 
-        #region Lyrics File Info Dialog
+        #region Lyrics File Info Dialog Box
         
         private void LyricsFileInfo_ContentDialog_Opened(ContentDialog sender, ContentDialogOpenedEventArgs args)
         {
