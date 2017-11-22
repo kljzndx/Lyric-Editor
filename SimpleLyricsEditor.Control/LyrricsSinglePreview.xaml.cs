@@ -35,6 +35,8 @@ namespace SimpleLyricsEditor.Control
             set => SetValue(LyricsProperty, value);
         }
 
+        private bool CanPreview => this.IsEnabled && this.Visibility == Visibility.Visible && Lyrics.Any();
+
         public Lyric CurrentLyric
         {
             get => (Lyric) GetValue(CurrentLyricProperty);
@@ -58,10 +60,10 @@ namespace SimpleLyricsEditor.Control
         }
 
         public event TypedEventHandler<LyrricsSinglePreview, LyricsPreviewRefreshEventArgs> Refreshed;
-
+        
         public void RefreshLyric(TimeSpan position)
         {
-            if (!Lyrics.Any())
+            if (!CanPreview)
                 return;
             if (_nextIndex >= Lyrics.Count)
                 _nextIndex = 0;
@@ -79,7 +81,7 @@ namespace SimpleLyricsEditor.Control
 
         public void Reposition(TimeSpan position)
         {
-            if (!Lyrics.Any())
+            if (!CanPreview)
                 return;
 
             var currentTime = position;
