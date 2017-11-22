@@ -115,6 +115,7 @@
     <Compile Include="LyrricsSinglePreview.xaml.cs">
       <DependentUpon>LyrricsSinglePreview.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Models\LyricsPreviewBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ShortcutKeysDialog.xaml.cs">
       <DependentUpon>ShortcutKeysDialog.xaml</DependentUpon>
