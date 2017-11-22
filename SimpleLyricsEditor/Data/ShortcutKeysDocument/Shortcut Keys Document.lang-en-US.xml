@@ -23,6 +23,10 @@
     <Condition> press Esc key </Condition>
     <Function> Exit input state </Function>
   </ShortcutKey>
+  <ShortcutKey Name="打开歌词文件信息对话框" Class="Lyrics operations">
+    <Condition> Ctrl + I </Condition>
+    <Function> Open Lyrics File Info Dialog Box </Function>
+  </ShortcutKey>
   <ShortcutKey Name="添加歌词" Class="Lyrics operations">
     <Condition>
 1. Press spacebar when there are no selected items 

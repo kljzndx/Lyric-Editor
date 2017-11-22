@@ -23,6 +23,10 @@
     <Condition> 按 Esc 键 </Condition>
     <Function> 退出输入状态 </Function>
   </ShortcutKey>
+  <ShortcutKey Name="打开歌词文件信息对话框" Class="歌词操作">
+    <Condition> Ctrl + I </Condition>
+    <Function> 打开 歌词文件信息 对话框 </Function>
+  </ShortcutKey>
   <ShortcutKey Name="添加歌词" Class="歌词操作">
     <Condition>
 1. 无选中项时按空格键
