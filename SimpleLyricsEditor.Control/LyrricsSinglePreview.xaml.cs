@@ -62,7 +62,7 @@ namespace SimpleLyricsEditor.Control
 
         private void LyrricsSinglePreview_Refreshed(LyricsPreviewBase sender, LyricsPreviewRefreshEventArgs args)
         {
-            bool isAny = BackLyric is Lyric && !String.IsNullOrEmpty(BackLyric.Content);
+            bool isAny = !String.IsNullOrEmpty(BackLyric.Content);
 
             if (!String.IsNullOrEmpty(args.CurrentLyric.Content))
                 TextBlock.Text = args.CurrentLyric.Content;
