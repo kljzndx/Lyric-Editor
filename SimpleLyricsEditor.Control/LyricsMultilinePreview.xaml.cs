@@ -22,10 +22,10 @@ namespace SimpleLyricsEditor.Control
 {
     public sealed partial class LyricsMultilinePreview : LyricsPreviewBase
     {
+        private static readonly object InterpolationLocker = new object();
+
         private readonly int _itemNormalHeight;
         private int _interpolation;
-        private readonly object _interpolationLocker = new object();
-
         public LyricsMultilinePreview()
         {
             this.InitializeComponent();
@@ -40,7 +40,7 @@ namespace SimpleLyricsEditor.Control
 
         private void LyricsMultilinePreview_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            lock (_interpolationLocker)
+            lock (InterpolationLocker)
                 _interpolation = (int) ComputeInterpolation();
         }
 
