@@ -112,6 +112,9 @@
     <Compile Include="BlurBackgroundImage.xaml.cs">
       <DependentUpon>BlurBackgroundImage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="LyricsMultilinePreview.xaml.cs">
+      <DependentUpon>LyricsMultilinePreview.xaml</DependentUpon>
+    </Compile>
     <Compile Include="LyrricsSinglePreview.xaml.cs">
       <DependentUpon>LyrricsSinglePreview.xaml</DependentUpon>
     </Compile>
@@ -119,6 +122,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ShortcutKeysDialog.xaml.cs">
       <DependentUpon>ShortcutKeysDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Templates\LyricsMultilinePreviewItemTemplate.xaml.cs">
+      <DependentUpon>LyricsMultilinePreviewItemTemplate.xaml</DependentUpon>
     </Compile>
     <Compile Include="UpdateLogDialog.xaml.cs">
       <DependentUpon>UpdateLogDialog.xaml</DependentUpon>
@@ -153,11 +159,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="LyricsMultilinePreview.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="LyrricsSinglePreview.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ShortcutKeysDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Templates\LyricsMultilinePreviewItemTemplate.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
