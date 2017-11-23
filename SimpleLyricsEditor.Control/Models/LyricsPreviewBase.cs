@@ -40,23 +40,54 @@ namespace SimpleLyricsEditor.Control.Models
         public event TypedEventHandler<LyricsPreviewBase, LyricsPreviewRefreshEventArgs> Refreshed;
 
         protected bool CanPreview => IsEnabled && Visibility == Visibility.Visible && Lyrics.Any();
-
-        protected abstract void RefreshLyricCore(TimeSpan position);
-        protected abstract void RepositionCore(TimeSpan position);
-
+        
         public void RefreshLyric(TimeSpan position)
         {
+            if (!CanPreview)
+                return;
+
             if (NextIndex >= Lyrics.Count)
                 NextIndex = 0;
 
-            if (CanPreview)
-                RefreshLyricCore(position);
+            long currentTime = position.Ticks;
+            Lyric nextLyric = Lyrics[NextIndex];
+            long nextTime = nextLyric.Time.Ticks;
+
+            if (currentTime >= nextTime && currentTime <= nextTime + TimeSpan.TicksPerSecond)
+            {
+                CurrentLyric = nextLyric;
+                NextIndex++;
+            }
         }
 
         public void Reposition(TimeSpan position)
         {
-            if (CanPreview)
-                RepositionCore(position);
+            if (!CanPreview)
+                return;
+            
+            if (position.CompareTo(Lyrics.First().Time) <= 0)
+            {
+                CurrentLyric = Lyric.Empty;
+                NextIndex = 0;
+                return;
+            }
+
+            if (position.CompareTo(Lyrics.Last().Time) >= 0)
+            {
+                CurrentLyric = Lyrics.Last();
+                NextIndex = 0;
+                return;
+            }
+
+            for (var i = 0; i < Lyrics.Count; i++)
+            {
+                if (position.CompareTo(Lyrics[i].Time) < 0)
+                {
+                    CurrentLyric = Lyrics[i - 1];
+                    NextIndex = i;
+                    break;
+                }
+            }
         }
     }
 }
