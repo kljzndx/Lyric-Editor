@@ -23,20 +23,18 @@ namespace SimpleLyricsEditor.Control
     public sealed partial class LyricsMultilinePreview : LyricsPreviewBase
     {
         private static readonly object InterpolationLocker = new object();
-
-        private readonly int _itemNormalHeight;
+        
         private int _interpolation;
 
         public LyricsMultilinePreview()
         {
             this.InitializeComponent();
-            _itemNormalHeight = (int) new ListViewItem().MinHeight;
             _interpolation = (int) ComputeInterpolation();
         }
 
         private double ComputeInterpolation()
         {
-            return Main_ListView.ActualHeight / _itemNormalHeight / 2;
+            return Main_ListView.ActualHeight / 44 / 2;
         }
 
         private void LyricsMultilinePreview_SizeChanged(object sender, SizeChangedEventArgs e)
