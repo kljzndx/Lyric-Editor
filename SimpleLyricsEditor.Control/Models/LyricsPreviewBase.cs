@@ -39,7 +39,7 @@ namespace SimpleLyricsEditor.Control.Models
 
         public event TypedEventHandler<LyricsPreviewBase, LyricsPreviewRefreshEventArgs> Refreshed;
 
-        protected bool CanPreview => IsEnabled && Visibility == Visibility.Visible && Lyrics.Any();
+        protected bool CanPreview => IsEnabled && Visibility == Visibility.Visible && Lyrics != null && Lyrics.Any();
         
         public void RefreshLyric(TimeSpan position)
         {
