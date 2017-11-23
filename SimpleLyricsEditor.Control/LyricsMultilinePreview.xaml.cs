@@ -49,14 +49,16 @@ namespace SimpleLyricsEditor.Control
                 lyric.IsSelected = false;
 
             if (args.CurrentLyric.Equals(Lyric.Empty))
+            {
+                Main_ListView.ScrollIntoView(Lyrics[0]);
                 return;
+            }
 
             args.CurrentLyric.IsSelected = true;
             
             int itemId = Lyrics.IndexOf(args.CurrentLyric);
 
-            if (itemId - _interpolation >= 0)
-                Main_ListView.ScrollIntoView(Lyrics[itemId - _interpolation], ScrollIntoViewAlignment.Leading);
+            Main_ListView.ScrollIntoView(Lyrics[itemId - _interpolation > 0 ? itemId - _interpolation : 0], ScrollIntoViewAlignment.Leading);
         }
     }
 }
