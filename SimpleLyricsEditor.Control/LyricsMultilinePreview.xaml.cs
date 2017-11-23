@@ -26,6 +26,7 @@ namespace SimpleLyricsEditor.Control
 
         private readonly int _itemNormalHeight;
         private int _interpolation;
+
         public LyricsMultilinePreview()
         {
             this.InitializeComponent();
