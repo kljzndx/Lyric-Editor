@@ -12,7 +12,7 @@
     d:DesignWidth="400"
     SizeChanged="LyricsMultilinePreview_SizeChanged" Refreshed="LyricsMultilinePreview_Refreshed">
 
-    <ListView x:Name="Main_ListView" ItemsSource="{x:Bind Lyrics, Mode=OneWay}">
+    <ListView x:Name="Main_ListView" ItemsSource="{x:Bind Lyrics, Mode=OneWay}" SelectionMode="None">
         <ListView.ItemContainerStyle>
             <Style TargetType="ListViewItem">
                 <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
