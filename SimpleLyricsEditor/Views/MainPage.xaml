@@ -151,7 +151,7 @@
                 </StackPanel>
 
                 <StackPanel Grid.Column="1" Orientation="Horizontal" Margin="10,0">
-                    <Button x:Name="LyricsFileInfo_Button" Content="&#xE1A1;" Style="{StaticResource ControllerButtonStyle}" Click="LyricsFileInfo_Button_Click"/>
+                    <Button x:Name="LyricsFileInfo_Button" x:Uid="/LyricsEdit/LyricsFileInfo_Button" Content="&#xE1A1;" Style="{StaticResource ControllerButtonStyle}" Click="LyricsFileInfo_Button_Click"/>
                 </StackPanel>
 
                 <StackPanel Grid.Column="2" Orientation="Horizontal">
