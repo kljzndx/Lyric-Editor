@@ -22,6 +22,10 @@ namespace SimpleLyricsEditor.DAL
             _content = content.Trim();
         }
 
+        public Lyric(Lyric lyric) : this(lyric.Time, lyric.Content)
+        {
+        }
+
         public TimeSpan Time
         {
             get => _time;
