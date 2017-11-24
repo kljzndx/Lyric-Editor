@@ -218,7 +218,7 @@
                 <ctol:LyricsMultilinePreview x:Name="MultilinePreview"/>
             </Border>
             
-            <ToggleButton x:Name="PreviewMode_ToggleButton" Content="&#xE18B;" Style="{StaticResource ControllerButtonStyle}" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="20" Checked="PreviewMode_ToggleButton_Checked"/>
+            <ToggleButton x:Name="PreviewMode_ToggleButton" x:Uid="/Tools/PreviewMode_ToggleButton" Content="&#xE18B;" Style="{StaticResource ControllerButtonStyle}" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="20" Checked="PreviewMode_ToggleButton_Checked"/>
 
         </Grid>
         
