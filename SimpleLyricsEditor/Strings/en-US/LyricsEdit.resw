@@ -133,10 +133,6 @@ Shortcut Keys : C</value>
     <value>Sort
 Shortcut Keys : S</value>
   </data>
-  <data name="LyricTime_Button.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Go to this time
-Shortcut Key : G</value>
-  </data>
   <data name="ModifyLyrics_ComboBoxItem.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
     <value>Modify Lyrics Content
 Shortcut Key : M</value>
@@ -145,27 +141,9 @@ Shortcut Key : M</value>
     <value>Move time of lyrics
 Shortcut Key : Space</value>
   </data>
-  <data name="MultilineEditMode_ToggleButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Multiline Edit Mode</value>
-  </data>
   <data name="RemoveLyrics_Button.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
     <value>Remove lyric
 Shortcut keys : Delete</value>
-  </data>
-  <data name="SelectTools_Button.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Select Tools</value>
-  </data>
-  <data name="Select_AfterItem_MenuFlyoutItem.Text" xml:space="preserve">
-    <value>Select After Item</value>
-  </data>
-  <data name="Select_BeforeItem_MenuFlyoutItem.Text" xml:space="preserve">
-    <value>Select Before Item</value>
-  </data>
-  <data name="Select_Paragraph_MenuFlyoutItem.Text" xml:space="preserve">
-    <value>Select Paragraph</value>
-  </data>
-  <data name="Select_Reverse_MenuFlyoutItem.Text" xml:space="preserve">
-    <value>Reverse Select</value>
   </data>
   <data name="LyricsContent_TextBox.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
     <value>Press I / Esc Key to Enter/Exit input state
@@ -189,9 +167,5 @@ Shortcut Key: Ctrl + Z</value>
   <data name="Submit_Button.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
     <value>Submit
 Shortcut key: Press Ctrl + Enter in Input box</value>
-  </data>
-  <data name="LyricsFileInfo_Button.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Lyrics File Info
-Shortcut key: Ctrl + I</value>
   </data>
 </root>
