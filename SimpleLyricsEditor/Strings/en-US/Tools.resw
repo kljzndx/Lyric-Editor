@@ -128,6 +128,9 @@ Shortcut Key : G</value>
   <data name="MultilineEditMode_ToggleButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
     <value>Multiline Edit Mode</value>
   </data>
+  <data name="PreviewMode_ToggleButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Preview Mode</value>
+  </data>
   <data name="SelectTools_Button.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
     <value>Select Tools</value>
   </data>

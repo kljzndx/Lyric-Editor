@@ -143,4 +143,7 @@
   <data name="Select_Reverse_MenuFlyoutItem.Text" xml:space="preserve">
     <value>反向选择</value>
   </data>
+  <data name="PreviewMode_ToggleButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>预览模式</value>
+  </data>
 </root>
