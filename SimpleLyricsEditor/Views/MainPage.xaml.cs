@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.IO;
@@ -43,6 +44,7 @@ namespace SimpleLyricsEditor.Views
             InitializeComponent();
 
             ButtonsInMultilineEditMode_StackPanel.Visibility = Visibility.Collapsed;
+            MultilinePreview.Lyrics = new ObservableCollection<Lyric>();
 
             _viewModel = DataContext as MainViewModel;
             _viewModel.LyricItems.CollectionChanged += LyricItems_CollectionChanged;
@@ -470,7 +472,9 @@ namespace SimpleLyricsEditor.Views
 
         private void PreviewMode_ToggleButton_Checked(object sender, RoutedEventArgs e)
         {
-            MultilinePreview.Lyrics = _viewModel.LyricItems.ToList();
+            foreach (Lyric item in _viewModel.LyricItems)
+                MultilinePreview.Lyrics.Add(new Lyric(item));
+
             MultilinePreview.Reposition(Player.Position);
         }
 
