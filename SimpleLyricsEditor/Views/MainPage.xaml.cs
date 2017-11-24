@@ -282,6 +282,7 @@ namespace SimpleLyricsEditor.Views
                 BlurBackground.Source = args.Source.AlbumImage;
 
             SinglePreview.Reposition(Player.Position);
+            MultilinePreview.Reposition(Player.Position);
 
             #region Replace Lyrics Tags
 
@@ -295,9 +296,15 @@ namespace SimpleLyricsEditor.Views
         private void Player_PositionChanged(AudioPlayer sender, PositionChangeEventArgs args)
         {
             if (args.IsUserChange)
+            {
                 SinglePreview.Reposition(args.Position);
+                MultilinePreview.Reposition(args.Position);
+            }
             else
+            {
                 SinglePreview.RefreshLyric(args.Position);
+                MultilinePreview.RefreshLyric(args.Position);
+            }
         }
 
         #endregion
@@ -540,5 +547,10 @@ namespace SimpleLyricsEditor.Views
         }
 
         #endregion
+
+        private void MultilineLyricsPreview_ToggleButton_Checked(object sender, RoutedEventArgs e)
+        {
+            MultilinePreview.Lyrics = _viewModel.LyricItems.ToList();
+        }
     }
 }

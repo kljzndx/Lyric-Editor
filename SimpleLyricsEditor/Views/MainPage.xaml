@@ -73,6 +73,7 @@
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
@@ -81,12 +82,12 @@
             <pctol:FrostedGlassBackground GlassBackgroundBrush="{ThemeResource AppBarBackgroundThemeBrush}" GlassOpacity="{x:Bind _settings.FrostedGlassOpacity, Mode=OneWay}" Visibility="{x:Bind _settings.IsFrostedGlassEffectDisplay, Mode=OneWay, Converter={StaticResource BoolToVisibility}}"/>
             <ctol:AudioPlayer x:Name="Player" Playing="Player_Playing" Paused="Player_Paused" SourceChanged="Player_SourceChanged" PositionChanged="Player_PositionChanged"/>
         </Grid>
-        <Grid Grid.Row="1" Grid.RowSpan="2">
+        <Grid Grid.Row="1" Grid.RowSpan="3">
             <pctol:FrostedGlassBackground GlassBackgroundBrush="{ThemeResource ApplicationPageBackgroundThemeBrush}" GlassOpacity="{x:Bind _settings.FrostedGlassOpacity, Mode=OneWay}" Visibility="{x:Bind _settings.IsFrostedGlassEffectDisplay, Mode=OneWay, Converter={StaticResource BoolToVisibility}}"/>
             <ctol:BlurBackgroundImage x:Name="BlurBackground" BlurDegree="{x:Bind _settings.BackgroundBlurDegree, Mode=OneWay}" Opacity="{x:Bind _settings.BackgroundOpacity, Mode=OneWay}" Visibility="{x:Bind _settings.IsDisplayBackground, Mode=OneWay, Converter={StaticResource BoolToVisibility}}"/>
         </Grid>
 
-        <Grid x:Name="LyricsOperations_Grid" Grid.Row="1" Background="Transparent" Tapped="LyricsOperations_Grid_Tapped">
+        <Grid x:Name="LyricsOperations_Grid" Grid.Row="1" Background="Transparent"  Visibility="{x:Bind MultilineLyricsPreview_ToggleButton.IsChecked, Mode=OneWay, Converter={StaticResource BoolToVisibility_Reverse}}" Tapped="LyricsOperations_Grid_Tapped">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
@@ -167,48 +168,61 @@
                     </Button>
                 </StackPanel>
             </Grid>
+            
+        </Grid>
 
-            <ListView x:Name="Lyrics_ListView" Grid.Row="2" ItemsSource="{x:Bind _viewModel.LyricItems}" GotFocus="Lyrics_ListView_GotFocus" LostFocus="Lyrics_ListView_LostFocus" SelectionChanged="Lyrics_ListView_SelectionChanged" Tapped="Lyrics_ListView_Tapped">
-                <ListView.ItemContainerStyle>
-                    <Style TargetType="ListViewItem">
-                        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                        <Setter Property="MinHeight" Value="40"/>
-                        <Setter Property="Margin" Value="0,2"/>
-                    </Style>
-                </ListView.ItemContainerStyle>
+        <Grid Grid.Row="2">
+            
+            <Grid Visibility="{x:Bind MultilineLyricsPreview_ToggleButton.IsChecked, Mode=OneWay, Converter={StaticResource BoolToVisibility_Reverse}}">
+                <ListView x:Name="Lyrics_ListView" ItemsSource="{x:Bind _viewModel.LyricItems}" GotFocus="Lyrics_ListView_GotFocus" LostFocus="Lyrics_ListView_LostFocus" SelectionChanged="Lyrics_ListView_SelectionChanged" Tapped="Lyrics_ListView_Tapped">
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                            <Setter Property="MinHeight" Value="40"/>
+                            <Setter Property="Margin" Value="0,2"/>
+                        </Style>
+                    </ListView.ItemContainerStyle>
 
-                <ListView.ItemTemplate>
-                    <DataTemplate x:DataType="model:Lyric">
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition/>
-                                <ColumnDefinition Width="Auto"/>
-                            </Grid.ColumnDefinitions>
+                    <ListView.ItemTemplate>
+                        <DataTemplate x:DataType="model:Lyric">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
                             
-                            <Button x:Name="LyricTime_Button" x:Uid="/LyricsEdit/LyricTime_Button" Background="Transparent" BorderThickness="0" VerticalAlignment="Top" Padding="0" Margin="0, 0, 5, 0" Click="LyricTime_Button_Click">
-                                <TextBlock Text="{x:Bind Time, Mode=OneWay, Converter={StaticResource TimeSpanToLyricTimeString}}"/>
-                            </Button>
+                                <Button x:Name="LyricTime_Button" x:Uid="/LyricsEdit/LyricTime_Button" Background="Transparent" BorderThickness="0" VerticalAlignment="Top" Padding="0" Margin="0, 0, 5, 0" Click="LyricTime_Button_Click">
+                                    <TextBlock Text="{x:Bind Time, Mode=OneWay, Converter={StaticResource TimeSpanToLyricTimeString}}"/>
+                                </Button>
                             
-                            <TextBlock Grid.Column="1" Text="{x:Bind Content, Mode=OneWay}" TextWrapping="Wrap" Margin="5, 0, 0, 0"/>
+                                <TextBlock Grid.Column="1" Text="{x:Bind Content, Mode=OneWay}" TextWrapping="Wrap" Margin="5, 0, 0, 0"/>
 
-                            <StackPanel Grid.Column="2" Orientation="Horizontal" Visibility="{x:Bind IsSelected, Mode=OneWay, Converter={StaticResource BoolToVisibility}}">
-                                <Button x:Name="MoveTime_Button" x:Uid="/LyricsEdit/MoveTime_Button" Content="&#xE759;" Style="{StaticResource ControllerButtonStyle}" Click="MoveTime_Button_Click"/>
-                                <Button x:Name="RemoveLyrics_Button" x:Uid="/LyricsEdit/RemoveLyrics_Button" Content="&#xE10A;" Style="{StaticResource ControllerButtonStyle}" Click="RemoveLyrics_Button_Click"/>
-                            </StackPanel>
-                        </Grid>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+                                <StackPanel Grid.Column="2" Orientation="Horizontal" Visibility="{x:Bind IsSelected, Mode=OneWay, Converter={StaticResource BoolToVisibility}}">
+                                    <Button x:Name="MoveTime_Button" x:Uid="/LyricsEdit/MoveTime_Button" Content="&#xE759;" Style="{StaticResource ControllerButtonStyle}" Click="MoveTime_Button_Click"/>
+                                    <Button x:Name="RemoveLyrics_Button" x:Uid="/LyricsEdit/RemoveLyrics_Button" Content="&#xE10A;" Style="{StaticResource ControllerButtonStyle}" Click="RemoveLyrics_Button_Click"/>
+                                </StackPanel>
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
 
-            <Button x:Name="LyricsSort_Button" x:Uid="/LyricsEdit/LyricsSort_Button" Grid.Row="2" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="50" Style="{StaticResource FloatingAction_ButtonStyle}" Click="LyricsSort_Button_Click">
-                <Button.Content>
-                    <SymbolIcon Symbol="Sort" Width="20" Height="20"/>
-                </Button.Content>
-            </Button>
+                <Button x:Name="LyricsSort_Button" x:Uid="/LyricsEdit/LyricsSort_Button" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="50" Style="{StaticResource FloatingAction_ButtonStyle}" Click="LyricsSort_Button_Click">
+                    <Button.Content>
+                        <SymbolIcon Symbol="Sort" Width="20" Height="20"/>
+                    </Button.Content>
+                </Button>
+            </Grid>
+            
+            <Border Visibility="{x:Bind MultilineLyricsPreview_ToggleButton.IsChecked, Mode=OneWay, Converter={StaticResource BoolToVisibility}}">
+                <ctol:LyricsMultilinePreview x:Name="MultilinePreview"/>
+            </Border>
+            
+            <ToggleButton x:Name="MultilineLyricsPreview_ToggleButton" Content="&#xE18B;" Style="{StaticResource ControllerButtonStyle}" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="20" Checked="MultilineLyricsPreview_ToggleButton_Checked"/>
 
         </Grid>
-        <Grid Grid.Row="2" Tapped="LyricsPreview_Grid_Tapped">
+        
+        <Grid Grid.Row="3" Visibility="{x:Bind MultilineLyricsPreview_ToggleButton.IsChecked, Mode=OneWay, Converter={StaticResource BoolToVisibility_Reverse}}" Tapped="LyricsPreview_Grid_Tapped">
             <Rectangle Fill="{ThemeResource SystemControlBackgroundAccentBrush}" Opacity="{x:Bind _settings.PreviewBackgroundOpacity, Mode=OneWay}"/>
             <ctol:LyrricsSinglePreview x:Name="SinglePreview" Lyrics="{x:Bind _viewModel.LyricItems}" FontSize="{x:Bind _settings.SinglePreviewFontSize, Mode=OneWay}"/>
         </Grid>
