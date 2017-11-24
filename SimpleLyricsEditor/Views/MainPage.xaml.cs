@@ -548,7 +548,7 @@ namespace SimpleLyricsEditor.Views
 
         #endregion
 
-        private void MultilineLyricsPreview_ToggleButton_Checked(object sender, RoutedEventArgs e)
+        private void PreviewMode_ToggleButton_Checked(object sender, RoutedEventArgs e)
         {
             MultilinePreview.Lyrics = _viewModel.LyricItems.ToList();
         }

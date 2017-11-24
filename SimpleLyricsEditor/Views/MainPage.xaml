@@ -87,7 +87,7 @@
             <ctol:BlurBackgroundImage x:Name="BlurBackground" BlurDegree="{x:Bind _settings.BackgroundBlurDegree, Mode=OneWay}" Opacity="{x:Bind _settings.BackgroundOpacity, Mode=OneWay}" Visibility="{x:Bind _settings.IsDisplayBackground, Mode=OneWay, Converter={StaticResource BoolToVisibility}}"/>
         </Grid>
 
-        <Grid x:Name="LyricsOperations_Grid" Grid.Row="1" Background="Transparent"  Visibility="{x:Bind MultilineLyricsPreview_ToggleButton.IsChecked, Mode=OneWay, Converter={StaticResource BoolToVisibility_Reverse}}" Tapped="LyricsOperations_Grid_Tapped">
+        <Grid x:Name="LyricsOperations_Grid" Grid.Row="1" Background="Transparent"  Visibility="{x:Bind PreviewMode_ToggleButton.IsChecked, Mode=OneWay, Converter={StaticResource BoolToVisibility_Reverse}}" Tapped="LyricsOperations_Grid_Tapped">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
@@ -173,7 +173,7 @@
 
         <Grid Grid.Row="2">
             
-            <Grid Visibility="{x:Bind MultilineLyricsPreview_ToggleButton.IsChecked, Mode=OneWay, Converter={StaticResource BoolToVisibility_Reverse}}">
+            <Grid Visibility="{x:Bind PreviewMode_ToggleButton.IsChecked, Mode=OneWay, Converter={StaticResource BoolToVisibility_Reverse}}">
                 <ListView x:Name="Lyrics_ListView" ItemsSource="{x:Bind _viewModel.LyricItems}" GotFocus="Lyrics_ListView_GotFocus" LostFocus="Lyrics_ListView_LostFocus" SelectionChanged="Lyrics_ListView_SelectionChanged" Tapped="Lyrics_ListView_Tapped">
                     <ListView.ItemContainerStyle>
                         <Style TargetType="ListViewItem">
@@ -214,15 +214,15 @@
                 </Button>
             </Grid>
             
-            <Border Visibility="{x:Bind MultilineLyricsPreview_ToggleButton.IsChecked, Mode=OneWay, Converter={StaticResource BoolToVisibility}}">
+            <Border Visibility="{x:Bind PreviewMode_ToggleButton.IsChecked, Mode=OneWay, Converter={StaticResource BoolToVisibility}}">
                 <ctol:LyricsMultilinePreview x:Name="MultilinePreview"/>
             </Border>
             
-            <ToggleButton x:Name="MultilineLyricsPreview_ToggleButton" Content="&#xE18B;" Style="{StaticResource ControllerButtonStyle}" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="20" Checked="MultilineLyricsPreview_ToggleButton_Checked"/>
+            <ToggleButton x:Name="PreviewMode_ToggleButton" Content="&#xE18B;" Style="{StaticResource ControllerButtonStyle}" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="20" Checked="PreviewMode_ToggleButton_Checked"/>
 
         </Grid>
         
-        <Grid Grid.Row="3" Visibility="{x:Bind MultilineLyricsPreview_ToggleButton.IsChecked, Mode=OneWay, Converter={StaticResource BoolToVisibility_Reverse}}" Tapped="LyricsPreview_Grid_Tapped">
+        <Grid Grid.Row="3" Visibility="{x:Bind PreviewMode_ToggleButton.IsChecked, Mode=OneWay, Converter={StaticResource BoolToVisibility_Reverse}}" Tapped="LyricsPreview_Grid_Tapped">
             <Rectangle Fill="{ThemeResource SystemControlBackgroundAccentBrush}" Opacity="{x:Bind _settings.PreviewBackgroundOpacity, Mode=OneWay}"/>
             <ctol:LyrricsSinglePreview x:Name="SinglePreview" Lyrics="{x:Bind _viewModel.LyricItems}" FontSize="{x:Bind _settings.SinglePreviewFontSize, Mode=OneWay}"/>
         </Grid>
