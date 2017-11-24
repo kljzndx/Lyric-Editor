@@ -475,13 +475,18 @@ namespace SimpleLyricsEditor.Views
             foreach (Lyric item in _viewModel.LyricItems)
                 MultilinePreview.Lyrics.Add(new Lyric(item));
 
+            MultilinePreview.IsEnabled = true;
             MultilinePreview.Reposition(Player.Position);
+            SinglePreview.IsEnabled = false;
         }
 
         private void PreviewMode_ToggleButton_Unchecked(object sender, RoutedEventArgs e)
         {
-            MultilinePreview.Lyrics.Clear();
+            SinglePreview.IsEnabled = true;
             SinglePreview.Reposition(Player.Position);
+
+            MultilinePreview.Lyrics.Clear();
+            MultilinePreview.IsEnabled = false;
         }
 
         private void LyricTime_Button_Click(object sender, RoutedEventArgs e)
