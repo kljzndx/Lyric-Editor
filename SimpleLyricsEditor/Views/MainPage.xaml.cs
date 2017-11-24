@@ -478,6 +478,12 @@ namespace SimpleLyricsEditor.Views
             MultilinePreview.Reposition(Player.Position);
         }
 
+        private void PreviewMode_ToggleButton_Unchecked(object sender, RoutedEventArgs e)
+        {
+            MultilinePreview.Lyrics.Clear();
+            SinglePreview.Reposition(Player.Position);
+        }
+
         private void LyricTime_Button_Click(object sender, RoutedEventArgs e)
         {
             Lyric lyric = (sender as Button).DataContext as Lyric;
