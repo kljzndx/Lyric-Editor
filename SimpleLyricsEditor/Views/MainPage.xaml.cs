@@ -471,6 +471,7 @@ namespace SimpleLyricsEditor.Views
         private void PreviewMode_ToggleButton_Checked(object sender, RoutedEventArgs e)
         {
             MultilinePreview.Lyrics = _viewModel.LyricItems.ToList();
+            MultilinePreview.Reposition(Player.Position);
         }
 
         private void LyricTime_Button_Click(object sender, RoutedEventArgs e)
