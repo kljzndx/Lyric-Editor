@@ -360,10 +360,45 @@ namespace SimpleLyricsEditor.Views
         {
             _inputBoxSubmitAction.Invoke();
         }
-        
+
         #endregion
 
         #region Lyrics edit tools
+
+        private void MoveTime_Button_Click(object sender, RoutedEventArgs e)
+        {
+            _viewModel.Move(Player.Position);
+        }
+
+        private void RemoveLyrics_Button_Click(object sender, RoutedEventArgs e)
+        {
+            _viewModel.Remove();
+        }
+
+        private void CopyLyrics_Button_Click(object sender, RoutedEventArgs e)
+        {
+            if (Lyrics_ListView.SelectedItems.Any())
+                _viewModel.Copy(Player.Position);
+        }
+
+        private void Undo_Button_Click(object sender, RoutedEventArgs e)
+        {
+            _viewModel.Undo(1);
+        }
+
+        private void Redo_Button_Click(object sender, RoutedEventArgs e)
+        {
+            _viewModel.Redo(1);
+        }
+
+        private void LyricsSort_Button_Click(object sender, RoutedEventArgs e)
+        {
+            _viewModel.Sort(_viewModel.LyricItems);
+        }
+
+        #endregion
+
+        #region Tools
 
         private void MultilineEditMode_ToggleButton_Checked(object sender, RoutedEventArgs e)
         {
@@ -428,30 +463,22 @@ namespace SimpleLyricsEditor.Views
 
         #endregion
 
-        private void CopyLyrics_Button_Click(object sender, RoutedEventArgs e)
-        {
-            if (Lyrics_ListView.SelectedItems.Any())
-                _viewModel.Copy(Player.Position);
-        }
-
         private async void LyricsFileInfo_Button_Click(object sender, RoutedEventArgs e)
         {
             await LyricsFileInfo_ContentDialog.ShowAsync();
         }
 
-        private void Undo_Button_Click(object sender, RoutedEventArgs e)
+        private void PreviewMode_ToggleButton_Checked(object sender, RoutedEventArgs e)
         {
-            _viewModel.Undo(1);
+            MultilinePreview.Lyrics = _viewModel.LyricItems.ToList();
         }
 
-        private void Redo_Button_Click(object sender, RoutedEventArgs e)
+        private void LyricTime_Button_Click(object sender, RoutedEventArgs e)
         {
-            _viewModel.Redo(1);
-        }
+            Lyric lyric = (sender as Button).DataContext as Lyric;
 
-        private void LyricsSort_Button_Click(object sender, RoutedEventArgs e)
-        {
-            _viewModel.Sort(_viewModel.LyricItems);
+            Lyrics_ListView.SelectedItem = lyric;
+            GoToLyricTime(lyric);
         }
 
         #endregion
@@ -509,24 +536,6 @@ namespace SimpleLyricsEditor.Views
             }
         }
 
-        private void LyricTime_Button_Click(object sender, RoutedEventArgs e)
-        {
-            Lyric lyric = (sender as Button).DataContext as Lyric;
-
-            Lyrics_ListView.SelectedItem = lyric;
-            GoToLyricTime(lyric);
-        }
-
-        private void MoveTime_Button_Click(object sender, RoutedEventArgs e)
-        {
-            _viewModel.Move(Player.Position);
-        }
-
-        private void RemoveLyrics_Button_Click(object sender, RoutedEventArgs e)
-        {
-            _viewModel.Remove();
-        }
-
         #endregion
 
         private void LyricsPreview_Grid_Tapped(object sender, TappedRoutedEventArgs e)
@@ -547,10 +556,5 @@ namespace SimpleLyricsEditor.Views
         }
 
         #endregion
-
-        private void PreviewMode_ToggleButton_Checked(object sender, RoutedEventArgs e)
-        {
-            MultilinePreview.Lyrics = _viewModel.LyricItems.ToList();
-        }
     }
 }
