@@ -116,14 +116,14 @@
                 </Grid.ColumnDefinitions>
                 
                 <StackPanel Orientation="Horizontal">
-                    <ToggleButton x:Name="MultilineEditMode_ToggleButton" x:Uid="/LyricsEdit/MultilineEditMode_ToggleButton" Content="&#xE133;" IsChecked="{x:Bind _settings.MultilineEditModeEnabled, Mode=TwoWay, Converter={StaticResource BoolNullableToBool}}" Style="{StaticResource ControllerButtonStyle}" Checked="MultilineEditMode_ToggleButton_Checked" Unchecked="MultilineEditMode_ToggleButton_Unchecked"/>
+                    <ToggleButton x:Name="MultilineEditMode_ToggleButton" x:Uid="/Tools/MultilineEditMode_ToggleButton" Content="&#xE133;" IsChecked="{x:Bind _settings.MultilineEditModeEnabled, Mode=TwoWay, Converter={StaticResource BoolNullableToBool}}" Style="{StaticResource ControllerButtonStyle}" Checked="MultilineEditMode_ToggleButton_Checked" Unchecked="MultilineEditMode_ToggleButton_Unchecked"/>
 
                     <StackPanel x:Name="ButtonsInMultilineEditMode_StackPanel" Orientation="Horizontal" HorizontalAlignment="Left">
                         <StackPanel.Projection>
                             <PlaneProjection x:Name="ButtonsInMultilineEditMode_Projection" CenterOfRotationX="0"/>
                         </StackPanel.Projection>
 
-                        <Button x:Name="SelectTools_Button" x:Uid="/LyricsEdit/SelectTools_Button" Style="{StaticResource ControllerButtonStyle}" IsEnabled="{x:Bind _viewModel.IsLyricsItemAny, Mode=OneWay}">
+                        <Button x:Name="SelectTools_Button" x:Uid="/Tools/SelectTools_Button" Style="{StaticResource ControllerButtonStyle}" IsEnabled="{x:Bind _viewModel.IsLyricsItemAny, Mode=OneWay}">
                             <Button.Content>
                                 <Path Width="20" Height="20" Stroke="{ThemeResource SystemControlBackgroundBaseHighBrush}" StrokeThickness="1.6">
                                     <Path.Data>
@@ -139,10 +139,10 @@
 
                             <Button.Flyout>
                                 <MenuFlyout>
-                                    <MenuFlyoutItem x:Name="Select_Reverse_MenuFlyoutItem" x:Uid="/LyricsEdit/Select_Reverse_MenuFlyoutItem" Click="Select_Reverse_MenuFlyoutItem_Click"/>
-                                    <MenuFlyoutItem x:Name="Select_BeforeItem_MenuFlyoutItem" x:Uid="/LyricsEdit/Select_BeforeItem_MenuFlyoutItem" Click="Select_BeforeItem_MenuFlyoutItem_Click"/>
-                                    <MenuFlyoutItem x:Name="Select_AfterItem_MenuFlyoutItem" x:Uid="/LyricsEdit/Select_AfterItem_MenuFlyoutItem" Click="Select_AfterItem_MenuFlyoutItem_Click"/>
-                                    <MenuFlyoutItem x:Name="Select_Paragraph_MenuFlyoutItem" x:Uid="/LyricsEdit/Select_Paragraph_MenuFlyoutItem" Click="Select_Paragraph_MenuFlyoutItem_Click"/>
+                                    <MenuFlyoutItem x:Name="Select_Reverse_MenuFlyoutItem" x:Uid="/Tools/Select_Reverse_MenuFlyoutItem" Click="Select_Reverse_MenuFlyoutItem_Click"/>
+                                    <MenuFlyoutItem x:Name="Select_BeforeItem_MenuFlyoutItem" x:Uid="/Tools/Select_BeforeItem_MenuFlyoutItem" Click="Select_BeforeItem_MenuFlyoutItem_Click"/>
+                                    <MenuFlyoutItem x:Name="Select_AfterItem_MenuFlyoutItem" x:Uid="/Tools/Select_AfterItem_MenuFlyoutItem" Click="Select_AfterItem_MenuFlyoutItem_Click"/>
+                                    <MenuFlyoutItem x:Name="Select_Paragraph_MenuFlyoutItem" x:Uid="/Tools/Select_Paragraph_MenuFlyoutItem" Click="Select_Paragraph_MenuFlyoutItem_Click"/>
                                 </MenuFlyout>
                             </Button.Flyout>
                         </Button>
@@ -152,7 +152,7 @@
                 </StackPanel>
 
                 <StackPanel Grid.Column="1" Orientation="Horizontal" Margin="10,0">
-                    <Button x:Name="LyricsFileInfo_Button" x:Uid="/LyricsEdit/LyricsFileInfo_Button" Content="&#xE1A1;" Style="{StaticResource ControllerButtonStyle}" Click="LyricsFileInfo_Button_Click"/>
+                    <Button x:Name="LyricsFileInfo_Button" x:Uid="/Tools/LyricsFileInfo_Button" Content="&#xE1A1;" Style="{StaticResource ControllerButtonStyle}" Click="LyricsFileInfo_Button_Click"/>
                 </StackPanel>
 
                 <StackPanel Grid.Column="2" Orientation="Horizontal">
@@ -191,8 +191,8 @@
                                     <ColumnDefinition/>
                                     <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
-                            
-                                <Button x:Name="LyricTime_Button" x:Uid="/LyricsEdit/LyricTime_Button" Background="Transparent" BorderThickness="0" VerticalAlignment="Top" Padding="0" Margin="0, 0, 5, 0" Click="LyricTime_Button_Click">
+
+                                <Button x:Name="LyricTime_Button" x:Uid="/Tools/LyricTime_Button" Background="Transparent" BorderThickness="0" VerticalAlignment="Top" Padding="0" Margin="0, 0, 5, 0" Click="LyricTime_Button_Click">
                                     <TextBlock Text="{x:Bind Time, Mode=OneWay, Converter={StaticResource TimeSpanToLyricTimeString}}"/>
                                 </Button>
                             
