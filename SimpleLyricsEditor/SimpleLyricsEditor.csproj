@@ -266,6 +266,7 @@
     <None Include="Package.StoreAssociation.xml" />
     <Content Include="Data\ShortcutKeysDocument\Shortcut Keys Document.lang-en-US.xml" />
     <Content Include="Data\ShortcutKeysDocument\Shortcut Keys Document.lang-zh-CN.xml" />
+    <Content Include="Data\UpdateLogs\zh-CN\v3.9.1.md" />
     <Content Include="Properties\Default.rd.xml" />
   </ItemGroup>
   <ItemGroup>
