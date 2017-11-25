@@ -146,4 +146,7 @@
   <data name="PreviewMode_ToggleButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
     <value>预览模式</value>
   </data>
+  <data name="MiniMode_StackPanel.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>进入/退出 迷你模式</value>
+  </data>
 </root>

@@ -146,4 +146,7 @@ Shortcut Key : G</value>
   <data name="Select_Reverse_MenuFlyoutItem.Text" xml:space="preserve">
     <value>Reverse Select</value>
   </data>
+  <data name="MiniMode_StackPanel.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Enter / Exit Mini Mode</value>
+  </data>
 </root>
