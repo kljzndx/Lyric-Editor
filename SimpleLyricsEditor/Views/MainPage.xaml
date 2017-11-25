@@ -218,7 +218,7 @@
                     <ctol:LyricsMultilinePreview x:Name="MultilinePreview"/>
                 </Border>
 
-                <StackPanel x:Name="MiniMode_StackPanel" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="50">
+                <StackPanel x:Name="MiniMode_StackPanel" x:Uid="/Tools/MiniMode_StackPanel" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="50">
                     <Button x:Name="EnterMiniMode_Button" Style="{StaticResource FloatingAction_ButtonStyle}" Visibility="{x:Bind _viewModel.IsMiniMode, Mode=OneWay, Converter={StaticResource BoolToVisibility_Reverse}}" Click="EnterMiniMode_Button_Click">
                         <Button.Content>
                             <SymbolIcon Symbol="Pin"/>
