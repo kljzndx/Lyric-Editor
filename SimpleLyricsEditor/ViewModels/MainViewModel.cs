@@ -14,6 +14,7 @@ namespace SimpleLyricsEditor.ViewModels
 {
     public class MainViewModel : ViewModelBase
     {
+        private bool _isMiniMode;
         private List<LyricsTag> _lyricsTags;
 
         public MainViewModel()
@@ -29,6 +30,12 @@ namespace SimpleLyricsEditor.ViewModels
 
             LyricsFileNotifier.FileChanged += LyricsFileChanged;
             LyricsFileNotifier.SaveRequested += LyricsFileSaveRequested;
+        }
+
+        public bool IsMiniMode
+        {
+            get => _isMiniMode;
+            set => Set(ref _isMiniMode, value);
         }
 
         public List<LyricsTag> LyricsTags

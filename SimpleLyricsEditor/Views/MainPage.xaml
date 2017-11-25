@@ -172,8 +172,7 @@
         </Grid>
 
         <Grid Grid.Row="2">
-            
-            <Grid Visibility="{x:Bind PreviewMode_ToggleButton.IsChecked, Mode=OneWay, Converter={StaticResource BoolToVisibility_Reverse}}">
+            <Grid x:Name="LyricsList_Grid" Visibility="{x:Bind PreviewMode_ToggleButton.IsChecked, Mode=OneWay, Converter={StaticResource BoolToVisibility_Reverse}}">
                 <ListView x:Name="Lyrics_ListView" ItemsSource="{x:Bind _viewModel.LyricItems}" GotFocus="Lyrics_ListView_GotFocus" LostFocus="Lyrics_ListView_LostFocus" SelectionChanged="Lyrics_ListView_SelectionChanged" Tapped="Lyrics_ListView_Tapped">
                     <ListView.ItemContainerStyle>
                         <Style TargetType="ListViewItem">
@@ -209,19 +208,34 @@
 
                 <Button x:Name="LyricsSort_Button" x:Uid="/LyricsEdit/LyricsSort_Button" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="50" Style="{StaticResource FloatingAction_ButtonStyle}" Click="LyricsSort_Button_Click">
                     <Button.Content>
-                        <SymbolIcon Symbol="Sort" Width="20" Height="20"/>
+                        <SymbolIcon Symbol="Sort"/>
                     </Button.Content>
                 </Button>
             </Grid>
-            
-            <Border Visibility="{x:Bind PreviewMode_ToggleButton.IsChecked, Mode=OneWay, Converter={StaticResource BoolToVisibility}}">
-                <ctol:LyricsMultilinePreview x:Name="MultilinePreview"/>
-            </Border>
+
+            <Grid x:Name="PreviewMode_Grid" Visibility="{x:Bind PreviewMode_ToggleButton.IsChecked, Mode=OneWay, Converter={StaticResource BoolToVisibility}}">
+                <Border>
+                    <ctol:LyricsMultilinePreview x:Name="MultilinePreview"/>
+                </Border>
+
+                <StackPanel x:Name="MiniMode_StackPanel" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="50">
+                    <Button x:Name="EnterMiniMode_Button" Style="{StaticResource FloatingAction_ButtonStyle}" Visibility="{x:Bind _viewModel.IsMiniMode, Mode=OneWay, Converter={StaticResource BoolToVisibility_Reverse}}" Click="EnterMiniMode_Button_Click">
+                        <Button.Content>
+                            <SymbolIcon Symbol="Pin"/>
+                        </Button.Content>
+                    </Button>
+
+                    <Button x:Name="ExitMiniMode_Button" Style="{StaticResource FloatingAction_ButtonStyle}" Visibility="{x:Bind _viewModel.IsMiniMode, Mode=OneWay, Converter={StaticResource BoolToVisibility}}" Click="ExitMiniMode_Button_Click">
+                        <Button.Content>
+                            <SymbolIcon Symbol="UnPin"/>
+                        </Button.Content>
+                    </Button>
+                </StackPanel>
+            </Grid>
             
             <ToggleButton x:Name="PreviewMode_ToggleButton" x:Uid="/Tools/PreviewMode_ToggleButton" Content="&#xE18B;" Style="{StaticResource ControllerButtonStyle}" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="20" Checked="PreviewMode_ToggleButton_Checked" Unchecked="PreviewMode_ToggleButton_Unchecked"/>
-
         </Grid>
-        
+
         <Grid Grid.Row="3" Visibility="{x:Bind PreviewMode_ToggleButton.IsChecked, Mode=OneWay, Converter={StaticResource BoolToVisibility_Reverse}}" Tapped="LyricsPreview_Grid_Tapped">
             <Rectangle Fill="{ThemeResource SystemControlBackgroundAccentBrush}" Opacity="{x:Bind _settings.PreviewBackgroundOpacity, Mode=OneWay}"/>
             <ctol:LyrricsSinglePreview x:Name="SinglePreview" Lyrics="{x:Bind _viewModel.LyricItems}" FontSize="{x:Bind _settings.SinglePreviewFontSize, Mode=OneWay}"/>

@@ -5,9 +5,12 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Windows.Foundation;
+using Windows.Foundation.Metadata;
 using Windows.Storage;
 using Windows.Storage.AccessCache;
 using Windows.System;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
@@ -36,6 +39,7 @@ namespace SimpleLyricsEditor.Views
         private bool _lyricsListGotFocus;
         private MainViewModel _viewModel;
         private Lyric _backLyric;
+        private readonly ApplicationView _currentView;
 
         private Action _inputBoxSubmitAction;
 
@@ -43,6 +47,7 @@ namespace SimpleLyricsEditor.Views
         {
             InitializeComponent();
 
+            _currentView = ApplicationView.GetForCurrentView();
             ButtonsInMultilineEditMode_StackPanel.Visibility = Visibility.Collapsed;
             MultilinePreview.Lyrics = new ObservableCollection<Lyric>();
 
@@ -56,6 +61,12 @@ namespace SimpleLyricsEditor.Views
             GlobalKeyNotifier.KeyUp += WindowKeyUp;
 
             ImageFileNotifier.FileChanged += ImageFileChanged;
+
+            if (!ApiInformation.IsEnumNamedValuePresent(nameof(ApplicationViewMode), "CompactOverlay") ||
+                !_currentView.IsViewModeSupported(ApplicationViewMode.CompactOverlay))
+            {
+                MiniMode_StackPanel.Visibility = Visibility.Collapsed;
+            }
         }
 
         private void AddLyrics()
@@ -487,6 +498,25 @@ namespace SimpleLyricsEditor.Views
 
             MultilinePreview.Lyrics.Clear();
             MultilinePreview.IsEnabled = false;
+        }
+
+        private async void EnterMiniMode_Button_Click(object sender, RoutedEventArgs e)
+        {
+            ViewModePreferences preferences = ViewModePreferences.CreateDefault(ApplicationViewMode.CompactOverlay);
+            preferences.CustomSize = new Size(500, 500);
+            preferences.ViewSizePreference = ViewSizePreference.Custom;
+            bool modeSwitched = await _currentView.TryEnterViewModeAsync(ApplicationViewMode.CompactOverlay, preferences);
+
+            if (!modeSwitched)
+                throw new Exception("Can not enter Mini Mode");
+
+            _viewModel.IsMiniMode = true;
+        }
+
+        private async void ExitMiniMode_Button_Click(object sender, RoutedEventArgs e)
+        {
+            await _currentView.TryEnterViewModeAsync(ApplicationViewMode.Default);
+            _viewModel.IsMiniMode = false;
         }
 
         private void LyricTime_Button_Click(object sender, RoutedEventArgs e)
