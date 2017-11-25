@@ -62,7 +62,8 @@ namespace SimpleLyricsEditor.Views
 
             ImageFileNotifier.FileChanged += ImageFileChanged;
 
-            if (!ApiInformation.IsEnumNamedValuePresent(typeof(ApplicationViewMode).FullName, "CompactOverlay") ||
+            if (!ApiInformation.IsTypePresent("Windows.UI.ViewManagement.ApplicationViewMode") ||
+                !ApiInformation.IsEnumNamedValuePresent(typeof(ApplicationViewMode).FullName, "CompactOverlay") ||
                 !_currentView.IsViewModeSupported(ApplicationViewMode.CompactOverlay))
             {
                 MiniMode_StackPanel.Visibility = Visibility.Collapsed;
