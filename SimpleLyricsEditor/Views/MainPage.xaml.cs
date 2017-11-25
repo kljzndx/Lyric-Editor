@@ -590,6 +590,12 @@ namespace SimpleLyricsEditor.Views
             Lyrics_ListView.SelectedItem = null;
         }
 
+        private void MultilinePreview_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            Lyric lyric = (Lyric) e.ClickedItem;
+            GoToLyricTime(lyric);
+        }
+
         #region Lyrics File Info Dialog Box
         
         private void LyricsFileInfo_ContentDialog_Opened(ContentDialog sender, ContentDialogOpenedEventArgs args)

@@ -215,7 +215,7 @@
 
             <Grid x:Name="PreviewMode_Grid" Visibility="{x:Bind PreviewMode_ToggleButton.IsChecked, Mode=OneWay, Converter={StaticResource BoolToVisibility}}">
                 <Border>
-                    <ctol:LyricsMultilinePreview x:Name="MultilinePreview"/>
+                    <ctol:LyricsMultilinePreview x:Name="MultilinePreview" ItemClick="MultilinePreview_ItemClick"/>
                 </Border>
 
                 <StackPanel x:Name="MiniMode_StackPanel" x:Uid="/Tools/MiniMode_StackPanel" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="50">
