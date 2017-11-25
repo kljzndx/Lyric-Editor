@@ -32,6 +32,8 @@ namespace SimpleLyricsEditor.Control
             _interpolation = (int) ComputeInterpolation();
         }
 
+        public event ItemClickEventHandler ItemClick;
+
         private double ComputeInterpolation()
         {
             return Main_ListView.ActualHeight / 44 / 2;
@@ -59,6 +61,11 @@ namespace SimpleLyricsEditor.Control
             int itemId = Lyrics.IndexOf(args.CurrentLyric);
 
             Main_ListView.ScrollIntoView(Lyrics[itemId - _interpolation > 0 ? itemId - _interpolation : 0], ScrollIntoViewAlignment.Leading);
+        }
+
+        private void Main_ListView_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            ItemClick?.Invoke(this, e);
         }
     }
 }
