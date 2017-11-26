@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using Windows.Foundation;
 using Windows.UI.Xaml;
@@ -11,8 +12,10 @@ namespace SimpleLyricsEditor.Control.Models
 {
     public abstract class LyricsPreviewBase : UserControl
     {
+        private static readonly ObservableCollection<Lyric> EmptyLyricList = new ObservableCollection<Lyric>();
+
         public static readonly DependencyProperty LyricsProperty = DependencyProperty.Register(
-            nameof(Lyrics), typeof(IList<Lyric>), typeof(LyricsPreviewBase), new PropertyMetadata(null));
+            nameof(Lyrics), typeof(IList<Lyric>), typeof(LyricsPreviewBase), new PropertyMetadata(EmptyLyricList));
 
         public static readonly DependencyProperty CurrentLyricProperty = DependencyProperty.Register(
             nameof(CurrentLyric), typeof(Lyric), typeof(LyricsPreviewBase), new PropertyMetadata(Lyric.Empty));
