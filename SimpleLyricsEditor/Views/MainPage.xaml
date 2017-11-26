@@ -233,7 +233,7 @@
                 </StackPanel>
             </Grid>
             
-            <ToggleButton x:Name="PreviewMode_ToggleButton" x:Uid="/Tools/PreviewMode_ToggleButton" Content="&#xE18B;" Style="{StaticResource ControllerButtonStyle}" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="20" Checked="PreviewMode_ToggleButton_Checked" Unchecked="PreviewMode_ToggleButton_Unchecked"/>
+            <ToggleButton x:Name="PreviewMode_ToggleButton" x:Uid="/Tools/PreviewMode_ToggleButton" Content="&#xE18B;" Style="{StaticResource ControllerButtonStyle}" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="20" IsEnabled="{x:Bind _viewModel.IsLyricsItemAny, Mode=OneWay}" Checked="PreviewMode_ToggleButton_Checked" Unchecked="PreviewMode_ToggleButton_Unchecked"/>
         </Grid>
 
         <Grid Grid.Row="3" Visibility="{x:Bind PreviewMode_ToggleButton.IsChecked, Mode=OneWay, Converter={StaticResource BoolToVisibility_Reverse}}" Tapped="LyricsPreview_Grid_Tapped">
