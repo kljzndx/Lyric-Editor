@@ -49,7 +49,6 @@ namespace SimpleLyricsEditor.Views
 
             _currentView = ApplicationView.GetForCurrentView();
             ButtonsInMultilineEditMode_StackPanel.Visibility = Visibility.Collapsed;
-            MultilinePreview.Lyrics = new ObservableCollection<Lyric>();
 
             _viewModel = DataContext as MainViewModel;
             _viewModel.LyricItems.CollectionChanged += LyricItems_CollectionChanged;
