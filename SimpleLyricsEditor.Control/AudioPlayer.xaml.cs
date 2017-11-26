@@ -4,8 +4,6 @@ using Windows.Foundation;
 using Windows.Media;
 using Windows.Media.Core;
 using Windows.Media.Playback;
-using Windows.Storage.FileProperties;
-using Windows.Storage.Streams;
 using Windows.System;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
@@ -16,7 +14,6 @@ using SimpleLyricsEditor.BLL.Pickers;
 using SimpleLyricsEditor.Core;
 using SimpleLyricsEditor.DAL;
 using SimpleLyricsEditor.Events;
-using Windows.UI.Xaml.Media.Animation;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
@@ -24,6 +21,15 @@ namespace SimpleLyricsEditor.Control
 {
     public sealed partial class AudioPlayer : UserControl
     {
+        #region Locker
+        
+        private static readonly object PlayerPositionLocker = new object();
+
+        private static readonly object SmtcInitializeLocker = new object();
+        private static readonly object SmtcPositionLocker = new object();
+        
+        #endregion
+
         public static readonly DependencyProperty SourceProperty = DependencyProperty.Register(
             nameof(Source), typeof(Music), typeof(AudioPlayer), new PropertyMetadata(Music.Empty));
 
@@ -47,7 +53,6 @@ namespace SimpleLyricsEditor.Control
             new PropertyMetadata(TimeSpan.FromSeconds(5)));
 
         private readonly MediaPlayer _player;
-        private readonly object _positionLocker = new object();
         private readonly SystemMediaTransportControls _smtc;
 
         private bool _isPressShift;
@@ -55,7 +60,6 @@ namespace SimpleLyricsEditor.Control
 
         private Music _musicTemp;
         private Settings _settings = Settings.Current;
-        private RandomAccessStreamReference _thumbnailStream;
 
         public AudioPlayer()
         {
@@ -153,19 +157,25 @@ namespace SimpleLyricsEditor.Control
 
         private void EnableSmtcButton()
         {
-            _smtc.IsEnabled = true;
-            _smtc.IsPlayEnabled = true;
-            _smtc.IsPauseEnabled = true;
-            _smtc.IsStopEnabled = true;
-            _smtc.IsNextEnabled = true;
-            _smtc.IsFastForwardEnabled = true;
-            _smtc.IsPreviousEnabled = true;
-            _smtc.IsRewindEnabled = true;
+            lock (SmtcInitializeLocker)
+            {
+                if (_smtc.IsPlayEnabled)
+                    return;
+
+                _smtc.IsEnabled = true;
+                _smtc.IsPlayEnabled = true;
+                _smtc.IsPauseEnabled = true;
+                _smtc.IsStopEnabled = true;
+                _smtc.IsNextEnabled = true;
+                _smtc.IsFastForwardEnabled = true;
+                _smtc.IsPreviousEnabled = true;
+                _smtc.IsRewindEnabled = true;
+            }
         }
 
         private void RefreshPosition()
         {
-            lock (_positionLocker)
+            lock (PlayerPositionLocker)
             {
                 var currentPositon = _player.PlaybackSession.Position;
                 Position_Slider.Value = currentPositon.TotalMinutes;
@@ -177,7 +187,7 @@ namespace SimpleLyricsEditor.Control
 
         public void SetPosition(TimeSpan newPosition)
         {
-            lock (_positionLocker)
+            lock (PlayerPositionLocker)
             {
                 _player.PlaybackSession.Position = newPosition;
                 Position_Slider.Value = newPosition.TotalMinutes;
@@ -189,7 +199,7 @@ namespace SimpleLyricsEditor.Control
 
         private void SetSmtcPosition(TimeSpan position)
         {
-            lock (_smtc)
+            lock (SmtcPositionLocker)
             {
                 var timeLine = new SystemMediaTransportControlsTimelineProperties
                 {
@@ -312,8 +322,6 @@ namespace SimpleLyricsEditor.Control
                 {
                     Source = _musicTemp;
                     _player.PlaybackSession.PlaybackRate = _settings.PlaybackRate;
-                    _thumbnailStream = RandomAccessStreamReference.CreateFromStream(
-                        (await Source.File.GetScaledImageAsThumbnailAsync(ThumbnailMode.MusicView)).CloneStream());
 
                     EnableSmtcButton();
 
@@ -483,7 +491,7 @@ namespace SimpleLyricsEditor.Control
 
         private void PlayOrPause_ToggleButton_Checked(object sender, RoutedEventArgs e)
         {
-            (sender as ToggleButton).Content = '\uE103';
+            ((ToggleButton) sender).Content = '\uE103';
 
             if (!IsPlay)
                 Play();
@@ -491,7 +499,7 @@ namespace SimpleLyricsEditor.Control
 
         private void PlayOrPause_ToggleButton_Unchecked(object sender, RoutedEventArgs e)
         {
-            (sender as ToggleButton).Content = '\uE102';
+            ((ToggleButton) sender).Content = '\uE102';
 
             if (IsPlay)
                 Pause();
