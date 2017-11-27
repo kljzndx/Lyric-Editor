@@ -3,7 +3,11 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
+using Windows.Data.Xml.Dom;
+using Windows.Storage;
+using Windows.UI.Notifications;
 using GalaSoft.MvvmLight;
+using Microsoft.Toolkit.Uwp.Notifications;
 using SimpleLyricsEditor.BLL;
 using SimpleLyricsEditor.BLL.LyricsOperations;
 using SimpleLyricsEditor.DAL;
@@ -14,9 +18,11 @@ namespace SimpleLyricsEditor.ViewModels
 {
     public class MainViewModel : ViewModelBase
     {
+        private static XmlDocument _savedToastXmlDocument;
+
         private bool _isMiniMode;
         private List<LyricsTag> _lyricsTags;
-
+        
         public MainViewModel()
         {
             _lyricsTags = new LyricsTagFactory().CreateTags();
@@ -178,6 +184,17 @@ namespace SimpleLyricsEditor.ViewModels
             var content = LyricsSerializer.Serialization(LyricItems,
                 LyricsTags.Where(t => !string.IsNullOrWhiteSpace(t.TagValue)));
             await LyricsFileIO.WriteText(e.File, content);
+
+            if (_savedToastXmlDocument == null)
+            {
+                StorageFile file = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Data/ToastNotification/Saved.xml"));
+                string xmlContent = await FileIO.ReadTextAsync(file);
+                XmlDocument xdoc = new XmlDocument();
+                xdoc.LoadXml(xmlContent);
+                _savedToastXmlDocument = xdoc;
+            }
+
+            ToastNotificationManager.CreateToastNotifier().Show(new ToastNotification(_savedToastXmlDocument));
         }
     }
 }

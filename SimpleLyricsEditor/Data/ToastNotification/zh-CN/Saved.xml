@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<toast>
+    <visual>
+        <binding template="ToastGeneric">
+            <text>保存成功</text>
+        </binding>
+    </visual>
+</toast>
