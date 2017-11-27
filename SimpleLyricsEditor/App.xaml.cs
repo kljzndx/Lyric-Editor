@@ -1,24 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.Storage;
 using Windows.System;
 using Windows.UI.Core;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using HappyStudio.UwpToolsLibrary.Auxiliarys;
 using HappyStudio.UwpToolsLibrary.Information;
@@ -37,13 +29,13 @@ namespace SimpleLyricsEditor
     sealed partial class App : Application
     {
         private const string Emill = "kljzndx@outlook.com";
+        
+        private static bool _isPressCtrl;
+        private static bool _isPressShift;
+        private static CoreWindow _coreWindow;
+        private static ExceptionHandlingSynchronizationContext _exceptionHandlingSynchronizationContext;
+
         public static bool IsInputing;
-
-        private CoreWindow _coreWindow;
-
-        private bool _isPressCtrl;
-        private bool _isPressShift;
-
 
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
@@ -60,13 +52,26 @@ namespace SimpleLyricsEditor
                 this.RequestedTheme = (ApplicationTheme) ((int) settings.PageTheme - 1);
         }
 
-        private void EnsureSyncContext()
+        private void KeyEventInitializer()
         {
-            var exceptionHandlingSynchronizationContext = ExceptionHandlingSynchronizationContext.Register();
-            exceptionHandlingSynchronizationContext.UnhandledException += OnSynchronizationContextUnhandledException;
+            if (_coreWindow != null)
+                return;
+
+            _coreWindow = CoreWindow.GetForCurrentThread();
+            _coreWindow.KeyDown += Window_KeyDown;
+            _coreWindow.KeyUp += Window_KeyUp;
         }
 
-        private async Task ShowErrorDialog(Exception ex)
+        private void EnsureSyncContext()
+        {
+            if (_exceptionHandlingSynchronizationContext != null)
+                return;
+
+            _exceptionHandlingSynchronizationContext = ExceptionHandlingSynchronizationContext.Register();
+            _exceptionHandlingSynchronizationContext.UnhandledException += OnSynchronizationContextUnhandledException;
+        }
+
+        private static async Task ShowErrorDialog(Exception ex)
         {
             StringBuilder builder = new StringBuilder();
             builder.AppendLine(CharacterLibrary.ErrorTable.GetString("OperationProcess"));
@@ -79,29 +84,63 @@ namespace SimpleLyricsEditor
             string errorReportEmillTitle =
                 $"{AppInfo.Name} {AppInfo.Version} {CharacterLibrary.MessageBox.GetString("ErrorReportEmillTitle")}";
 
-            var buttons = new Dictionary<string, UICommandInvokedHandler>();
-            buttons.Add(CharacterLibrary.MessageBox.GetString("SendErrorReport"),
-                async (c) => await EmailEx.SendAsync(Emill, errorReportEmillTitle, builder.ToString()));
-            buttons.Add(CharacterLibrary.MessageBox.GetString("Close"), null);
+            var buttons = new Dictionary<string, UICommandInvokedHandler>
+            {
+                {
+                    CharacterLibrary.MessageBox.GetString("SendErrorReport"),
+                    async c => await EmailEx.SendAsync(Emill, errorReportEmillTitle, builder.ToString())
+                },
+                {CharacterLibrary.MessageBox.GetString("Close"), null}
+            };
 
             await MessageBox.ShowAsync(CharacterLibrary.MessageBox.GetString("ErrorReportDialogTitle"),
                 ex.ToShortString(), buttons);
         }
 
-        private void InitializeKeyEvent()
+        private void AppInitializer(IActivatedEventArgs args)
         {
-            if (_coreWindow != null)
-                return;
+            Frame rootFrame = Window.Current.Content as Frame;
+            var normalLaunchArgs = args as LaunchActivatedEventArgs;
 
-            _coreWindow = CoreWindow.GetForCurrentThread();
-            _coreWindow.KeyDown += Window_KeyDown;
-            _coreWindow.KeyUp += Window_KeyUp;
+            // Do not repeat app initialization when the Window already has content,
+            // just ensure that the window is active
+            if (rootFrame == null)
+            {
+                // Create a Frame to act as the navigation context and navigate to the first page
+                rootFrame = new Frame();
+
+                rootFrame.NavigationFailed += OnNavigationFailed;
+
+                if (args.PreviousExecutionState == ApplicationExecutionState.Terminated)
+                {
+                    //TODO: Load state from previously suspended application
+                }
+
+                // Place the frame in the current Window
+                Window.Current.Content = rootFrame;
+            }
+
+            if (normalLaunchArgs != null)
+                if (normalLaunchArgs.PrelaunchActivated)
+                    return;
+
+            if (rootFrame.Content == null)
+            {
+                // When the navigation stack isn't restored navigate to the first page,
+                // configuring the new page by passing required information as a navigation
+                // parameter
+                rootFrame.Navigate(typeof(Views.UiFramework), normalLaunchArgs?.Arguments);
+            }
+            // Ensure the current window is active
+            Window.Current.Activate();
+
+            KeyEventInitializer();
+            EnsureSyncContext();
         }
 
         protected override void OnActivated(IActivatedEventArgs args)
         {
-            InitializeKeyEvent();
-            EnsureSyncContext();
+            AppInitializer(args);
         }
 
         /// <summary>
@@ -111,68 +150,12 @@ namespace SimpleLyricsEditor
         /// <param name="e">Details about the launch request and process.</param>
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
-            Frame rootFrame = Window.Current.Content as Frame;
-            
-            // Do not repeat app initialization when the Window already has content,
-            // just ensure that the window is active
-            if (rootFrame == null)
-            {
-                // Create a Frame to act as the navigation context and navigate to the first page
-                rootFrame = new Frame();
-
-                rootFrame.NavigationFailed += OnNavigationFailed;
-
-                if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
-                {
-                    //TODO: Load state from previously suspended application
-                }
-
-                // Place the frame in the current Window
-                Window.Current.Content = rootFrame;
-            }
-
-            if (e.PrelaunchActivated == false)
-            {
-                if (rootFrame.Content == null)
-                {
-                    // When the navigation stack isn't restored navigate to the first page,
-                    // configuring the new page by passing required information as a navigation
-                    // parameter
-                    rootFrame.Navigate(typeof(Views.UiFramework), e.Arguments);
-                    InitializeKeyEvent();
-                    EnsureSyncContext();
-                }
-                // Ensure the current window is active
-                Window.Current.Activate();
-            }
+            AppInitializer(e);
         }
 
         protected override void OnFileActivated(FileActivatedEventArgs args)
         {
-            Frame rootFrame = Window.Current.Content as Frame;
-
-            // Do not repeat app initialization when the Window already has content,
-            // just ensure that the window is active
-            if (rootFrame == null)
-            {
-                // Create a Frame to act as the navigation context and navigate to the first page
-                rootFrame = new Frame();
-
-                rootFrame.NavigationFailed += OnNavigationFailed;
-                
-                // Place the frame in the current Window
-                Window.Current.Content = rootFrame;
-            }
-            if (rootFrame.Content == null)
-            {
-                // When the navigation stack isn't restored navigate to the first page,
-                // configuring the new page by passing required information as a navigation
-                // parameter
-                rootFrame.Navigate(typeof(Views.UiFramework));
-                InitializeKeyEvent();
-                EnsureSyncContext();
-            }
-            Window.Current.Activate();
+            AppInitializer(args);
 
             LyricsFileNotifier.ChangeFile(args.Files.Last() as StorageFile);
         }
