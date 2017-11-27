@@ -2,7 +2,7 @@
 <toast>
     <visual>
         <binding template="ToastGeneric">
-            <text>保存成功</text>
+            <text>保存完成</text>
         </binding>
     </visual>
 </toast>
