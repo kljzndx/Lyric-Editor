@@ -7,7 +7,6 @@ using Windows.Data.Xml.Dom;
 using Windows.Storage;
 using Windows.UI.Notifications;
 using GalaSoft.MvvmLight;
-using Microsoft.Toolkit.Uwp.Notifications;
 using SimpleLyricsEditor.BLL;
 using SimpleLyricsEditor.BLL.LyricsOperations;
 using SimpleLyricsEditor.DAL;
