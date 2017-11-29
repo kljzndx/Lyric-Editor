@@ -266,8 +266,6 @@ namespace SimpleLyricsEditor.Views
         private void OpenFile_AppBarToggleButton_Checked(object sender, RoutedEventArgs e)
         {
             OpenFile_MenuFlyout.ShowAt(sender as FrameworkElement);
-
-            OpenFile_AppBarToggleButton.Foreground = new SolidColorBrush(Colors.White);
         }
 
         private void OpenFile_MenuFlyout_Closing(FlyoutBase sender, FlyoutBaseClosingEventArgs args)
