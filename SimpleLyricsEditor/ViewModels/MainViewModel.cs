@@ -193,7 +193,11 @@ namespace SimpleLyricsEditor.ViewModels
                 _savedToastXmlDocument = xdoc;
             }
 
-            ToastNotificationManager.CreateToastNotifier().Show(new ToastNotification(_savedToastXmlDocument));
+            ToastNotification notification = new ToastNotification(_savedToastXmlDocument)
+            {
+                ExpirationTime = DateTimeOffset.Now.AddSeconds(10)
+            };
+            ToastNotificationManager.CreateToastNotifier().Show(notification);
         }
     }
 }
