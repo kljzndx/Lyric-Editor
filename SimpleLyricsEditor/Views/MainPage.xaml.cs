@@ -540,7 +540,8 @@ namespace SimpleLyricsEditor.Views
         {
             Lyric lyric = (sender as Button).DataContext as Lyric;
 
-            Lyrics_ListView.SelectedItem = lyric;
+            Lyrics_ListView.SelectRange(new ItemIndexRange(Lyrics_ListView.Items.IndexOf(lyric), 1));
+            
             GoToLyricTime(lyric);
         }
 
