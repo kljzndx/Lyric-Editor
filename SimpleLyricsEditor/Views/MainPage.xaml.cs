@@ -436,8 +436,11 @@ namespace SimpleLyricsEditor.Views
 
         private void Select_Reverse_MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
         {
-            foreach (ListViewItem item in Lyrics_ListView.ItemsPanelRoot.Children.Cast<ListViewItem>().ToList())
-                item.IsSelected = !item.IsSelected;
+            var selectedRanges = Lyrics_ListView.SelectedRanges.ToList();
+
+            Lyrics_ListView.SelectAll();
+            foreach (ItemIndexRange range in selectedRanges)
+                Lyrics_ListView.DeselectRange(range);
         }
 
         private void Select_BeforeItem_MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
