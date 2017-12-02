@@ -465,21 +465,30 @@ namespace SimpleLyricsEditor.Views
 
         private void Select_Paragraph_MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
         {
-            int sltId = Lyrics_ListView.SelectedIndex;
-            var listItems = Lyrics_ListView.ItemsPanelRoot.Children.Cast<ListViewItem>().ToList();
-            var sourceItems = Lyrics_ListView.Items.Cast<Lyric>().ToList();
+            int selectedIndex = Lyrics_ListView.SelectedIndex;
+            int paragraphStart = 0;
+            int paragraphLength = -1;
 
-            for (int i = sltId - 1; i >= 0; i--)
-                if (!String.IsNullOrEmpty(sourceItems[i].Content))
-                    listItems[i].IsSelected = true;
-                else
-                    break;
+            var lyrics = _viewModel.LyricItems.ToList();
 
-            for (int i = sltId; i < sourceItems.Count - 1; i++)
-                if (!String.IsNullOrEmpty(sourceItems[i].Content))
-                    listItems[i].IsSelected = true;
+            foreach (var lyric in lyrics.Where(l => String.IsNullOrEmpty(l.Content)))
+            {
+                int currentId = lyrics.IndexOf(lyric);
+
+                if (currentId <= selectedIndex)
+                    paragraphStart = currentId + 1;
                 else
+                {
+                    paragraphLength = currentId - paragraphStart;
                     break;
+                }
+            }
+
+            if (paragraphLength == -1)
+                paragraphLength =  lyrics.Count - paragraphStart;
+
+            Lyrics_ListView.DeselectRange(new ItemIndexRange(0, (uint) lyrics.Count));
+            Lyrics_ListView.SelectRange(new ItemIndexRange(paragraphStart, (uint) paragraphLength));
         }
 
         #endregion
