@@ -13,6 +13,7 @@ using Windows.System;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media.Imaging;
 using HappyStudio.UwpToolsLibrary.Auxiliarys;
@@ -441,18 +442,22 @@ namespace SimpleLyricsEditor.Views
 
         private void Select_BeforeItem_MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
         {
-            var items = Lyrics_ListView.ItemsPanelRoot.Children.Cast<ListViewItem>().ToList();
+            uint selectedIndex = (uint) Lyrics_ListView.SelectedIndex;
 
-            for (var i = Lyrics_ListView.SelectedIndex; i >= 0; i--)
-                items[i].IsSelected = true;
+            Lyrics_ListView.DeselectRange(new ItemIndexRange(0, (uint) Lyrics_ListView.Items.Count));
+            Lyrics_ListView.SelectRange(new ItemIndexRange(0, selectedIndex + 1));
         }
 
         private void Select_AfterItem_MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
         {
-            var items = Lyrics_ListView.ItemsPanelRoot.Children.Cast<ListViewItem>().ToList();
+            bool isSelected = Lyrics_ListView.SelectedIndex >= 0;
+            int itemsCount = Lyrics_ListView.Items.Count;
 
-            for (var i = Lyrics_ListView.SelectedIndex; i < Lyrics_ListView.Items.Count - 1; i++)
-                items[i].IsSelected = true;
+            int selectIndex = isSelected ? Lyrics_ListView.SelectedIndex : 0;
+            uint selectCount = (uint) (isSelected ? itemsCount - selectIndex : itemsCount);
+
+            Lyrics_ListView.DeselectRange(new ItemIndexRange(0, (uint) Lyrics_ListView.Items.Count));
+            Lyrics_ListView.SelectRange(new ItemIndexRange(selectIndex, selectCount));
         }
 
         private void Select_Paragraph_MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
