@@ -445,21 +445,31 @@ namespace SimpleLyricsEditor.Views
 
         private void Select_BeforeItem_MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
         {
-            uint selectedIndex = (uint) Lyrics_ListView.SelectedIndex;
+            int selectedIndex = Lyrics_ListView.SelectedIndex;
 
-            Lyrics_ListView.DeselectRange(new ItemIndexRange(0, (uint) Lyrics_ListView.Items.Count));
-            Lyrics_ListView.SelectRange(new ItemIndexRange(0, selectedIndex + 1));
+            if (selectedIndex != -1)
+            {
+                Lyrics_ListView.DeselectRange(new ItemIndexRange(0, (uint) Lyrics_ListView.Items.Count));
+                Lyrics_ListView.SelectRange(new ItemIndexRange(0, (uint) (selectedIndex + 1)));
+            }
+            else
+                Lyrics_ListView.SelectAll();
         }
 
         private void Select_AfterItem_MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
         {
-            bool isSelected = Lyrics_ListView.SelectedIndex >= 0;
+            if (Lyrics_ListView.SelectedIndex == -1)
+            {
+                Lyrics_ListView.SelectAll();
+                return;
+            }
+
             int itemsCount = Lyrics_ListView.Items.Count;
 
-            int selectIndex = isSelected ? Lyrics_ListView.SelectedIndex : 0;
-            uint selectCount = (uint) (isSelected ? itemsCount - selectIndex : itemsCount);
+            int selectIndex = Lyrics_ListView.SelectedIndex;
+            uint selectCount = (uint) (itemsCount - selectIndex);
 
-            Lyrics_ListView.DeselectRange(new ItemIndexRange(0, (uint) Lyrics_ListView.Items.Count));
+            Lyrics_ListView.DeselectRange(new ItemIndexRange(0, (uint) itemsCount));
             Lyrics_ListView.SelectRange(new ItemIndexRange(selectIndex, selectCount));
         }
 
