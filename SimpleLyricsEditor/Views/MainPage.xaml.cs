@@ -587,7 +587,7 @@ namespace SimpleLyricsEditor.Views
 
         private void Lyrics_ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (e.AddedItems.FirstOrDefault() is Lyric currentLyric)
+            if (e.AddedItems.LastOrDefault() is Lyric currentLyric)
             {
                 Lyrics_ListView.ScrollIntoView(currentLyric);
 
