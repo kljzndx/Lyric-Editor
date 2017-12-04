@@ -449,7 +449,7 @@ namespace SimpleLyricsEditor.Views
 
             if (selectedIndex != -1)
             {
-                Lyrics_ListView.DeselectRange(new ItemIndexRange(0, (uint) Lyrics_ListView.Items.Count));
+                Lyrics_ListView.SelectedIndex = -1;
                 Lyrics_ListView.SelectRange(new ItemIndexRange(0, (uint) (selectedIndex + 1)));
             }
             else
@@ -469,7 +469,7 @@ namespace SimpleLyricsEditor.Views
             int selectIndex = Lyrics_ListView.SelectedIndex;
             uint selectCount = (uint) (itemsCount - selectIndex);
 
-            Lyrics_ListView.DeselectRange(new ItemIndexRange(0, (uint) itemsCount));
+            Lyrics_ListView.SelectedItem = null;
             Lyrics_ListView.SelectRange(new ItemIndexRange(selectIndex, selectCount));
         }
 
@@ -497,7 +497,7 @@ namespace SimpleLyricsEditor.Views
             if (paragraphLength == -1)
                 paragraphLength =  lyrics.Count - paragraphStart;
 
-            Lyrics_ListView.DeselectRange(new ItemIndexRange(0, (uint) lyrics.Count));
+            Lyrics_ListView.SelectedItem = null;
             Lyrics_ListView.SelectRange(new ItemIndexRange(paragraphStart, (uint) paragraphLength));
         }
 
