@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AddLyrics_ComboBoxItem.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>添加歌词项目
+    <value>逐行添加歌词项目
 快捷键：空格
 按住 Shift 可往上添加歌词</value>
   </data>
@@ -134,7 +134,7 @@
 快捷键：S</value>
   </data>
   <data name="ModifyLyrics_ComboBoxItem.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>修改歌词内容
+    <value>修改所选歌词项目的内容
 快捷键：M</value>
   </data>
   <data name="MoveTime_Button.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">

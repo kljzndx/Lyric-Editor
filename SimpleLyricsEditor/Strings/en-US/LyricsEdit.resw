@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AddLyrics_ComboBoxItem.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Add Lyric Items
+    <value>Add Lyrics item by line
 Shortcut keys : Space
 Press Shift to Add Lyrics to Above</value>
   </data>
@@ -134,7 +134,7 @@ Shortcut Keys : C</value>
 Shortcut Keys : S</value>
   </data>
   <data name="ModifyLyrics_ComboBoxItem.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Modify Lyrics Content
+    <value>Modify the content of the selected lyrics items
 Shortcut Key : M</value>
   </data>
   <data name="MoveTime_Button.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
