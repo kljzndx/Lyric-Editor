@@ -32,11 +32,21 @@ namespace SimpleLyricsEditor.Control
             _interpolation = (int) ComputeInterpolation();
         }
 
+        private int ItemsCountOnView => _interpolation / 44;
+
         public event ItemClickEventHandler ItemClick;
 
         private double ComputeInterpolation()
         {
-            return Main_ListView.ActualHeight / 44 / 2;
+            return Root_Viewer.ActualHeight / 2 - 22;
+        }
+
+        private double ComputeScrollVerticalOffset(int itemId)
+        {
+            if (itemId + 1 < ItemsCountOnView / 2)
+                return 0;
+            else
+                return 44 * itemId - _interpolation;
         }
 
         private void LyricsMultilinePreview_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -52,7 +62,7 @@ namespace SimpleLyricsEditor.Control
 
             if (args.CurrentLyric.Equals(Lyric.Empty))
             {
-                Main_ListView.ScrollIntoView(Lyrics[0]);
+                Root_Viewer.ChangeView(null, 0, null);
                 return;
             }
 
@@ -60,7 +70,7 @@ namespace SimpleLyricsEditor.Control
             
             int itemId = Lyrics.IndexOf(args.CurrentLyric);
 
-            Main_ListView.ScrollIntoView(Lyrics[itemId - _interpolation > 0 ? itemId - _interpolation : 0], ScrollIntoViewAlignment.Leading);
+            Root_Viewer.ChangeView(null, ComputeScrollVerticalOffset(itemId), null);
         }
 
         private void Main_ListView_ItemClick(object sender, ItemClickEventArgs e)

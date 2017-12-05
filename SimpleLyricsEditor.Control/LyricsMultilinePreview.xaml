@@ -12,17 +12,19 @@
     d:DesignWidth="400"
     SizeChanged="LyricsMultilinePreview_SizeChanged" Refreshed="LyricsMultilinePreview_Refreshed">
 
-    <ListView x:Name="Main_ListView" ItemsSource="{x:Bind Lyrics, Mode=OneWay}" SelectionMode="None" IsItemClickEnabled="True" ItemClick="Main_ListView_ItemClick">
-        <ListView.ItemContainerStyle>
-            <Style TargetType="ListViewItem">
-                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-            </Style>
-        </ListView.ItemContainerStyle>
+    <ScrollViewer x:Name="Root_Viewer">
+        <ListView x:Name="Main_ListView" ItemsSource="{x:Bind Lyrics, Mode=OneWay}" SelectionMode="None" IsItemClickEnabled="True" ItemClick="Main_ListView_ItemClick">
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                </Style>
+            </ListView.ItemContainerStyle>
 
-        <ListView.ItemTemplate>
-            <DataTemplate x:DataType="dmodel:Lyric">
-                <template:LyricsMultilinePreviewItemTemplate LyricContent="{x:Bind Content}" IsBold="{x:Bind IsSelected, Mode=OneWay}"/>
-            </DataTemplate>
-        </ListView.ItemTemplate>
-    </ListView>
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="dmodel:Lyric">
+                    <template:LyricsMultilinePreviewItemTemplate LyricContent="{x:Bind Content}" IsBold="{x:Bind IsSelected, Mode=OneWay}"/>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </ScrollViewer>
 </cmodel:LyricsPreviewBase>
