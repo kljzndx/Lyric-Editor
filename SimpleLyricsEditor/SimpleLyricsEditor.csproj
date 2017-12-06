@@ -168,6 +168,7 @@
     <Content Include="Data\UpdateLogs\zh-CN\v3.9.13.md" />
     <Content Include="Data\UpdateLogs\zh-CN\v3.9.15.md" />
     <Content Include="Data\UpdateLogs\zh-CN\v3.9.16.md" />
+    <Content Include="Data\UpdateLogs\zh-CN\v3.9.18.md" />
     <None Include="SimpleLyricsEditor_StoreKey.pfx" />
     <None Include="SimpleLyricsEditor_TemporaryKey.pfx" />
     <PRIResource Include="Strings\en-US\Tools.resw" />
