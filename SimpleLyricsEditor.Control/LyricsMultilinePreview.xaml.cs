@@ -24,35 +24,38 @@ namespace SimpleLyricsEditor.Control
     {
         private static readonly object InterpolationLocker = new object();
         
-        private int _interpolation;
-
         public LyricsMultilinePreview()
         {
             this.InitializeComponent();
-            _interpolation = (int) ComputeInterpolation();
+            _itemsCountOnView = ComputeItemsCountOnView();
         }
 
-        private int ItemsCountOnView => _interpolation / 44;
+        private int _itemsCountOnView;
 
         public event ItemClickEventHandler ItemClick;
 
-        private double ComputeInterpolation()
+        private int ComputeItemsCountOnView()
         {
-            return Root_Viewer.ActualHeight / 2 - 22;
+            return (int) Root_Viewer.ActualHeight / 44;
         }
-
-        private double ComputeScrollVerticalOffset(int itemId)
+        
+        private double ComputeScrollVerticalOffset(Lyric item)
         {
-            if (itemId + 1 < ItemsCountOnView / 2)
+            int itemId = Lyrics.IndexOf(item);
+            if (itemId + 1 < _itemsCountOnView / 2)
                 return 0;
-            else
-                return 44 * itemId - _interpolation;
+
+            int itemHeight = Main_ListView.ContainerFromItem(item) is ListViewItem listViewItem
+                ? (int) listViewItem.DesiredSize.Height
+                : 44;
+
+            return (44 * itemId) - (Root_Viewer.ActualHeight / 2 - itemHeight);
         }
 
         private void LyricsMultilinePreview_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             lock (InterpolationLocker)
-                _interpolation = (int) ComputeInterpolation();
+                _itemsCountOnView = ComputeItemsCountOnView();
         }
 
         private void LyricsMultilinePreview_Refreshed(LyricsPreviewBase sender, LyricsPreviewRefreshEventArgs args)
@@ -67,10 +70,8 @@ namespace SimpleLyricsEditor.Control
             }
 
             args.CurrentLyric.IsSelected = true;
-            
-            int itemId = Lyrics.IndexOf(args.CurrentLyric);
 
-            Root_Viewer.ChangeView(null, ComputeScrollVerticalOffset(itemId), null);
+            Root_Viewer.ChangeView(null, ComputeScrollVerticalOffset(args.CurrentLyric), null);
         }
 
         private void Main_ListView_ItemClick(object sender, ItemClickEventArgs e)
