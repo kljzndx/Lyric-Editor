@@ -49,12 +49,14 @@ namespace SimpleLyricsEditor.Control.Templates
                 if (value)
                 {
                     Main_TextBlock.FontWeight = FontWeights.Bold;
-                    Main_TextBlock.FontSize = this.FontSize + 2;
+                    Reset_Storyboard.Stop();
+                    Amplifier_Storyboard.Begin();
                 }
                 else
                 {
                     Main_TextBlock.FontWeight = FontWeights.Normal;
-                    Main_TextBlock.FontSize = this.FontSize;
+                    Amplifier_Storyboard.Stop();
+                    Reset_Storyboard.Begin();
                 }
             }
         }
