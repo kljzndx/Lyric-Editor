@@ -7,16 +7,20 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     d:DesignHeight="300"
-    d:DesignWidth="400">
+    d:DesignWidth="400"
+    Foreground="Red" Background="{ThemeResource SystemControlBackgroundBaseHighBrush}">
 
     <UserControl.Resources>
         <Storyboard x:Name="FadeIn">
-            <FadeInThemeAnimation Storyboard.TargetName="TextBlock"/>
+            <FadeInThemeAnimation Storyboard.TargetName="Root_Grid"/>
         </Storyboard>
         <Storyboard x:Name="FadeOut">
-            <FadeOutThemeAnimation Storyboard.TargetName="TextBlock"/>
+            <FadeOutThemeAnimation Storyboard.TargetName="Root_Grid"/>
         </Storyboard>
     </UserControl.Resources>
 
-    <TextBlock x:Name="TextBlock" TextAlignment="Center" FontSize="{x:Bind FontSize, Mode=OneWay}" Margin="0,5"/>
+    <Grid x:Name="Root_Grid" HorizontalAlignment="Center" Margin="0,5">
+        <TextBlock x:Name="Bottom_TextBlock" FontSize="{x:Bind FontSize, Mode=OneWay}" Foreground="{x:Bind Background, Mode=OneWay}" SizeChanged="Bottom_TextBlock_SizeChanged"/>
+        <TextBlock x:Name="Top_TextBlock" Width="0" HorizontalAlignment="Left" FontSize="{x:Bind FontSize, Mode=OneWay}" Foreground="{x:Bind Foreground, Mode=OneWay}"/>
+    </Grid>
 </model:LyricsPreviewBase>
