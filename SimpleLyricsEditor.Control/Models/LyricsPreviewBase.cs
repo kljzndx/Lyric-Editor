@@ -58,8 +58,8 @@ namespace SimpleLyricsEditor.Control.Models
 
             if (currentTime >= nextTime && currentTime <= nextTime + TimeSpan.TicksPerSecond)
             {
-                CurrentLyric = nextLyric;
                 NextIndex++;
+                CurrentLyric = nextLyric;
             }
         }
 
@@ -70,15 +70,15 @@ namespace SimpleLyricsEditor.Control.Models
             
             if (position.CompareTo(Lyrics.First().Time) <= 0)
             {
-                CurrentLyric = Lyric.Empty;
                 NextIndex = 0;
+                CurrentLyric = Lyric.Empty;
                 return;
             }
 
             if (position.CompareTo(Lyrics.Last().Time) >= 0)
             {
-                CurrentLyric = Lyrics.Last();
                 NextIndex = 0;
+                CurrentLyric = Lyrics.Last();
                 return;
             }
 
@@ -86,8 +86,8 @@ namespace SimpleLyricsEditor.Control.Models
             {
                 if (position.CompareTo(Lyrics[i].Time) < 0)
                 {
-                    CurrentLyric = Lyrics[i - 1];
                     NextIndex = i;
+                    CurrentLyric = Lyrics[i - 1];
                     break;
                 }
             }
