@@ -109,6 +109,7 @@
     <Compile Include="BoolNullableToBool.cs" />
     <Compile Include="BoolToVisibility.cs" />
     <Compile Include="BoolToVisibility_Reverse.cs" />
+    <Compile Include="ColorExtension.cs" />
     <Compile Include="Convert.xaml.cs">
       <DependentUpon>Convert.xaml</DependentUpon>
     </Compile>
