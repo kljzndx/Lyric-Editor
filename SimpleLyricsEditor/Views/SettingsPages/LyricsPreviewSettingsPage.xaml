@@ -11,7 +11,7 @@
     <StackPanel>
         <Slider x:Uid="/LyricsPreviewSettings/PreviewBackgroundOpacity_Slider" Value="{x:Bind _settings.PreviewBackgroundOpacity, Mode=TwoWay, Converter={StaticResource PercentageToDouble}}"/>
         <Slider x:Uid="/LyricsPreviewSettings/SinglePreviewFontSize_Slider" Minimum="16" Maximum="32" Value="{x:Bind _settings.SinglePreviewFontSize, Mode=TwoWay}"/>
-        <ToggleSwitch IsOn="{x:Bind _settings.CaraOkEffectEnabled, Mode=TwoWay}"/>
+        <ToggleSwitch x:Uid="/LyricsPreviewSettings/CaraOk_ToggleSwitch" IsOn="{x:Bind _settings.CaraOkEffectEnabled, Mode=TwoWay}"/>
     </StackPanel>
 </model:SettingsPageBase>
 
