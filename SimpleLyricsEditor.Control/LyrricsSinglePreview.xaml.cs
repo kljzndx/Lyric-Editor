@@ -67,6 +67,8 @@ namespace SimpleLyricsEditor.Control
                     _scaleAnimation.Duration = ComputeCaraOkDuration(args.CurrentLyric);
                     _caraOk.Begin();
                 }
+                else
+                    Top_TextBlock.Width = 0;
             }
 
             if (!isAny && !String.IsNullOrEmpty(args.CurrentLyric.Content))
