@@ -9,7 +9,7 @@ namespace SimpleLyricsEditor.ValueConvert
     {
         public static Color HexColorToColor(this string hexColor)
         {
-            Regex regex = new Regex(@"#(?<A>.{2})(?<R>.{2})(?<G>.{2})(?<B>.{2})");
+            Regex regex = new Regex(@"#(?<A>[0-9a-fA-F]{2})(?<R>[0-9a-fA-F]{2})(?<G>[0-9a-fA-F]{2})(?<B>[0-9a-fA-F]{2})");
             Match match = regex.Match(hexColor);
             if (!match.Success)
                 throw new Exception("此字符串不是有效的16进制颜色值" +
