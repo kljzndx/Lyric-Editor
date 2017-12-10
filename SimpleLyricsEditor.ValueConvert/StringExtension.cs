@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using Windows.UI;
 
@@ -10,10 +11,18 @@ namespace SimpleLyricsEditor.ValueConvert
         {
             Regex regex = new Regex(@"#(?<A>.{2})(?<R>.{2})(?<G>.{2})(?<B>.{2})");
             Match match = regex.Match(hexColor);
+            if (!match.Success)
+                throw new Exception("此字符串不是有效的16进制颜色值" +
+                                    Environment.NewLine +
+                                    "有效的颜色值示例如下" +
+                                    Environment.NewLine +
+                                    "#FF000000");
+
+            GroupCollection groups = match.Groups;
             List<byte> bytes = new List<byte>();
 
-            foreach (Group item in match.Groups)
-                bytes.Add(System.Convert.ToByte(item.Value, 16));
+            for (int i = 1; i < groups.Count; i++)
+                bytes.Add(System.Convert.ToByte(groups[i].Value, 16));
 
             return Color.FromArgb(bytes[0], bytes[1], bytes[2], bytes[3]);
         }
