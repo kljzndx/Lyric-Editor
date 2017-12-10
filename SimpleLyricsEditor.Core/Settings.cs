@@ -40,7 +40,8 @@ namespace SimpleLyricsEditor.Core
             if (base.SettingObject.Values.ContainsKey("AdClickDate"))
                 base.SettingObject.Values.Remove("AdClickDate");
 
-            _caraOkEffectColor = base.GetSetting(nameof(CaraOkEffectColor), Colors.Red.ToHexString(),
+            _caraOkEffectColor = base.GetSetting(nameof(CaraOkEffectColor),
+                Colors.Red.ToHexString(),
                 s => s.HexColorToColor());
             
             InitializeSettingFields();
