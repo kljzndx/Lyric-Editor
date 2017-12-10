@@ -2,7 +2,7 @@
 using System.Text;
 using SimpleLyricsEditor.Core;
 
-namespace SimpleLyricsEditor.ValueConvert
+namespace SimpleLyricsEditor.Models
 {
     public static class ExceptionExtension
     {

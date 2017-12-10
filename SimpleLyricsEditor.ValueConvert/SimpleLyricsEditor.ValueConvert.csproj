@@ -114,7 +114,6 @@
       <DependentUpon>Convert.xaml</DependentUpon>
     </Compile>
     <Compile Include="DoubleToLyricTimeString.cs" />
-    <Compile Include="ExceptionExtension.cs" />
     <Compile Include="PercentageToDouble.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StringExtension.cs" />
@@ -137,12 +136,6 @@
       <Generator>MSBuild:Compile</Generator>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\SimpleLyricsEditor.Core\SimpleLyricsEditor.Core.csproj">
-      <Project>{af9a2dad-4ece-4a03-81d3-dede622420f1}</Project>
-      <Name>SimpleLyricsEditor.Core</Name>
-    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
