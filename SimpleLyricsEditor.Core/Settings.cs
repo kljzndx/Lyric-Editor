@@ -4,13 +4,12 @@ using Windows.UI.Xaml;
 using HappyStudio.UwpToolsLibrary.Auxiliarys;
 using HappyStudio.UwpToolsLibrary.Auxiliarys.Attributes;
 using HappyStudio.UwpToolsLibrary.Information;
+using SimpleLyricsEditor.ValueConvert;
 
 namespace SimpleLyricsEditor.Core
 {
     public sealed class Settings : SettingsBase
     {
-        private static readonly Color RedColor = Colors.DeepSkyBlue;
-
         [SettingFieldByNormal(nameof(PlaybackRate), 1D)] private double _playbackRate;
         [SettingFieldByNormal(nameof(Balance), 0D)] private double _balance;
         [SettingFieldByNormal(nameof(Volume), 1D)] private double _volume;
@@ -31,6 +30,7 @@ namespace SimpleLyricsEditor.Core
         [SettingFieldByNormal(nameof(PreviewBackgroundOpacity), 0.3)] private double _previewBackgroundOpacity;
         [SettingFieldByNormal(nameof(SinglePreviewFontSize), 20D)] private double _singlePreviewFontSize;
         [SettingFieldByNormal(nameof(CaraOkEffectEnabled), true)] private bool _caraOkEffectEnabled;
+        private Color _caraOkEffectColor;
 
         private Settings()
         {
@@ -39,6 +39,9 @@ namespace SimpleLyricsEditor.Core
                 base.SettingObject.Values.Remove("BackgroundSourceType");
             if (base.SettingObject.Values.ContainsKey("AdClickDate"))
                 base.SettingObject.Values.Remove("AdClickDate");
+
+            _caraOkEffectColor = base.GetSetting(nameof(CaraOkEffectColor), Colors.Red.ToHexString(),
+                s => s.HexColorToColor());
             
             InitializeSettingFields();
         }
@@ -148,6 +151,12 @@ namespace SimpleLyricsEditor.Core
         {
             get => _caraOkEffectEnabled;
             set => SetSetting(ref _caraOkEffectEnabled, value);
+        }
+
+        public Color CaraOkEffectColor
+        {
+            get => _caraOkEffectColor;
+            set => SetSetting(ref _caraOkEffectColor, value, settingValue: value.ToHexString());
         }
     }
 }
