@@ -132,6 +132,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Page>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SimpleLyricsEditor.ValueConvert\SimpleLyricsEditor.ValueConvert.csproj">
+      <Project>{7d550156-c386-4928-a077-b048ead45dbd}</Project>
+      <Name>SimpleLyricsEditor.ValueConvert</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
