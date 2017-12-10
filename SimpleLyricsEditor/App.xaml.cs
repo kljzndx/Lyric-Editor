@@ -16,6 +16,7 @@ using HappyStudio.UwpToolsLibrary.Auxiliarys;
 using HappyStudio.UwpToolsLibrary.Information;
 using SimpleLyricsEditor.Core;
 using SimpleLyricsEditor.Events;
+using SimpleLyricsEditor.Models;
 using SimpleLyricsEditor.ValueConvert;
 using WinRTExceptions;
 using AppInfo = HappyStudio.UwpToolsLibrary.Information.AppInfo;
