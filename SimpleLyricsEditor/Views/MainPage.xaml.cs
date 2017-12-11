@@ -550,12 +550,16 @@ namespace SimpleLyricsEditor.Views
         {
             Lyric lyric = (sender as Button).DataContext as Lyric;
 
-            var range = new ItemIndexRange(Lyrics_ListView.Items.IndexOf(lyric), 1);
-            if (Lyrics_ListView.SelectedItems.Contains(lyric))
-                Lyrics_ListView.DeselectRange(range);
-            else
-                Lyrics_ListView.SelectRange(range);
-            
+            if (Lyrics_ListView.SelectionMode == ListViewSelectionMode.Multiple ||
+                Lyrics_ListView.SelectionMode == ListViewSelectionMode.Extended)
+            { 
+                var range = new ItemIndexRange(Lyrics_ListView.Items.IndexOf(lyric), 1);
+                if (Lyrics_ListView.SelectedItems.Contains(lyric))
+                    Lyrics_ListView.DeselectRange(range);
+                else
+                    Lyrics_ListView.SelectRange(range);
+            }
+
             GoToLyricTime(lyric);
         }
 
