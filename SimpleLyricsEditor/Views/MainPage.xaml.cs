@@ -554,6 +554,7 @@ namespace SimpleLyricsEditor.Views
                 Lyrics_ListView.SelectionMode == ListViewSelectionMode.Extended)
             { 
                 var range = new ItemIndexRange(Lyrics_ListView.Items.IndexOf(lyric), 1);
+
                 if (Lyrics_ListView.SelectedItems.Contains(lyric))
                     Lyrics_ListView.DeselectRange(range);
                 else
