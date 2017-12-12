@@ -11,7 +11,10 @@ namespace SimpleLyricsEditor.BLL.Pickers
 
         private static FileOpenPicker GetPicker()
         {
-            FileOpenPicker picker = new FileOpenPicker();
+            FileOpenPicker picker = new FileOpenPicker
+            {
+                SuggestedStartLocation = PickerLocationId.PicturesLibrary
+            };
             picker.FileTypeFilter.Add(".png");
             picker.FileTypeFilter.Add(".jpg");
             picker.FileTypeFilter.Add(".dng");

@@ -16,9 +16,13 @@ namespace SimpleLyricsEditor.BLL.Pickers
         
         private static FileOpenPicker GetPicker()
         {
-            FileOpenPicker picker = new FileOpenPicker();
+            FileOpenPicker picker = new FileOpenPicker
+            {
+                SuggestedStartLocation = PickerLocationId.MusicLibrary
+            };
             picker.FileTypeFilter.Add(".lrc");
             picker.FileTypeFilter.Add(".txt");
+
             return picker;
         }
     }

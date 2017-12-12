@@ -16,7 +16,10 @@ namespace SimpleLyricsEditor.BLL.Pickers
 
         private static FileOpenPicker GetPicker()
         {
-            var picker = new FileOpenPicker();
+            var picker = new FileOpenPicker
+            {
+                SuggestedStartLocation = PickerLocationId.MusicLibrary
+            };
             picker.FileTypeFilter.Add(".wav");
             picker.FileTypeFilter.Add(".flac");
             picker.FileTypeFilter.Add(".alac");
