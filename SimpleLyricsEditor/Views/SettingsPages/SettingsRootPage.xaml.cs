@@ -26,13 +26,14 @@ namespace SimpleLyricsEditor.Views.SettingsPages
     public sealed partial class SettingsRootPage : Page
     {
         private readonly List<PageModel> pms;
+
         public SettingsRootPage()
         {
             this.InitializeComponent();
             pms = new List<PageModel>
             {
-                new PageModel(CharacterLibrary.BackgroundSettings.GetString("Title"), typeof(BackgroundSettingsPage)),
-                new PageModel(CharacterLibrary.LyricsPreviewSettings.GetString("Title"), typeof(LyricsPreviewSettingsPage))
+                new PageModel(typeof(BackgroundSettingsPage)),
+                new PageModel(typeof(LyricsPreviewSettingsPage))
             };
         }
 

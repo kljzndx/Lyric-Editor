@@ -27,11 +27,9 @@ namespace SimpleLyricsEditor.Views
     /// </summary>
     public sealed partial class UiFramework : Page
     {
-        private static readonly PageModel SettingsPageModel =
-            new PageModel(CharacterLibrary.SettingsRoot.GetString("Title"), typeof(SettingsRootPage));
+        private static readonly PageModel SettingsPageModel = new PageModel(typeof(SettingsRootPage));
 
-        private static readonly PageModel AboutPageModel =
-            new PageModel(CharacterLibrary.About.GetString("Title"), typeof(AboutPage));
+        private static readonly PageModel AboutPageModel = new PageModel(typeof(AboutPage));
 
         private readonly Settings _settings = Settings.Current;
         private StorageFile _lyricsFile;
