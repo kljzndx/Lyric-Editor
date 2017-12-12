@@ -11,6 +11,7 @@
     <StackPanel>
         <Slider x:Uid="/LyricsPreviewSettings/PreviewBackgroundOpacity_Slider" Value="{x:Bind _settings.PreviewBackgroundOpacity, Mode=TwoWay, Converter={StaticResource PercentageToDouble}}"/>
         <Slider x:Uid="/LyricsPreviewSettings/SinglePreviewFontSize_Slider" Minimum="16" Maximum="32" Value="{x:Bind _settings.SinglePreviewFontSize, Mode=TwoWay}"/>
+        <Button x:Name="CaraOkEffectSettings_Button" x:Uid="/LyricsPreviewSettings/CaraOkEffectSettings_Button" Margin="0,10" Click="CaraOkEffectSettings_Button_Click"/>
     </StackPanel>
 </model:SettingsPageBase>
 

@@ -24,9 +24,16 @@ namespace SimpleLyricsEditor.Views.SettingsPages
     /// </summary>
     public sealed partial class LyricsPreviewSettingsPage : SettingsPageBase
     {
+        private static PageModel CaraOkEffectSettings_PageModel = new PageModel(typeof(CaraOkSettingsPage));
+
         public LyricsPreviewSettingsPage() : base()
         {
             this.InitializeComponent();
+        }
+
+        private void CaraOkEffectSettings_Button_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(CaraOkEffectSettings_PageModel.PageType, CaraOkEffectSettings_PageModel.Title);
         }
     }
 }
