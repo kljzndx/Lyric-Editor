@@ -120,4 +120,13 @@
   <data name="CaraOk_ToggleSwitch.Header" xml:space="preserve">
     <value>Cara OK Effect</value>
   </data>
+  <data name="Hue_Slider.Header" xml:space="preserve">
+    <value>Hue</value>
+  </data>
+  <data name="Lightness_Slider.Header" xml:space="preserve">
+    <value>Lightness</value>
+  </data>
+  <data name="Saturation_Slider.Header" xml:space="preserve">
+    <value>Saturation</value>
+  </data>
 </root>

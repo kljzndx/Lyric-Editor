@@ -7,8 +7,20 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <StackPanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <ToggleSwitch x:Uid="/CaraOkSettings/CaraOk_ToggleSwitch" IsOn="{x:Bind _settings.CaraOkEffectEnabled, Mode=TwoWay}"/>
+    <StackPanel x:Name="Root_StackPanel" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <ToggleSwitch x:Name="CaraOk_ToggleSwitch" x:Uid="/CaraOkSettings/CaraOk_ToggleSwitch" IsOn="{x:Bind _settings.CaraOkEffectEnabled, Mode=TwoWay}"/>
+
+        <StackPanel x:Name="CaraOkEffectColor_StackPanel" Visibility="{x:Bind _settings.CaraOkEffectEnabled, Mode=OneWay, Converter={StaticResource BoolToVisibility}}">
+            <Slider x:Name="Hue_Slider" x:Uid="/CaraOkSettings/Hue_Slider" Minimum="-360" Maximum="360" IsThumbToolTipEnabled="False" ValueChanged="{x:Bind _changeCaraOkEffectColor.Invoke}"/>
+            <Slider x:Name="Saturation_Slider" x:Uid="/CaraOkSettings/Saturation_Slider" ValueChanged="{x:Bind _changeCaraOkEffectColor.Invoke}"/>
+            <Slider x:Name="Lightness_Slider" x:Uid="/CaraOkSettings/Lightness_Slider" ValueChanged="{x:Bind _changeCaraOkEffectColor.Invoke}"/>
+
+            <Rectangle x:Name="ColorPreview_Rectangle" Width="250" Height="180" Margin="0,10">
+                <Rectangle.Fill>
+                    <SolidColorBrush Color="{x:Bind _settings.CaraOkEffectColor, Mode=OneWay}"/>
+                </Rectangle.Fill>
+            </Rectangle>
+        </StackPanel>
     </StackPanel>
 </model:SettingsPageBase>
 

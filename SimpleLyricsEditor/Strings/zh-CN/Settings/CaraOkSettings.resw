@@ -120,4 +120,13 @@
   <data name="CaraOk_ToggleSwitch.Header" xml:space="preserve">
     <value>卡拉OK特效</value>
   </data>
+  <data name="Hue_Slider.Header" xml:space="preserve">
+    <value>色相</value>
+  </data>
+  <data name="Lightness_Slider.Header" xml:space="preserve">
+    <value>亮度</value>
+  </data>
+  <data name="Saturation_Slider.Header" xml:space="preserve">
+    <value>饱和度</value>
+  </data>
 </root>
