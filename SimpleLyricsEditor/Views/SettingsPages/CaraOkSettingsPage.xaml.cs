@@ -14,7 +14,7 @@ namespace SimpleLyricsEditor.Views.SettingsPages
     {
         private Action _changeCaraOkEffectColor;
 
-        public CaraOkSettingsPage()
+        public CaraOkSettingsPage() : base()
         {
             this.InitializeComponent();
             _changeCaraOkEffectColor =  () =>
