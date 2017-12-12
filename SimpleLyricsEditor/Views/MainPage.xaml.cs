@@ -559,6 +559,8 @@ namespace SimpleLyricsEditor.Views
                 else
                     Lyrics_ListView.SelectRange(range);
             }
+            else if (Lyrics_ListView.SelectionMode != ListViewSelectionMode.None)
+                Lyrics_ListView.SelectedItem = lyric;
 
             GoToLyricTime(lyric);
         }
