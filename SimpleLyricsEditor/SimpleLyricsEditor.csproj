@@ -119,6 +119,9 @@
     <Compile Include="Views\SettingsPages\BackgroundSettingsPage.xaml.cs">
       <DependentUpon>BackgroundSettingsPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\SettingsPages\CaraOkSettingsPage.xaml.cs">
+      <DependentUpon>CaraOkSettingsPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\SettingsPages\LyricsPreviewSettingsPage.xaml.cs">
       <DependentUpon>LyricsPreviewSettingsPage.xaml</DependentUpon>
     </Compile>
@@ -173,6 +176,8 @@
     <Content Include="Data\UpdateLogs\zh-CN\v3.9.18.md" />
     <None Include="SimpleLyricsEditor_StoreKey.pfx" />
     <None Include="SimpleLyricsEditor_TemporaryKey.pfx" />
+    <PRIResource Include="Strings\en-US\Settings\CaraOkSettings.resw" />
+    <PRIResource Include="Strings\zh-CN\Settings\CaraOkSettings.resw" />
     <PRIResource Include="Strings\en-US\Tools.resw" />
     <PRIResource Include="Strings\zh-CN\Tools.resw" />
     <PRIResource Include="Strings\en-US\LyricsFileInfo.resw" />
@@ -300,6 +305,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\SettingsPages\BackgroundSettingsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SettingsPages\CaraOkSettingsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

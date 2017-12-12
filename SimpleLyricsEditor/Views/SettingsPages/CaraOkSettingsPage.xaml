@@ -1,0 +1,14 @@
+﻿<model:SettingsPageBase
+    x:Class="SimpleLyricsEditor.Views.SettingsPages.CaraOkSettingsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:model="using:SimpleLyricsEditor.Models"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <StackPanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <ToggleSwitch x:Uid="/CaraOkSettings/CaraOk_ToggleSwitch" IsOn="{x:Bind _settings.CaraOkEffectEnabled, Mode=TwoWay}"/>
+    </StackPanel>
+</model:SettingsPageBase>
+
