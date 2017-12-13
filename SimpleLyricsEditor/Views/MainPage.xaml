@@ -238,7 +238,11 @@
 
         <Grid Grid.Row="3" Visibility="{x:Bind PreviewMode_ToggleButton.IsChecked, Mode=OneWay, Converter={StaticResource BoolToVisibility_Reverse}}" Tapped="LyricsPreview_Grid_Tapped">
             <Rectangle Fill="{ThemeResource SystemControlBackgroundAccentBrush}" Opacity="{x:Bind _settings.PreviewBackgroundOpacity, Mode=OneWay}"/>
-            <ctol:LyrricsSinglePreview x:Name="SinglePreview" CaraOkEffectEnabled="{x:Bind _settings.CaraOkEffectEnabled, Mode=OneWay}" Lyrics="{x:Bind _viewModel.LyricItems}" FontSize="{x:Bind _settings.SinglePreviewFontSize, Mode=OneWay}"/>
+            <ctol:LyrricsSinglePreview x:Name="SinglePreview" CaraOkEffectEnabled="{x:Bind _settings.CaraOkEffectEnabled, Mode=OneWay}" Lyrics="{x:Bind _viewModel.LyricItems}" FontSize="{x:Bind _settings.SinglePreviewFontSize, Mode=OneWay}">
+                <ctol:LyrricsSinglePreview.Foreground>
+                    <SolidColorBrush Color="{x:Bind _settings.CaraOkEffectColor, Mode=OneWay}"/>
+                </ctol:LyrricsSinglePreview.Foreground>
+            </ctol:LyrricsSinglePreview>
         </Grid>
 
         <ContentDialog x:Name="LyricsFileInfo_ContentDialog" x:Uid="/LyricsFileInfo/LyricsFileInfo_ContentDialog" Grid.Row="2" Opened="LyricsFileInfo_ContentDialog_Opened" Closed="LyricsFileInfo_ContentDialog_Closed">
