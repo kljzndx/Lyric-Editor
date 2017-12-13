@@ -17,8 +17,14 @@ namespace SimpleLyricsEditor.Views.SettingsPages
         public CaraOkSettingsPage() : base()
         {
             this.InitializeComponent();
+
             _changeCaraOkEffectColor =  () =>
-                _settings.CaraOkEffectColor = HslToColor(Math.Abs(Hue_Slider.Value), Saturation_Slider.Value / 100, Lightness_Slider.Value / 100);
+                _settings.CaraOkEffectColor = HslToColor(Hue_Slider.Value, Saturation_Slider.Value / 100, Lightness_Slider.Value / 100);
+
+            var hsl = ColorToHsl(_settings.CaraOkEffectColor);
+            Hue_Slider.Value = hsl.hue;
+            Saturation_Slider.Value = hsl.saturation * 100;
+            Lightness_Slider.Value = hsl.lightness * 100;
         }
 
         private Color HslToColor(double hue, double saturation, double lightness)
@@ -61,6 +67,42 @@ namespace SimpleLyricsEditor.Views.SettingsPages
             }
 
             return Color.FromArgb(255, (byte)(255 * (red + light)), (byte)(255 * (green + light)), (byte)(255 * (blue + light)));
+        }
+
+        private (double hue, double saturation, double lightness) ColorToHsl(Color color)
+        {
+            double hue = 0D, saturation = 0D, lightness = 0D;
+            double red = color.R / 255, green = color.G / 255, blue = color.B / 255;
+            double min = Math.Min(Math.Min(red, green), blue), max = Math.Max(Math.Max(red, green), blue);
+            double difference = max - min, Total = max + min;
+
+            lightness = Total / 2;
+
+            if (difference != 0)
+            {
+                double redDifference = (max - red) / difference;
+                double greenDifference = (max - green) / difference;
+                double blueDifference = (max - blue) / difference;
+
+                if (lightness < 0.5)
+                    saturation = difference / Total;
+
+                if (red.Equals(max))
+                    hue = blueDifference - greenDifference;
+                else if (green.Equals(max))
+                    hue = 2 + redDifference - blueDifference;
+                else if (blue.Equals(max))
+                    hue = 4 + greenDifference - redDifference;
+
+                hue *= 60;
+
+                if (hue < 0)
+                    hue += 360;
+                else if (hue >= 360)
+                    hue -= 360;
+            }
+
+            return (hue, saturation, lightness);
         }
     }
 }
