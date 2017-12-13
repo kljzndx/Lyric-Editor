@@ -11,7 +11,7 @@
         <ToggleSwitch x:Name="CaraOk_ToggleSwitch" x:Uid="/CaraOkSettings/CaraOk_ToggleSwitch" IsOn="{x:Bind _settings.CaraOkEffectEnabled, Mode=TwoWay}"/>
 
         <StackPanel x:Name="CaraOkEffectColor_StackPanel" Visibility="{x:Bind _settings.CaraOkEffectEnabled, Mode=OneWay, Converter={StaticResource BoolToVisibility}}">
-            <Slider x:Name="Hue_Slider" x:Uid="/CaraOkSettings/Hue_Slider" Minimum="-360" Maximum="360" IsThumbToolTipEnabled="False" ValueChanged="{x:Bind _changeCaraOkEffectColor.Invoke}"/>
+            <Slider x:Name="Hue_Slider" x:Uid="/CaraOkSettings/Hue_Slider" Maximum="360" IsThumbToolTipEnabled="False" ValueChanged="{x:Bind _changeCaraOkEffectColor.Invoke}"/>
             <Slider x:Name="Saturation_Slider" x:Uid="/CaraOkSettings/Saturation_Slider" ValueChanged="{x:Bind _changeCaraOkEffectColor.Invoke}"/>
             <Slider x:Name="Lightness_Slider" x:Uid="/CaraOkSettings/Lightness_Slider" ValueChanged="{x:Bind _changeCaraOkEffectColor.Invoke}"/>
 
