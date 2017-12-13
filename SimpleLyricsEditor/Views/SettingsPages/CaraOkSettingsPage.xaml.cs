@@ -12,7 +12,7 @@ namespace SimpleLyricsEditor.Views.SettingsPages
     /// </summary>
     public sealed partial class CaraOkSettingsPage : SettingsPageBase
     {
-        private Action _changeCaraOkEffectColor;
+        private readonly Action _changeCaraOkEffectColor;
 
         public CaraOkSettingsPage() : base()
         {
@@ -91,13 +91,13 @@ namespace SimpleLyricsEditor.Views.SettingsPages
             double blueDifference = (max - blue) / difference;
 
             if (red == max)
-                hue = green == min ? 5.0 + blueDifference : 1.0 - greenDifference;
+                hue = green == min ? 5D + blueDifference : 1D - greenDifference;
             else if (green == max)
-                hue = blue == min ? 1.0 + redDifference : 3.0 - blueDifference;
+                hue = blue == min ? 1D + redDifference : 3D - blueDifference;
             else
-                hue = red == min ? 3.0 + greenDifference : 5.0 - redDifference;
+                hue = red == min ? 3D + greenDifference : 5D - redDifference;
 
-            hue *= 60;
+            hue *= 60D;
 
             return (hue, saturation, lightness);
         }
