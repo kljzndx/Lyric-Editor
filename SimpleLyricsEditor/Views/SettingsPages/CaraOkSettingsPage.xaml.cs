@@ -72,11 +72,11 @@ namespace SimpleLyricsEditor.Views.SettingsPages
         private (double hue, double saturation, double lightness) ColorToHsl(Color color)
         {
             double hue = 0D, saturation = 0D, lightness = 0D;
-            double red = color.R / 255, green = color.G / 255, blue = color.B / 255;
+            double red = color.R / 255D, green = color.G / 255D, blue = color.B / 255D;
             double min = Math.Min(Math.Min(red, green), blue), max = Math.Max(Math.Max(red, green), blue);
-            double difference = max - min, Total = max + min;
+            double difference = max - min, total = max + min;
 
-            lightness = Total / 2;
+            lightness = total / 2;
 
             if (difference != 0)
             {
@@ -85,7 +85,9 @@ namespace SimpleLyricsEditor.Views.SettingsPages
                 double blueDifference = (max - blue) / difference;
 
                 if (lightness < 0.5)
-                    saturation = difference / Total;
+                    saturation = difference / total;
+                else
+                    saturation = difference / (2 - total);
 
                 if (red.Equals(max))
                     hue = blueDifference - greenDifference;
