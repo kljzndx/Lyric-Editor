@@ -23,8 +23,8 @@ namespace SimpleLyricsEditor.Views.SettingsPages
 
             var hsl = ColorToHsl(_settings.CaraOkEffectColor);
             Hue_Slider.Value = hsl.hue;
-            Saturation_Slider.Value = hsl.saturation * 100;
-            Lightness_Slider.Value = hsl.lightness * 100;
+            Saturation_Slider.Value = hsl.saturation * 100D;
+            Lightness_Slider.Value = hsl.lightness * 100D;
         }
 
         private Color HslToColor(double hue, double saturation, double lightness)
@@ -76,33 +76,28 @@ namespace SimpleLyricsEditor.Views.SettingsPages
             double min = Math.Min(Math.Min(red, green), blue), max = Math.Max(Math.Max(red, green), blue);
             double difference = max - min, total = max + min;
 
-            lightness = total / 2;
+            lightness = total / 2D;
 
-            if (difference != 0)
-            {
-                double redDifference = (max - red) / difference;
-                double greenDifference = (max - green) / difference;
-                double blueDifference = (max - blue) / difference;
+            if (lightness <= 0D)
+                return (0D, 0D, 0D);
 
-                if (lightness < 0.5)
-                    saturation = difference / total;
-                else
-                    saturation = difference / (2 - total);
+            if (difference > 0D)
+                saturation = difference / (lightness <= 0.5 ? total : 2D - difference);
+            else
+                return (0D, 0D, lightness);
+            
+            double redDifference = (max - red) / difference;
+            double greenDifference = (max - green) / difference;
+            double blueDifference = (max - blue) / difference;
 
-                if (red.Equals(max))
-                    hue = blueDifference - greenDifference;
-                else if (green.Equals(max))
-                    hue = 2 + redDifference - blueDifference;
-                else if (blue.Equals(max))
-                    hue = 4 + greenDifference - redDifference;
+            if (red == max)
+                hue = green == min ? 5.0 + blueDifference : 1.0 - greenDifference;
+            else if (green == max)
+                hue = blue == min ? 1.0 + redDifference : 3.0 - blueDifference;
+            else
+                hue = red == min ? 3.0 + greenDifference : 5.0 - redDifference;
 
-                hue *= 60;
-
-                if (hue < 0)
-                    hue += 360;
-                else if (hue >= 360)
-                    hue -= 360;
-            }
+            hue *= 60;
 
             return (hue, saturation, lightness);
         }
