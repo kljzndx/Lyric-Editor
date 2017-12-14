@@ -177,6 +177,9 @@ namespace SimpleLyricsEditor.Control
         {
             lock (PlayerPositionLocker)
             {
+                if (Source.Equals(Music.Empty))
+                    return;
+                
                 var currentPositon = _player.PlaybackSession.Position;
                 Position_Slider.Value = currentPositon.TotalMinutes;
                 SetSmtcPosition(currentPositon);
@@ -342,7 +345,6 @@ namespace SimpleLyricsEditor.Control
         {
             await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
-                Pause();
                 SetPosition(TimeSpan.Zero);
             });
         }
@@ -384,7 +386,7 @@ namespace SimpleLyricsEditor.Control
                     case MediaPlaybackState.Paused:
                         _smtc.PlaybackStatus = MediaPlaybackStatus.Paused;
                         IsPlay = false;
-                        SetPosition(sender.Position);
+                        RefreshPosition();
                         Paused?.Invoke(this, EventArgs.Empty);
                         break;
                 }
