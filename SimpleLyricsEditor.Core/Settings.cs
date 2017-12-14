@@ -4,6 +4,7 @@ using Windows.UI.Xaml;
 using HappyStudio.UwpToolsLibrary.Auxiliarys;
 using HappyStudio.UwpToolsLibrary.Auxiliarys.Attributes;
 using HappyStudio.UwpToolsLibrary.Information;
+using SimpleLyricsEditor.Core.Factorys;
 using SimpleLyricsEditor.ValueConvert;
 
 namespace SimpleLyricsEditor.Core
@@ -41,8 +42,8 @@ namespace SimpleLyricsEditor.Core
                 base.SettingObject.Values.Remove("AdClickDate");
 
             _caraOkEffectColor = base.GetSetting(nameof(CaraOkEffectColor),
-                Colors.Red.ToHexString(),
-                s => s.HexColorToColor());
+                                                 Colors.Red.ToHexString(),
+                                                 new ColorFactory().FromHexString);
             
             InitializeSettingFields();
         }
