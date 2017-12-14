@@ -116,7 +116,6 @@
     <Compile Include="DoubleToLyricTimeString.cs" />
     <Compile Include="PercentageToDouble.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="StringExtension.cs" />
     <Compile Include="TimeSpanExtension.cs" />
     <Compile Include="TimeSpanToDouble.cs" />
     <Compile Include="TimeSpanToLyricTimeString.cs" />

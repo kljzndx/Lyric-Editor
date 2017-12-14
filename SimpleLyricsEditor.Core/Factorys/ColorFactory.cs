@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using Windows.UI;
 
-namespace SimpleLyricsEditor.ValueConvert
+namespace SimpleLyricsEditor.Core.Factorys
 {
-    public static class StringExtension
+    public class ColorFactory
     {
-        public static Color HexColorToColor(this string hexColor)
+        public Color FromHexString(string hex)
         {
             Regex regex = new Regex(@"#(?<A>[0-9a-fA-F]{2})(?<R>[0-9a-fA-F]{2})(?<G>[0-9a-fA-F]{2})(?<B>[0-9a-fA-F]{2})");
-            Match match = regex.Match(hexColor);
+            Match match = regex.Match(hex);
             if (!match.Success)
                 throw new Exception("此字符串不是有效的16进制颜色值" +
                                     Environment.NewLine +
