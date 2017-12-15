@@ -180,8 +180,8 @@ namespace SimpleLyricsEditor.Views
         {
             MsAdControl.Visibility = Visibility.Visible;
             MsAdControl.Resume();
-            AdsFadeOut_Storyboard.Stop();
             AdsFadeIn_Storyboard.Begin();
+            AdsFadeOut_Storyboard.Stop();
         }
 
         private void AdsVisibilityNotifier_HideRequested(object sender, EventArgs e)
