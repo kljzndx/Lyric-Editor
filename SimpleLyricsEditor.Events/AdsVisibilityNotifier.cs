@@ -4,17 +4,17 @@ namespace SimpleLyricsEditor.Events
 {
     public static class AdsVisibilityNotifier
     {
-        public static event EventHandler Displayed;
-        public static event EventHandler Hided;
+        public static event EventHandler DisplayRequested;
+        public static event EventHandler HideRequested;
 
-        public static void DisplayAds()
+        public static void DisplayAdsRequest()
         {
-            Displayed?.Invoke(null, EventArgs.Empty);
+            DisplayRequested?.Invoke(null, EventArgs.Empty);
         }
 
-        public static void HideAds()
+        public static void HideAdsRequest()
         {
-            Hided?.Invoke(null, EventArgs.Empty);
+            HideRequested?.Invoke(null, EventArgs.Empty);
         }
     }
 }
