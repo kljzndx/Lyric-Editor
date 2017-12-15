@@ -55,8 +55,8 @@ namespace SimpleLyricsEditor.Views
             GlobalKeyNotifier.KeyDown += OnWindowKeyDown;
             MusicFileNotifier.FileChanged += OnMusicFileFileChanged;
             LyricsFileNotifier.FileChanged += OnLyricsFileChanged;
-            AdsVisibilityNotifier.Displayed += AdsVisibilityNotifier_Displayed;
-            AdsVisibilityNotifier.Hided += AdsVisibilityNotifier_Hided;
+            AdsVisibilityNotifier.DisplayRequested += AdsVisibilityNotifier_DisplayRequested;
+            AdsVisibilityNotifier.HideRequested += AdsVisibilityNotifier_HideRequested;
         }
 
         #region Lyrics file operations
@@ -176,7 +176,7 @@ namespace SimpleLyricsEditor.Views
             _lyricsFile = e.File;
         }
 
-        private void AdsVisibilityNotifier_Displayed(object sender, EventArgs e)
+        private void AdsVisibilityNotifier_DisplayRequested(object sender, EventArgs e)
         {
             MsAdControl.Visibility = Visibility.Visible;
             MsAdControl.Resume();
@@ -184,7 +184,7 @@ namespace SimpleLyricsEditor.Views
             AdsFadeIn_Storyboard.Begin();
         }
 
-        private void AdsVisibilityNotifier_Hided(object sender, EventArgs e)
+        private void AdsVisibilityNotifier_HideRequested(object sender, EventArgs e)
         {
             AdsFadeIn_Storyboard.Stop();
             AdsFadeOut_Storyboard.Begin();

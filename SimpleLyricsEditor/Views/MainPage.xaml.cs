@@ -282,12 +282,12 @@ namespace SimpleLyricsEditor.Views
 
         private void Player_Playing(AudioPlayer sender, EventArgs args)
         {
-            AdsVisibilityNotifier.HideAds();
+            AdsVisibilityNotifier.HideAdsRequest();
         }
 
         private void Player_Paused(AudioPlayer sender, EventArgs args)
         {
-            AdsVisibilityNotifier.DisplayAds();
+            AdsVisibilityNotifier.DisplayAdsRequest();
         }
 
         private void Player_SourceChanged(AudioPlayer sender, MusicChangeEventArgs args)
