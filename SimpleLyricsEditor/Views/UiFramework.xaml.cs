@@ -178,18 +178,16 @@ namespace SimpleLyricsEditor.Views
 
         private void AdsVisibilityNotifier_Displayed(object sender, EventArgs e)
         {
-            if (MsAdControl.Visibility == Visibility.Visible)
-                return;
-
             MsAdControl.Visibility = Visibility.Visible;
             MsAdControl.Resume();
+            AdsFadeOut_Storyboard.Stop();
             AdsFadeIn_Storyboard.Begin();
         }
 
         private void AdsVisibilityNotifier_Hided(object sender, EventArgs e)
         {
-            if (MsAdControl.Visibility == Visibility.Visible)
-                AdsFadeOut_Storyboard.Begin();
+            AdsFadeIn_Storyboard.Stop();
+            AdsFadeOut_Storyboard.Begin();
         }
 
         private void AdsFadeOut_Storyboard_Completed(object sender, object e)
