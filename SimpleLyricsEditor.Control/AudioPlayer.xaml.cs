@@ -67,9 +67,7 @@ namespace SimpleLyricsEditor.Control
 
             _player = new MediaPlayer
             {
-                AudioCategory = MediaPlayerAudioCategory.Media,
-                AudioBalance = _settings.Balance,
-                Volume = _settings.Volume
+                AudioCategory = MediaPlayerAudioCategory.Media
             };
             _smtc = _player.SystemMediaTransportControls;
             _smtc.ButtonPressed += SMTC_ButtonPressed;
@@ -324,7 +322,10 @@ namespace SimpleLyricsEditor.Control
                 async () =>
                 {
                     Source = _musicTemp;
-                    _player.PlaybackSession.PlaybackRate = _settings.PlaybackRate;
+
+                    sender.Volume = _settings.Volume;
+                    sender.AudioBalance = _settings.Balance;
+                    sender.PlaybackSession.PlaybackRate = _settings.PlaybackRate;
 
                     EnableSmtcButton();
 
