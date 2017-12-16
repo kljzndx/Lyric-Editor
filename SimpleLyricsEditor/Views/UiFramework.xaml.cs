@@ -186,8 +186,8 @@ namespace SimpleLyricsEditor.Views
 
         private void AdsVisibilityNotifier_HideRequested(object sender, EventArgs e)
         {
-            AdsFadeIn_Storyboard.Stop();
             AdsFadeOut_Storyboard.Begin();
+            AdsFadeIn_Storyboard.Stop();
         }
 
         private void AdsFadeOut_Storyboard_Completed(object sender, object e)
