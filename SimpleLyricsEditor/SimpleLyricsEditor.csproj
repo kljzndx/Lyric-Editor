@@ -177,6 +177,7 @@
     <Content Include="Data\UpdateLogs\zh-CN\v3.10.5.md" />
     <Content Include="Data\UpdateLogs\zh-CN\v3.10.8.md" />
     <Content Include="Data\UpdateLogs\zh-CN\v3.10.11.md" />
+    <Content Include="Data\UpdateLogs\zh-CN\v3.10.13.md" />
     <None Include="SimpleLyricsEditor_StoreKey.pfx" />
     <None Include="SimpleLyricsEditor_TemporaryKey.pfx" />
     <PRIResource Include="Strings\en-US\Settings\CaraOkSettings.resw" />
