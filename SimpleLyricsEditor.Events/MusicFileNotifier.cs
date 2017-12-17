@@ -5,11 +5,11 @@ namespace SimpleLyricsEditor.Events
 {
     public class MusicFileNotifier
     {
-        public static event EventHandler<FileChangeEventArgs> FileChanged;
+        public static event EventHandler<FileChangeEventArgs> FileChangeRequested;
 
-        public static void ChangeFile(StorageFile file)
+        public static void ChangeFileRequest(StorageFile file)
         {
-            FileChanged?.Invoke(null, new FileChangeEventArgs(file));
+            FileChangeRequested?.Invoke(null, new FileChangeEventArgs(file));
         }
     }
 }
