@@ -85,12 +85,13 @@ namespace SimpleLyricsEditor.Control
             RewindButton_Transform.TranslateX = 44;
             FastForwardButton_Transform.TranslateX = -44;
 
-            Position_Slider.AddHandler(PointerPressedEvent, new PointerEventHandler(Position_Slider_PointerPressed),
-                true);
-            Position_Slider.AddHandler(PointerReleasedEvent, new PointerEventHandler(Position_Slider_PointerReleased),
-                true);
-
-            MusicFileNotifier.FileChanged += MusicFileChanged;
+            Position_Slider.AddHandler(PointerPressedEvent,
+                                       new PointerEventHandler(Position_Slider_PointerPressed),
+                                       true);
+            Position_Slider.AddHandler(PointerReleasedEvent,
+                                       new PointerEventHandler(Position_Slider_PointerReleased),
+                                       true);
+            
             GlobalKeyNotifier.KeyDown += OnKeyDown;
             GlobalKeyNotifier.KeyUp += OnKeyUp;
         }
@@ -150,7 +151,8 @@ namespace SimpleLyricsEditor.Control
 
             _musicTemp = source;
 
-            _player.Source = MediaSource.CreateFromStorageFile(source.File);
+            DisplayOpenFileButton_Wait();
+            _player.Source = MediaSource.CreateFromStorageFile(_musicTemp.File);
         }
 
         private void EnableSmtcButton()
@@ -217,13 +219,16 @@ namespace SimpleLyricsEditor.Control
 
         public async Task<bool> PickMusicFile()
         {
+            DisplayOpenFileButton_Wait();
             var file = await MusicFileOpenPicker.PickFile();
 
             if (file != null)
             {
-                MusicFileNotifier.ChangeFile(file);
+                SetSource(await Music.Parse(file));
                 return true;
             }
+
+            DisplayOpenFileButton_Normal();
             return false;
         }
         
@@ -237,6 +242,30 @@ namespace SimpleLyricsEditor.Control
         {
             if (RewindButton_Transform.TranslateX.Equals(0))
                 Folding.Begin();
+        }
+
+        private void DisplayOpenFileButton_Normal()
+        {
+            MusicFileOpening_ProgressRing.IsActive = false;
+            OpenMusicFile_Button.IsEnabled = true;
+            OpenMusicFile_SymbolIcon.Visibility = Visibility.Visible;
+            OpenMusicFile_Button.Visibility = Visibility.Visible;
+            PlayOrPause_ToggleButton.Visibility = Visibility.Collapsed;
+        }
+
+        private void DisplayOpenFileButton_Wait()
+        {
+            MusicFileOpening_ProgressRing.IsActive = true;
+            OpenMusicFile_Button.IsEnabled = false;
+            OpenMusicFile_SymbolIcon.Visibility = Visibility.Collapsed;
+            OpenMusicFile_Button.Visibility = Visibility.Visible;
+            PlayOrPause_ToggleButton.Visibility = Visibility.Collapsed;
+        }
+
+        private void HideOpenFileButton()
+        {
+            OpenMusicFile_Button.Visibility = Visibility.Collapsed;
+            PlayOrPause_ToggleButton.Visibility = Visibility.Visible;
         }
 
         public void Play()
@@ -266,15 +295,7 @@ namespace SimpleLyricsEditor.Control
 
             SetPosition(newPosition);
         }
-
-        private async void MusicFileChanged(object sender, FileChangeEventArgs e)
-        {
-            SetSource(await Music.Parse(e.File));
-
-            PlayOrPause_ToggleButton.Visibility = Visibility.Visible;
-            OpenMusicFile_Button.Visibility = Visibility.Collapsed;
-        }
-
+        
         private async void OnKeyDown(object sender, GlobalKeyEventArgs e)
         {
             _isPressShift = e.IsPressShift;
@@ -322,6 +343,7 @@ namespace SimpleLyricsEditor.Control
                 async () =>
                 {
                     Source = _musicTemp;
+                    HideOpenFileButton();
 
                     sender.Volume = _settings.Volume;
                     sender.AudioBalance = _settings.Balance;
@@ -356,8 +378,9 @@ namespace SimpleLyricsEditor.Control
             {
                 if (Source.Equals(Music.Empty))
                 {
-                    OpenMusicFile_Button.Visibility = Visibility.Visible;
-                    PlayOrPause_ToggleButton.Visibility = Visibility.Collapsed;
+                    DisplayOpenFileButton_Normal();
+
+                    HidePositionControlButtons();
                 }
                 else
                     SetSource(Source);
@@ -477,19 +500,8 @@ namespace SimpleLyricsEditor.Control
 
         private async void OpenMusicFile_Button_Click(object sender, RoutedEventArgs e)
         {
-            OpenMusicFile_SymbolIcon.Visibility = Visibility.Collapsed;
-            OpenMusicFile_Button.IsEnabled = false;
-            MusicFileOpening_ProgressRing.IsActive = true;
+            await PickMusicFile();
 
-            if (await PickMusicFile())
-            {
-                PlayOrPause_ToggleButton.Visibility = Visibility.Visible;
-                OpenMusicFile_Button.Visibility = Visibility.Collapsed;
-            }
-
-            MusicFileOpening_ProgressRing.IsActive = false;
-            OpenMusicFile_Button.IsEnabled = true;
-            OpenMusicFile_SymbolIcon.Visibility = Visibility.Visible;
         }
 
         private void PlayOrPause_ToggleButton_Checked(object sender, RoutedEventArgs e)
