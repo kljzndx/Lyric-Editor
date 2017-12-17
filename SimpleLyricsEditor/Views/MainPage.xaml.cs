@@ -60,6 +60,7 @@ namespace SimpleLyricsEditor.Views
             GlobalKeyNotifier.KeyDown += WindowKeyDown;
             GlobalKeyNotifier.KeyUp += WindowKeyUp;
 
+            MusicFileNotifier.FileChangeRequested += MusicFileChangeRequested;
             ImageFileNotifier.FileChanged += ImageFileChanged;
 
             if (!ApiInformation.IsTypePresent("Windows.UI.ViewManagement.ApplicationViewMode") ||
@@ -272,11 +273,22 @@ namespace SimpleLyricsEditor.Views
                 }
         }
 
+        #region Notifier
+
+        
+        private async void MusicFileChangeRequested(object sender, FileChangeEventArgs e)
+        {
+            Player.SetSource(await Music.Parse(e.File));
+        }
+
         private void ImageFileChanged(object sender, ImageFileChangeEventArgs e)
         {
             _backgroundImageSource = e.Source;
             BlurBackground.Source = _backgroundImageSource;
         }
+
+
+        #endregion
 
         #region Player
 
