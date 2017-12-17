@@ -53,7 +53,7 @@ namespace SimpleLyricsEditor.Views
             InitializeComponent();
 
             GlobalKeyNotifier.KeyDown += OnWindowKeyDown;
-            MusicFileNotifier.FileChanged += OnMusicFileFileChanged;
+            MusicFileNotifier.FileChangeRequested += OnMusicFileFileChanged;
             LyricsFileNotifier.FileChanged += OnLyricsFileChanged;
             AdsVisibilityNotifier.DisplayRequested += AdsVisibilityNotifier_DisplayRequested;
             AdsVisibilityNotifier.HideRequested += AdsVisibilityNotifier_HideRequested;
@@ -65,7 +65,7 @@ namespace SimpleLyricsEditor.Views
         {
             var file = await MusicFileOpenPicker.PickFile();
             if (file != null)
-                MusicFileNotifier.ChangeFile(file);
+                MusicFileNotifier.ChangeFileRequest(file);
         }
 
         private async Task OpenLyricsFile()
