@@ -325,8 +325,10 @@
                     </Setter.Value>
                 </Setter>
             </Style>
+            
             <cvt:TimeSpanToDouble x:Key="TimeSpanToDouble"/>
             <cvt:DoubleToLyricTimeString x:Key="DoubleToLyricTimeString"/>
+            
             <Storyboard x:Name="Expand">
                 <DoubleAnimation Storyboard.TargetName="Rewind_Button" Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:0.3"/>
                 <DoubleAnimation Storyboard.TargetName="FastForward_Button" Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:0.3"/>
