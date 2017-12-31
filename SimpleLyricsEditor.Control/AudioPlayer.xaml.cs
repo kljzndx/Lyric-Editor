@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Windows.Foundation;
-using Windows.Media;
 using Windows.Media.Core;
 using Windows.Media.Playback;
 using Windows.System;
@@ -24,9 +23,6 @@ namespace SimpleLyricsEditor.Control
         #region Locker
         
         private static readonly object PlayerPositionLocker = new object();
-
-        private static readonly object SmtcInitializeLocker = new object();
-        private static readonly object SmtcPositionLocker = new object();
         
         #endregion
 
@@ -53,7 +49,6 @@ namespace SimpleLyricsEditor.Control
             new PropertyMetadata(TimeSpan.FromSeconds(5)));
 
         private readonly MediaPlayer _player;
-        private readonly SystemMediaTransportControls _smtc;
 
         private bool _isPressShift;
         private bool _isPressSlider;
@@ -69,10 +64,7 @@ namespace SimpleLyricsEditor.Control
             {
                 AudioCategory = MediaPlayerAudioCategory.Media
             };
-            _smtc = _player.SystemMediaTransportControls;
-            _smtc.ButtonPressed += SMTC_ButtonPressed;
-            _smtc.PlaybackPositionChangeRequested += SMTC_PlaybackPositionChangeRequested;
-            _smtc.PlaybackRateChangeRequested += SMTC_PlaybackRateChangeRequested;
+
             _player.CommandManager.IsEnabled = false;
             _player.MediaOpened += Player_MediaOpened;
             _player.MediaFailed += Player_MediaFailed;
@@ -154,25 +146,7 @@ namespace SimpleLyricsEditor.Control
             DisplayOpenFileButton_Wait();
             _player.Source = MediaSource.CreateFromStorageFile(_musicTemp.File);
         }
-
-        private void EnableSmtcButton()
-        {
-            lock (SmtcInitializeLocker)
-            {
-                if (_smtc.IsPlayEnabled)
-                    return;
-
-                _smtc.IsEnabled = true;
-                _smtc.IsPlayEnabled = true;
-                _smtc.IsPauseEnabled = true;
-                _smtc.IsStopEnabled = true;
-                _smtc.IsNextEnabled = true;
-                _smtc.IsFastForwardEnabled = true;
-                _smtc.IsPreviousEnabled = true;
-                _smtc.IsRewindEnabled = true;
-            }
-        }
-
+        
         private void RefreshPosition()
         {
             lock (PlayerPositionLocker)
@@ -182,7 +156,7 @@ namespace SimpleLyricsEditor.Control
                 
                 var currentPositon = _player.PlaybackSession.Position;
                 Position_Slider.Value = currentPositon.TotalMinutes;
-                SetSmtcPosition(currentPositon);
+                //SetSmtcPosition(currentPositon);
 
                 PositionChanged?.Invoke(this, new PositionChangeEventArgs(false, currentPositon));
             }
@@ -194,29 +168,12 @@ namespace SimpleLyricsEditor.Control
             {
                 _player.PlaybackSession.Position = newPosition;
                 Position_Slider.Value = newPosition.TotalMinutes;
-                SetSmtcPosition(newPosition);
+                //SetSmtcPosition(newPosition);
 
                 PositionChanged?.Invoke(this, new PositionChangeEventArgs(true, newPosition));
             }
         }
-
-        private void SetSmtcPosition(TimeSpan position)
-        {
-            lock (SmtcPositionLocker)
-            {
-                var timeLine = new SystemMediaTransportControlsTimelineProperties
-                {
-                    StartTime = TimeSpan.Zero,
-                    MinSeekTime = TimeSpan.Zero,
-                    Position = position,
-                    MaxSeekTime = _player.PlaybackSession.NaturalDuration,
-                    EndTime = _player.PlaybackSession.NaturalDuration
-                };
-
-                _smtc.UpdateTimelineProperties(timeLine);
-            }
-        }
-
+        
         public async Task<bool> PickMusicFile()
         {
             DisplayOpenFileButton_Wait();
@@ -340,7 +297,7 @@ namespace SimpleLyricsEditor.Control
         private async void Player_MediaOpened(MediaPlayer sender, object args)
         {
             await Dispatcher.RunAsync(CoreDispatcherPriority.Normal,
-                async () =>
+                () =>
                 {
                     Source = _musicTemp;
                     HideOpenFileButton();
@@ -348,17 +305,11 @@ namespace SimpleLyricsEditor.Control
                     sender.Volume = _settings.Volume;
                     sender.AudioBalance = _settings.Balance;
                     sender.PlaybackSession.PlaybackRate = _settings.PlaybackRate;
-
-                    EnableSmtcButton();
-
+                    
                     SourceChanged?.Invoke(this, new MusicChangeEventArgs(Source));
                     DisplayPositionControlButtons();
                     Position_Slider.Maximum = sender.PlaybackSession.NaturalDuration.TotalMinutes;
-
-                    var updater = _smtc.DisplayUpdater;
-                    await updater.CopyFromFileAsync(MediaPlaybackType.Music, Source.File);
-                    updater.Update();
-
+                    
                     Play();
                 }
             );
@@ -395,20 +346,11 @@ namespace SimpleLyricsEditor.Control
             {
                 switch (sender.PlaybackState)
                 {
-                    case MediaPlaybackState.None:
-                        _smtc.PlaybackStatus = MediaPlaybackStatus.Closed;
-                        break;
-                    case MediaPlaybackState.Opening:
-                    case MediaPlaybackState.Buffering:
-                        _smtc.PlaybackStatus = MediaPlaybackStatus.Changing;
-                        break;
                     case MediaPlaybackState.Playing:
-                        _smtc.PlaybackStatus = MediaPlaybackStatus.Playing;
                         IsPlay = true;
                         Playing?.Invoke(this, EventArgs.Empty);
                         break;
                     case MediaPlaybackState.Paused:
-                        _smtc.PlaybackStatus = MediaPlaybackStatus.Paused;
                         IsPlay = false;
                         RefreshPosition();
                         Paused?.Invoke(this, EventArgs.Empty);
@@ -426,46 +368,7 @@ namespace SimpleLyricsEditor.Control
                         RefreshPosition();
                 });
         }
-
-        private async void SMTC_ButtonPressed(SystemMediaTransportControls sender, SystemMediaTransportControlsButtonPressedEventArgs args)
-        {
-            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-            {
-                switch (args.Button)
-                {
-                    case SystemMediaTransportControlsButton.Play:
-                        Play();
-                        break;
-                    case SystemMediaTransportControlsButton.Pause:
-                        Pause();
-                        break;
-                    case SystemMediaTransportControlsButton.Stop:
-                        Pause();
-                        SetPosition(TimeSpan.Zero);
-                        break;
-                    case SystemMediaTransportControlsButton.Next:
-                    case SystemMediaTransportControlsButton.FastForward:
-                        FastForward(FastForwardTimeOnPressedShift);
-                        break;
-                    case SystemMediaTransportControlsButton.Previous:
-                    case SystemMediaTransportControlsButton.Rewind:
-                        Rewind(RewindTimeOnPressedShift);
-                        break;
-                }
-            });
-        }
-
-        private async void SMTC_PlaybackPositionChangeRequested(SystemMediaTransportControls sender, PlaybackPositionChangeRequestedEventArgs args)
-        {
-            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => SetPosition(args.RequestedPlaybackPosition));
-        }
-
-        private async void SMTC_PlaybackRateChangeRequested(SystemMediaTransportControls sender, PlaybackRateChangeRequestedEventArgs args)
-        {
-            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal,
-                () => PlaybackRate_Slider.Value = args.RequestedPlaybackRate * 100);
-        }
-
+        
         private void Position_Slider_PointerPressed(object sender, PointerRoutedEventArgs e)
         {
             _isPressSlider = true;
