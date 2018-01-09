@@ -64,7 +64,13 @@ namespace SimpleLyricsEditor.Control
         {
             InitializeComponent();
 
-            _refreshPositionAction = async t => await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, RefreshPosition);
+            _refreshPositionAction = async t => await Dispatcher.RunAsync(CoreDispatcherPriority.Normal,
+                () =>
+                {
+                    if(!_isPressSlider)
+                        RefreshPosition();
+                }
+            );
 
             Rewind_Button.Opacity = 0;
             FastForward_Button.Opacity = 0;
