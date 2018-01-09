@@ -1,14 +1,18 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Media.Core;
 using Windows.Media.Playback;
+using Windows.Storage;
 using Windows.System;
+using Windows.System.Threading;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Input;
+using Windows.UI.Xaml.Media;
 using SimpleLyricsEditor.BLL.Pickers;
 using SimpleLyricsEditor.Core;
 using SimpleLyricsEditor.DAL;
@@ -21,9 +25,9 @@ namespace SimpleLyricsEditor.Control
     public sealed partial class AudioPlayer : UserControl
     {
         #region Locker
-        
+
         private static readonly object PlayerPositionLocker = new object();
-        
+
         #endregion
 
         public static readonly DependencyProperty SourceProperty = DependencyProperty.Register(
@@ -48,29 +52,19 @@ namespace SimpleLyricsEditor.Control
             nameof(FastForwardTimeOnPressedShift), typeof(TimeSpan), typeof(AudioPlayer),
             new PropertyMetadata(TimeSpan.FromSeconds(5)));
 
-        private readonly MediaPlayer _player;
-
         private bool _isPressShift;
         private bool _isPressSlider;
 
         private Music _musicTemp;
         private Settings _settings = Settings.Current;
+        private ThreadPoolTimer _refreshPositionTimer;
+        private readonly TimerElapsedHandler _refreshPositionAction;
 
         public AudioPlayer()
         {
             InitializeComponent();
 
-            _player = new MediaPlayer
-            {
-                AudioCategory = MediaPlayerAudioCategory.Media
-            };
-
-            _player.CommandManager.IsEnabled = false;
-            _player.MediaOpened += Player_MediaOpened;
-            _player.MediaFailed += Player_MediaFailed;
-            _player.MediaEnded += Player_MediaEnded;
-            _player.PlaybackSession.PlaybackStateChanged += Player_PlaybackSession_PlaybackStateChanged;
-            _player.PlaybackSession.PositionChanged += Player_PlaybackSession_PositionChanged;
+            _refreshPositionAction = async t => await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, RefreshPosition);
 
             Rewind_Button.Opacity = 0;
             FastForward_Button.Opacity = 0;
@@ -83,20 +77,20 @@ namespace SimpleLyricsEditor.Control
             Position_Slider.AddHandler(PointerReleasedEvent,
                                        new PointerEventHandler(Position_Slider_PointerReleased),
                                        true);
-            
+
             GlobalKeyNotifier.KeyDown += OnKeyDown;
             GlobalKeyNotifier.KeyUp += OnKeyUp;
         }
 
         public Music Source
         {
-            get => (Music) GetValue(SourceProperty);
+            get => (Music)GetValue(SourceProperty);
             private set => SetValue(SourceProperty, value);
         }
 
         public bool IsPlay
         {
-            get => (bool) GetValue(IsPlayProperty);
+            get => (bool)GetValue(IsPlayProperty);
             private set
             {
                 SetValue(IsPlayProperty, value);
@@ -106,37 +100,41 @@ namespace SimpleLyricsEditor.Control
 
         public TimeSpan RewindTime
         {
-            get => (TimeSpan) GetValue(RewindTimeProperty);
+            get => (TimeSpan)GetValue(RewindTimeProperty);
             set => SetValue(RewindTimeProperty, value);
         }
 
         public TimeSpan FastForwardTime
         {
-            get => (TimeSpan) GetValue(FastForwardTimeProperty);
+            get => (TimeSpan)GetValue(FastForwardTimeProperty);
             set => SetValue(FastForwardTimeProperty, value);
         }
 
         public TimeSpan RewindTimeOnPressedShift
         {
-            get => (TimeSpan) GetValue(RewindTimeOnPressedShiftProperty);
+            get => (TimeSpan)GetValue(RewindTimeOnPressedShiftProperty);
             set => SetValue(RewindTimeOnPressedShiftProperty, value);
         }
 
         public TimeSpan FastForwardTimeOnPressedShift
         {
-            get => (TimeSpan) GetValue(FastForwardTimeOnPressedShiftProperty);
+            get => (TimeSpan)GetValue(FastForwardTimeOnPressedShiftProperty);
             set => SetValue(FastForwardTimeOnPressedShiftProperty, value);
         }
 
-        public TimeSpan Position => _player.PlaybackSession.Position;
-        public TimeSpan Duration => _player.PlaybackSession.NaturalDuration;
+        public TimeSpan Position
+        {
+            get => Player.Position;
+            set => Player.Position = value;
+        }
+        public TimeSpan Duration => Player.NaturalDuration.TimeSpan;
 
         public event TypedEventHandler<AudioPlayer, MusicChangeEventArgs> SourceChanged;
         public event TypedEventHandler<AudioPlayer, PositionChangeEventArgs> PositionChanged;
         public event TypedEventHandler<AudioPlayer, EventArgs> Playing;
         public event TypedEventHandler<AudioPlayer, EventArgs> Paused;
 
-        public void SetSource(Music source)
+        public async void SetSource(Music source)
         {
             if (source.Equals(Music.Empty))
                 return;
@@ -144,19 +142,18 @@ namespace SimpleLyricsEditor.Control
             _musicTemp = source;
 
             DisplayOpenFileButton_Wait();
-            _player.Source = MediaSource.CreateFromStorageFile(_musicTemp.File);
+            Player.SetSource(await source.File.OpenAsync(FileAccessMode.Read), source.File.ContentType);
         }
-        
+
         private void RefreshPosition()
         {
             lock (PlayerPositionLocker)
             {
                 if (Source.Equals(Music.Empty))
                     return;
-                
-                var currentPositon = _player.PlaybackSession.Position;
+
+                var currentPositon = Position;
                 Position_Slider.Value = currentPositon.TotalMinutes;
-                //SetSmtcPosition(currentPositon);
 
                 PositionChanged?.Invoke(this, new PositionChangeEventArgs(false, currentPositon));
             }
@@ -166,14 +163,18 @@ namespace SimpleLyricsEditor.Control
         {
             lock (PlayerPositionLocker)
             {
-                _player.PlaybackSession.Position = newPosition;
+                Position = newPosition;
                 Position_Slider.Value = newPosition.TotalMinutes;
-                //SetSmtcPosition(newPosition);
 
                 PositionChanged?.Invoke(this, new PositionChangeEventArgs(true, newPosition));
             }
         }
-        
+
+        public void StartRefreshPositionTimer()
+        {
+            _refreshPositionTimer = ThreadPoolTimer.CreatePeriodicTimer(_refreshPositionAction, TimeSpan.FromMilliseconds(Debugger.IsAttached ? 1000 : 100));
+        }
+
         public async Task<bool> PickMusicFile()
         {
             DisplayOpenFileButton_Wait();
@@ -188,7 +189,7 @@ namespace SimpleLyricsEditor.Control
             DisplayOpenFileButton_Normal();
             return false;
         }
-        
+
         public void DisplayPositionControlButtons()
         {
             if (RewindButton_Transform.TranslateX.Equals(44))
@@ -227,12 +228,12 @@ namespace SimpleLyricsEditor.Control
 
         public void Play()
         {
-            _player.Play();
+            Player.Play();
         }
 
         public void Pause()
         {
-            _player.Pause();
+            Player.Pause();
         }
 
         public void Rewind(TimeSpan time)
@@ -246,13 +247,13 @@ namespace SimpleLyricsEditor.Control
 
         public void FastForward(TimeSpan time)
         {
-            var newPosition = Position + time <= _player.PlaybackSession.NaturalDuration
+            var newPosition = Position + time <= Duration
                 ? Position + time
-                : _player.PlaybackSession.NaturalDuration;
+                : Duration;
 
             SetPosition(newPosition);
         }
-        
+
         private async void OnKeyDown(object sender, GlobalKeyEventArgs e)
         {
             _isPressShift = e.IsPressShift;
@@ -293,82 +294,56 @@ namespace SimpleLyricsEditor.Control
                 FastForward_Button.Content = '\uE101';
             }
         }
-
-        private async void Player_MediaOpened(MediaPlayer sender, object args)
-        {
-            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal,
-                () =>
-                {
-                    Source = _musicTemp;
-                    HideOpenFileButton();
-
-                    sender.Volume = _settings.Volume;
-                    sender.AudioBalance = _settings.Balance;
-                    sender.PlaybackSession.PlaybackRate = _settings.PlaybackRate;
-                    
-                    SourceChanged?.Invoke(this, new MusicChangeEventArgs(Source));
-                    DisplayPositionControlButtons();
-                    Position_Slider.Maximum = sender.PlaybackSession.NaturalDuration.TotalMinutes;
-                    
-                    Play();
-                }
-            );
-        }
-
-        private async void Player_MediaEnded(MediaPlayer sender, object args)
-        {
-            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-            {
-                SetPosition(TimeSpan.Zero);
-            });
-        }
-
-        private async void Player_MediaFailed(MediaPlayer sender, MediaPlayerFailedEventArgs args)
-        {
-            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-            {
-                if (Source.Equals(Music.Empty))
-                {
-                    DisplayOpenFileButton_Normal();
-
-                    HidePositionControlButtons();
-                }
-                else
-                    SetSource(Source);
-
-                throw new Exception(args.ErrorMessage);
-            });
-        }
-
-        private async void Player_PlaybackSession_PlaybackStateChanged(MediaPlaybackSession sender, object args)
-        {
-            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-            {
-                switch (sender.PlaybackState)
-                {
-                    case MediaPlaybackState.Playing:
-                        IsPlay = true;
-                        Playing?.Invoke(this, EventArgs.Empty);
-                        break;
-                    case MediaPlaybackState.Paused:
-                        IsPlay = false;
-                        RefreshPosition();
-                        Paused?.Invoke(this, EventArgs.Empty);
-                        break;
-                }
-            });
-        }
-
-        private async void Player_PlaybackSession_PositionChanged(MediaPlaybackSession sender, object args)
-        {
-            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal,
-                () =>
-                {
-                    if (!_isPressSlider)
-                        RefreshPosition();
-                });
-        }
         
+        private void Player_MediaOpened(object sender, RoutedEventArgs e)
+        {
+            Source = _musicTemp;
+            HideOpenFileButton();
+
+            SourceChanged?.Invoke(this, new MusicChangeEventArgs(Source));
+            DisplayPositionControlButtons();
+
+            Play();
+        }
+
+        private void Player_MediaEnded(object sender, RoutedEventArgs e)
+        {
+            SetPosition(TimeSpan.Zero);
+        }
+
+        private void Player_MediaFailed(object sender, ExceptionRoutedEventArgs e)
+        {
+            if (Source.Equals(Music.Empty))
+            {
+                DisplayOpenFileButton_Normal();
+
+                HidePositionControlButtons();
+            }
+            else
+                SetSource(Source);
+
+            throw new Exception(e.ErrorMessage);
+        }
+
+        private void Player_CurrentStateChanged(object sender, RoutedEventArgs e)
+        {
+            switch (Player.CurrentState)
+            {
+                case MediaElementState.Buffering:
+                case MediaElementState.Playing:
+                    IsPlay = true;
+                    StartRefreshPositionTimer();
+                    Playing?.Invoke(this, EventArgs.Empty);
+                    break;
+                case MediaElementState.Paused:
+                    IsPlay = false;
+                    RefreshPosition();
+                    _refreshPositionTimer?.Cancel();
+                    Paused?.Invoke(this, EventArgs.Empty);
+                    break;
+            }
+        }
+
         private void Position_Slider_PointerPressed(object sender, PointerRoutedEventArgs e)
         {
             _isPressSlider = true;
@@ -379,24 +354,6 @@ namespace SimpleLyricsEditor.Control
             if (sender is Slider slider)
                 SetPosition(TimeSpan.FromMinutes(slider.Value));
             _isPressSlider = false;
-        }
-        
-        private void PlaybackRate_Slider_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
-        {
-            if (!Source.Equals(Music.Empty))
-                _player.PlaybackSession.PlaybackRate = e.NewValue / 100;
-        }
-
-        private void Volume_Slider_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
-        {
-            if (!Source.Equals(Music.Empty))
-                _player.Volume = e.NewValue / 100;
-        }
-
-        private void Balance_Slider_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
-        {
-            if (!Source.Equals(Music.Empty))
-                _player.AudioBalance = e.NewValue / 100;
         }
 
         #region PlayerControlButton
@@ -409,7 +366,7 @@ namespace SimpleLyricsEditor.Control
 
         private void PlayOrPause_ToggleButton_Checked(object sender, RoutedEventArgs e)
         {
-            ((ToggleButton) sender).Content = '\uE103';
+            ((ToggleButton)sender).Content = '\uE103';
 
             if (!IsPlay)
                 Play();
@@ -417,7 +374,7 @@ namespace SimpleLyricsEditor.Control
 
         private void PlayOrPause_ToggleButton_Unchecked(object sender, RoutedEventArgs e)
         {
-            ((ToggleButton) sender).Content = '\uE102';
+            ((ToggleButton)sender).Content = '\uE102';
 
             if (IsPlay)
                 Pause();
