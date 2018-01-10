@@ -57,6 +57,11 @@ namespace SimpleLyricsEditor.Views
             LyricsFileNotifier.FileChanged += OnLyricsFileChanged;
             AdsVisibilityNotifier.DisplayRequested += AdsVisibilityNotifier_DisplayRequested;
             AdsVisibilityNotifier.HideRequested += AdsVisibilityNotifier_HideRequested;
+
+            if (ApiInformation.IsEventPresent(typeof(FlyoutBase).FullName, "Closing"))
+                OpenFile_MenuFlyout.Closing += (s, e) => OpenFile_AppBarToggleButton.IsChecked = false;
+            else
+                OpenFile_MenuFlyout.Closed += (s, e) => OpenFile_AppBarToggleButton.IsChecked = false;
         }
 
         #region Lyrics file operations
@@ -262,11 +267,6 @@ namespace SimpleLyricsEditor.Views
         private void OpenFile_AppBarToggleButton_Checked(object sender, RoutedEventArgs e)
         {
             OpenFile_MenuFlyout.ShowAt(sender as FrameworkElement);
-        }
-
-        private void OpenFile_MenuFlyout_Closing(FlyoutBase sender, FlyoutBaseClosingEventArgs args)
-        {
-            OpenFile_AppBarToggleButton.IsChecked = false;
         }
         
         private void MenuFlyoutOfBottomBar_Opening(object sender, object e)
