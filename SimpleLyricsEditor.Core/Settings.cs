@@ -129,13 +129,7 @@ namespace SimpleLyricsEditor.Core
 
         public double BackgroundBlurDegree
         {
-            get
-            {
-                if (IsBlueUsability)
-                    return _backgroundBlurDegree;
-                else
-                    return 0D;
-            }
+            get => IsBlueUsability ? _backgroundBlurDegree : 0D;
             set => SetSetting(ref _backgroundBlurDegree, value);
         }
 
