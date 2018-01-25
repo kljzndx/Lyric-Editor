@@ -22,7 +22,7 @@ namespace SimpleLyricsEditor.BLL
 
         public async Task<string> GetLogContent(string fileName)
         {
-            StorageFile file = await StorageFile.GetFileFromApplicationUriAsync(new Uri(_allLogsFolderUri, fileName));
+            StorageFile file = await StorageFile.GetFileFromApplicationUriAsync(new Uri(_allLogsFolderUri, "Logs/" + fileName));
             return await FileIO.ReadTextAsync(file);
         }
     }
