@@ -180,7 +180,7 @@
     <Content Include="Data\UpdateLogs\Logs\v3.10.13.md" />
     <Content Include="Data\UpdateLogs\Logs\v3.10.14.md" />
     <Content Include="Data\UpdateLogs\Logs\v3.10.15.md" />
-    <Content Include="Data\UpdateLogs\Logs\v3.11.2.md" />
+    <Content Include="Data\UpdateLogs\Logs\v3.11.3.md" />
     <None Include="SimpleLyricsEditor_StoreKey.pfx" />
     <None Include="SimpleLyricsEditor_TemporaryKey.pfx" />
     <PRIResource Include="Strings\en-US\Settings\CaraOkSettings.resw" />
