@@ -158,7 +158,7 @@ namespace SimpleLyricsEditor.ViewModels
             if (e.File == null)
             {
                 LyricItems.Clear();
-                LyricsTags.Clear();
+                LyricsTags = new LyricsTagFactory().CreateTags();
                 UndoOperations.Clear();
                 RedoOperations.Clear();
                 return;
