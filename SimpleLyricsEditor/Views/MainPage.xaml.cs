@@ -517,7 +517,9 @@ namespace SimpleLyricsEditor.Views
 
         private async void LyricsFileInfo_Button_Click(object sender, RoutedEventArgs e)
         {
+            LyricsFileInfo_Button.IsEnabled = false;
             await LyricsFileInfo_ContentDialog.ShowAsync();
+            LyricsFileInfo_Button.IsEnabled = true;
         }
 
         private void PreviewMode_ToggleButton_Checked(object sender, RoutedEventArgs e)
