@@ -317,7 +317,7 @@
             <Button Content="&#xE805;" Style="{StaticResource ControllerButtonStyle}" RelativePanel.AlignLeftWithPanel="True">
                 <Button.Flyout>
                     <Flyout Placement="Bottom">
-                        <Slider x:Name="PlaybackRate_Slider" x:Uid="/AudioPlayer/PlaybackRate_Slider" Width="200" Minimum="10" Value="{x:Bind _settings.PlaybackRate, Mode=TwoWay, Converter={StaticResource PercentageToDouble}}" Maximum="190"/>
+                        <Slider x:Name="PlaybackRate_Slider" x:Uid="/AudioPlayer/PlaybackRate_Slider" Width="200" Minimum="10" Value="{x:Bind _settings.PlaybackRate, Mode=TwoWay, Converter={StaticResource PercentageToDouble}}" Maximum="190" StepFrequency="10"/>
                     </Flyout>
                 </Button.Flyout>
             </Button>
