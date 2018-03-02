@@ -92,7 +92,7 @@
                 </Grid>
             </PivotItem>
             <PivotItem Header="{x:Bind _viewModel.DialogUi.AllVersionsTag, Mode=OneWay}">
-                <ListView x:Name="AllVersions_ListView" ItemsSource="{x:Bind _viewModel.AllLogs, Mode=OneWay}" SelectedItem="{x:Bind _viewModel.CurrentUpdateLog, Mode=OneWay}" SelectionChanged="AllVersions_ListView_SelectionChanged">
+                <ListView x:Name="AllVersions_ListView" ItemsSource="{x:Bind _viewModel.AllLogs, Mode=OneWay}" SelectionMode="None" IsItemClickEnabled="True" ItemClick="AllVersions_ListView_ItemClick">
                     <ListView.ItemContainerStyle>
                         <Style TargetType="ListViewItem">
                             <Setter Property="HorizontalContentAlignment" Value="Stretch"/>

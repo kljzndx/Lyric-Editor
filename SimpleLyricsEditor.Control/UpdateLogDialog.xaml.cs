@@ -35,11 +35,12 @@ namespace SimpleLyricsEditor.Control
             await _viewModel.GetDialogUIAsync();
             await _viewModel.GetAllLogsAsync();
             _viewModel.CurrentUpdateLog = _viewModel.AllLogs.First();
+            await _viewModel.ReadLogContentAsync();
         }
 
-        private async void AllVersions_ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private async void AllVersions_ListView_ItemClick(object sender, ItemClickEventArgs e)
         {
-            _viewModel.CurrentUpdateLog = e.AddedItems.First() as UpdateLog;
+            _viewModel.CurrentUpdateLog = e.ClickedItem as UpdateLog;
 
             await _viewModel.ReadLogContentAsync();
 
