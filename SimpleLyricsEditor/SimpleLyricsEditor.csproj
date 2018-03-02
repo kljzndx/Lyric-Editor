@@ -342,10 +342,10 @@
       <Version>1.4.3</Version>
     </PackageReference>
     <PackageReference Include="HappyStudio.UwpToolsLibrary.Information">
-      <Version>1.0.2</Version>
+      <Version>1.0.3</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
-      <Version>6.0.6</Version>
+      <Version>6.0.7</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Services.Store.SDK">
       <Version>10.1705.16001</Version>
