@@ -52,18 +52,24 @@ namespace SimpleLyricsEditor.Control.Models
             if (NextIndex >= Lyrics.Count)
                 NextIndex = 0;
 
-            long currentTimeTicks = position.Ticks;
+            long currentPositionTicks = position.Ticks;
+            long currentLyricTimeTicks = CurrentLyric != null ? CurrentLyric.Time.Ticks : 0;
+            Lyric backLyric = Lyrics[NextIndex > 1 ? NextIndex - 2 : 0];
             Lyric nextLyric = Lyrics[NextIndex];
-            long nextTimeTicks = nextLyric.Time.Ticks;
-            long nextEndTimeTicks = nextTimeTicks + TimeSpan.TicksPerSecond;
+            long nextLyricTimeTicks = nextLyric.Time.Ticks;
 
-            if (currentTimeTicks >= nextTimeTicks && currentTimeTicks <= nextEndTimeTicks)
+            if (currentPositionTicks >= nextLyricTimeTicks)
             {
                 NextIndex++;
                 CurrentLyric = nextLyric;
             }
-            else if (currentTimeTicks > nextEndTimeTicks)
-                Reposition(position);
+            else if (currentPositionTicks < currentLyricTimeTicks)
+            {
+                if (NextIndex > 0)
+                    NextIndex--;
+
+                CurrentLyric = backLyric;
+            }
         }
 
         public void Reposition(TimeSpan position)
