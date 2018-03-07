@@ -292,10 +292,10 @@
     <Content Include="Assets\Wide310x150Logo.scale-200.png" />
     <Content Include="Assets\Wide310x150Logo.scale-400.png" />
     <Content Include="Assets\毛玻璃.png" />
-    <None Include="Package.StoreAssociation.xml" />
     <Content Include="Data\ShortcutKeysDocument\Shortcut Keys Document.lang-en-US.xml" />
     <Content Include="Data\ShortcutKeysDocument\Shortcut Keys Document.lang-zh-CN.xml" />
     <Content Include="Data\UpdateLogs\Logs\v3.9.1.md" />
+    <None Include="Package.xml" />
     <Content Include="Properties\Default.rd.xml" />
   </ItemGroup>
   <ItemGroup>
