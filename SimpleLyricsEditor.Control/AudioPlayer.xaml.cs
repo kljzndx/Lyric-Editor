@@ -1,13 +1,8 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Threading.Tasks;
 using Windows.Foundation;
-using Windows.Media.Core;
-using Windows.Media.Playback;
 using Windows.Storage;
 using Windows.System;
-using Windows.System.Threading;
-using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -57,31 +52,18 @@ namespace SimpleLyricsEditor.Control
 
         private Music _musicTemp;
         private Settings _settings = Settings.Current;
-        private ThreadPoolTimer _refreshPositionTimer;
-        private readonly TimerElapsedHandler _refreshPositionAction;
 
         public AudioPlayer()
         {
             InitializeComponent();
-
-            _refreshPositionAction = async t => await Dispatcher.RunAsync(CoreDispatcherPriority.Normal,
-                () =>
-                {
-                    if(!_isPressSlider)
-                        RefreshPosition();
-                }
-            );
-
+            
             Rewind_Button.Opacity = 0;
             FastForward_Button.Opacity = 0;
             RewindButton_Transform.TranslateX = 44;
             FastForwardButton_Transform.TranslateX = -44;
-
-            Position_Slider.AddHandler(PointerPressedEvent,
-                                       new PointerEventHandler(Position_Slider_PointerPressed),
-                                       true);
+            
             Position_Slider.AddHandler(PointerReleasedEvent,
-                                       new PointerEventHandler(Position_Slider_PointerReleased),
+                                       new PointerEventHandler((s, e) => PositionChanged?.Invoke(this, new PositionChangeEventArgs(true, Player.Position))),
                                        true);
 
             GlobalKeyNotifier.KeyDown += OnKeyDown;
@@ -131,8 +113,9 @@ namespace SimpleLyricsEditor.Control
         public TimeSpan Position
         {
             get => Player.Position;
-            set => Player.Position = value;
+            private set => Player.Position = value;
         }
+
         public TimeSpan Duration => Player.NaturalDuration.TimeSpan;
 
         public event TypedEventHandler<AudioPlayer, MusicChangeEventArgs> SourceChanged;
@@ -157,11 +140,10 @@ namespace SimpleLyricsEditor.Control
             {
                 if (Source.Equals(Music.Empty))
                     return;
+                
+                Position_Slider.Value = Position.TotalMinutes;
 
-                var currentPositon = Position;
-                Position_Slider.Value = currentPositon.TotalMinutes;
-
-                PositionChanged?.Invoke(this, new PositionChangeEventArgs(false, currentPositon));
+                PositionChanged?.Invoke(this, new PositionChangeEventArgs(false, Position));
             }
         }
 
@@ -169,18 +151,13 @@ namespace SimpleLyricsEditor.Control
         {
             lock (PlayerPositionLocker)
             {
-                Position = newPosition;
+                TimeSpan currentPosition = Position;
                 Position_Slider.Value = newPosition.TotalMinutes;
 
-                PositionChanged?.Invoke(this, new PositionChangeEventArgs(true, newPosition));
+                PositionChanged?.Invoke(this, new PositionChangeEventArgs(newPosition < currentPosition, newPosition));
             }
         }
-
-        public void StartRefreshPositionTimer()
-        {
-            _refreshPositionTimer = ThreadPoolTimer.CreatePeriodicTimer(_refreshPositionAction, TimeSpan.FromMilliseconds(Debugger.IsAttached ? 1000 : 100));
-        }
-
+        
         public async Task<bool> PickMusicFile()
         {
             DisplayOpenFileButton_Wait();
@@ -308,6 +285,7 @@ namespace SimpleLyricsEditor.Control
 
             SourceChanged?.Invoke(this, new MusicChangeEventArgs(Source));
             DisplayPositionControlButtons();
+            SetPosition(TimeSpan.Zero);
 
             Play();
         }
@@ -338,36 +316,28 @@ namespace SimpleLyricsEditor.Control
                 case MediaElementState.Buffering:
                 case MediaElementState.Playing:
                     IsPlay = true;
-                    StartRefreshPositionTimer();
+                    RefreshPosition();
                     Playing?.Invoke(this, EventArgs.Empty);
                     break;
                 case MediaElementState.Paused:
                     IsPlay = false;
                     RefreshPosition();
-                    _refreshPositionTimer?.Cancel();
                     Paused?.Invoke(this, EventArgs.Empty);
                     break;
             }
         }
 
-        private void Position_Slider_PointerPressed(object sender, PointerRoutedEventArgs e)
+        private void Position_Slider_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
         {
-            _isPressSlider = true;
+            if (e.NewValue > e.OldValue)
+                PositionChanged?.Invoke(this, new PositionChangeEventArgs(false, Position));
         }
-
-        private void Position_Slider_PointerReleased(object sender, PointerRoutedEventArgs e)
-        {
-            if (sender is Slider slider)
-                SetPosition(TimeSpan.FromMinutes(slider.Value));
-            _isPressSlider = false;
-        }
-
+        
         #region PlayerControlButton
 
         private async void OpenMusicFile_Button_Click(object sender, RoutedEventArgs e)
         {
             await PickMusicFile();
-
         }
 
         private void PlayOrPause_ToggleButton_Checked(object sender, RoutedEventArgs e)
