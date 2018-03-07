@@ -154,7 +154,7 @@ namespace SimpleLyricsEditor.Control
                 TimeSpan currentPosition = Position;
                 Position_Slider.Value = newPosition.TotalMinutes;
 
-                PositionChanged?.Invoke(this, new PositionChangeEventArgs(newPosition < currentPosition, newPosition));
+                PositionChanged?.Invoke(this, new PositionChangeEventArgs(true, newPosition));
             }
         }
         
@@ -329,8 +329,7 @@ namespace SimpleLyricsEditor.Control
 
         private void Position_Slider_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
         {
-            if (e.NewValue > e.OldValue)
-                PositionChanged?.Invoke(this, new PositionChangeEventArgs(false, Position));
+            PositionChanged?.Invoke(this, new PositionChangeEventArgs(false, Position));
         }
         
         #region PlayerControlButton
