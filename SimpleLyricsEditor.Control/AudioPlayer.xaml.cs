@@ -51,7 +51,7 @@ namespace SimpleLyricsEditor.Control
         private bool _isPressSlider;
 
         private Music _musicTemp;
-        private Settings _settings = Settings.Current;
+        private readonly Settings _settings = Settings.Current;
 
         public AudioPlayer()
         {
