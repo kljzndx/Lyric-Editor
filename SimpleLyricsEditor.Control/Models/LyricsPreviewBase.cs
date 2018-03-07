@@ -57,8 +57,9 @@ namespace SimpleLyricsEditor.Control.Models
             Lyric backLyric = Lyrics[NextIndex > 1 ? NextIndex - 2 : 0];
             Lyric nextLyric = Lyrics[NextIndex];
             long nextLyricTimeTicks = nextLyric.Time.Ticks;
+            long nextLyricEndTimeTicks = nextLyricTimeTicks + 30000000;
 
-            if (currentPositionTicks >= nextLyricTimeTicks)
+            if (currentPositionTicks >= nextLyricTimeTicks && currentPositionTicks < nextLyricEndTimeTicks)
             {
                 NextIndex++;
                 CurrentLyric = nextLyric;
