@@ -53,23 +53,14 @@ namespace SimpleLyricsEditor.Control.Models
                 NextIndex = 0;
 
             long currentPositionTicks = position.Ticks;
-            long currentLyricTimeTicks = CurrentLyric != null ? CurrentLyric.Time.Ticks : 0;
-            Lyric backLyric = Lyrics[NextIndex > 1 ? NextIndex - 2 : 0];
             Lyric nextLyric = Lyrics[NextIndex];
             long nextLyricTimeTicks = nextLyric.Time.Ticks;
-            long nextLyricEndTimeTicks = nextLyricTimeTicks + 30000000;
+            long nextLyricEndTimeTicks = nextLyricTimeTicks + 10000000;
 
             if (currentPositionTicks >= nextLyricTimeTicks && currentPositionTicks < nextLyricEndTimeTicks)
             {
                 NextIndex++;
                 CurrentLyric = nextLyric;
-            }
-            else if (currentPositionTicks < currentLyricTimeTicks)
-            {
-                if (NextIndex > 0)
-                    NextIndex--;
-
-                CurrentLyric = backLyric;
             }
         }
 
