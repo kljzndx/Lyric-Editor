@@ -48,7 +48,6 @@ namespace SimpleLyricsEditor.Control
             new PropertyMetadata(TimeSpan.FromSeconds(5)));
 
         private bool _isPressShift;
-        private bool _isPressSlider;
 
         private Music _musicTemp;
         private readonly Settings _settings = Settings.Current;
