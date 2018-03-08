@@ -77,6 +77,9 @@
             <RowDefinition/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
+        
+        <!-- 用来接收焦点的透明 Button -->
+        <Button Width="1" Height="1" Padding="0" TabIndex="0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
 
         <Grid Background="{ThemeResource AppBarBackgroundThemeBrush}">
             <pctol:FrostedGlassBackground GlassBackgroundBrush="{ThemeResource AppBarBackgroundThemeBrush}" GlassOpacity="{x:Bind _settings.FrostedGlassOpacity, Mode=OneWay}" Visibility="{x:Bind _settings.IsFrostedGlassEffectDisplay, Mode=OneWay, Converter={StaticResource BoolToVisibility}}"/>
