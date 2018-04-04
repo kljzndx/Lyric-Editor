@@ -1,5 +1,6 @@
 ﻿using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;
+using Windows.UI.Xaml.Navigation;
 using SimpleLyricsEditor.Core;
 
 namespace SimpleLyricsEditor.Models
@@ -14,6 +15,7 @@ namespace SimpleLyricsEditor.Models
             {
                 new NavigationThemeTransition()
             };
+            NavigationCacheMode = NavigationCacheMode.Enabled;
         }
 
         ~SettingsPageBase()
