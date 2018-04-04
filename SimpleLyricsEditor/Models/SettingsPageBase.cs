@@ -15,5 +15,10 @@ namespace SimpleLyricsEditor.Models
                 new NavigationThemeTransition()
             };
         }
+
+        ~SettingsPageBase()
+        {
+            _settings = null;
+        }
     }
 }
