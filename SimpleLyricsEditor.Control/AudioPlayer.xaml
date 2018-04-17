@@ -307,7 +307,9 @@
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
             
-            <TextBlock Text="{Binding ElementName=Position_Slider, Path=Value, Mode=OneWay, Converter={StaticResource DoubleToLyricTimeString}}" VerticalAlignment="Center"/>
+            <!--<TextBlock Text="{Binding ElementName=Position_Slider, Path=Value, Mode=OneWay, Converter={StaticResource DoubleToLyricTimeString}}" VerticalAlignment="Center"/>-->
+            <HyperlinkButton x:Name="Position_HyperlinkButton" Content="{Binding ElementName=Position_Slider, Path=Value, Converter={StaticResource DoubleToLyricTimeString}}" Click="Position_HyperlinkButton_Click" Foreground="{ThemeResource SystemControlBackgroundBaseHighBrush}"/>
+            <TextBox x:Name="Position_TextBox" LostFocus="Position_TextBox_LostFocus" Visibility="Collapsed" VerticalAlignment="Center"/>
             <Slider x:Name="Position_Slider" Grid.Column="1" Value="{Binding ElementName=Player, Path=Position, Mode=TwoWay, Converter={StaticResource TimeSpanToDouble}}" Maximum="{x:Bind Player.NaturalDuration.TimeSpan.TotalMinutes, Mode=OneWay}" Style="{StaticResource MediaSliderStyle}" Margin="5,0" ThumbToolTipValueConverter="{StaticResource DoubleToLyricTimeString}" SmallChange="0.01" LargeChange="0.1" StepFrequency="0.01" ValueChanged="Position_Slider_ValueChanged"/>
             <TextBlock Grid.Column="2" Text="{x:Bind Position_Slider.Maximum, Mode=OneWay, Converter={StaticResource DoubleToLyricTimeString}}" VerticalAlignment="Center"/>
             

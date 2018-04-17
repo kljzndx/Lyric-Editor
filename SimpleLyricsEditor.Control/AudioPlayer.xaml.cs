@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Storage;
@@ -8,6 +10,7 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
+using HappyStudio.UwpToolsLibrary.Auxiliarys;
 using SimpleLyricsEditor.BLL.Pickers;
 using SimpleLyricsEditor.Core;
 using SimpleLyricsEditor.DAL;
@@ -365,5 +368,51 @@ namespace SimpleLyricsEditor.Control
         }
 
         #endregion
+
+        private void Position_HyperlinkButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is HyperlinkButton theButton)
+            {
+                theButton.Visibility = Visibility.Collapsed;
+                Position_TextBox.Visibility = Visibility.Visible;
+                Position_TextBox.Text = $"{Position.Minutes:D2}:{Position.Seconds:D2}.{Position.Milliseconds:D3}";
+                Position_TextBox.Focus(FocusState.Pointer);
+            }
+        }
+
+        private void Position_TextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            var theBox = sender as TextBox;
+            if (theBox is null)
+                return;
+
+            Regex timeRegex = new Regex(@"^(?<minutes>\d{1,2})\:(?<seconds>\d{1,2})(\.(?<milliseconds>\d{1,3}))?$");
+            var match = timeRegex.Match(theBox.Text);
+            if (match.Success)
+            {
+                byte.TryParse(match.Groups["minutes"].Value, out byte min);
+                byte.TryParse(match.Groups["seconds"].Value, out byte ss);
+
+                StringBuilder msStringBuilder = new StringBuilder(match.Groups["milliseconds"].Value);
+                int needNum = 3 - msStringBuilder.Length;
+                while (needNum > 0 && needNum < 3)
+                {
+                    msStringBuilder.Append("0");
+
+                    needNum--;
+                }
+
+                int.TryParse(msStringBuilder.ToString(), out int ms);
+
+                TimeSpan newPosition = new TimeSpan(0, 0, min, ss, ms);
+                SetPosition(newPosition);
+            }
+            else
+                MessageBox.ShowAsync(CharacterLibrary.ErrorInfo.GetString("TimeFormatError"), CharacterLibrary.MessageBox.GetString("Close"));
+
+            theBox.Visibility = Visibility.Collapsed;
+            Position_HyperlinkButton.Visibility = Visibility.Visible;
+            Position_HyperlinkButton.Focus(FocusState.Pointer);
+        }
     }
 }
