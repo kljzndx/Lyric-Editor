@@ -129,4 +129,7 @@
   <data name="ShowFeedbackHubError" xml:space="preserve">
     <value>Unable to start Feedback Hub</value>
   </data>
+  <data name="TimeFormatError" xml:space="preserve">
+    <value>Time format error!</value>
+  </data>
 </root>
