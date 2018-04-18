@@ -211,6 +211,21 @@ namespace SimpleLyricsEditor.Control
             PlayOrPause_ToggleButton.Visibility = Visibility.Visible;
         }
 
+        private void EnterTimeEditMode()
+        {
+            Position_HyperlinkButton.Visibility = Visibility.Collapsed;
+            Position_TextBox.Visibility = Visibility.Visible;
+            Position_TextBox.Text = $"{Position.Minutes:D2}:{Position.Seconds:D2}.{Position.Milliseconds:D3}";
+            Position_TextBox.Focus(FocusState.Pointer);
+        }
+
+        private void ExitTimeEditMode()
+        {
+            Position_TextBox.Visibility = Visibility.Collapsed;
+            Position_HyperlinkButton.Visibility = Visibility.Visible;
+            Position_HyperlinkButton.Focus(FocusState.Pointer);
+        }
+
         public void Play()
         {
             Player.Play();
@@ -371,13 +386,7 @@ namespace SimpleLyricsEditor.Control
 
         private void Position_HyperlinkButton_Click(object sender, RoutedEventArgs e)
         {
-            if (sender is HyperlinkButton theButton)
-            {
-                theButton.Visibility = Visibility.Collapsed;
-                Position_TextBox.Visibility = Visibility.Visible;
-                Position_TextBox.Text = $"{Position.Minutes:D2}:{Position.Seconds:D2}.{Position.Milliseconds:D3}";
-                Position_TextBox.Focus(FocusState.Pointer);
-            }
+            EnterTimeEditMode();
         }
 
         private void Position_TextBox_LostFocus(object sender, RoutedEventArgs e)
@@ -410,9 +419,13 @@ namespace SimpleLyricsEditor.Control
             else
                 MessageBox.ShowAsync(CharacterLibrary.ErrorInfo.GetString("TimeFormatError"), CharacterLibrary.MessageBox.GetString("Close"));
 
-            theBox.Visibility = Visibility.Collapsed;
-            Position_HyperlinkButton.Visibility = Visibility.Visible;
-            Position_HyperlinkButton.Focus(FocusState.Pointer);
+            ExitTimeEditMode();
+        }
+
+        private void Position_TextBox_KeyDown(object sender, KeyRoutedEventArgs e)
+        {
+            if (e.Key == VirtualKey.Enter)
+                ExitTimeEditMode();
         }
     }
 }
