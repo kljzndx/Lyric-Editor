@@ -126,6 +126,9 @@
   <data name="ErrorReportEmillTitle" xml:space="preserve">
     <value>Error Report</value>
   </data>
+  <data name="RebootApp" xml:space="preserve">
+    <value>Reboot bpp</value>
+  </data>
   <data name="SendErrorReport" xml:space="preserve">
     <value>Send Error Report</value>
   </data>
