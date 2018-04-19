@@ -77,10 +77,13 @@ namespace SimpleLyricsEditor.Views
                 Application.Current.RequestedTheme != (ApplicationTheme) ((int) _settings.PageTheme - 1))
             {
                 Dictionary<string, UICommandInvokedHandler> buttons = new Dictionary<string, UICommandInvokedHandler>();
-                if (ApiInformation.IsTypePresent("Windows.ApplicationModel.Core.CoreApplication"))
+                if (ApiInformation.IsTypePresent("Windows.ApplicationModel.Core.CoreApplication") &&
+                    ApiInformation.IsMethodPresent("Windows.ApplicationModel.Core.CoreApplication", "RequestRestartAsync", 1))
+                {
                     buttons.Add(CharacterLibrary.MessageBox.GetString("RebootApp"),
                         async u => await CoreApplication.RequestRestartAsync(String.Empty));
-
+                }
+                
                 await MessageBox.ShowAsync
                 (
                     String.Empty, 
