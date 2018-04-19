@@ -1,4 +1,9 @@
-﻿using Windows.UI.Xaml;
+﻿using System;
+using System.Collections.Generic;
+using Windows.ApplicationModel.Core;
+using Windows.Foundation.Metadata;
+using Windows.UI.Popups;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
@@ -71,9 +76,16 @@ namespace SimpleLyricsEditor.Views
                 _settings.PageTheme != ElementTheme.Default &&
                 Application.Current.RequestedTheme != (ApplicationTheme) ((int) _settings.PageTheme - 1))
             {
+                Dictionary<string, UICommandInvokedHandler> buttons = new Dictionary<string, UICommandInvokedHandler>();
+                if (ApiInformation.IsTypePresent("Windows.ApplicationModel.Core.CoreApplication"))
+                    buttons.Add(CharacterLibrary.MessageBox.GetString("RebootApp"),
+                        async u => await CoreApplication.RequestRestartAsync(String.Empty));
+
                 await MessageBox.ShowAsync
                 (
+                    String.Empty, 
                     CharacterLibrary.ErrorInfo.GetString("RebootApp"),
+                    buttons,
                     CharacterLibrary.MessageBox.GetString("Close")
                 );
             }
