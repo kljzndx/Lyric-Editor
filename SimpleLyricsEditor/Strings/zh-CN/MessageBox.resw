@@ -126,10 +126,13 @@
   <data name="ErrorReportEmillTitle" xml:space="preserve">
     <value>错误报告</value>
   </data>
-  <data name="RebootApp" xml:space="preserve">
-    <value>重启应用</value>
+  <data name="No" xml:space="preserve">
+    <value>否</value>
   </data>
   <data name="SendErrorReport" xml:space="preserve">
     <value>发送错误报告</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>是</value>
   </data>
 </root>
