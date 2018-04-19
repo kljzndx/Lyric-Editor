@@ -124,7 +124,9 @@
     <value>找不到文件</value>
   </data>
   <data name="RebootApp" xml:space="preserve">
-    <value>请重启应用以得到最佳体验</value>
+    <value>请重启应用以得到最佳体验。
+
+是否要重启应用？</value>
   </data>
   <data name="ShowFeedbackHubError" xml:space="preserve">
     <value>无法启动反馈中心</value>
