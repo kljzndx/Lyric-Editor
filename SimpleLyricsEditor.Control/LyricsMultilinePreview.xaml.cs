@@ -49,7 +49,7 @@ namespace SimpleLyricsEditor.Control
                 ? (int) listViewItem.DesiredSize.Height
                 : 44;
 
-            return (44 * itemId) - (Root_Viewer.ActualHeight / 2 - itemHeight);
+            return (itemHeight * itemId) - ((Root_Viewer.ActualHeight / 2) - (itemHeight / 2));
         }
 
         private void LyricsMultilinePreview_SizeChanged(object sender, SizeChangedEventArgs e)
