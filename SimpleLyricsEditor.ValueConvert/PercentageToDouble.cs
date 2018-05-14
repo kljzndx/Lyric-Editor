@@ -7,12 +7,16 @@ namespace SimpleLyricsEditor.ValueConvert
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            return (double) value * 100;
+            if (value is double)
+                return (double) value * 100;
+            return 0D;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)
         {
-            return (double) value / 100;
+            if (value is double)
+                return (double) value / 100;
+            return 0D;
         }
     }
 }
