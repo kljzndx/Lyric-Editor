@@ -9,6 +9,7 @@ using Windows.Foundation;
 using Windows.Foundation.Metadata;
 using Windows.Storage;
 using Windows.Storage.AccessCache;
+using Windows.Storage.Streams;
 using Windows.System;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
@@ -34,7 +35,7 @@ namespace SimpleLyricsEditor.Views
     {
         private readonly Settings _settings = Settings.Current;
 
-        private BitmapSource _backgroundImageSource;
+        private IRandomAccessStream _backgroundImageData;
         private bool _isPressCtrl;
         private bool _isPressShift;
         private bool _lyricsListGotFocus;
@@ -98,10 +99,9 @@ namespace SimpleLyricsEditor.Views
             StorageFile file = await ApplicationData.Current.LocalFolder.TryGetItemAsync("Background.img") as StorageFile;
             if (file != null)
             {
-                BitmapImage image = new BitmapImage();
-                image.SetSource(await file.OpenAsync(FileAccessMode.Read));
-                _backgroundImageSource = image;
-                BlurBackground.Source = image;
+                var data = await file.OpenAsync(FileAccessMode.Read);
+                _backgroundImageData = data;
+                BlurBackground.Source = data;
             }
             else if (!String.IsNullOrEmpty(_settings.BackgroundImagePath))
             {
@@ -265,11 +265,11 @@ namespace SimpleLyricsEditor.Views
                 if (_settings.IsFollowSongAlbumCover)
                 {
                     if (!Player.Source.Equals(Music.Empty))
-                        BlurBackground.Source = Player.Source.AlbumImage;
+                        BlurBackground.Source = Player.Source.AlbumImageData;
                 }
-                else if (BlurBackground.Source == Player.Source.AlbumImage)
+                else if (BlurBackground.Source == Player.Source.AlbumImageData)
                 {
-                    BlurBackground.Source = _backgroundImageSource;
+                    BlurBackground.Source = _backgroundImageData;
                 }
         }
 
@@ -283,8 +283,8 @@ namespace SimpleLyricsEditor.Views
 
         private void ImageFileChanged(object sender, ImageFileChangeEventArgs e)
         {
-            _backgroundImageSource = e.Source;
-            BlurBackground.Source = _backgroundImageSource;
+            _backgroundImageData = e.Data;
+            BlurBackground.Source = _backgroundImageData;
         }
 
 
@@ -305,7 +305,7 @@ namespace SimpleLyricsEditor.Views
         private void Player_SourceChanged(AudioPlayer sender, MusicChangeEventArgs args)
         {
             if (_settings.IsFollowSongAlbumCover)
-                BlurBackground.Source = args.Source.AlbumImage;
+                BlurBackground.Source = args.Source.AlbumImageData;
 
             SinglePreview.Reposition(Player.Position);
             MultilinePreview.Reposition(Player.Position);

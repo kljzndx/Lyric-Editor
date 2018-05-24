@@ -11,9 +11,10 @@ namespace SimpleLyricsEditor.Events
 
         public static async Task ChangeFile(StorageFile file)
         {
+            var data = await file.OpenAsync(FileAccessMode.Read);
             BitmapImage image = new BitmapImage();
-            image.SetSource(await file.OpenAsync(FileAccessMode.Read));
-            FileChanged?.Invoke(null, new ImageFileChangeEventArgs(file, image));
+            image.SetSource(data);
+            FileChanged?.Invoke(null, new ImageFileChangeEventArgs(data, image));
         }
     }
 }
