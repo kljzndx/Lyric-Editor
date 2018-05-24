@@ -8,22 +8,33 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     d:DesignHeight="300"
-    d:DesignWidth="400"
-    Opacity="0.3">
+    d:DesignWidth="400">
 
     <UserControl.Resources>
-        <Storyboard x:Name="FadeIn">
-            <FadeInThemeAnimation TargetName="Image"/>
+        <Storyboard x:Name="Mask_FadeIn">
+            <FadeInThemeAnimation Storyboard.TargetName="Mask_Rectangle"/>
+        </Storyboard>
+
+        <Storyboard x:Name="Image_FadeIn">
+            <FadeInThemeAnimation Storyboard.TargetName="Image"/>
         </Storyboard>
 
         <Storyboard x:Name="FadeOut" Completed="FadeOut_Completed">
-            <FadeOutThemeAnimation TargetName="Image"/>
+            <FadeOutThemeAnimation Storyboard.TargetName="Image"/>
+            <FadeOutThemeAnimation Storyboard.TargetName="Mask_Rectangle"/>
         </Storyboard>
     </UserControl.Resources>
 
-    <Image x:Name="Image" Stretch="UniformToFill">
-        <interactivity:Interaction.Behaviors>
-            <bhv:Blur Value="{x:Bind BlurDegree, Mode=OneWay}"/>
-        </interactivity:Interaction.Behaviors>
-    </Image>
+    <Grid>
+        <Border Opacity="{x:Bind ImageOpacity, Mode=OneWay}">
+            <Image x:Name="Image" Stretch="UniformToFill">
+                <interactivity:Interaction.Behaviors>
+                    <bhv:Blur Value="{x:Bind BlurDegree, Mode=OneWay}"/>
+                </interactivity:Interaction.Behaviors>
+            </Image>
+        </Border>
+        <Border Opacity="{x:Bind MaskOpacity, Mode=OneWay}">
+            <Rectangle x:Name="Mask_Rectangle"/>
+        </Border>
+    </Grid>
 </UserControl>
