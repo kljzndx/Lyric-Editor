@@ -87,7 +87,7 @@
         </Grid>
         <Grid Grid.Row="1" Grid.RowSpan="3">
             <pctol:FrostedGlassBackground GlassBackgroundBrush="{ThemeResource ApplicationPageBackgroundThemeBrush}" GlassOpacity="{x:Bind _settings.FrostedGlassOpacity, Mode=OneWay}" Visibility="{x:Bind _settings.IsFrostedGlassEffectDisplay, Mode=OneWay, Converter={StaticResource BoolToVisibility}}"/>
-            <ctol:BlurBackgroundImage x:Name="BlurBackground" BlurDegree="{x:Bind _settings.BackgroundBlurDegree, Mode=OneWay}" ImageOpacity="{x:Bind _settings.BackgroundOpacity, Mode=OneWay}" Visibility="{x:Bind _settings.IsDisplayBackground, Mode=OneWay, Converter={StaticResource BoolToVisibility}}"/>
+            <ctol:BlurBackgroundImage x:Name="BlurBackground" BlurDegree="{x:Bind _settings.BackgroundBlurDegree, Mode=OneWay}" ImageOpacity="{x:Bind _settings.BackgroundImageOpacity, Mode=OneWay}" MaskOpacity="{x:Bind _settings.BackgroundDominantMaskOpacity, Mode=OneWay}" Visibility="{x:Bind _settings.IsDisplayBackground, Mode=OneWay, Converter={StaticResource BoolToVisibility}}"/>
         </Grid>
 
         <Grid x:Name="LyricsOperations_Grid" Grid.Row="1" Background="Transparent"  Visibility="{x:Bind PreviewMode_ToggleButton.IsChecked, Mode=OneWay, Converter={StaticResource BoolToVisibility_Reverse}}" Tapped="LyricsOperations_Grid_Tapped">

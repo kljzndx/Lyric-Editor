@@ -126,11 +126,14 @@
   <data name="BackgroundDisplay_ToggleSwitch.Header" xml:space="preserve">
     <value>背景显示</value>
   </data>
+  <data name="BackgroundDominantMaskOpacity_Slider.Header" xml:space="preserve">
+    <value>主题遮罩不透明度</value>
+  </data>
   <data name="BackgroundImageFilePath_TextBox.Header" xml:space="preserve">
     <value>背景图片路径</value>
   </data>
-  <data name="BackgroundOpacity_Slider.Header" xml:space="preserve">
-    <value>背景不透明度</value>
+  <data name="BackgroundImageOpacity_Slider.Header" xml:space="preserve">
+    <value>背景图片不透明度</value>
   </data>
   <data name="FollowSongAlbumCover_ToggleSwitch.Header" xml:space="preserve">
     <value>跟随歌曲专辑封面</value>

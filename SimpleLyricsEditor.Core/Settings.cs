@@ -24,7 +24,8 @@ namespace SimpleLyricsEditor.Core
         [SettingFieldByNormal(nameof(IsFollowSongAlbumCover),  true)] private bool _isFollowSongAlbumCover;
         [SettingFieldByNormal(nameof(BackgroundImagePath), "")] private string _backgroundImagePath;
         [SettingFieldByNormal(nameof(BackgroundBlurDegree), 5D)] private double _backgroundBlurDegree;
-        [SettingFieldByNormal(nameof(BackgroundOpacity), 0.3D)] private double _backgroundOpacity;
+        [SettingFieldByNormal(nameof(BackgroundImageOpacity), 0.3D)] private double _backgroundImageOpacity;
+        [SettingFieldByNormal(nameof(BackgroundDominantMaskOpacity), 0.3D)] private double _backgroundDominantMaskOpacity;
 
         [SettingFieldByNormal(nameof(MultilineEditModeEnabled), false)] private bool _multilineEditModeEnabled;
 
@@ -36,6 +37,8 @@ namespace SimpleLyricsEditor.Core
         private Settings()
         {
             base.RenameSettingKey("IsDisplayBackground", nameof(IsDisplayBackground));
+            base.RenameSettingKey("BackgroundOpacity", nameof(BackgroundImageOpacity));
+
             if (base.SettingObject.Values.ContainsKey("BackgroundSourceType"))
                 base.SettingObject.Values.Remove("BackgroundSourceType");
             if (base.SettingObject.Values.ContainsKey("AdClickDate"))
@@ -119,10 +122,16 @@ namespace SimpleLyricsEditor.Core
             set => SetSetting(ref _backgroundImagePath, value);
         }
 
-        public double BackgroundOpacity
+        public double BackgroundImageOpacity
         {
-            get => _backgroundOpacity;
-            set => SetSetting(ref _backgroundOpacity, value);
+            get => _backgroundImageOpacity;
+            set => SetSetting(ref _backgroundImageOpacity, value);
+        }
+
+        public double BackgroundDominantMaskOpacity
+        {
+            get => _backgroundDominantMaskOpacity;
+            set => SetSetting(ref _backgroundDominantMaskOpacity, value);
         }
 
         public bool IsBlueUsability => SystemInfo.BuildVersion >= 14393;

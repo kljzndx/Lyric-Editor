@@ -27,7 +27,7 @@ namespace SimpleLyricsEditor.Control
             nameof(ImageOpacity), typeof(double), typeof(BlurBackgroundImage), new PropertyMetadata(0.3D));
 
         public static readonly DependencyProperty MaskOpacityProperty = DependencyProperty.Register(
-            nameof(MaskOpacity), typeof(double), typeof(BlurBackgroundImage), new PropertyMetadata(0.4D));
+            nameof(MaskOpacity), typeof(double), typeof(BlurBackgroundImage), new PropertyMetadata(0.3D));
 
         public static readonly DependencyProperty BlurDegreeProperty = DependencyProperty.Register(
             "BlurDegree", typeof(double), typeof(BlurBackgroundImage), new PropertyMetadata(5D));
