@@ -22,40 +22,22 @@ namespace SimpleLyricsEditor.Control
 {
     public sealed partial class LyricsMultilinePreview : LyricsPreviewBase
     {
-        private static readonly object InterpolationLocker = new object();
         
         public LyricsMultilinePreview()
         {
             this.InitializeComponent();
-            _itemsCountOnView = ComputeItemsCountOnView();
-        }
-
-        private int _itemsCountOnView;
-
-        public event ItemClickEventHandler ItemClick;
-
-        private int ComputeItemsCountOnView()
-        {
-            return (int) Root_Viewer.ActualHeight / 44;
         }
         
-        private double ComputeScrollVerticalOffset(Lyric item)
+        public event ItemClickEventHandler ItemClick;
+        
+        private double ComputeScrollVerticalOffset(Lyric lyrics)
         {
-            int itemId = Lyrics.IndexOf(item);
-            if (itemId + 1 < _itemsCountOnView / 2)
+            ListViewItem item = (ListViewItem)Main_ListView.ContainerFromItem(lyrics);
+            if (item is null)
                 return 0;
 
-            int itemHeight = Main_ListView.ContainerFromItem(item) is ListViewItem listViewItem
-                ? (int) listViewItem.DesiredSize.Height
-                : 44;
-
-            return (itemHeight * itemId) - ((Root_Viewer.ActualHeight / 2) - (itemHeight / 2));
-        }
-
-        private void LyricsMultilinePreview_SizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            lock (InterpolationLocker)
-                _itemsCountOnView = ComputeItemsCountOnView();
+            var transformToVisual = item.TransformToVisual(Main_ListView);
+            return transformToVisual.TransformPoint(new Point()).Y + (item.ActualHeight / 2) - (Root_Viewer.ActualHeight / 2);
         }
 
         private void LyricsMultilinePreview_Refreshed(LyricsPreviewBase sender, LyricsPreviewRefreshEventArgs args)

@@ -10,7 +10,7 @@
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400"
-    SizeChanged="LyricsMultilinePreview_SizeChanged" Refreshed="LyricsMultilinePreview_Refreshed">
+    Refreshed="LyricsMultilinePreview_Refreshed">
 
     <ScrollViewer x:Name="Root_Viewer">
         <ListView x:Name="Main_ListView" ItemsSource="{x:Bind Lyrics, Mode=OneWay}" SelectionMode="None" IsItemClickEnabled="True" ItemClick="Main_ListView_ItemClick">
