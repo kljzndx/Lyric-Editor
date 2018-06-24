@@ -21,7 +21,7 @@
     <PackageCertificateThumbprint>9FEEC0A3F3D771E9CD4843DB9A55A378168C8AEB</PackageCertificateThumbprint>
     <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
     <AppxBundle>Always</AppxBundle>
-    <AppxBundlePlatforms>x64</AppxBundlePlatforms>
+    <AppxBundlePlatforms>x86|x64|arm</AppxBundlePlatforms>
     <GenerateAppInstallerFile>False</GenerateAppInstallerFile>
     <AppInstallerUpdateFrequency>1</AppInstallerUpdateFrequency>
     <AppInstallerCheckForUpdateFrequency>OnApplicationRun</AppInstallerCheckForUpdateFrequency>
@@ -192,6 +192,7 @@
     <Content Include="Data\UpdateLogs\Logs\v3.11.13.md" />
     <Content Include="Data\UpdateLogs\Logs\v3.12.1.md" />
     <Content Include="Data\UpdateLogs\Logs\v3.12.2.md" />
+    <Content Include="Data\UpdateLogs\Logs\v3.12.3.md" />
     <None Include="SimpleLyricsEditor_StoreKey.pfx" />
     <None Include="SimpleLyricsEditor_TemporaryKey.pfx" />
     <PRIResource Include="Strings\en-US\Settings\CaraOkSettings.resw" />
