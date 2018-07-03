@@ -18,7 +18,7 @@
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WindowsXamlEnableOverview>true</WindowsXamlEnableOverview>
     <PackageCertificateKeyFile>SimpleLyricsEditor_StoreKey.pfx</PackageCertificateKeyFile>
-    <PackageCertificateThumbprint>9FEEC0A3F3D771E9CD4843DB9A55A378168C8AEB</PackageCertificateThumbprint>
+    <PackageCertificateThumbprint>0D4AA997B8ABAE22D7BD3DA37F1CBDA0D47563DB</PackageCertificateThumbprint>
     <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
     <AppxBundle>Always</AppxBundle>
     <AppxBundlePlatforms>x86|x64|arm</AppxBundlePlatforms>
@@ -194,8 +194,6 @@
     <Content Include="Data\UpdateLogs\Logs\v3.12.2.md" />
     <Content Include="Data\UpdateLogs\Logs\v3.12.3.md" />
     <Content Include="Data\UpdateLogs\Logs\v3.12.4.md" />
-    <None Include="SimpleLyricsEditor_StoreKey.pfx" />
-    <None Include="SimpleLyricsEditor_TemporaryKey.pfx" />
     <PRIResource Include="Strings\en-US\Settings\CaraOkSettings.resw" />
     <PRIResource Include="Strings\zh-CN\Settings\CaraOkSettings.resw" />
     <PRIResource Include="Strings\en-US\Tools.resw" />
@@ -304,9 +302,9 @@
     <Content Include="Data\ShortcutKeysDocument\Shortcut Keys Document.lang-en-US.xml" />
     <Content Include="Data\ShortcutKeysDocument\Shortcut Keys Document.lang-zh-CN.xml" />
     <Content Include="Data\UpdateLogs\Logs\v3.9.1.md" />
-    <None Include="Package.xml" />
     <None Include="Package.StoreAssociation.xml" />
     <Content Include="Properties\Default.rd.xml" />
+    <None Include="SimpleLyricsEditor_StoreKey.pfx" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
