@@ -39,16 +39,14 @@ namespace SimpleLyricsEditor.Core
             base.RenameSettingKey("IsDisplayBackground", nameof(IsDisplayBackground));
             base.RenameSettingKey("BackgroundOpacity", nameof(BackgroundImageOpacity));
 
-            if (base.SettingObject.Values.ContainsKey("BackgroundSourceType"))
-                base.SettingObject.Values.Remove("BackgroundSourceType");
-            if (base.SettingObject.Values.ContainsKey("AdClickDate"))
-                base.SettingObject.Values.Remove("AdClickDate");
+            if (base.SettingContainer.Values.ContainsKey("BackgroundSourceType"))
+                base.SettingContainer.Values.Remove("BackgroundSourceType");
+            if (base.SettingContainer.Values.ContainsKey("AdClickDate"))
+                base.SettingContainer.Values.Remove("AdClickDate");
 
             _caraOkEffectColor = base.GetSetting(nameof(CaraOkEffectColor),
                                                  Colors.Red.ToHexString(),
                                                  new ColorFactory().FromHexString);
-            
-            InitializeSettingFields();
         }
 
         public static Settings Current { get; } = new Settings();

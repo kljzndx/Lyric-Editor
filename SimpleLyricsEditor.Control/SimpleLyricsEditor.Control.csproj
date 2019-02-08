@@ -135,10 +135,10 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="HappyStudio.UwpToolsLibrary.Control">
-      <Version>1.4.3</Version>
+      <Version>1.6.5</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
-      <Version>6.1.4</Version>
+      <Version>6.1.9</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Toolkit.Uwp.UI.Animations">
       <Version>1.5.1</Version>
@@ -147,7 +147,7 @@
       <Version>1.5.1</Version>
     </PackageReference>
     <PackageReference Include="MvvmLight">
-      <Version>5.4.1</Version>
+      <Version>5.4.1.1</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>

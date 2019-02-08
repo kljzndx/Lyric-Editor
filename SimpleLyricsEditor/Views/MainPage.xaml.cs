@@ -111,12 +111,12 @@ namespace SimpleLyricsEditor.Views
 
         private async Task ExtractionOldVersionBackgroundImageFile()
         {
-            if(!_settings.SettingObject.Values.ContainsKey("LocalBackgroundImagePath"))
+            if(!_settings.SettingContainer.Values.ContainsKey("LocalBackgroundImagePath"))
                 return;
 
-            if (String.IsNullOrEmpty(_settings.SettingObject.Values["LocalBackgroundImagePath"].ToString()))
+            if (String.IsNullOrEmpty(_settings.SettingContainer.Values["LocalBackgroundImagePath"].ToString()))
             {
-                _settings.SettingObject.Values.Remove("LocalBackgroundImagePath");
+                _settings.SettingContainer.Values.Remove("LocalBackgroundImagePath");
                 return;
             }
 
@@ -131,7 +131,7 @@ namespace SimpleLyricsEditor.Views
             }
             catch (FileNotFoundException)
             {
-                _settings.SettingObject.Values.Remove("LocalBackgroundImagePath");
+                _settings.SettingContainer.Values.Remove("LocalBackgroundImagePath");
                 StorageApplicationPermissions.FutureAccessList.Remove("BackgroundImage");
                 await MessageBox.ShowAsync(
                     CharacterLibrary.ErrorInfo.GetString("NotFoundFile"),

@@ -38,13 +38,13 @@ namespace SimpleLyricsEditor.Views
         private int BootTimes
         {
             get => _settings.GetSetting("BootTimes", 0);
-            set => _settings.SettingObject.Values["BootTimes"] = value;
+            set => _settings.SettingContainer.Values["BootTimes"] = value;
         }
 
         private string UpdateLogVersion
         {
             get => _settings.GetSetting("UpdateLogVersion", String.Empty);
-            set => _settings.SettingObject.Values["UpdateLogVersion"] = value;
+            set => _settings.SettingContainer.Values["UpdateLogVersion"] = value;
         }
 
 
@@ -205,7 +205,7 @@ namespace SimpleLyricsEditor.Views
 
         private void UpdateLogDialog_Hided(object sender, EventArgs e)
         {
-            _settings.SettingObject.Values["UpdateLogVersion"] = AppInfo.Version;
+            _settings.SettingContainer.Values["UpdateLogVersion"] = AppInfo.Version;
         }
 
         #region Fast menu

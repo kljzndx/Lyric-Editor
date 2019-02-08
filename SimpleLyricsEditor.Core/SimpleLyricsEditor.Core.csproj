@@ -117,13 +117,13 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="HappyStudio.UwpToolsLibrary.Auxiliarys">
-      <Version>1.1.5</Version>
+      <Version>1.2.3</Version>
     </PackageReference>
     <PackageReference Include="HappyStudio.UwpToolsLibrary.Information">
       <Version>1.0.3</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
-      <Version>6.1.4</Version>
+      <Version>6.1.9</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
