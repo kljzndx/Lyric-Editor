@@ -107,6 +107,9 @@ namespace SimpleLyricsEditor.Control
 
         private async void FadeOut_Completed(object sender, object e)
         {
+            if (Source is null)
+                return;
+
             BitmapImage bitmap = new BitmapImage();
             bitmap.SetSource(Source);
 
