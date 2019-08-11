@@ -142,7 +142,7 @@
     <value>毛玻璃效果</value>
   </data>
   <data name="FrostedGlassNotAvailable_TextBlock.Text" xml:space="preserve">
-    <value>仅支持 Win10 1703 及以上版本</value>
+    <value>仅支持 Win10 1709 及以上版本</value>
   </data>
   <data name="FrostedGlassOpacity_Slider.Header" xml:space="preserve">
     <value>毛玻璃不透明度</value>

@@ -121,7 +121,7 @@
     <value>Background Blur Degree</value>
   </data>
   <data name="BackgroundBlurNotAvailable_TextBlock.Text" xml:space="preserve">
-    <value>Only support Win10 1607 and above version</value>
+    <value>Only support Win10 1607 or Higher</value>
   </data>
   <data name="BackgroundDisplay_ToggleSwitch.Header" xml:space="preserve">
     <value>Background Display</value>
@@ -142,7 +142,7 @@
     <value>Frosted glass effect</value>
   </data>
   <data name="FrostedGlassNotAvailable_TextBlock.Text" xml:space="preserve">
-    <value>Only support Win10 1703 and above version</value>
+    <value>Only support Win10 1709 or Higher</value>
   </data>
   <data name="FrostedGlassOpacity_Slider.Header" xml:space="preserve">
     <value>Frosted glass opacity</value>

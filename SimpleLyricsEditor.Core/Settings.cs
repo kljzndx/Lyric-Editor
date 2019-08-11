@@ -82,7 +82,7 @@ namespace SimpleLyricsEditor.Core
             }
         }
 
-        public bool IsFrostedGlassUsability => SystemInfo.BuildVersion >= 15063;
+        public bool IsFrostedGlassUsability => SystemInfo.BuildVersion >= 16299;
 
         public bool IsFrostedGlassEffectDisplay
         {
