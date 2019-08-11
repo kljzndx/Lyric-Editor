@@ -121,7 +121,7 @@
     <value>Background Blur Degree</value>
   </data>
   <data name="BackgroundBlurNotAvailable_TextBlock.Text" xml:space="preserve">
-    <value>Only support Win10 1607 or Higher</value>
+    <value>Only support Win10 1703 or Higher</value>
   </data>
   <data name="BackgroundDisplay_ToggleSwitch.Header" xml:space="preserve">
     <value>Background Display</value>

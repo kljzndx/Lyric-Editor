@@ -132,7 +132,7 @@ namespace SimpleLyricsEditor.Core
             set => SetSetting(ref _backgroundDominantMaskOpacity, value);
         }
 
-        public bool IsBlueUsability => SystemInfo.BuildVersion >= 14393;
+        public bool IsBlueUsability => SystemInfo.BuildVersion >= 15063;
 
         public double BackgroundBlurDegree
         {
