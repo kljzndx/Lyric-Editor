@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
+using Windows.Foundation.Metadata;
 using Windows.Storage;
 using Windows.Storage.Streams;
 using Windows.UI;
@@ -11,8 +12,8 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 using Microsoft.Graphics.Canvas;
-using Microsoft.Toolkit.Uwp;
-using SimpleLyricsEditor.Events;
+using Microsoft.Toolkit.Uwp.Helpers;
+using Microsoft.Toolkit.Uwp.UI.Media;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
@@ -30,9 +31,10 @@ namespace SimpleLyricsEditor.Control
             nameof(MaskOpacity), typeof(double), typeof(BlurBackgroundImage), new PropertyMetadata(0.3D));
 
         public static readonly DependencyProperty BlurDegreeProperty = DependencyProperty.Register(
-            "BlurDegree", typeof(double), typeof(BlurBackgroundImage), new PropertyMetadata(5D));
+            "BlurDegree", typeof(double), typeof(BlurBackgroundImage), new PropertyMetadata(5D, BlurDegree_PropertyChangedCallback));
 
         private readonly CanvasDevice device = new CanvasDevice();
+        private Brush blurBrush;
 
         public BlurBackgroundImage()
         {
@@ -119,6 +121,29 @@ namespace SimpleLyricsEditor.Control
             SolidColorBrush brush = new SolidColorBrush(await GetDominantColor(Source));
             Mask_Rectangle.Fill = brush;
             Mask_FadeIn.Begin();
+        }
+
+        private static void BlurDegree_PropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var sender = d as BlurBackgroundImage;
+            if (sender?.blurBrush == null)
+                return;
+
+            var brush = (BackdropBlurBrush) sender.blurBrush;
+            brush.Amount = (double) e.NewValue;
+        }
+
+        private void BlurBackgroundImage_OnLoaded(object sender, RoutedEventArgs e)
+        {
+            if (ApiInformation.IsApiContractPresent("Windows.Foundation.UniversalApiContract", 3))
+            {
+                blurBrush = new BackdropBlurBrush
+                {
+                    Amount = BlurDegree
+                };
+
+                Blur_Rectangle.Fill = blurBrush;
+            }
         }
     }
 }
