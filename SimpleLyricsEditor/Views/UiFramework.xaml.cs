@@ -178,7 +178,7 @@ namespace SimpleLyricsEditor.Views
 
         private void OnLyricsFileChanged(object sender, FileChangeEventArgs e)
         {
-            if (e.File.FileType == ".lrc" || _lyricsFile == null)
+            if (e.File.FileType == ".lrc" || e.File == null)
                 _lyricsFile = e.File;
         }
 
