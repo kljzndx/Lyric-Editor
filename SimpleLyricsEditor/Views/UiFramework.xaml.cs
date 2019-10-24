@@ -34,6 +34,7 @@ namespace SimpleLyricsEditor.Views
         private readonly Settings _settings = Settings.Current;
         private StorageFile _lyricsFile;
         private StorageFile _musicFile;
+        private string _lyricsFileName;
 
         private int BootTimes
         {
@@ -86,7 +87,7 @@ namespace SimpleLyricsEditor.Views
         {
             if (_lyricsFile == null)
             {
-                var file = await LyricsFileSavePicker.PickFile();
+                var file = await LyricsFileSavePicker.PickFile(_lyricsFileName);
                 if (file != null)
                     _lyricsFile = file;
                 else
@@ -98,7 +99,7 @@ namespace SimpleLyricsEditor.Views
 
         private async Task SaveAs()
         {
-            var file = await LyricsFileSavePicker.PickFile();
+            var file = await LyricsFileSavePicker.PickFile(_lyricsFileName);
             if (file == null)
                 return;
 
@@ -174,12 +175,15 @@ namespace SimpleLyricsEditor.Views
         private void OnMusicFileFileChanged(object sender, FileChangeEventArgs e)
         {
             _musicFile = e.File;
+            _lyricsFileName = _musicFile.DisplayName;
         }
 
         private void OnLyricsFileChanged(object sender, FileChangeEventArgs e)
         {
-            if (e.File.FileType == ".lrc" || e.File == null)
+            if (e.File != null && e.File.FileType == ".lrc")
                 _lyricsFile = e.File;
+            else
+                _lyricsFile = null;
         }
 
         private void AdsVisibilityNotifier_DisplayRequested(object sender, EventArgs e)

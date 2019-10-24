@@ -10,8 +10,9 @@ namespace SimpleLyricsEditor.BLL.Pickers
     {
         public static readonly FileSavePicker Picker = GetPicker();
 
-        public static async Task<StorageFile> PickFile()
+        public static async Task<StorageFile> PickFile(string fileName)
         {
+            Picker.SuggestedFileName = !String.IsNullOrWhiteSpace(fileName) ? fileName : "new lyrics file";
             return await Picker.PickSaveFileAsync();
         }
 
