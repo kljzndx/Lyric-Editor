@@ -36,6 +36,7 @@ namespace SimpleLyricsEditor.ViewModels
 
             LyricsFileNotifier.FileChanged += LyricsFileChanged;
             LyricsFileNotifier.SaveRequested += LyricsFileSaveRequested;
+            SavingDialogWhenClosingNotifier.ValidatingRequested += SavingDialogWhenClosingNotifier_ValidatingRequested;
         }
 
         public bool IsMiniMode
@@ -201,6 +202,12 @@ namespace SimpleLyricsEditor.ViewModels
                 ExpirationTime = DateTimeOffset.Now.AddSeconds(10)
             };
             ToastNotificationManager.CreateToastNotifier().Show(notification);
+        }
+
+        private void SavingDialogWhenClosingNotifier_ValidatingRequested(object sender, EventArgs e)
+        {
+            if (_lastOperationBeforeSaved != UndoOperations.FirstOrDefault())
+                SavingDialogWhenClosingNotifier.RequestToShowDialog();
         }
     }
 }

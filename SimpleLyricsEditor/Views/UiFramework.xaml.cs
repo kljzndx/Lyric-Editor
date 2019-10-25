@@ -59,6 +59,7 @@ namespace SimpleLyricsEditor.Views
             LyricsFileNotifier.FileChanged += OnLyricsFileChanged;
             AdsVisibilityNotifier.DisplayRequested += AdsVisibilityNotifier_DisplayRequested;
             AdsVisibilityNotifier.HideRequested += AdsVisibilityNotifier_HideRequested;
+            SavingDialogWhenClosingNotifier.ShowingDialogRequested += SavingDialogWhenClosingNotifier_ShowingDialogRequested;
             SystemNavigationManager.GetForCurrentView().BackRequested += SystemNavigationManager_BackRequested;
 
             if (ApiInformation.IsEventPresent(typeof(FlyoutBase).FullName, "Closing"))
@@ -360,12 +361,24 @@ namespace SimpleLyricsEditor.Views
 
         private void SystemNavigationManager_BackRequested(object sender, BackRequestedEventArgs e)
         {
-            // TODO 判断是否需要保存并显示保存弹窗
+            EventHandler handler = (s, a) => e.Handled = true;
+
+            SavingDialogWhenClosingNotifier.ShowingDialogRequested += handler;
+            SavingDialogWhenClosingNotifier.RequestValidating();
+            SavingDialogWhenClosingNotifier.ShowingDialogRequested -= handler;
+        }
+
+        private async void SavingDialogWhenClosingNotifier_ShowingDialogRequested(object sender, EventArgs e)
+        {
+            await Save_ContentDialog.ShowAsync();
         }
 
         private async void Save_Button_OnClick(object sender, RoutedEventArgs e)
         {
             await SaveFile();
+            if (_lyricsFile == null)
+                return;
+
             Save_ContentDialog.Hide();
             App.Current.Exit();
         }
