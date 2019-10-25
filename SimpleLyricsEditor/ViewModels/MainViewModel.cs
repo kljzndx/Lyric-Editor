@@ -21,6 +21,7 @@ namespace SimpleLyricsEditor.ViewModels
 
         private bool _isMiniMode;
         private List<LyricsTag> _lyricsTags;
+        private LyricsOperationBase _lastOperationBeforeSaved;
         
         public MainViewModel()
         {
@@ -180,6 +181,8 @@ namespace SimpleLyricsEditor.ViewModels
 
         private async void LyricsFileSaveRequested(object sender, FileChangeEventArgs e)
         {
+            _lastOperationBeforeSaved = UndoOperations.FirstOrDefault();
+
             var content = LyricsSerializer.Serialization(LyricItems,
                 LyricsTags.Where(t => !string.IsNullOrWhiteSpace(t.TagValue)));
             await LyricsFileIO.WriteText(e.File, content);

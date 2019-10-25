@@ -80,9 +80,9 @@
                                 </Style>
                             </Grid.Resources>
 
-                            <Button x:Name="Save_Button" x:Uid="/ContentDialog/Save_Button" Grid.Column="0"/>
-                            <Button x:Name="DoNotSave_Button" x:Uid="/ContentDialog/DoNotSave_Button" Grid.Column="1"/>
-                            <Button x:Name="Cancel_Button" x:Uid="/ContentDialog/Cancel_Button" Grid.Column="2"/>
+                            <Button x:Name="Save_Button" x:Uid="/ContentDialog/Save_Button" Grid.Column="0" Click="Save_Button_OnClick"/>
+                            <Button x:Name="DoNotSave_Button" x:Uid="/ContentDialog/DoNotSave_Button" Grid.Column="1" Click="DoNotSave_Button_OnClick"/>
+                            <Button x:Name="Cancel_Button" x:Uid="/ContentDialog/Cancel_Button" Grid.Column="2" Click="Cancel_Button_OnClick"/>
                         </Grid>
                     </Grid>
                 </ContentDialog>

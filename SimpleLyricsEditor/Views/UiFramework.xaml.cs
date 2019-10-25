@@ -4,6 +4,7 @@ using Windows.Foundation.Metadata;
 using Windows.Storage;
 using Windows.System;
 using Windows.UI;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -58,6 +59,7 @@ namespace SimpleLyricsEditor.Views
             LyricsFileNotifier.FileChanged += OnLyricsFileChanged;
             AdsVisibilityNotifier.DisplayRequested += AdsVisibilityNotifier_DisplayRequested;
             AdsVisibilityNotifier.HideRequested += AdsVisibilityNotifier_HideRequested;
+            SystemNavigationManager.GetForCurrentView().BackRequested += SystemNavigationManager_BackRequested;
 
             if (ApiInformation.IsEventPresent(typeof(FlyoutBase).FullName, "Closing"))
                 OpenFile_MenuFlyout.Closing += (s, e) => OpenFile_AppBarToggleButton.IsChecked = false;
@@ -355,5 +357,28 @@ namespace SimpleLyricsEditor.Views
         #endregion
 
         #endregion
+
+        private void SystemNavigationManager_BackRequested(object sender, BackRequestedEventArgs e)
+        {
+            // TODO 判断是否需要保存并显示保存弹窗
+        }
+
+        private async void Save_Button_OnClick(object sender, RoutedEventArgs e)
+        {
+            await SaveFile();
+            Save_ContentDialog.Hide();
+            App.Current.Exit();
+        }
+
+        private void DoNotSave_Button_OnClick(object sender, RoutedEventArgs e)
+        {
+            Save_ContentDialog.Hide();
+            App.Current.Exit();
+        }
+
+        private void Cancel_Button_OnClick(object sender, RoutedEventArgs e)
+        {
+            Save_ContentDialog.Hide();
+        }
     }
 }
