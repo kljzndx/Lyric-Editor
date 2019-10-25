@@ -117,6 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Cancel_Button.Content" xml:space="preserve">
+    <value>取消</value>
+  </data>
+  <data name="DoNotSave_Button.Content" xml:space="preserve">
+    <value>不保存</value>
+  </data>
   <data name="GetReviews_ContentDialog.Content" xml:space="preserve">
     <value>如果好用，请给五星好评
 如果不好用，请直截了当说出哪些地方做的不好
@@ -130,5 +136,11 @@
   </data>
   <data name="GetReviews_ContentDialog.Title" xml:space="preserve">
     <value>简易歌词编辑器 好用吗？</value>
+  </data>
+  <data name="Save_Button.Content" xml:space="preserve">
+    <value>保存</value>
+  </data>
+  <data name="TipForSave_TextBlock.Text" xml:space="preserve">
+    <value>你是否想要保存此文件？</value>
   </data>
 </root>

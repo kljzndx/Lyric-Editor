@@ -204,8 +204,8 @@
     <PRIResource Include="Strings\zh-CN\Tools.resw" />
     <PRIResource Include="Strings\en-US\LyricsFileInfo.resw" />
     <PRIResource Include="Strings\zh-CN\LyricsFileInfo.resw" />
-    <PRIResource Include="Strings\en-US\GetReviewsDialog.resw" />
-    <PRIResource Include="Strings\zh-CN\GetReviewsDialog.resw" />
+    <PRIResource Include="Strings\en-US\ContentDialog.resw" />
+    <PRIResource Include="Strings\zh-CN\ContentDialog.resw" />
     <PRIResource Include="Strings\en-US\About.resw" />
     <PRIResource Include="Strings\zh-CN\About.resw" />
     <PRIResource Include="Strings\en-US\Email.resw" />
