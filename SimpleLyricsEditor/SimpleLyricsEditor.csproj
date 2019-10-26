@@ -309,7 +309,7 @@
     <Content Include="Data\UpdateLogs\Logs\v3.12.6.md" />
     <Content Include="Data\UpdateLogs\Logs\v3.12.8.md" />
     <Content Include="Data\UpdateLogs\Logs\v3.13.1.md" />
-    <Content Include="Data\UpdateLogs\Logs\v3.13.2.md" />
+    <Content Include="Data\UpdateLogs\Logs\v3.13.3.md" />
     <None Include="Package.StoreAssociation.xml" />
     <Content Include="Properties\Default.rd.xml" />
     <None Include="SimpleLyricsEditor_StoreKey.pfx" />
