@@ -5,6 +5,7 @@ using Windows.Storage;
 using Windows.System;
 using Windows.UI;
 using Windows.UI.Core;
+using Windows.UI.Core.Preview;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -60,7 +61,9 @@ namespace SimpleLyricsEditor.Views
             AdsVisibilityNotifier.DisplayRequested += AdsVisibilityNotifier_DisplayRequested;
             AdsVisibilityNotifier.HideRequested += AdsVisibilityNotifier_HideRequested;
             SavingDialogWhenClosingNotifier.ShowingDialogRequested += SavingDialogWhenClosingNotifier_ShowingDialogRequested;
+
             SystemNavigationManager.GetForCurrentView().BackRequested += SystemNavigationManager_BackRequested;
+            SystemNavigationManagerPreview.GetForCurrentView().CloseRequested += SystemNavigationManagerPreview_CloseRequested;
 
             if (ApiInformation.IsEventPresent(typeof(FlyoutBase).FullName, "Closing"))
                 OpenFile_MenuFlyout.Closing += (s, e) => OpenFile_AppBarToggleButton.IsChecked = false;
@@ -358,6 +361,15 @@ namespace SimpleLyricsEditor.Views
         #endregion
 
         #endregion
+
+        private void SystemNavigationManagerPreview_CloseRequested(object sender, SystemNavigationCloseRequestedPreviewEventArgs e)
+        {
+            EventHandler handler = (s, a) => e.Handled = true;
+
+            SavingDialogWhenClosingNotifier.ShowingDialogRequested += handler;
+            SavingDialogWhenClosingNotifier.RequestValidating();
+            SavingDialogWhenClosingNotifier.ShowingDialogRequested -= handler;
+        }
 
         private void SystemNavigationManager_BackRequested(object sender, BackRequestedEventArgs e)
         {
