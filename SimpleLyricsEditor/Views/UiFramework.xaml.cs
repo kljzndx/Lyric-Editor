@@ -36,6 +36,7 @@ namespace SimpleLyricsEditor.Views
         private StorageFile _lyricsFile;
         private StorageFile _musicFile;
         private string _lyricsFileName;
+        private bool _isSaveDialogDisplay;
 
         private int BootTimes
         {
@@ -59,7 +60,7 @@ namespace SimpleLyricsEditor.Views
             LyricsFileNotifier.FileChanged += OnLyricsFileChanged;
             AdsVisibilityNotifier.DisplayRequested += AdsVisibilityNotifier_DisplayRequested;
             AdsVisibilityNotifier.HideRequested += AdsVisibilityNotifier_HideRequested;
-            SavingDialogWhenClosingNotifier.ShowingDialogRequested += SavingDialogWhenClosingNotifier_ShowingDialogRequested;
+            SavingDialogWhenClosingNotifier.ValidatingResultReturned += SavingDialogWhenClosingNotifier_ValidatingResultReturned;
             SystemNavigationManager.GetForCurrentView().BackRequested += SystemNavigationManager_BackRequested;
 
             if (ApiInformation.IsEventPresent(typeof(FlyoutBase).FullName, "Closing"))
@@ -361,16 +362,19 @@ namespace SimpleLyricsEditor.Views
 
         private void SystemNavigationManager_BackRequested(object sender, BackRequestedEventArgs e)
         {
-            EventHandler handler = (s, a) => e.Handled = true;
-
-            SavingDialogWhenClosingNotifier.ShowingDialogRequested += handler;
+            e.Handled = true;
             SavingDialogWhenClosingNotifier.RequestValidating();
-            SavingDialogWhenClosingNotifier.ShowingDialogRequested -= handler;
         }
 
-        private async void SavingDialogWhenClosingNotifier_ShowingDialogRequested(object sender, EventArgs e)
+        private async void SavingDialogWhenClosingNotifier_ValidatingResultReturned(object sender, bool e)
         {
-            await Save_ContentDialog.ShowAsync();
+            if (_isSaveDialogDisplay)
+                return;
+
+            if (e)
+                await Save_ContentDialog.ShowAsync();
+            else
+                App.Current.Exit();
         }
 
         private async void Save_Button_OnClick(object sender, RoutedEventArgs e)
@@ -392,6 +396,16 @@ namespace SimpleLyricsEditor.Views
         private void Cancel_Button_OnClick(object sender, RoutedEventArgs e)
         {
             Save_ContentDialog.Hide();
+        }
+
+        private void Save_ContentDialog_OnOpened(ContentDialog sender, ContentDialogOpenedEventArgs args)
+        {
+            _isSaveDialogDisplay = true;
+        }
+
+        private void Save_ContentDialog_OnClosed(ContentDialog sender, ContentDialogClosedEventArgs args)
+        {
+            _isSaveDialogDisplay = false;
         }
     }
 }

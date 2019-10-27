@@ -59,7 +59,7 @@
                 <ctol:UpdateLogDialog x:Name="UpdateLogDialog" Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}" Margin="30" Visibility="Collapsed" Hided="UpdateLogDialog_Hided"/>
                 <ctol:ShortcutKeysDialog x:Name="ShortcutKeysDialog" Margin="30" Visibility="Collapsed"/>
 
-                <ContentDialog x:Name="Save_ContentDialog" Width="300">
+                <ContentDialog x:Name="Save_ContentDialog" Width="300" Opened="Save_ContentDialog_OnOpened" Closed="Save_ContentDialog_OnClosed">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition/>
