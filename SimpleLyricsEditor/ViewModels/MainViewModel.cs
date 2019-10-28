@@ -206,8 +206,7 @@ namespace SimpleLyricsEditor.ViewModels
 
         private void SavingDialogWhenClosingNotifier_ValidatingRequested(object sender, EventArgs e)
         {
-            if (_lastOperationBeforeSaved != UndoOperations.FirstOrDefault())
-                SavingDialogWhenClosingNotifier.RequestToShowDialog();
+            SavingDialogWhenClosingNotifier.ReturnValidatingResult(_lastOperationBeforeSaved != UndoOperations.FirstOrDefault());
         }
     }
 }
