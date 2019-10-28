@@ -364,11 +364,8 @@ namespace SimpleLyricsEditor.Views
 
         private void SystemNavigationManagerPreview_CloseRequested(object sender, SystemNavigationCloseRequestedPreviewEventArgs e)
         {
-            EventHandler handler = (s, a) => e.Handled = true;
-
-            SavingDialogWhenClosingNotifier.ShowingDialogRequested += handler;
+            e.Handled = true;
             SavingDialogWhenClosingNotifier.RequestValidating();
-            SavingDialogWhenClosingNotifier.ShowingDialogRequested -= handler;
         }
 
         private void SystemNavigationManager_BackRequested(object sender, BackRequestedEventArgs e)
