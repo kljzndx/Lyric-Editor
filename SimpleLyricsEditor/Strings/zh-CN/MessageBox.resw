@@ -120,6 +120,9 @@
   <data name="Close" xml:space="preserve">
     <value>关闭</value>
   </data>
+  <data name="DefaultFileName" xml:space="preserve">
+    <value>新歌词</value>
+  </data>
   <data name="ErrorReportDialogTitle" xml:space="preserve">
     <value>出错啦！</value>
   </data>
