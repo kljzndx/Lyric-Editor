@@ -12,7 +12,7 @@ namespace SimpleLyricsEditor.BLL.Pickers
 
         public static async Task<StorageFile> PickFile(string fileName)
         {
-            Picker.SuggestedFileName = !String.IsNullOrWhiteSpace(fileName) ? fileName : "new lyrics file";
+            Picker.SuggestedFileName = !String.IsNullOrWhiteSpace(fileName) ? fileName : "New lyrics";
             return await Picker.PickSaveFileAsync();
         }
 
