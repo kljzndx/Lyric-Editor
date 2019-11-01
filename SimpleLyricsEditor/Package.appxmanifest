@@ -38,6 +38,14 @@
             </uap:SupportedFileTypes>
           </uap:FileTypeAssociation>
         </uap:Extension>
+        <uap:Extension Category="windows.shareTarget">
+          <uap:ShareTarget Description="Receive lrc file">
+            <uap:SupportedFileTypes>
+              <uap:FileType>.lrc</uap:FileType>
+            </uap:SupportedFileTypes>
+            <uap:DataFormat>StorageItems,Text</uap:DataFormat>
+          </uap:ShareTarget>
+        </uap:Extension>
       </Extensions>
     </Application>
   </Applications>

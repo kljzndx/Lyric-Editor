@@ -143,6 +143,19 @@ namespace SimpleLyricsEditor
             AppInitializer(args);
         }
 
+        protected override async void OnShareTargetActivated(ShareTargetActivatedEventArgs args)
+        {
+            args.ShareOperation.ReportStarted();
+            AppInitializer(args);
+
+            var files = (await args.ShareOperation.Data.GetStorageItemsAsync())
+                .Where(i => i.IsOfType(StorageItemTypes.File)).Cast<StorageFile>().ToList();
+            if (files.Any())
+                LyricsFileNotifier.ChangeFile(files.Last());
+
+            args.ShareOperation.ReportCompleted();
+        }
+
         /// <summary>
         /// Invoked when the application is launched normally by the end user.  Other entry points
         /// will be used such as when the application is launched to open a specific file.
