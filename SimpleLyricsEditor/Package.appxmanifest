@@ -43,7 +43,6 @@
             <uap:SupportedFileTypes>
               <uap:FileType>.lrc</uap:FileType>
             </uap:SupportedFileTypes>
-            <uap:DataFormat>StorageItems,Text</uap:DataFormat>
           </uap:ShareTarget>
         </uap:Extension>
       </Extensions>
