@@ -27,6 +27,8 @@ namespace SimpleLyricsEditor.Views
     /// </summary>
     public sealed partial class UiFramework : Page
     {
+        public static StorageFile TempFile { get; private set; }
+
         private static readonly PageModel SettingsPageModel = new PageModel(typeof(SettingsRootPage));
 
         private static readonly PageModel AboutPageModel = new PageModel(typeof(AboutPage));
@@ -70,8 +72,18 @@ namespace SimpleLyricsEditor.Views
         private async Task OpenMusicFile()
         {
             var file = await MusicFileOpenPicker.PickFile();
-            if (file != null)
-                MusicFileNotifier.ChangeFileRequest(file);
+            if (file == null)
+                return;
+
+            MusicFileNotifier.ChangeFileRequest(file);
+        }
+
+        private async Task CreateLyricsFile()
+        {
+            // 为下次启动做准备
+            _settings.IsNeedOpenTempFile = true;
+            await FileIO.WriteTextAsync(TempFile, String.Empty);
+            LyricsFileNotifier.ChangeFile(TempFile);
         }
 
         private async Task OpenLyricsFile()
@@ -81,11 +93,12 @@ namespace SimpleLyricsEditor.Views
                 return;
             
             LyricsFileNotifier.ChangeFile(file);
+            _settings.IsNeedOpenTempFile = false;
         }
 
         private async Task SaveFile()
         {
-            if (_lyricsFile == null)
+            if (_lyricsFile == null || _lyricsFile == TempFile)
             {
                 var file = await LyricsFileSavePicker.PickFile(_lyricsFileName);
                 if (file != null)
@@ -95,6 +108,7 @@ namespace SimpleLyricsEditor.Views
             }
 
             LyricsFileNotifier.SendSaveRequest(_lyricsFile);
+            _settings.IsNeedOpenTempFile = false;
         }
 
         private async Task SaveAs()
@@ -103,7 +117,9 @@ namespace SimpleLyricsEditor.Views
             if (file == null)
                 return;
 
+            _lyricsFile = file;
             LyricsFileNotifier.SendSaveRequest(file);
+            _settings.IsNeedOpenTempFile = false;
         }
 
         #endregion
@@ -126,7 +142,7 @@ namespace SimpleLyricsEditor.Views
                 switch (e.Key)
                 {
                     case VirtualKey.N:
-                        LyricsFileNotifier.ChangeFile(null);
+                        await CreateLyricsFile();
                         break;
                     case VirtualKey.M:
                         await OpenMusicFile();
@@ -153,6 +169,8 @@ namespace SimpleLyricsEditor.Views
 
         private async void UiFramework_Loaded(object sender, RoutedEventArgs e)
         {
+            TempFile = await ApplicationData.Current.LocalFolder.CreateFileAsync("Temp lyrics.lrc", CreationCollisionOption.OpenIfExists);
+
             if (!StoreServicesFeedbackLauncher.IsSupported())
                 FeedbackInFeedbackHub_MenuFlyoutItem.Visibility = Visibility.Collapsed;
 
@@ -168,6 +186,11 @@ namespace SimpleLyricsEditor.Views
                 if (BootTimes == 10)
                     await GetReviews_ContentDialog.ShowAsync();
             }
+
+            if (_settings.IsNeedOpenTempFile)
+                LyricsFileNotifier.ChangeFile(TempFile);
+            else
+                await CreateLyricsFile();
         }
 
         #region Notifiers
@@ -181,7 +204,9 @@ namespace SimpleLyricsEditor.Views
         private void OnLyricsFileChanged(object sender, FileChangeEventArgs e)
         {
             if (e.File != null && e.File.FileType == ".lrc")
+            {
                 _lyricsFile = e.File;
+            }
             else
                 _lyricsFile = null;
         }
@@ -264,9 +289,9 @@ namespace SimpleLyricsEditor.Views
         #endregion
         #region Bottom Bar
 
-        private void NewFile_AppBarButton_Click(object sender, RoutedEventArgs e)
+        private async void NewFile_AppBarButton_Click(object sender, RoutedEventArgs e)
         {
-            LyricsFileNotifier.ChangeFile(null);
+            await CreateLyricsFile();
         }
 
         private void OpenFile_AppBarToggleButton_Checked(object sender, RoutedEventArgs e)

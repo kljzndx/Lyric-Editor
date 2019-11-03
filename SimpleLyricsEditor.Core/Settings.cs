@@ -19,7 +19,6 @@ namespace SimpleLyricsEditor.Core
 
         [SettingFieldByNormal(nameof(IsFrostedGlassEffectDisplay), true)] private bool _isFrostedGlassEffectDisplay;
         [SettingFieldByNormal(nameof(FrostedGlassOpacity), 0.65D)] private double _frostedGlassOpacity;
-
         [SettingFieldByNormal(nameof(IsDisplayBackground), true)] private bool _isDisplayBackground;
         [SettingFieldByNormal(nameof(IsFollowSongAlbumCover),  true)] private bool _isFollowSongAlbumCover;
         [SettingFieldByNormal(nameof(BackgroundImagePath), "")] private string _backgroundImagePath;
@@ -27,11 +26,12 @@ namespace SimpleLyricsEditor.Core
         [SettingFieldByNormal(nameof(BackgroundImageOpacity), 0.3D)] private double _backgroundImageOpacity;
         [SettingFieldByNormal(nameof(BackgroundDominantMaskOpacity), 0.3D)] private double _backgroundDominantMaskOpacity;
 
-        [SettingFieldByNormal(nameof(MultilineEditModeEnabled), false)] private bool _multilineEditModeEnabled;
-
         [SettingFieldByNormal(nameof(PreviewBackgroundOpacity), 0.3)] private double _previewBackgroundOpacity;
         [SettingFieldByNormal(nameof(SinglePreviewFontSize), 20D)] private double _singlePreviewFontSize;
         [SettingFieldByNormal(nameof(CaraOkEffectEnabled), true)] private bool _caraOkEffectEnabled;
+
+        [SettingFieldByNormal(nameof(MultilineEditModeEnabled), false)] private bool _multilineEditModeEnabled;
+
         private Color _caraOkEffectColor;
 
         private Settings()
@@ -51,6 +51,8 @@ namespace SimpleLyricsEditor.Core
 
         public static Settings Current { get; } = new Settings();
 
+        #region PlayerSettings
+
         public double PlaybackRate
         {
             get => _playbackRate;
@@ -69,9 +71,13 @@ namespace SimpleLyricsEditor.Core
             set => SetSetting(ref _volume, value);
         }
 
+        #endregion
+
         public bool IsLightTheme => PageTheme == ElementTheme.Light || 
                                     PageTheme == ElementTheme.Default && Application.Current.RequestedTheme == ApplicationTheme.Light;
         
+        #region Background settings
+
         public ElementTheme PageTheme
         {
             get => _pageTheme;
@@ -140,12 +146,16 @@ namespace SimpleLyricsEditor.Core
             set => SetSetting(ref _backgroundBlurDegree, value);
         }
 
+        #endregion
+
         public bool MultilineEditModeEnabled
         {
             get => _multilineEditModeEnabled;
             set => SetSetting(ref _multilineEditModeEnabled, value);
         }
-        
+
+        #region Preview area settings
+
         public double PreviewBackgroundOpacity
         {
             get => _previewBackgroundOpacity;
@@ -168,6 +178,16 @@ namespace SimpleLyricsEditor.Core
         {
             get => _caraOkEffectColor;
             set => SetSetting(ref _caraOkEffectColor, value, settingValue: value.ToHexString());
+        }
+
+        #endregion
+
+        [SettingFieldByNormal(nameof(IsNeedOpenTempFile), false)] private bool _isNeedOpenTempFile;
+
+        public bool IsNeedOpenTempFile
+        {
+            get => _isNeedOpenTempFile;
+            set => SetSetting(ref _isNeedOpenTempFile, value);
         }
     }
 }
