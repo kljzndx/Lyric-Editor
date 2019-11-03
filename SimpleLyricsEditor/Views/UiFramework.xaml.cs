@@ -4,8 +4,6 @@ using Windows.Foundation.Metadata;
 using Windows.Storage;
 using Windows.System;
 using Windows.UI;
-using Windows.UI.Core;
-using Windows.UI.Core.Preview;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -37,7 +35,6 @@ namespace SimpleLyricsEditor.Views
         private StorageFile _lyricsFile;
         private StorageFile _musicFile;
         private string _lyricsFileName;
-        private bool _isSaveDialogDisplay;
 
         private int BootTimes
         {
@@ -61,9 +58,6 @@ namespace SimpleLyricsEditor.Views
             LyricsFileNotifier.FileChanged += OnLyricsFileChanged;
             AdsVisibilityNotifier.DisplayRequested += AdsVisibilityNotifier_DisplayRequested;
             AdsVisibilityNotifier.HideRequested += AdsVisibilityNotifier_HideRequested;
-            SavingDialogWhenClosingNotifier.ValidatingResultReturned += SavingDialogWhenClosingNotifier_ValidatingResultReturned;
-            SystemNavigationManager.GetForCurrentView().BackRequested += SystemNavigationManager_BackRequested;
-            SystemNavigationManagerPreview.GetForCurrentView().CloseRequested += SystemNavigationManagerPreview_CloseRequested;
 
             if (ApiInformation.IsEventPresent(typeof(FlyoutBase).FullName, "Closing"))
                 OpenFile_MenuFlyout.Closing += (s, e) => OpenFile_AppBarToggleButton.IsChecked = false;
@@ -361,59 +355,5 @@ namespace SimpleLyricsEditor.Views
         #endregion
 
         #endregion
-
-        private void SystemNavigationManagerPreview_CloseRequested(object sender, SystemNavigationCloseRequestedPreviewEventArgs e)
-        {
-            e.Handled = true;
-            SavingDialogWhenClosingNotifier.RequestValidating();
-        }
-
-        private void SystemNavigationManager_BackRequested(object sender, BackRequestedEventArgs e)
-        {
-            e.Handled = true;
-            SavingDialogWhenClosingNotifier.RequestValidating();
-        }
-
-        private async void SavingDialogWhenClosingNotifier_ValidatingResultReturned(object sender, bool e)
-        {
-            if (_isSaveDialogDisplay)
-                return;
-
-            if (e)
-                await Save_ContentDialog.ShowAsync();
-            else
-                App.Current.Exit();
-        }
-
-        private async void Save_Button_OnClick(object sender, RoutedEventArgs e)
-        {
-            await SaveFile();
-            if (_lyricsFile == null)
-                return;
-
-            Save_ContentDialog.Hide();
-            App.Current.Exit();
-        }
-
-        private void DoNotSave_Button_OnClick(object sender, RoutedEventArgs e)
-        {
-            Save_ContentDialog.Hide();
-            App.Current.Exit();
-        }
-
-        private void Cancel_Button_OnClick(object sender, RoutedEventArgs e)
-        {
-            Save_ContentDialog.Hide();
-        }
-
-        private void Save_ContentDialog_OnOpened(ContentDialog sender, ContentDialogOpenedEventArgs args)
-        {
-            _isSaveDialogDisplay = true;
-        }
-
-        private void Save_ContentDialog_OnClosed(ContentDialog sender, ContentDialogClosedEventArgs args)
-        {
-            _isSaveDialogDisplay = false;
-        }
     }
 }

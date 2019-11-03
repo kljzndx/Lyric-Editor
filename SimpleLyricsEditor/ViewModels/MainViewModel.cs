@@ -21,8 +21,7 @@ namespace SimpleLyricsEditor.ViewModels
 
         private bool _isMiniMode;
         private List<LyricsTag> _lyricsTags;
-        private LyricsOperationBase _lastOperationBeforeSaved;
-        
+
         public MainViewModel()
         {
             _lyricsTags = new LyricsTagFactory().CreateTags();
@@ -36,7 +35,6 @@ namespace SimpleLyricsEditor.ViewModels
 
             LyricsFileNotifier.FileChanged += LyricsFileChanged;
             LyricsFileNotifier.SaveRequested += LyricsFileSaveRequested;
-            SavingDialogWhenClosingNotifier.ValidatingRequested += SavingDialogWhenClosingNotifier_ValidatingRequested;
         }
 
         public bool IsMiniMode
@@ -182,8 +180,6 @@ namespace SimpleLyricsEditor.ViewModels
 
         private async void LyricsFileSaveRequested(object sender, FileChangeEventArgs e)
         {
-            _lastOperationBeforeSaved = UndoOperations.FirstOrDefault();
-
             var content = LyricsSerializer.Serialization(LyricItems,
                 LyricsTags.Where(t => !string.IsNullOrWhiteSpace(t.TagValue)));
             await LyricsFileIO.WriteText(e.File, content);
@@ -202,11 +198,6 @@ namespace SimpleLyricsEditor.ViewModels
                 ExpirationTime = DateTimeOffset.Now.AddSeconds(10)
             };
             ToastNotificationManager.CreateToastNotifier().Show(notification);
-        }
-
-        private void SavingDialogWhenClosingNotifier_ValidatingRequested(object sender, EventArgs e)
-        {
-            SavingDialogWhenClosingNotifier.ReturnValidatingResult(_lastOperationBeforeSaved != UndoOperations.FirstOrDefault());
         }
     }
 }

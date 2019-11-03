@@ -118,7 +118,6 @@
     <Compile Include="MusicChangeEventArgs.cs" />
     <Compile Include="PositionChangeEventArgs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SavingDialogWhenClosingNotifier.cs" />
     <EmbeddedResource Include="Properties\SimpleLyricsEditor.Events.rd.xml" />
   </ItemGroup>
   <ItemGroup>

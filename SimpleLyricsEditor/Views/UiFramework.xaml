@@ -59,34 +59,6 @@
                 <ctol:UpdateLogDialog x:Name="UpdateLogDialog" Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}" Margin="30" Visibility="Collapsed" Hided="UpdateLogDialog_Hided"/>
                 <ctol:ShortcutKeysDialog x:Name="ShortcutKeysDialog" Margin="30" Visibility="Collapsed"/>
 
-                <ContentDialog x:Name="Save_ContentDialog" Width="300" Opened="Save_ContentDialog_OnOpened" Closed="Save_ContentDialog_OnClosed">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
-
-                        <TextBlock x:Uid="/ContentDialog/TipForSave_TextBlock" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        <Grid Grid.Row="1">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition/>
-                                <ColumnDefinition/>
-                                <ColumnDefinition/>
-                            </Grid.ColumnDefinitions>
-                            <Grid.Resources>
-                                <Style TargetType="Button">
-                                    <Setter Property="HorizontalAlignment" Value="Stretch"/>
-                                    <Setter Property="Margin" Value="4,0"/>
-                                </Style>
-                            </Grid.Resources>
-
-                            <Button x:Name="Save_Button" x:Uid="/ContentDialog/Save_Button" Grid.Column="0" Click="Save_Button_OnClick"/>
-                            <Button x:Name="DoNotSave_Button" x:Uid="/ContentDialog/DoNotSave_Button" Grid.Column="1" Click="DoNotSave_Button_OnClick"/>
-                            <Button x:Name="Cancel_Button" x:Uid="/ContentDialog/Cancel_Button" Grid.Column="2" Click="Cancel_Button_OnClick"/>
-                        </Grid>
-                    </Grid>
-                </ContentDialog>
-
                 <ContentDialog x:Name="GetReviews_ContentDialog" x:Uid="/ContentDialog/GetReviews_ContentDialog" PrimaryButtonClick="GetReviews_ContentDialog_PrimaryButtonClick" SecondaryButtonClick="GetReviews_ContentDialog_SecondaryButtonClick"/>
             </Grid>
         </SplitView.Content>

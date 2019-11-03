@@ -117,14 +117,8 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Cancel_Button.Content" xml:space="preserve">
-    <value>Cancel</value>
-  </data>
-  <data name="DoNotSave_Button.Content" xml:space="preserve">
-    <value>Don't save</value>
-  </data>
   <data name="GetReviews_ContentDialog.Content" xml:space="preserve">
-    <value>If is feasible, please give it five star
+    <value>If it is feasible, please give it five star
 or not, please give me same suggestion for any defect
 your support and feedback is the most motivation for me</value>
   </data>
@@ -136,11 +130,5 @@ your support and feedback is the most motivation for me</value>
   </data>
   <data name="GetReviews_ContentDialog.Title" xml:space="preserve">
     <value>Is the Simple Lyric Editor good to use?</value>
-  </data>
-  <data name="Save_Button.Content" xml:space="preserve">
-    <value>Save</value>
-  </data>
-  <data name="TipForSave_TextBlock.Text" xml:space="preserve">
-    <value>Do you want to save this file?</value>
   </data>
 </root>
