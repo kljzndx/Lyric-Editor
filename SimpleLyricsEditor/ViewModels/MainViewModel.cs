@@ -142,8 +142,8 @@ namespace SimpleLyricsEditor.ViewModels
         private void UndoOperations_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             RaisePropertyChanged(nameof(CanUndo));
-            if (_optionFile != null)
-                LyricsFileNotifier.SendSaveRequest(_optionFile);
+            // if (_optionFile != null)
+            //     LyricsFileNotifier.SendSaveRequest(_optionFile);
         }
 
         private void RedoOperations_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)

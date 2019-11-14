@@ -78,12 +78,13 @@ namespace SimpleLyricsEditor.Views
             MusicFileNotifier.ChangeFileRequest(file);
         }
 
-        private async Task CreateLyricsFile()
+        private void CreateLyricsFile()
         {
-            // 为下次启动做准备
-            _settings.IsNeedOpenTempFile = true;
-            await FileIO.WriteTextAsync(TempFile, String.Empty);
-            LyricsFileNotifier.ChangeFile(TempFile);
+            //// 为下次启动做准备
+            //_settings.IsNeedOpenTempFile = true;
+            //await FileIO.WriteTextAsync(TempFile, String.Empty);
+            //LyricsFileNotifier.ChangeFile(TempFile);
+            LyricsFileNotifier.ChangeFile(null);
         }
 
         private async Task OpenLyricsFile()
@@ -142,7 +143,7 @@ namespace SimpleLyricsEditor.Views
                 switch (e.Key)
                 {
                     case VirtualKey.N:
-                        await CreateLyricsFile();
+                        CreateLyricsFile();
                         break;
                     case VirtualKey.M:
                         await OpenMusicFile();
@@ -169,7 +170,7 @@ namespace SimpleLyricsEditor.Views
 
         private async void UiFramework_Loaded(object sender, RoutedEventArgs e)
         {
-            TempFile = await ApplicationData.Current.LocalFolder.CreateFileAsync("Temp lyrics.lrc", CreationCollisionOption.OpenIfExists);
+            //TempFile = await ApplicationData.Current.LocalFolder.CreateFileAsync("Temp lyrics.lrc", CreationCollisionOption.OpenIfExists);
 
             if (!StoreServicesFeedbackLauncher.IsSupported())
                 FeedbackInFeedbackHub_MenuFlyoutItem.Visibility = Visibility.Collapsed;
@@ -187,10 +188,10 @@ namespace SimpleLyricsEditor.Views
                     await GetReviews_ContentDialog.ShowAsync();
             }
 
-            if (_settings.IsNeedOpenTempFile)
-                LyricsFileNotifier.ChangeFile(TempFile);
-            else
-                await CreateLyricsFile();
+            //if (_settings.IsNeedOpenTempFile)
+            //    LyricsFileNotifier.ChangeFile(TempFile);
+            //else
+            //    await CreateLyricsFile();
         }
 
         #region Notifiers
@@ -289,9 +290,9 @@ namespace SimpleLyricsEditor.Views
         #endregion
         #region Bottom Bar
 
-        private async void NewFile_AppBarButton_Click(object sender, RoutedEventArgs e)
+        private void NewFile_AppBarButton_Click(object sender, RoutedEventArgs e)
         {
-            await CreateLyricsFile();
+            CreateLyricsFile();
         }
 
         private void OpenFile_AppBarToggleButton_Checked(object sender, RoutedEventArgs e)
