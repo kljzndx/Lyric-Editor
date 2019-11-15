@@ -7,6 +7,7 @@ using Windows.Data.Xml.Dom;
 using Windows.Storage;
 using Windows.UI.Notifications;
 using GalaSoft.MvvmLight;
+using Microsoft.Toolkit.Uwp.Helpers;
 using SimpleLyricsEditor.BLL;
 using SimpleLyricsEditor.BLL.LyricsOperations;
 using SimpleLyricsEditor.DAL;
@@ -185,6 +186,7 @@ namespace SimpleLyricsEditor.ViewModels
             var content = LyricsSerializer.Serialization(LyricItems,
                 LyricsTags.Where(t => !string.IsNullOrWhiteSpace(t.TagValue)));
             await LyricsFileIO.WriteText(e.File, content);
+            LyricsFileNotifier.ReturnSaveResult(e.File, content);
 
             if (_optionFile != e.File)
             {
