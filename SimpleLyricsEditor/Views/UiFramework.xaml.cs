@@ -8,7 +8,6 @@ using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Media;
 using HappyStudio.UwpToolsLibrary.Auxiliarys;
 using HappyStudio.UwpToolsLibrary.Information;
 using Microsoft.Advertising.WinRT.UI;
@@ -92,7 +91,7 @@ namespace SimpleLyricsEditor.Views
             // 为下次启动做准备
             _settings.IsNeedOpenTempFile = true;
             TempFile = await ApplicationData.Current.LocalFolder.CreateFileAsync(TempFileName, CreationCollisionOption.ReplaceExisting);
-            LyricsFileNotifier.ChangeFile(TempFile);|
+            LyricsFileNotifier.ChangeFile(TempFile);
         }
 
         private async Task OpenLyricsFile()

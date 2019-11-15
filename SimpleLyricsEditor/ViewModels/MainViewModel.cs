@@ -5,6 +5,7 @@ using System.Collections.Specialized;
 using System.Linq;
 using Windows.Data.Xml.Dom;
 using Windows.Storage;
+using Windows.System.Threading;
 using Windows.UI.Notifications;
 using GalaSoft.MvvmLight;
 using Microsoft.Toolkit.Uwp.Helpers;
@@ -13,7 +14,6 @@ using SimpleLyricsEditor.BLL.LyricsOperations;
 using SimpleLyricsEditor.DAL;
 using SimpleLyricsEditor.DAL.Factory;
 using SimpleLyricsEditor.Events;
-using SimpleLyricsEditor.Views;
 
 namespace SimpleLyricsEditor.ViewModels
 {
@@ -25,6 +25,8 @@ namespace SimpleLyricsEditor.ViewModels
         private List<LyricsTag> _lyricsTags;
 
         private StorageFile _optionFile;
+
+        private ThreadPoolTimer _autoSaveTimer;
 
         public MainViewModel()
         {
@@ -39,6 +41,7 @@ namespace SimpleLyricsEditor.ViewModels
 
             LyricsFileNotifier.FileChanged += LyricsFileChanged;
             LyricsFileNotifier.SaveRequested += LyricsFileSaveRequested;
+            CreateSaveTimer();
         }
 
         public bool IsMiniMode
@@ -62,6 +65,18 @@ namespace SimpleLyricsEditor.ViewModels
         public bool IsLyricsItemAny => LyricItems.Count >= 2;
         public bool CanUndo => UndoOperations.Any();
         public bool CanRedo => RedoOperations.Any();
+
+        private void CreateSaveTimer()
+        {
+            _autoSaveTimer = ThreadPoolTimer.CreatePeriodicTimer(async t =>
+            {
+                await DispatcherHelper.ExecuteOnUIThreadAsync(() =>
+                {
+                    if (_optionFile != null)
+                        LyricsFileNotifier.SendSaveRequest(_optionFile);
+                });
+            }, TimeSpan.FromSeconds(30));
+        }
         
         public void CreateOperation(LyricsOperationBase operation)
         {
@@ -143,8 +158,6 @@ namespace SimpleLyricsEditor.ViewModels
         private void UndoOperations_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             RaisePropertyChanged(nameof(CanUndo));
-            // if (_optionFile != null)
-            //     LyricsFileNotifier.SendSaveRequest(_optionFile);
         }
 
         private void RedoOperations_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
