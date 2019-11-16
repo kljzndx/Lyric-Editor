@@ -25,7 +25,7 @@ namespace SimpleLyricsEditor.Control.Templates
             nameof(LyricContent), typeof(string), typeof(LyricsMultilinePreviewItemTemplate), new PropertyMetadata(String.Empty));
 
         public static readonly DependencyProperty IsBoldProperty = DependencyProperty.Register(
-            nameof(IsBold), typeof(bool), typeof(LyricsMultilinePreviewItemTemplate), new PropertyMetadata(false));
+            nameof(IsBold), typeof(bool), typeof(LyricsMultilinePreviewItemTemplate), new PropertyMetadata(false, IsBold_OnPropertyChangedCallback));
 
         public LyricsMultilinePreviewItemTemplate()
         {
@@ -42,22 +42,26 @@ namespace SimpleLyricsEditor.Control.Templates
         public bool IsBold
         {
             get => (bool) GetValue(IsBoldProperty);
-            set
-            {
-                SetValue(IsBoldProperty, value);
+            set => SetValue(IsBoldProperty, value);
+        }
 
-                if (value)
-                {
-                    Main_TextBlock.FontWeight = FontWeights.Bold;
-                    Reset_Storyboard.Stop();
-                    Amplifier_Storyboard.Begin();
-                }
-                else
-                {
-                    Main_TextBlock.FontWeight = FontWeights.Normal;
-                    Amplifier_Storyboard.Stop();
-                    Reset_Storyboard.Begin();
-                }
+        private static void IsBold_OnPropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var theObj = d as LyricsMultilinePreviewItemTemplate;
+            if (theObj is null)
+                return;
+
+            if ((bool) e.NewValue)
+            {
+                theObj.Main_TextBlock.FontWeight = FontWeights.Bold;
+                theObj.Reset_Storyboard.Stop();
+                theObj.Amplifier_Storyboard.Begin();
+            }
+            else
+            {
+                theObj.Main_TextBlock.FontWeight = FontWeights.Normal;
+                theObj.Amplifier_Storyboard.Stop();
+                theObj.Reset_Storyboard.Begin();
             }
         }
     }

@@ -18,5 +18,5 @@
         </Storyboard>
     </UserControl.Resources>
 
-    <TextBlock x:Name="Main_TextBlock" Text="{x:Bind LyricContent, Mode=OneWay}" TextWrapping="Wrap" FontWeight="Bold" TextAlignment="Center"/>
+    <TextBlock x:Name="Main_TextBlock" Text="{x:Bind LyricContent, Mode=OneWay}" TextWrapping="Wrap" TextAlignment="Center"/>
 </UserControl>
