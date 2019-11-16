@@ -11,10 +11,10 @@
 
     <UserControl.Resources>
         <Storyboard x:Name="Amplifier_Storyboard">
-            <DoubleAnimation To="18" Duration="0:0:0.1" EnableDependentAnimation="True" Storyboard.TargetProperty="FontSize" Storyboard.TargetName="Main_TextBlock"/>
+            <DoubleAnimation x:Name="Amplifier_Animation" To="18" Duration="0:0:0.1" EnableDependentAnimation="True" Storyboard.TargetProperty="FontSize" Storyboard.TargetName="Main_TextBlock"/>
         </Storyboard>
         <Storyboard x:Name="Reset_Storyboard">
-            <DoubleAnimation To="15" Duration="0:0:0.1" EnableDependentAnimation="True" Storyboard.TargetProperty="FontSize" Storyboard.TargetName="Main_TextBlock"/>
+            <DoubleAnimation x:Name="Reset_Animation" To="15" Duration="0:0:0.1" EnableDependentAnimation="True" Storyboard.TargetProperty="FontSize" Storyboard.TargetName="Main_TextBlock"/>
         </Storyboard>
     </UserControl.Resources>
 

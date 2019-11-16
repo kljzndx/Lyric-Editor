@@ -13,6 +13,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using SimpleLyricsEditor.Core;
 using SimpleLyricsEditor.DAL;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
@@ -27,10 +28,15 @@ namespace SimpleLyricsEditor.Control.Templates
         public static readonly DependencyProperty IsBoldProperty = DependencyProperty.Register(
             nameof(IsBold), typeof(bool), typeof(LyricsMultilinePreviewItemTemplate), new PropertyMetadata(false, IsBold_OnPropertyChangedCallback));
 
+        private readonly Settings _settings = Settings.Current;
+
         public LyricsMultilinePreviewItemTemplate()
         {
             this.InitializeComponent();
-            Main_TextBlock.FontSize = this.FontSize;
+            Main_TextBlock.FontSize = _settings.MultilinePreviewFontSize;
+            Amplifier_Animation.To = _settings.MultilinePreviewFontSize + 3;
+            Reset_Animation.To = _settings.MultilinePreviewFontSize;
+            _settings.PropertyChanged += Settings_PropertyChanged;
         }
 
         public string LyricContent
@@ -62,6 +68,18 @@ namespace SimpleLyricsEditor.Control.Templates
                 theObj.Main_TextBlock.FontWeight = FontWeights.Normal;
                 theObj.Amplifier_Storyboard.Stop();
                 theObj.Reset_Storyboard.Begin();
+            }
+        }
+
+        private void Settings_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(_settings.MultilinePreviewFontSize))
+            {
+                Amplifier_Animation.To = _settings.MultilinePreviewFontSize + 3;
+                Reset_Animation.To = _settings.MultilinePreviewFontSize;
+
+                Main_TextBlock.FontSize =
+                    IsBold ? (double) Amplifier_Animation.To : (double) Reset_Animation.To;
             }
         }
     }

@@ -120,6 +120,12 @@
   <data name="CaraOkEffectSettings_Button.Content" xml:space="preserve">
     <value>卡拉OK设置</value>
   </data>
+  <data name="FontSizeInPreviewMode_Button.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>预览模式的字体大小设置</value>
+  </data>
+  <data name="FontSizeInPreviewMode_Slider.Header" xml:space="preserve">
+    <value>字体大小</value>
+  </data>
   <data name="PreviewBackgroundOpacity_Slider.Header" xml:space="preserve">
     <value>背景透明度</value>
   </data>
