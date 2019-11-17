@@ -126,6 +126,9 @@
   <data name="FontSizeInPreviewMode_Slider.Header" xml:space="preserve">
     <value>Font size</value>
   </data>
+  <data name="LineSpacingInPreviewMode_Slider.Header" xml:space="preserve">
+    <value>Line pacing</value>
+  </data>
   <data name="PreviewBackgroundOpacity_Slider.Header" xml:space="preserve">
     <value>Background Opacity</value>
   </data>

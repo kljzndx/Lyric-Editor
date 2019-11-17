@@ -223,7 +223,10 @@
                     <Button x:Name="FontSettingsInPreviewMode_Button" x:Uid="/LyricsPreviewSettings/FontSettingsInPreviewMode_Button" Content="&#xE185;" VerticalAlignment="Top" Style="{StaticResource ControllerButtonStyle}" Margin="20">
                         <Button.Flyout>
                             <Flyout>
-                                <Slider x:Name="FontSizeInPreviewMode_Slider" x:Uid="/LyricsPreviewSettings/FontSizeInPreviewMode_Slider" Width="100" Minimum="12" Maximum="24" Value="{x:Bind _settings.MultilinePreviewFontSize, Mode=TwoWay}"/>
+                                <StackPanel>
+                                    <Slider x:Name="FontSizeInPreviewMode_Slider" x:Uid="/LyricsPreviewSettings/FontSizeInPreviewMode_Slider" Width="100" Minimum="12" Maximum="36" Value="{x:Bind _settings.MultilinePreviewFontSize, Mode=TwoWay}"/>
+                                    <Slider x:Name="LineSpacingInPreviewMode_Slider" x:Uid="/LyricsPreviewSettings/LineSpacingInPreviewMode_Slider" Width="100" Minimum="4" Maximum="36" Value="{x:Bind _settings.MultilinePreviewLineSpacing, Mode=TwoWay}"/>
+                                </StackPanel>
                             </Flyout>
                         </Button.Flyout>
                     </Button>

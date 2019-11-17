@@ -126,6 +126,9 @@
   <data name="FontSizeInPreviewMode_Slider.Header" xml:space="preserve">
     <value>字体大小</value>
   </data>
+  <data name="LineSpacingInPreviewMode_Slider.Header" xml:space="preserve">
+    <value>行间距</value>
+  </data>
   <data name="PreviewBackgroundOpacity_Slider.Header" xml:space="preserve">
     <value>背景透明度</value>
   </data>

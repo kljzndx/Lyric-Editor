@@ -33,6 +33,8 @@ namespace SimpleLyricsEditor.Control.Templates
         public LyricsMultilinePreviewItemTemplate()
         {
             this.InitializeComponent();
+
+            Main_TextBlock.Margin = new Thickness(0, _settings.MultilinePreviewLineSpacing, 0, _settings.MultilinePreviewLineSpacing);
             Main_TextBlock.FontSize = _settings.MultilinePreviewFontSize;
             Amplifier_Animation.To = _settings.MultilinePreviewFontSize + 3;
             Reset_Animation.To = _settings.MultilinePreviewFontSize;
@@ -73,13 +75,18 @@ namespace SimpleLyricsEditor.Control.Templates
 
         private void Settings_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(_settings.MultilinePreviewFontSize))
+            switch (e.PropertyName)
             {
-                Amplifier_Animation.To = _settings.MultilinePreviewFontSize + 3;
-                Reset_Animation.To = _settings.MultilinePreviewFontSize;
+                case nameof(_settings.MultilinePreviewFontSize):
+                    Amplifier_Animation.To = _settings.MultilinePreviewFontSize + 3;
+                    Reset_Animation.To = _settings.MultilinePreviewFontSize;
 
-                Main_TextBlock.FontSize =
-                    IsBold ? (double) Amplifier_Animation.To : (double) Reset_Animation.To;
+                    Main_TextBlock.FontSize =
+                        IsBold ? (double) Amplifier_Animation.To : (double) Reset_Animation.To;
+                    break;
+                case nameof(_settings.MultilinePreviewLineSpacing):
+                    Main_TextBlock.Margin = new Thickness(0, _settings.MultilinePreviewLineSpacing, 0, _settings.MultilinePreviewLineSpacing);
+                    break;
             }
         }
     }

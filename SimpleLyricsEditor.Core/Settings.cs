@@ -29,6 +29,7 @@ namespace SimpleLyricsEditor.Core
         [SettingFieldByNormal(nameof(PreviewBackgroundOpacity), 0.3)] private double _previewBackgroundOpacity;
         [SettingFieldByNormal(nameof(SinglePreviewFontSize), 20D)] private double _singlePreviewFontSize;
         [SettingFieldByNormal(nameof(MultilinePreviewFontSize), 15D)] private double multilinePreviewFontSize;
+        [SettingFieldByNormal(nameof(MultilinePreviewLineSpacing), 4D)] private double multilinePreviewLineSpacing;
         [SettingFieldByNormal(nameof(CaraOkEffectEnabled), true)] private bool _caraOkEffectEnabled;
 
         [SettingFieldByNormal(nameof(MultilineEditModeEnabled), false)] private bool _multilineEditModeEnabled;
@@ -177,6 +178,11 @@ namespace SimpleLyricsEditor.Core
             set => SetSetting(ref multilinePreviewFontSize, value);
         }
 
+        public double MultilinePreviewLineSpacing
+        {
+            get => multilinePreviewLineSpacing;
+            set => SetSetting(ref multilinePreviewLineSpacing, value);
+        }
         public bool CaraOkEffectEnabled
         {
             get => _caraOkEffectEnabled;
