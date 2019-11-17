@@ -220,7 +220,7 @@
                 <Grid>
                     <ctol:LyricsMultilinePreview x:Name="MultilinePreview" ItemClick="MultilinePreview_ItemClick"/>
 
-                    <Button x:Name="FontSizeInPreviewMode_Button" x:Uid="/LyricsPreviewSettings/FontSizeInPreviewMode_Button" Content="&#xE185;" VerticalAlignment="Top" Style="{StaticResource ControllerButtonStyle}" Margin="20">
+                    <Button x:Name="FontSettingsInPreviewMode_Button" x:Uid="/LyricsPreviewSettings/FontSettingsInPreviewMode_Button" Content="&#xE185;" VerticalAlignment="Top" Style="{StaticResource ControllerButtonStyle}" Margin="20">
                         <Button.Flyout>
                             <Flyout>
                                 <Slider x:Name="FontSizeInPreviewMode_Slider" x:Uid="/LyricsPreviewSettings/FontSizeInPreviewMode_Slider" Width="100" Minimum="12" Maximum="24" Value="{x:Bind _settings.MultilinePreviewFontSize, Mode=TwoWay}"/>

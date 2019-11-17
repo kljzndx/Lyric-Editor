@@ -120,8 +120,8 @@
   <data name="CaraOkEffectSettings_Button.Content" xml:space="preserve">
     <value>Cara Ok Effect Settings</value>
   </data>
-  <data name="FontSizeInPreviewMode_Button.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Font size setting in Preview Mode</value>
+  <data name="FontSettingsInPreviewMode_Button.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Font settings in Preview Mode</value>
   </data>
   <data name="FontSizeInPreviewMode_Slider.Header" xml:space="preserve">
     <value>Font size</value>
