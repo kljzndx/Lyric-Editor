@@ -12,6 +12,7 @@ using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
+using GalaSoft.MvvmLight.Messaging;
 using HappyStudio.UwpToolsLibrary.Auxiliarys;
 using HappyStudio.UwpToolsLibrary.Information;
 using SimpleLyricsEditor.Core;
@@ -28,6 +29,7 @@ namespace SimpleLyricsEditor
     /// </summary>
     sealed partial class App : Application
     {
+        public const string FileLaunchMessageToken = "FileLaunch";
         private const string Emill = "kljzndx@outlook.com";
         
         private static bool _isPressCtrl;
@@ -170,7 +172,9 @@ namespace SimpleLyricsEditor
         {
             AppInitializer(args);
 
-            LyricsFileNotifier.ChangeFile(args.Files.Last() as StorageFile);
+            var file = args.Files.Last() as StorageFile;
+            Messenger.Default.Send(file?.Name, FileLaunchMessageToken);
+            LyricsFileNotifier.ChangeFile(file);
         }
 
         /// <summary>

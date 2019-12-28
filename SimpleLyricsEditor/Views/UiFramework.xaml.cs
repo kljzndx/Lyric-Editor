@@ -8,6 +8,7 @@ using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
+using GalaSoft.MvvmLight.Messaging;
 using HappyStudio.UwpToolsLibrary.Auxiliarys;
 using HappyStudio.UwpToolsLibrary.Information;
 using Microsoft.Advertising.WinRT.UI;
@@ -40,6 +41,7 @@ namespace SimpleLyricsEditor.Views
         private StorageFile _lyricsFile;
         private StorageFile _musicFile;
         private string _lyricsFileName;
+        private bool _isOpenTempFile = true;
 
         private int BootTimes
         {
@@ -64,6 +66,8 @@ namespace SimpleLyricsEditor.Views
             LyricsFileNotifier.FileSaved += OnLyricsFileSaved;
             AdsVisibilityNotifier.DisplayRequested += AdsVisibilityNotifier_DisplayRequested;
             AdsVisibilityNotifier.HideRequested += AdsVisibilityNotifier_HideRequested;
+
+            Messenger.Default.Register<string>(this, App.FileLaunchMessageToken, msg => _isOpenTempFile = false);
 
             if (ApiInformation.IsEventPresent(typeof(FlyoutBase).FullName, "Closing"))
                 OpenFile_MenuFlyout.Closing += (s, e) => OpenFile_AppBarToggleButton.IsChecked = false;
@@ -194,13 +198,16 @@ namespace SimpleLyricsEditor.Views
                     await GetReviews_ContentDialog.ShowAsync();
             }
 
-            if (_settings.IsNeedOpenTempFile)
+            if (_isOpenTempFile)
             {
-                TempFile = await ApplicationData.Current.LocalFolder.CreateFileAsync(TempFileName, CreationCollisionOption.OpenIfExists);
-                LyricsFileNotifier.ChangeFile(TempFile);
+                if (_settings.IsNeedOpenTempFile)
+                {
+                    TempFile = await ApplicationData.Current.LocalFolder.CreateFileAsync(TempFileName, CreationCollisionOption.OpenIfExists);
+                    LyricsFileNotifier.ChangeFile(TempFile);
+                }
+                else
+                    await CreateLyricsFile();
             }
-            else
-                await CreateLyricsFile();
         }
 
         #region Notifiers
